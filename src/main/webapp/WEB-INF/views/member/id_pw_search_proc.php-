@@ -1,0 +1,152 @@
+<?
+require $_SERVER["DOCUMENT_ROOT"]."/include/top_all_proc.php";
+//========================================
+noCache();
+header_encoding();
+//========================================
+$chk = trim($_POST["chk"]);
+$m_uid = trim($_POST["m_uid"]);
+$m_mobile = trim($_POST["m_mobile"]);
+$m_email = trim($_POST["m_email"]);
+$m_com_num = trim($_POST["m_com_num"]);
+//debug_arr($_POST);
+//========================================
+
+// add_start : 인증 메일 변수.. GET 방식 [4번 과정에서 인증할 때 사용]
+$v_email = trim($_GET["v_email"]);
+$v_key = trim($_GET["v_key"]);
+// add_end
+
+// add_start : v_email, v_key에 관해 예외처리 추가 함
+if ( $m_name == "" && $m_email== "" &&	$v_email == "" && $v_key == "") {goback("정상 경로로 접근해 주세요.");exit;}
+// add end
+
+//========================================
+$stone_db = new clsStoneDb();$stone_db->OPEN_DB();
+$stone_log = new clsStoneLog();
+$stone_enc = new clsStoneEnc(); // 암호화
+//========================================
+
+// add_start : 인증 메일로 부터 왔는지 확인.. 메일과 키를 db로 부터 확인..
+if ($v_email != "" && $v_key != "") {
+	
+	
+
+    $sql = "SELECT * FROM member WHERE m_email='$v_email' AND m_key='$v_key'";
+	
+    $row= $stone_db->EXEC_SQL_ROW($sql);
+    if ($row) {
+        $output='Your Email has already been verified.';
+        
+		
+		$sql1 = "update member set m_key = '' where m_email = '".$v_email."'";
+		
+		$stone_db->EXEC_SQL($sql1);
+
+		// TODO:여기에 리다이렉트로 패스워드 바꾸도록 해야함...
+	
+		gourl('정상적으로 인증 되었습니다.',"/html2/html/member/login.php");
+
+//========================================
+
+		
+    } else{
+    	
+		goback("정상 경로로 접근해 주세요.");exit;
+    }
+
+	$stone_db->CLOSE_DB();
+	exit;
+}
+// add_end
+
+if ($chk == "1") {
+	$flag = "아이디 찾기";
+	$sql = " select m_idx,m_email,m_upass,m_name,m_retire from member ";
+	$sql .= " where m_email = ".mres($m_email);
+	$sql .= " and m_mobile = ".mres($m_mobile);
+}
+/*
+ else {
+	$flag = "비밀번호 찾기";
+	$sql = " select m_idx,m_uid,m_upass,m_retire from member ";
+	$sql .= " where (m_email1 = ".mres($m_email1);
+	$sql .= " and m_email2 = ".mres($m_email2);
+	$sql .= " ) and m_com_num = ".mres($m_com_num)  ;
+}
+ * 
+ * */
+ 
+//debug_str($sql);
+$row = $stone_db->EXEC_SQL_ROW($sql);
+//exit;
+//========================================
+if (!$row) {$stone_db->CLOSE_DB();
+	goback("회원 정보가 존재하지 않습니다. 다시한번 확인해주세요!");
+	exit;
+}
+//========================================
+//if ($row->m_retire != "N") {$stone_db->CLOSE_DB();$goback("탈퇴한 회원입니다.");exit;}
+//========================================
+$m_idx = $row->m_idx;
+$m_uid = $row->m_uid;
+$m_name = $row->m_name;
+// 회원 운영 이력 입력
+$mla_gubun = "8";//운영 구분(모름:0,로그인:1,로그아웃:2,등록:3,수정:4,상세보기:5,삭제:6,다운로드:7,검색:8)
+$mla_content = "회원 {$flag}({$m_idx})";
+$stone_log_action = new clsStoneLogAction();
+$result2 = $stone_log_action->EXEC_LOG_MEMBER($stone_db,$m_idx,$m_email,$mla_content,$mla_gubun);
+if (!$result2[0]) {
+	debug_str($result2[1]);
+	goback("운영 이력 입력중 오류가 발생 되었습니다.");
+	$stone_db->CLOSE_DB();
+	exit;
+}
+
+// add_start : 유저의 메일을 사용하여 key 생성..
+$user_email = $row->m_email;
+$user_name = $row->m_name;
+$user_id = $row->m_uid;
+$key = gen_activation_key($m_email, 20);
+$passwd = gen_activation_key($m_email, 6);
+$sEncPass = $stone_enc->EnCode($passwd);
+
+// 생성된 key를 db에 저장.
+$sql1 = "update member set m_key = '".$key."', m_upass = '".$sEncPass."' where m_idx = ".$m_idx;
+$stone_db->EXEC_SQL($sql1);
+// 메일 보내기.. 링크에 email과 key를 보내서 get 변수로 가져올 수 있게 함.
+// 해당 이메일로는 email과 key를 포함한 링크를 보냄.링크 클릭 하면 email과 key로 db 검색 후, 결과값이 있으면 인증 성공!
+verificationMAIL($key, $m_email, $passwd, $m_name);
+
+// 키생성 함수.. 20자리 hash 값
+function gen_activation_key($email, $num){    
+    $generatedKey = sha1(mt_rand(10000,99999).time().$email);
+    return substr($generatedKey, 0, $num);
+}
+
+
+
+// 승인 메일 보내기 함수
+function verificationMAIL($gKEY, $email, $passwd, $m_name){
+    $to=$email;
+    $from='do-not-reply@example.com';
+    $subject='mail 발송됨';
+    $headers .= 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+    $mailMsg=''.$m_name.'회원님의 아이디는 '.$m_uid. " 
+    <br> 새로운 비밀번호를 생성하여 안내해 드립니다.
+    <br> 변경된 비밀번호를 확인하신후, 비밀번호 변경 링크를 클릭해 주십시오.
+    <br> 변경될 비밀번호".$passwd.
+    "<br> http://songyoungki.com/member/id_pw_search_proc.php?v_email=".$email.'&v_key='.$gKEY;
+    mail($to,$subject,$mailMsg,$headers);
+}
+// add_end
+
+//========================================
+$stone_db->CLOSE_DB();
+//========================================
+$reurl = "/html2/html/member/login.php";
+$nextUrl .= $reurl."?m_idx=".$m_idx."&sFindFlag=".$chk;
+//========================================
+Header("Location:".$nextUrl);
+?>

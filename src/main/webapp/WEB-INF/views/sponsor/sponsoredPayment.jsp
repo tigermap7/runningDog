@@ -1,0 +1,167 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+        <c:import url="/WEB-INF/views/include/head.jsp"/>
+        <script>
+            $(function(){
+                $(".privacyCke_con").hide();
+                $(".sPaymentInfo a.con1").click(function(){
+                    $(".privacyCke_con").show();
+                    $(".privacyCke_con textarea.con2").removeClass('on');
+                    $(".privacyCke_con textarea.con1").toggleClass('on');
+                });
+                $(".sPaymentInfo a.con2").click(function(){
+                    $(".privacyCke_con").show();
+                    $(".privacyCke_con textarea.con1").removeClass('on');
+                    $(".privacyCke_con textarea.con2").toggleClass('on');
+                });
+            });
+        </script>
+	</head>
+	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+		<div id="wrap">
+            <c:import url="/WEB-INF/views/include/header.jsp"/>
+			<!-- 컨텐츠 -->
+			<div id="content">
+			    <!--서브 비주얼/타이틀-->
+                <div class="visual-sub-vagas animal-vagas">
+                    <div class="vsv-copy sub-title">
+                       <div>
+                            <ul class="navi">
+                                <li><a href="#none">홈</a></li>
+                                <li class="xi-angle-right"><a href="#none">후원하기</a></li>
+                            </ul>
+                        </div>
+                        <h2><span>후원하기</span></h2>
+                        <h3>여러분의 따뜻한 손길로<br/>작은 생명에게 새 삶을 찾아주세요.</h3>
+                    </div>
+                </div>
+			    <!--서브 비주얼/타이틀 끝-->
+                
+                <div class="subContent_wrap">
+                    <!-- 좌측메뉴 -->
+                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <!-- 좌측메뉴 끝 -->
+                    <div class="subContent">
+                        <!--상세-->
+                        <form action="" method="post">
+                        <table class="sPaymentInfo">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="80%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">▣ 후원자 정보&nbsp;&nbsp;&nbsp;<span>*필수입력</span></th>
+                                </tr>
+                            <tbody>
+                                <tr>
+                                    <td>후원자 분류<span>*</span></td>
+                                    <td>
+                                        <button type="button" class="active"><i class="xi-user-o"></i> 개인</button>
+                                        <!-- <button type="button"><i class="xi-network-company"></i> 사업자</button> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>후원인(이름or가명)<span>*</span></td>
+                                    <td>
+                                        <input type="text" name="" title="후원인(이름or가명)" class="form-control w50p" placeholder="이름" required/>
+                                        <label style="margin-left:0.9375rem;"><input type="checkbox" name="" id=""> 14세 미만</label> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>이메일<span>*</span></td>
+                                    <td>
+                                        <input type="email" name="" title="이메일" class="form-control w50p" placeholder="이메일" required/>
+                                        <label style="margin-left:0.9375rem;"><input type="checkbox" name="" id=""> 이메일수신동의(선택)</label> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>연락처<span>*</span></td>
+                                    <td>
+                                        <input type="tel" name="" title="연락처" class="form-control w50p" placeholder="연락처" required/>
+                                        <label style="margin-left:0.9375rem;"><input type="checkbox" name="" id=""> SNS수신동의(선택)</label> 
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="sPaymentInfo mt50">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="80%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">▣ 후원정보&nbsp;&nbsp;&nbsp;<span>*필수입력</span></th>
+                                </tr>
+                            <tbody>
+                                <tr>
+                                    <td>후원방법<span>*</span></td>
+                                    <td><button type="button">일시불</button></td>
+                                </tr>
+                                <tr>
+                                    <td>납부방법<span>*</span></td>
+                                    <td>
+                                        <label><input type="radio" name="chk1" id=""> 신용카드</label>
+                                        <label><input type="radio" name="chk1" id=""> 무통장입금</label>
+                                        <label><input type="radio" name="chk1" id=""> 실시간계좌이체</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>후원금액<span>*</span></td>
+                                    <td>
+                                        <select name="" id="" class="form-control w50p mb10">
+                                            <option value="">직접입력</option>
+                                            <option value="">1천원</option>
+                                            <option value="">3천원</option>
+                                            <option value="">5천원</option>
+                                            <option value="">1만원</option>
+                                            <option value="">3만원</option>
+                                            <option value="">5만원</option>
+                                            <option value="">10만원</option>
+                                        </select>
+                                        <input type="number" name="" id="" class="form-control w50p" placeholder="금액을 입력해주세요." required>
+                                    </td>
+                                </tr>
+                                <!-- <tr class="receipt">
+                                    <td colspan="2">
+                                        <p>따뜻한 후원의 손길 감사합니다. 기부금영수증 처리를 하시겠습니까?</p>
+                                        <button type="button">네</button>
+                                        <button type="button">아니요</button>
+                                    </td>
+                                </tr> -->
+                                <tr class="privacyInfo">
+                                    <td>약관동의<span>*</span></td>
+                                    <td>
+                                        <label><input type="checkbox" name="" id="">모두 동의합니다.</label><br/>
+                                        <label><input type="checkbox" name="chk1" id="" required>(필수)이용약관에 동의합니다.</label><a href="#none" class="con1"><i class="xi-comment-o"></i> 보기</a><br/>
+                                        <label><input type="checkbox" name="chk1" id="" required>(필수)개인정보처리방에 동의합니다.</label><a href="#none" class="con2"><i class="xi-comment-o"></i> 보기</a><br/>
+                                    </td>
+                                </tr>
+                                <tr class="privacyCke_con">
+                                    <td colspan="2">
+                                        <c:import url="/views/include/termsCon.jsp"/>
+                                        <c:import url="/views/include/privacyCon.jsp"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="sPayment_Btn">
+                            <button class="w50p"><i class="xi-piggy-bank"></i> 후원하기</button>
+                        </div>
+                        </form>
+                        <!-- 상세 끝 -->                        
+                    </div>
+                </div>
+            </div>
+            <!-- 컨텐츠 끝 -->
+
+            <c:import url="/WEB-INF/views/include/footer.jsp"/>
+		</div>
+	</body>
+</html>
