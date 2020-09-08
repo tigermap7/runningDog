@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+
+	<resultMap id="resultSponsor" type="Sponsor">
+		<id property="sNum" column="s_num" />
+		<result property="sId" column="s_id" />
+		<result property="sTitle" column="s_title" />
+		<result property="sSummary" column="s_summary" />
+		<result property="sContent" column="s_content" />
+		<result property="sDate" column="s_date" />
+		<result property="sAmount" column="s_amount" />
+		<result property="sCurrent" column="s_current" />
+		<result property="sOriginal" column="s_original" />
+		<result property="sRename" column="s_rename" />
+	</resultMap>
+	
+	<select id="selectAll" resultType="Sponsor">
+		select * from sponsor
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Sponsor">
+		select * from sponsor where s_num = #{ snum }
+	</select>
+	
+	
+	<insert id="insertSponsor" parameterType="Sponsor">
+		
+	</insert>
+	
+	<update id="updateSponsor" parameterType="Sponsor">
+		
+	</update>
+	
+	<delete id="deletSponsor" parameterType="int">
+		delete from member where s_num = #{ snum }
+	</delete>
+	
+	
+</mapper>
