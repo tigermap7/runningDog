@@ -31,7 +31,7 @@
 			
 	</resultMap>
 	
-	<resultMap type="Board" id="resultNew4">
+	<resultMap type="Dboard" id="resultNew4">
 		<result column="d_num" property="dNum" />
 		<result column="d_title" property="dTitle" />
 		<result column="d_count" property="dCount" />
