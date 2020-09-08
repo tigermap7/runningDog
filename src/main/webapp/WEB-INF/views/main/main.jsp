@@ -300,7 +300,7 @@
                             <p>사랑스러운 반려동물의<br/>유용한 소식을 알려드립니다.</p>
                         </li>
                         <li>
-                            <a href="#none" class="xi-plus-circle-o"></a>
+                            <a href="nlist.do" class="xi-plus-circle-o"></a>
                             <h2>공지사항 <i class="xi-bell-o"></i></h2>
                             <p>'지금 달려갈 개'의<br/>공지사항을 꼭 확인해주세요.</p>
                         </li>
