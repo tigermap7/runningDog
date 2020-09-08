@@ -92,7 +92,7 @@
                     <li><a href="/runningdog/views/member/join.jsp">회원가입</a></li>
                     <li><a href="/runningdog/views/mypage/myProfile.jsp">나의 프로필</a></li>
                     <li><a href="/runningdog/views/mypage/myservice.jsp">나의 자원봉사</a></li>
-                    <li><a href="/runningdog/views/mypage/myChatting.jsp">나의 채팅</a></li>
+                    <li><a href="moveChatting.do">나의 채팅</a></li>
                     <li><a href="/runningdog/views/mypage/myReview.jsp">나의 댓글</a></li>
                 </ul>
             </li>
@@ -118,7 +118,7 @@
         <li><a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a></li>
         <li><a href="/runningdog/views/issue/knowledgeList.jsp">반려동물상식</a></li>
         <li><a href="/runningdog/views/issue/issueList.jsp">오늘의 이슈</a></li>
-        <li><a href="/runningdog/views/mypage/myChatting.jsp">나의 채팅</a></li>
+        <li><a href="moveChatting.do">나의 채팅</a></li>
         <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
         <li><a href="/runningdog/views/about/aboutView.jsp">사이트소개</a></li>
     </ul>
