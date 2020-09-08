@@ -50,7 +50,7 @@
                         <div class="sort-area">  
                             <h4>전체 150개의 '따뜻한 손길'</h4>
                             <div>
-                                <a href="sponsorWrite.jsp" class="writeBtn">글쓰기</a>
+                                <!-- <a href="sponsorWrite.jsp" class="writeBtn">글쓰기</a> -->
                                 <div>
                                 <form action="" name="">
                                     <a class="active" href="#none">전체</a>

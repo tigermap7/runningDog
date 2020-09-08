@@ -11,15 +11,15 @@
 
 <title>관리자 화면</title>
 
-<link rel="stylesheet" type="text/css" href="/WEB-INF/resources/admin/css/common.css">
-<link rel="stylesheet" type="text/css" href="/WEB-INF/resources/common/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="/WEB-INF/resources/common/css/swiper.min.css">
-<script src="/WEB-INF/resources/admin/js/member.js"></script>
-<script src="/WEB-INF/resources/common/js/jquery-3.5.1.min.js"></script>
-<script src="/WEB-INF/resources/common/js/bootstrap.js"></script>
-<script src="/WEB-INF/resources/common/js/swiper.min.js"></script>
-<script src="/WEB-INF/resources/common/js/summernote-ko-KR.js"></script>
-<script src="/WEB-INF/resources/common/js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/admin/css/common.css">
+<link rel="stylesheet" type="text/css" href="resources/common/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="resources/common/css/swiper.min.css">
+<script src="resources/admin/js/member.js"></script>
+<script src="resources/common/js/jquery-3.5.1.min.js"></script>
+<script src="resources/common/js/bootstrap.js"></script>
+<script src="resources/common/js/swiper.min.js"></script>
+<script src="resources/common/js/summernote-ko-KR.js"></script>
+<script src="resources/common/js/common.js"></script>
 
 <!--티스토리 불펌금지-->
 <!-- <script type="text/javascript">
