@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">공지사항</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="nlist.do">공지사항</a></li>
                             </ul>
                         </div>
                         <h2><span>공지사항</span></h2>
@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -38,6 +38,8 @@
                             <form action="" name="">
                             <select>
                                 <option value="" class="fontColor-dark">제목</option>
+                                <option value="" class="fontColor-dark">내용</option>
+                                <option value="" class="fontColor-dark">제목 + 내용</option>
                             </select>
                             <div class="search-box">
                                 <input type="text" placeholder="원하시는 키워드를 검색해주세요.">
@@ -63,7 +65,7 @@
                                     <col width="15%">
                                 </colgroup>
                                 <tbody>
-                                    <tr onclick="location.href='noticeView.jsp';" class="active">
+                                    <tr onclick="location.href='ndetail.do';" class="active">
                                         <td class="number">6</td>
                                         <td class="title">
                                             <h2><span>공지</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
