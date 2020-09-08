@@ -18,6 +18,8 @@
 <script src="/WEB-INF/resources/common/js/jquery-3.5.1.min.js"></script>
 <script src="/WEB-INF/resources/common/js/bootstrap.js"></script>
 <script src="/WEB-INF/resources/common/js/swiper.min.js"></script>
+<script src="/WEB-INF/resources/common/js/summernote-ko-KR.js"></script>
+<script src="/WEB-INF/resources/common/js/common.js"></script>
 
 <!--티스토리 불펌금지-->
 <!-- <script type="text/javascript">

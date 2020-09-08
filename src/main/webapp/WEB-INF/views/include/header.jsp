@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="gnbWrap clearfix">
-        <h1 onclick="location='/onlyYou/'" title="지금 달려갈 개"></h1>
+        <h1 onclick="location='/runningdog/'" title="지금 달려갈 개"></h1>
         <ul class="gnb clearfix">
             <li class="menuBtn"><a href="#none">전체</a></li>
             <li>
@@ -104,13 +104,13 @@
 <div id="mHeader">
     <dl>
         <dt><button class="xi-backspace" onclick="javascript:history.back();"></button></dt>
-        <dd><h1 onclick="location='/onlyYou/'"></h1></dd>
+        <dd><h1 onclick="location='/runningdog/'"></h1></dd>
         <dt>
             <button class="xi-align-justify" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"></button>
         </dt>
     </dl>
     <ul class="mHeader_menu collapse" id="navbarSupportedContent">
-        <li><a href="/onlyYou/"><i class="xi-home-o"></i> 홈으로</a></li>
+        <li><a href="/runningdog/"><i class="xi-home-o"></i> 홈으로</a></li>
         <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
         <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
         <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>

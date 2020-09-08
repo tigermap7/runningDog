@@ -16,13 +16,13 @@
     background-position: top center;
 }
 #main_visual .swiper-wrapper > div.first {
-    background-image: url('/runningdog/images/main/main_visual01.jpg');
+    background-image: url('/runningdog/resources/images/main/main_visual01.jpg');
 }
 #main_visual .swiper-wrapper > div.middle {
-    background-image: url('/runningdog/images/main/main_visual02.jpg');
+    background-image: url('/runningdog/resources/images/main/main_visual02.jpg');
 }
 #main_visual .swiper-wrapper > div.last {
-    background-image: url('/runningdog/images/main/main_visual03.jpg');
+    background-image: url('/runningdog/resources/images/main/main_visual03.jpg');
     text-align: right;
 }
 #main_visual .swiper-wrapper > div > div {
@@ -341,7 +341,7 @@
 .main_banner {
     position: relative;
     width: 100%;
-    background-image: url(/runningdog/images/main/main_bannerBg.jpg);
+    background-image: url(/runningdog/resources/images/main/main_bannerBg.jpg);
     height: 20rem;
     background-size: cover;
     background-position: center;
@@ -520,7 +520,7 @@
 .main_banner2 {
     position: relative;
     width: 100%;
-    background-image: url(/runningdog/images/main/main_bannerBg2.jpg);
+    background-image: url(/runningdog/resources/images/main/main_bannerBg2.jpg);
     height: 20rem;
     background-size: cover;
     background-position: center;

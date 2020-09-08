@@ -16,7 +16,7 @@
 
 .vegas-overlay {
     opacity: .5;
-    background: transparent url("/runningdog/images/btnIcn/overlay_01.png") center center repeat;
+    background: transparent url("/runningdog/resources/images/btnIcn/overlay_01.png") center center repeat;
 }
 
 .vegas-timer {

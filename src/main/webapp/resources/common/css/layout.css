@@ -80,7 +80,7 @@
     float: left;
     width: 6.625rem;
     height: 3.75rem;
-    background-image:url(/runningdog/images/common/logo.png);
+    background-image:url(/runningdog/resources/images/common/logo.png);
     background-repeat: no-repeat;
 
 }
@@ -173,7 +173,7 @@
     border-bottom:1px solid #eee;
 }
 #header.active .gnbWrap h1{
-    background-image:url(/runningdog/images/common/logo_over.png);
+    background-image:url(/runningdog/resources/images/common/logo_over.png);
 }
 #header.active .gnbWrap .gnb > li > a {
     color:#ff92a8;
@@ -189,7 +189,7 @@
     height: 5rem;
 }
 #header.on .gnbWrap h1{
-    background-image:url(/runningdog/images/common/logo_over.png);
+    background-image:url(/runningdog/resources/images/common/logo_over.png);
     margin-top: 0.625rem;
 }
 #header.on .gnbWrap .gnb > li > a{
@@ -492,7 +492,7 @@
     width: 5.5rem;
     height: 3.125rem;
     margin: 0 auto;
-    background-image: url(/runningdog/images/common/logo.png);
+    background-image: url(/runningdog/resources/images/common/logo.png);
     background-repeat: no-repeat;
     background-size: 5.5rem 3.125rem;
     cursor: pointer;
@@ -501,7 +501,7 @@
     background-color: #fff;
 }
 #mHeader.on dl dd h1, #mHeader.active dl dd h1 {
-    background-image:url(/runningdog/images/common/logo_over.png);
+    background-image:url(/runningdog/resources/images/common/logo_over.png);
 }
 #mHeader.on dl dt, #mHeader.active dl dt {
     color:#ff92a8;
