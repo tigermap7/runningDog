@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -56,7 +56,7 @@
                                     <col width="20%">
                                 </colgroup>
                                 <tbody>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
+                                    <tr onclick="location.href='cknowdetail.do';">
                                         <td class="number">10</td>
                                         <td class="title">
                                             <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
