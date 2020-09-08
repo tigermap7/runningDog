@@ -295,7 +295,7 @@
                             </p>
                         </li>
                         <li>
-                            <a href="#none" class="xi-plus-circle-o"></a>
+                            <a href="cknowlist.do" class="xi-plus-circle-o"></a>
                             <h2>상식/이슈 <i class="xi-message-o"></i></h2>
                             <p>사랑스러운 반려동물의<br/>유용한 소식을 알려드립니다.</p>
                         </li>
