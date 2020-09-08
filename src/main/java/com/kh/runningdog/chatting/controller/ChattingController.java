@@ -14,4 +14,9 @@ public class ChattingController {
 		logger.info("moveChatting.do run...");
 		return "mypage/myChatting";
 	}
+	
+	@RequestMapping("moveChattingView.do")
+	public String moveChattingView() {
+		return "/mypage/myChattingView";
+	}
 }

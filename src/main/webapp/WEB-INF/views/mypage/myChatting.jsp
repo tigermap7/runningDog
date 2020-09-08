@@ -57,47 +57,7 @@
                                 <col width="10%">
                             </colgroup>
                             <tbody>
-                                <tr onclick="location='myChattingView.jsp'">
-                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
-                                    <td class="title">
-                                        <h2>멍무이 <span>2020.08.31일 마지막 응답</span></h2>
-                                        <p>안녕하세요. 유기동물 공고보고 연락드렸습니다. 강아지를 지금 보러갈까 하는데 괜찮을까요?</p>
-                                    </td>
-                                    <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-                                </tr>
-                                <tr onclick="location='myChattingView.jsp'">
-                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
-                                    <td class="title">
-                                        <h2>멍무이 <span>2020.08.31일 마지막 응답</span></h2>
-                                        <p>안녕하세요. 유기동물 공고보고 연락드렸습니다. 강아지를 지금 보러갈까 하는데 괜찮을까요?</p>
-                                    </td>
-                                    <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-                                </tr>
-                                <tr onclick="location='myChattingView.jsp'">
-                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
-                                    <td class="title">
-                                        <h2>멍무이 <span>2020.08.31일 마지막 응답</span></h2>
-                                        <p>안녕하세요. 유기동물 공고보고 연락드렸습니다. 강아지를 지금 보러갈까 하는데 괜찮을까요?</p>
-                                    </td>
-                                    <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-                                </tr>
-                                <tr onclick="location='myChattingView.jsp'">
-                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
-                                    <td class="title">
-                                        <h2>멍무이 <span>2020.08.31일 마지막 응답</span></h2>
-                                        <p>안녕하세요. 유기동물 공고보고 연락드렸습니다. 강아지를 지금 보러갈까 하는데 괜찮을까요?</p>
-                                    </td>
-                                    <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-                                </tr>
-                                <tr onclick="location='myChattingView.jsp'">
-                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
-                                    <td class="title">
-                                        <h2>멍무이 <span>2020.08.31일 마지막 응답</span></h2>
-                                        <p>안녕하세요. 유기동물 공고보고 연락드렸습니다. 강아지를 지금 보러갈까 하는데 괜찮을까요?</p>
-                                    </td>
-                                    <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-                                </tr>
-                                <tr onclick="location='myChattingView.jsp'">
+                                <tr onclick="location='moveChattingView.do'">
                                     <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
                                     <td class="title">
                                         <h2>멍무이 <span>2020.08.31일 마지막 응답</span></h2>
