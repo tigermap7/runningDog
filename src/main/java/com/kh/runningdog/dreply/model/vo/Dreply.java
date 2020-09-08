@@ -15,7 +15,7 @@ public class Dreply implements java.io.Serializable{
 	private int dreLevel;
 	private int uniqueNum;
 	
-	Dreply (){}
+	public Dreply (){}
 
 	public Dreply(int dreNum, int dNum, String dreWriter, String dreContent, Date dreDate, Date dreMdate,
 			int dreParents, int dreLevel, int uniqueNum) {
