@@ -5,11 +5,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
-        <c:import url="/WEB_INF/views/include/head.jsp"/>
+        <c:import url="/WEB-INF/views/include/head.jsp"/>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
-            <c:import url="/WEB_INF/views/include/header.jsp"/>
+            <c:import url="/WEB-INF/views/include/header.jsp"/>
 			<!-- 컨텐츠 -->
 			<div id="content">
 			    <!--서브 비주얼/타이틀-->
@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/WEB_INF/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -39,7 +39,7 @@
             </div>
             <!-- 컨텐츠 끝 -->
 
-            <c:import url="/WEB_INF/views/include/footer.jsp"/>
+            <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
 	</body>
 </html>

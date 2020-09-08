@@ -65,7 +65,7 @@
         	<li>
                 <div><a href="#none">전체카테고리</a></div>
                 <ul class="depth2">
-                    <li><a href="aboutView.jsp">사이트소개</a></li>
+                    <li><a href="aboutView.do">사이트소개</a></li>
                     <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
                     <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
                     <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
@@ -121,6 +121,6 @@
         <li><a href="/runningdog/views/issue/issueList.jsp">오늘의 이슈</a></li>
         <li><a href="/runningdog/views/mypage/myChatting.jsp">나의 채팅</a></li>
         <li><a href="nlist.do">공지사항</a></li>
-        <li><a href="/runningdog/views/about/aboutView.jsp">사이트소개</a></li>
+        <li><a href="aboutView.do">사이트소개</a></li>
     </ul>
 </div>
