@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+	<resultMap type="Member" id="resultMember">
+		<id property="uniqueNum" column="unique_num"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPwd" column="user_pwd"/>
+		<result property="nickname" column="nickname"/>
+		<result property="phone" column="phone"/>
+		<result property="profleImg" column="profle_img"/>
+		<result property="joinDate" column="join_date"/>
+		<result property="lastAccessDate" column="last_access_date"/>
+		<result property="loginType" column="login_type"/>
+		<result property="loginLimit" column="login_limit"/>
+	</resultMap>
+
+	<resultMap type="Member" id="resultList">
+		<result property="uniqueNum" column="unique_num"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPwd" column="user_pwd"/>
+		<result property="nickname" column="nickname"/>
+		<result property="phone" column="phone"/>
+		<result property="profleImg" column="profle_img"/>
+		<result property="joinDate" column="join_date"/>
+		<result property="lastAccessDate" column="last_access_date"/>
+		<result property="loginType" column="login_type"/>
+		<result property="loginLimit" column="login_limit"/>
+	</resultMap>
+	
+	<select id="selectLogin" parameterType="Member" resultMap="resultMember">
+		select * from member where user_id = #{ userId } and user_pwd = #{ userPwd } and LOGIN_LIMIT = 'N'
+	</select>
+	
+	<select id="selectList" resultMap="resultList">
+
+	</select>
+	
+	<select id="selectMember" parameterType="string" resultType="Member">
+
+	</select>
+	
+	<!-- select id="selectSearchUserid" parameterType="string" resultMap="resultMember">
+
+	</select-->
+	
+	
+	<!-- select id="selectCheckId" parameterType="string" resultType="_int">
+		select count(userid) from member where userid = #{ uid }
+	</select-->
+	
+	
+	<insert id="insertMember" parameterType="Member" >
+	
+	</insert>
+	
+	
+	<update id="updateMember" parameterType="Member">
+
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+
+	</delete>
+</mapper>

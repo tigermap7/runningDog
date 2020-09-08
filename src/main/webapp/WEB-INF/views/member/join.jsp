@@ -25,7 +25,7 @@
 			<div id="content">
 				<!-- 로그인 -->
                 <div class="member_wrap">
-                    <form name="join" method="post" action="#">
+                    <form method="post" action="#">
                     <legend>회원가입</legend>
                     <div class="login_wrap">
                         <h1 onclick="location='/WEB-INF/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>
@@ -73,8 +73,8 @@
                             <input class="join_btn" type="submit" name="" value="회원가입">
                         </div>
                         <div class="privacyCke_con">
-                            <c:import url="/views/include/termsCon.jsp"/>
-                            <c:import url="/views/include/privacyCon.jsp"/>
+                            <c:import url="termsCon.do"/>
+                            <c:import url="privacyCon.do"/>
                         </div>
                     </div>
 				    </form>

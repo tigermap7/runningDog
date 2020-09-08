@@ -10,11 +10,11 @@
                 <li onclick="location='#none'"><i class="xi-lightbulb-o"></i><span>[서울시 강북구 미아동]</span>흰색 포메리안을 강아지를 찾습니다.</li>
             </ul>
             <ul class="util">
-                <li><a class="hover_line01" href="/runningdog/views/member/login.jsp">로그인</a></li>
-                <li><a class="hover_line01" href="/runningdog/views/member/join.jsp">회원가입</a></li>
-                <li><a class="hover_line01" href="#none">로그아웃</a></li>
-                <li><a class="hover_line01" href="/runningdog/views/mypage/myInfo.jsp">마이페이지</a></li>
-                <li><a class="hover_line01" href="/runningdog/views/admin/member/allMember.jsp">관리자페이지</a></li>
+                <li><a class="hover_line01" href="login.do">로그인</a></li>
+                <li><a class="hover_line01" href="join.do">회원가입</a></li>
+                <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
+                <li><a class="hover_line01" href="mypage.do">마이페이지</a></li>
+                <li><a class="hover_line01" href="admin.do">관리자페이지</a></li>
             </ul>
         </div>
     </div>
@@ -88,9 +88,9 @@
             <li>
                 <div><a href="#none">멤버</a></div>
                 <ul class="depth2">
-                    <li><a href="/runningdog/views/member/login.jsp">로그인</a></li>
-                    <li><a href="/runningdog/views/member/join.jsp">회원가입</a></li>
-                    <li><a href="/runningdog/views/mypage/myProfile.jsp">나의 프로필</a></li>
+                    <li><a href="login.do">로그인</a></li>
+                    <li><a href="join.do">회원가입</a></li>
+                    <li><a href="mypage.do">나의 프로필</a></li>
                     <li><a href="/runningdog/views/mypage/myservice.jsp">나의 자원봉사</a></li>
                     <li><a href="/runningdog/views/mypage/myChatting.jsp">나의 채팅</a></li>
                     <li><a href="/runningdog/views/mypage/myReview.jsp">나의 댓글</a></li>
@@ -106,7 +106,7 @@
         <dt><button class="xi-backspace" onclick="javascript:history.back();"></button></dt>
         <dd><h1 onclick="location='/runningdog/'"></h1></dd>
         <dt>
-            <button class="xi-align-justify" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"></button>
+            <button class="xi-align-justify collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"></button>
         </dt>
     </dl>
     <ul class="mHeader_menu collapse" id="navbarSupportedContent">

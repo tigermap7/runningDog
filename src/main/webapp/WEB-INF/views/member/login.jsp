@@ -13,33 +13,32 @@
 			<div id="content">
 				<!-- 로그인 -->
                 <div class="member_wrap">
-                    <form name="join" method="post" action="#">
+                    <form name="loginFrom" method="post" action="loginAction.do">
                     <legend>로그인</legend>
                     <div class="login_wrap">
-                        <h1 onclick="location='/WEB-INF/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>
+                        <h1 onclick="location='/runningdog/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>
                         <div class="loginInfo">
                             <div>
                                 <span><i class="xi-mail-o"></i></span>
-                                <span><input type="email" name="" title="아이디" class="w100p" placeholder="아이디(이메일)" required/></span>
+                                <span><input type="email" name="userId" title="아이디" id="loginUserId" class="w100p" placeholder="아이디(이메일)" required/></span>
                             </div>
-                            <p>
-                                <span>아이디(이메일)를 입력해주세요.</span>
-                                <span>아이디(이메일)가 이메일 형식이 아닙니다.</span>
+                            <p id="idWarning">
+                                <span></span>
                             </p>
                             <div>
                                 <span><i class="xi-lock-o"></i></span>
-                                <span><input type="password" name="" title="비밀번호" class="w100p" placeholder="비밀번호" required/></span>
+                                <span><input type="password" name="userPwd" title="비밀번호" id="loginUserPwd" class="w100p" placeholder="비밀번호" required/></span>
                             </div>
-                            <p>
-                                <span>비밀번호를 입력해주세요</span>
+                            <p id="pwdWarning">
+                                <span></span>
                             </p>
                             <dl>
-                                <dt><label><input type="checkbox" name="" id=""> 이메일 저장</label></dt>
-                                <dd onclick="location='accountFind.jsp'">아이디(이메일)/비밀번호 찾기 <i class="xi-angle-right"></i></dd>
+                                <dt><label><input type="checkbox" name="" id="idSaveCheck"> 이메일 저장</label></dt>
+                                <dd onclick="location='accountFind.do'">아이디(이메일)/비밀번호 찾기 <i class="xi-angle-right"></i></dd>
                             </dl>
                             <input class="login_btn" type="submit" name="" value="로그인">
                         </div>
-                        <a href="join.jsp" class="join_btn">회원가입</a>
+                        <a href="join.do" class="join_btn">회원가입</a>
 
                         <ul class="snsLogin">
                             <li onclick="location='#none'" class="kLogin">
