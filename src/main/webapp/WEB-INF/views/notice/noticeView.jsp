@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">공지사항</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="nlist.do">공지사항</a></li>
                             </ul>
                         </div>
                         <h2><span>공지사항</span></h2>
@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -57,7 +57,7 @@
                     <!-- 버튼 -->
                     <div class="viewBtn-wrap">
                         <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                        <button class="listBtn"><i class="xi-rotate-left"></i> 목록</button>
+                        <button class="listBtn" onclick="javascript:history.go(-1);"><i class="xi-rotate-left"></i> 목록</button>
                         <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
                         <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
                         <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
