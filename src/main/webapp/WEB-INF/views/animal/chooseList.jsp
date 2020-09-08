@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -54,7 +54,7 @@
                         <div class="sort-area">  
                             <h4>전체 150마리 '작은 천사'</h4>
                             <div>
-                                <a href="chooseWrite.jsp" class="writeBtn">글쓰기</a>
+                                <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
                                 <div>
                                 <form action="" name="">
                                     <a class="active" href="#none">전체</a>

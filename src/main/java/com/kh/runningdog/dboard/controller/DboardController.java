@@ -17,6 +17,12 @@ public class DboardController {
 	
 	@RequestMapping("dlistPage.do")
 	public String moveDlistPage() {
-		return "animal/animalList";
+		return "animal/chooseList";
 	}
+	
+	@RequestMapping("dinsertPage.do")
+	public String moveDinsertPage() {
+		return "animal/chooseWrite";
+	}
+	
 }

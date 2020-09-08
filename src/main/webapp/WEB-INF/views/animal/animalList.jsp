@@ -38,7 +38,7 @@
                             <form action="" name="">
                             <select>
                                 <option value="" class="fontColor-dark">전체</option>
-                                <option value="" class="fontColor-dark">견종</option>
+                                <option value="" class="fontColor-dark">유기동물축종</option>
                                 <option value="" class="fontColor-dark">나이</option>
                                 <option value="" class="fontColor-dark">지역</option>
                                 <option value="" class="fontColor-dark">보호센터</option>

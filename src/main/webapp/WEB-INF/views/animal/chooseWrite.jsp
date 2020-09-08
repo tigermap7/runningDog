@@ -6,6 +6,7 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -29,7 +30,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -48,35 +49,73 @@
                                 <tbody>
                                     <tr>
                                         <td>제목</td>
-                                        <td><input type="text" name="" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
+                                        <td><input type="text" name="dTitle" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
                                     </tr>
                                     <tr>
                                         <td>썸네일</td>
-                                        <td><input type="file" name="" title=""/></td>
+                                        <td><input type="file" name="ofile" title="" required/></td>
                                     </tr>
                                     <tr>
                                         <td>발견날짜</td>
-                                        <td><input type="date" name="" title="" class="form-control w50p" placeholder="발견날짜 입력" required/></td>
+                                        <td><input type="date" name="dFindDate" title="" class="form-control w50p" placeholder="발견날짜 입력" required/></td>
                                     </tr>
                                     <tr>
-                                        <td>견종</td>
-                                        <td><input type="text" name="" title="" class="form-control w50p" placeholder="견종 입력" /></td>
+                                        <td>보호중 반려동물</td>
+                                        <td><label><input type="radio" name="dCategory" value="d" checked/>강아지</label>
+                                        	<label><input type="radio" name="dCategory" value="c" />고양이</label>
+                                        	<label><input type="radio" name="dCategory" value="e" />기타</label>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>색상</td>
-                                        <td><input type="text" name="" title="" class="form-control w50p" placeholder="색상 입력" /></td>
+                                        <td>성별</td>
+                                        <td><label><input type="radio" name="dGender" value="m" checked/>수컷</label>
+                                        	<label><input type="radio" name="dGender" value="f"/>암컷</label>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>연락처</td>
+                                        <td><input type="text" name="dPhone" onKeyup="inputTelNumber(this);"
+                                        	maxlength="13" class="form-control w50p" placeholder="특수문자없이 숫자만 입력해 주세요" required/></td>
                                     </tr>
                                     <tr>
                                         <td>발견장소</td>
-                                        <td><input type="text" name="" title="" class="form-control w100p" placeholder="발견장소 입력" required/></td>
+                                        <td><select name="Dlocal" required="required">
+												<option value="">지역선택</option>
+												<option value="1" ${param.local eq"1"?"selected" :"" }>강남구</option>
+												<option value="2" ${param.local eq"2"?"selected" :"" }>강동구</option>
+												<option value="3" ${param.local eq"3"?"selected" :"" }>강북구</option>
+												<option value="4" ${param.local eq"4"?"selected" :"" }>강서구</option>
+												<option value="5" ${param.local eq"5"?"selected" :"" }>관악구</option>
+												<option value="6" ${param.local eq"6"?"selected" :"" }>광진구</option>
+												<option value="7" ${param.local eq"7"?"selected" :"" }>구로구</option>
+												<option value="8" ${param.local eq"8"?"selected" :"" }>금천구</option>
+												<option value="9" ${param.local eq"9"?"selected" :"" }>노원구</option>
+												<option value="10" ${param.local eq"10"?"selected" :"" }>도봉구</option>
+												<option value="11" ${param.local eq"11"?"selected" :"" }>동대문구</option>
+												<option value="12" ${param.local eq"12"?"selected" :"" }>동작구</option>
+												<option value="13" ${param.local eq"13"?"selected" :"" }>마포구</option>
+												<option value="14" ${param.local eq"14"?"selected" :"" }>서대문구</option>
+												<option value="15" ${param.local eq"15"?"selected" :"" }>서초구</option>
+												<option value="16" ${param.local eq"16"?"selected" :"" }>성동구</option>
+												<option value="17" ${param.local eq"17"?"selected" :"" }>성북구</option>
+												<option value="18" ${param.local eq"18"?"selected" :"" }>송파구</option>
+												<option value="19" ${param.local eq"19"?"selected" :"" }>양천구</option>
+												<option value="20" ${param.local eq"20"?"selected" :"" }>영등포구</option>
+												<option value="21" ${param.local eq"21"?"selected" :"" }>용산구</option>
+												<option value="22" ${param.local eq"22"?"selected" :"" }>은평구</option>
+												<option value="23" ${param.local eq"23"?"selected" :"" }>종로구</option>
+												<option value="24" ${param.local eq"24"?"selected" :"" }>중구</option>
+												<option value="25" ${param.local eq"25"?"selected" :"" }>중랑구</option>
+										</select> 
+										<input type="text" name="dFindLocal" title="" class="form-control w50p" placeholder="발견장소 입력" required/></td>
                                     </tr>
                                     <tr>
                                         <td>특이사항</td>
-                                        <td><input type="text" name="" title="" class="form-control w100p" placeholder="특징/성향 입력" /></td>
+                                        <td><input type="text" name="dPoint" title="" class="form-control w100p" placeholder="특징/성향/색상 입력" /></td>
                                     </tr>
                                     <tr>
                                         <td>내용</td>
-                                        <td><textarea name="" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                                        <td><textarea name="dContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea></td>
                                     </tr>
                                 </tbody>
                             </table>
