@@ -80,6 +80,6 @@
 		<websocket:sockjs/>
 	</websocket:handlers>
 	
-	<beans:bean id="echoHandler" class="com.kh.runningdog.util.EchoHandler"/>
+	<beans:bean id="echoHandler" class="com.kh.runningdog.websocket.util.EchoHandler"/>
 	
 </beans:beans>
