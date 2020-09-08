@@ -36,8 +36,8 @@
                 <a href="/runningdog/views/protect/protectList.jsp">보호센터 정보</a>
                 <div class="dep2Wrap">
                     <ul class="dep2">
-                        <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
-                        <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/moveProject.do">보호센터정보</a></li>
+                        <li><a href="/runningdog/vlist.do">자원봉사모집</a></li>
                     </ul>
                 </div>
             </li>
@@ -68,7 +68,7 @@
                     <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
                     <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
                     <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
-                    <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
+                    <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
                     <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
                 </ul>
             </li>
@@ -110,11 +110,11 @@
         </dt>
     </dl>
     <ul class="mHeader_menu collapse" id="navbarSupportedContent">
-        <li><a href="/runningdog/"><i class="xi-home-o"></i> 홈으로</a></li>
+        <li><a href="main.do"><i class="xi-home-o"></i> 홈으로</a></li>
         <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
         <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
         <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
-        <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
+        <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
         <li><a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a></li>
         <li><a href="/runningdog/views/issue/knowledgeList.jsp">반려동물상식</a></li>
         <li><a href="/runningdog/views/issue/issueList.jsp">오늘의 이슈</a></li>
