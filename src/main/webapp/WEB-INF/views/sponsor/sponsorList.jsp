@@ -67,7 +67,7 @@
                                 <li onclick="location='sdetail.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">후원중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
+                                        <a href="#none" class="urlIcon xi-share-alt-o"></a> <!-- 공유하기 버튼 -->
                                         <img src="resources/images/test/test01.jfif">
                                     </div>
                                     <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
