@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">후원하기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="slist.do">후원하기</a></li>
                             </ul>
                         </div>
                         <h2><span>후원하기</span></h2>
@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="../include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -64,94 +64,94 @@
                         <!--리스트-->
                         <div class="sponsorList">
                             <ul>
-                                <li onclick="location='sponsorView.jsp'">
+                                <li onclick="location='sdetail.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">후원중</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
+                                        <img src="resources/images/test/test01.jfif">
                                     </div>
                                     <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
                                     <p>
                                         이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
                                     </p>
                                     <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
+                                        <a href="sdetail.do">자세히보기</a>
+                                        <a href="spay.do">후원하기</a>
                                     </span>
                                 </li>
-                                <li onclick="location='sponsorView.jsp'">
+                                <li onclick="location='sdetail.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">후원중</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
+                                        <img src="resources/images/test/test01.jfif">
                                     </div>
                                     <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
                                     <p>
                                         이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
                                     </p>
                                     <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
+                                        <a href="sdetail.do">자세히보기</a>
+                                        <a href="spay.do">후원하기</a>
                                     </span>
                                 </li>
-                                <li onclick="location='sponsorView.jsp'">
+                                <li onclick="location='sdetail.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">후원중</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
+                                        <img src="resources/images/test/test01.jfif">
                                     </div>
                                     <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
                                     <p>
                                         이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
                                     </p>
                                     <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
+                                        <a href="sdetail.do">자세히보기</a>
+                                        <a href="spay.do">후원하기</a>
                                     </span>
                                 </li>
-                                <li onclick="location='sponsorView.jsp'">
+                                <li onclick="location='sdetail.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">후원중</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
+                                        <img src="resources/images/test/test01.jfif">
                                     </div>
                                     <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
                                     <p>
                                         이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
                                     </p>
                                     <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
+                                        <a href="sdetail.do">자세히보기</a>
+                                        <a href="spay.do">후원하기</a>
                                     </span>
                                 </li>
-                                <li onclick="location='sponsorView.jsp'">
+                                <li onclick="location='sdetail.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">후원중</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
+                                        <img src="resources/images/test/test01.jfif">
                                     </div>
                                     <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
                                     <p>
                                         이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
                                     </p>
                                     <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
+                                        <a href="sdetail.do">자세히보기</a>
+                                        <a href="spay.do">후원하기</a>
                                     </span>
                                 </li>
-                                <li onclick="location='sponsorView.jsp'">
+                                <li onclick="location='sdetail.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">후원중</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
+                                        <img src="resources/images/test/test01.jfif">
                                     </div>
                                     <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
                                     <p>
                                         이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
                                     </p>
                                     <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
+                                        <a href="sdetail.do">자세히보기</a>
+                                        <a href="spay.do">후원하기</a>
                                     </span>
                                 </li>
                             </ul>

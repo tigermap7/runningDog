@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">후원하기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="slist.do">후원하기</a></li>
                             </ul>
                         </div>
                         <h2><span>후원하기</span></h2>
@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
                     <div class="subContent">
                         <!--상세-->
@@ -43,12 +43,12 @@
                                 <div>
                                     <h3>'따뜻한 마음의 실천'</h3>
                                     <h2>이 작은 아이가 살아갈 수 있게 도와주세요.</h2>
-                                    <span class="sPaymentBtn"><a href="sponsoredPayment.jsp"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
+                                    <span class="sPaymentBtn"><a href="spay.do"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
                                 </div>
                             </div>
                             
                             <div class="textCon">
-                                <img src="/runningdog/resources/images/test/test01.jfif"><br/><br/>
+                                <img src="resources/images/test/test01.jfif"><br/><br/>
                                 하얗게 흐려진 그림 속 추억의 책장 속 우리<br/>
                                 그저 스쳐간 안녕<br/>
                                 돌아와 끝내 말 못하고<br/>
@@ -74,7 +74,7 @@
                                 베인 상처 흔적만 남아 머물러있는걸<br/>
                                 the stay stay again (oh stay~ stay again)<br/>
                             </div>
-                            <span class="sPaymentBtn"><a href="sponsoredPayment.jsp"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
+                            <span class="sPaymentBtn"><a href="slist.do"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
                                 
                         </div>
                         <!-- 상세 끝 -->

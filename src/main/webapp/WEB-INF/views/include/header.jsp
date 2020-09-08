@@ -42,7 +42,7 @@
                 </div>
             </li>
             <li>
-                <a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a>
+                <a href="slist.do">후원하기</a>
             </li>
             <li>
                 <a href="/runningdog/views/issue/knowledgeList.jsp">상식/이슈</a>
@@ -73,9 +73,9 @@
                 </ul>
             </li>
             <li>
-                <div><a href="#none">후원하기</a></div>
+                <div><a href="slist.do">후원하기</a></div>
                 <ul class="depth2">
-                    <a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a>
+                    <a href="slist.do">후원하기</a>
                 </ul>
             </li>
             <li>
@@ -115,7 +115,7 @@
         <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
         <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
         <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
-        <li><a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a></li>
+        <li><a href="slist.do">후원하기</a></li>
         <li><a href="/runningdog/views/issue/knowledgeList.jsp">반려동물상식</a></li>
         <li><a href="/runningdog/views/issue/issueList.jsp">오늘의 이슈</a></li>
         <li><a href="/runningdog/views/mypage/myChatting.jsp">나의 채팅</a></li>
