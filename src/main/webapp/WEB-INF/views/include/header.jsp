@@ -53,7 +53,8 @@
                     </ul>
                 </div>
             </li>
-            <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
+           <li><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
+           <li><a href="nlist.do">공지사항</a></li>
         </ul>
     </div>
     <!-- //상단메뉴 -->
@@ -69,7 +70,7 @@
                     <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
                     <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
                     <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
-                    <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
+                    <li><a href="nlist.do">공지사항</a></li>
                 </ul>
             </li>
             <li>
@@ -119,7 +120,7 @@
         <li><a href="/runningdog/views/issue/knowledgeList.jsp">반려동물상식</a></li>
         <li><a href="/runningdog/views/issue/issueList.jsp">오늘의 이슈</a></li>
         <li><a href="/runningdog/views/mypage/myChatting.jsp">나의 채팅</a></li>
-        <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
+        <li><a href="nlist.do">공지사항</a></li>
         <li><a href="/runningdog/views/about/aboutView.jsp">사이트소개</a></li>
     </ul>
 </div>
