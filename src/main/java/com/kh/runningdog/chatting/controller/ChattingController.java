@@ -1,5 +1,7 @@
 package com.kh.runningdog.chatting.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,9 @@ public class ChattingController {
 	}
 	
 	@RequestMapping("moveChattingView.do")
-	public ModelAndView moveChattingView(ModelAndView mv){
+	public ModelAndView moveChattingView(ModelAndView mv, HttpSession session){
 		mv.setViewName("mypage/myChattingView");
+		session.setAttribute("userid", "userid");
 		// User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		/* mv.addObject("userid", session.getId()); */
 //		System.out.println("id : " + session.getId());

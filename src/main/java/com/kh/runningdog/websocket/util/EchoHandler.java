@@ -2,6 +2,7 @@ package com.kh.runningdog.websocket.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,20 +25,28 @@ public class EchoHandler extends TextWebSocketHandler{
 		// sessions.put(session.getId(), session);
 		sessionList.add(session);
 		logger.info("{} 연결됨", session.getId());
+		
+		logger.info("인터셉터 : " + getHttpSessionValue(session));
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		logger.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
+		logger.info("{}로 부터 {} 받음", getHttpSessionValue(session), message.getPayload());
 		
 		for (WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(session.getId()/* session.getPrincipal().getName() */ + "|" + message.getPayload()));
+			sess.sendMessage(new TextMessage(getHttpSessionValue(session)/* session.getPrincipal().getName() */ + "|" + message.getPayload()));
 		}
 	}
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessionList.remove(session);
-		logger.info("{} 연결 끊김", session.getId());
+		logger.info("{} 연결 끊김", getHttpSessionValue(session));
+	}
+	
+	public Object getHttpSessionValue(WebSocketSession session) {
+		Map<String, Object> map = session.getAttributes();
+		Object value = map.get("userid");
+		return value;
 	}
 }
