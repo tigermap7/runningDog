@@ -55,7 +55,7 @@
                                 <a href="movenoticeinsert.do" class="writeBtn">글쓰기</a>
                             </div>
                         </div>
-                        
+
                         <!--리스트-->
                         <div class="list-area">
                             <table>
@@ -65,29 +65,58 @@
                                     <col width="15%">
                                 </colgroup>
                                 <tbody>
-                                    <tr onclick="location.href='ndetail.do';" class="active">
-                                        <td class="number">6</td>
+                                
+                        	<!-- 공지사항 new 알람을 위한 한달 전 날짜 -->
+                            <jsp:useBean id="nowDate" class="java.util.Date"/>
+							<jsp:setProperty name="nowDate" property="time" value="${nowDate.time - 86400000 * 31}"/>
+							<fmt:formatDate value="${nowDate}" type="date" pattern="yyyy/MM/dd" var="monthAgo"/>
+                                
+                                <c:forEach items="${ requestScope.list }" var="n">
+                                
+                                <c:if test="${ !empty n.noticeState }">
+                                     <tr onclick="location.href='ndetail.do';" class="active">
+                                        <td class="number">${n.noticeNo}</td>
                                         <td class="title">
-                                            <h2><span>공지</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
+                                            <h2><span>공지</span>${ n.noticeTitle }</h2>
                                             <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
+                                                <li>${ n.noticeDate }</li>
+                                                <li>${ n.noticeReadcount }</li>
                                             </ul>
                                         </td>
-                                        <td class="fileIcon"><i class="xi-file-text"></i></td>
-                                    </tr>
+                                        <td class="fileIcon">
+                                        <c:if test="${ !empty n.noticeOriginalFilename1 || !empty n.noticeOriginalFilename2 || !empty n.noticeOriginalFilename3 }">
+                                      	  <i class="xi-file-text"></i>
+                                        </c:if>
+                                        </td>
+                                        
+                                    </tr> 
+                                </c:if> 
+                                    
+                                <c:if test="${ empty n.noticeState }">    
                                     <tr onclick="location.href='noticeView.jsp';">
-                                        <td class="number">5</td>
+                                        <td class="number">${n.noticeNo}</td>
                                         <td class="title">
-                                            <h2>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
+                                        <fmt:formatDate value="${n.noticeDate}" type="date" pattern="yyyy/MM/dd" var="ndate"/>
+
+                                            <h2>
+											<c:if test="${monthAgo < ndate}"> <!-- 공지사항 작성일이 한달안에 작성된 공지사항은 new 알림-->
+												<span>new</span>
+											</c:if>	                                            
+                                            ${ n.noticeTitle }</h2>
                                             <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
+                                                <li>${ n.noticeDate }</li>
+                                                <li>${ n.noticeReadcount }</li>
                                             </ul>
                                         </td>
-                                        <td class="fileIcon"><i class="xi-file-text"></i></td>
+                                        <td class="fileIcon">
+                                        <c:if test="${ !empty n.noticeOriginalFilename1 || !empty n.noticeOriginalFilename2 || !empty n.noticeOriginalFilename3 }">
+                                      	  <i class="xi-file-text"></i>
+                                        </c:if>
+                                        </td>
                                     </tr>
-                                    <tr onclick="location.href='noticeView.jsp';">
+                                 </c:if>   
+                                </c:forEach>
+<!--                                    <tr onclick="location.href='noticeView.jsp';">
                                         <td class="number">4</td>
                                         <td class="title">
                                             <h2>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
@@ -130,8 +159,10 @@
                                             </ul>
                                         </td>
                                         <td class="fileIcon"><i class="xi-file-text"></i></td>
-                                    </tr>
-                                    <tr>
+                                    </tr> -->
+                                    
+                                    <!-- 목록이 없을 때 -->
+<!--                                     <tr>
                                         <td colspan="3">
                                             <div class="list-no">
                                                 <p>
@@ -141,7 +172,9 @@
                                                 <h1>목록이 없습니다.</h1>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
+                                    
+                                    
                                 </tbody>
                             </table>
                         </div>
