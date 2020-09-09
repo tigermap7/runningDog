@@ -30,30 +30,25 @@
 	</resultMap>
 	
 	<select id="selectLogin" parameterType="Member" resultMap="resultMember">
-		select * from member where user_id = #{ userId } and user_pwd = #{ userPwd } and LOGIN_LIMIT = 'N'
+		select * from member where user_id = #{ userId }
 	</select>
 	
-	<select id="selectList" resultMap="resultList">
-
+	<select id="selectUserIdCheck" parameterType="Member" resultMap="resultMember">
+		select user_id from member where user_id = #{ userId }
 	</select>
 	
-	<select id="selectMember" parameterType="string" resultType="Member">
-
+	<select id="selectNicknameCheck" parameterType="Member" resultMap="resultMember">
+		select nickname from member where  nickname = #{ nickname }
 	</select>
 	
-	<!-- select id="selectSearchUserid" parameterType="string" resultMap="resultMember">
-
-	</select-->
+	<select id="selectPhoneCheck" parameterType="Member" resultMap="resultMember">
+		select phone from member where  phone = #{ phone }
+	</select>
 	
-	
-	<!-- select id="selectCheckId" parameterType="string" resultType="_int">
-		select count(userid) from member where userid = #{ uid }
-	</select-->
-	
-	
-	<insert id="insertMember" parameterType="Member" >
-	
+	<insert id="insertMember" parameterType="Member">
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, NULL, DEFAULT, DEFAULT, null, DEFAULT)
 	</insert>
+	
 	
 	
 	<update id="updateMember" parameterType="Member">

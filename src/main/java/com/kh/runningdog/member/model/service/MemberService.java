@@ -11,5 +11,7 @@ public interface MemberService {
 	int insertMember(Member member);
 	int updateMember(Member member);
 	int deleteMember(String userId);
-	
+	Member selectUserIdCheck(Member member);
+	Member selectNicknameCheck(Member member);
+	Member selectPhoneCheck(Member member);
 }

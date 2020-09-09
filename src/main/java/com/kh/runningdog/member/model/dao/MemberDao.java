@@ -31,6 +31,18 @@ public class MemberDao {
 		return session.selectOne("memberMapper.selectLogin", member);
 	}
 	
+	public Member selectUserIdCheck(Member member) {
+		return session.selectOne("memberMapper.selectUserIdCheck", member);
+	}
+	
+	public Member selectNicknameCheck(Member member) {
+		return session.selectOne("memberMapper.selectNicknameCheck", member);
+	}
+	
+	public Member selectPhoneCheck(Member member) {
+		return session.selectOne("memberMapper.selectPhoneCheck", member);
+	}
+	
 	public int insertMember(Member member) {
 		return session.insert("memberMapper.insertMember", member);
 	}
@@ -40,7 +52,7 @@ public class MemberDao {
 	}
 	
 	public int deleteMember(String userId) {
-		return session.delete("memberMapper.insertMember", userId);
+		return session.delete("memberMapper.deleteMember", userId);
 	}
 
 }
