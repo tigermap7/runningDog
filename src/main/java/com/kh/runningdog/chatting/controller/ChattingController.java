@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.socket.WebSocketSession;
 
 @Controller
 public class ChattingController {
@@ -16,7 +18,11 @@ public class ChattingController {
 	}
 	
 	@RequestMapping("moveChattingView.do")
-	public String moveChattingView() {
-		return "/mypage/myChattingView";
+	public ModelAndView moveChattingView(ModelAndView mv){
+		mv.setViewName("mypage/myChattingView");
+		// User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		/* mv.addObject("userid", session.getId()); */
+//		System.out.println("id : " + session.getId());
+		return mv;
 	}
 }
