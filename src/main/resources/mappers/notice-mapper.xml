@@ -22,18 +22,37 @@
 
 	
 	<select id="selectList" resultMap="resultNotice" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
-		<![CDATA[
 			SELECT * 
 			FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_READCOUNT, NOTICE_STATE, NOTICE_ORIGINAL_FILENAME1, NOTICE_RENAME_FILENAME1,  
-					NOTICE_ORIGINAL_FILENAME2, NOTICE_RENAME_FILENAME2, NOTICE_ORIGINAL_FILENAME3, NOTICE_RENAME_FILENAME3
-			  FROM (select * from notice order by notice_state nulls last, notice_date desc)) 
-			  WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
-		]]>		  
+				  NOTICE_ORIGINAL_FILENAME2, NOTICE_RENAME_FILENAME2, NOTICE_ORIGINAL_FILENAME3, NOTICE_RENAME_FILENAME3
+			  FROM (select * from notice 
+			  <if test="search == 'title'">
+				WHERE NOTICE_TITLE LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'content'">
+	  			WHERE NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'both'">
+	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+			</if>
+			  order by notice_state nulls last, notice_date desc)) 
+	     	<![CDATA[
+	  		  WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+	     	]]>	
 	</select>
 	
 	
-	<select id="getListCount" resultType="_int">
+	<select id="getListCount" resultType="_int" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
 		select count(*) from notice
+			<if test="search == 'title'">
+				WHERE NOTICE_TITLE LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'content'">
+	  			WHERE NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'both'">
+	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+			</if>
 	</select>
 
 </mapper>
