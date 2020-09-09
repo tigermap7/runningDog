@@ -133,6 +133,8 @@
 	            
 	//evt 파라미터는 websocket이 보내준 데이터다.
 	function onMessage(evt){  //변수 안에 function자체를 넣음.
+		var time = new Date();
+		var chatTime = time.toLocaleString('ko-KR', { hour: 'numeric', minute: 'numeric', hour12: true });
 		var data = evt.data;
 		var sessionid = null;
 		var message = null;
@@ -160,7 +162,7 @@
 			printHTML += "</div>"; */
 			var printHTML = "<dl class='user_left'>";
 			printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
-			printHTML += "<dd><p>" + message +"</p><span>10:42 오후</span></dd>";
+			printHTML += "<dd><p>" + message +"</p><span>" + chatTime + "</span></dd>";
 			printHTML += "</dl>";
 
 			$("#chatdata").append(printHTML);
@@ -172,7 +174,7 @@
 			printHTML += "</div>"; */
 			var printHTML = "<dl class='user_right myChatting'>";
 			printHTML += "<dt>" + message;
-			printHTML += "<dd>10:45 오후</dd>";
+			printHTML += "<dd>" + chatTime + "</dd>";
 			printHTML += "</dt></dl>";
 			
 			$("#chatdata").append(printHTML);
