@@ -93,7 +93,7 @@
                                         <td><a href="serviceView.jsp">자세히 보기 <i class="xi-eye-o"></i></a></td>
                                     </tr>
                                    </c:forEach>
-                                    <tr class="serviceOn" onclick="location.href='serviceView.jsp'">
+                                    <!-- <tr class="serviceOn" onclick="location.href='serviceView.jsp'">
                                         <td class="img">
                                             <span>모집중</span>
                                             <img src="/runningdog/resources/images/test/animalNews04.jpg">
@@ -108,24 +108,8 @@
                                             </ul>
                                         </td>
                                         <td><a href="serviceView.jsp">자세히 보기 <i class="xi-eye-o"></i></a></td>
-                                    </tr>
-                                    <tr class="serviceOn" onclick="location.href='serviceView.jsp'">
-                                        <td class="img">
-                                            <span>모집중</span>
-                                            <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                        </td>
-                                        <td>
-                                            <h3>작은 생명을 위한 도움의 손길이 필요합니다.</h3>
-                                            <ul>
-                                                <li class="location"><span>지역 : </span>서울시 종로구 신설동</li>
-                                                <li><span>센터명 : </span>조남동 쉼터</li>
-                                                <li><span>모집기간 : </span>상시모집</li>
-                                                <li><span>봉사기간 : </span>2020.08.26 ~ 2020.09.30</li>
-                                            </ul>
-                                        </td>
-                                        <td><a href="serviceView.jsp">자세히 보기 <i class="xi-eye-o"></i></a></td>
-                                    </tr>
-                                    <tr class="serviceOut" onclick="location.href='serviceView.jsp'">
+                                    </tr> -->
+                                    <!-- <tr class="serviceOut" onclick="location.href='serviceView.jsp'">
                                         <td class="img">
                                             <span>마감</span>
                                             <img src="/runningdog/resources/images/test/animalNews04.jpg">
@@ -140,30 +124,64 @@
                                             </ul>
                                         </td>
                                         <td><a href="serviceView.jsp">자세히 보기 <i class="xi-eye-o"></i></a></td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         <!-- 리스트 끝 -->
                     
                         <!-- 페이징 -->
-                        <c:if test="${listCount > 0}">
+                      <c:if test="${listCount > 0}">
                         <dl class="list-paging">
                             <dd>
                             <c:if test="${currentPage <= 1 }">
                                 <a><i class="xi-angle-left"></i></a>
                             </c:if>
-                            <c:if test="${currentPage >1}">
-                            	<c:url var="sbl" value="vlist.do">
+                            <c:if test="${currentPage > 1}">
+                            	<c:url var="sl" value="vlist.do">
                                		<c:param name="page" value="1"/>
                                 </c:url>
-                                 <a href="${sbl}"><i class="xi-angle-left"></i></a>
+                                 <a href="${sl}"><i class="xi-angle-left"></i></a>
                             </c:if>
-                                <a href="#none" class="active">1</a>
-                                <a href="#none">2</a>
-                                <a href="#none">3</a>
-                                <a href="#none">4</a>
-                                <a href="#none">5</a>
-                                <a href="#none"><i class="xi-angle-right"></i></a>
+                            	<!-- 이전그룹으로 이동처리 -->
+                            <c:if test="${currentPage > 10 }">
+                            	<c:if test="${(currentPage -10) < startPage && (currentPage -10) }">
+                                <c:url var="slbefore" value="vlist.do">
+                                	<c:param name="page" value="${startPage - 10}"/>
+                                </c:url>
+                                  <a href="${slbefore}"><i class="xi-angle-left"></i></a>
+                                </c:if>
+                             </c:if>
+                             	<!-- 현재 페이지가 속한 페이지 그룹의 숫자 출력 처리 -->
+                           <c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
+                              <c:if test="${p eq currentPage }">
+                              		<a class="active">${ p }</a>
+                              </c:if>	
+                              <c:if test="${p ne currentPage }">
+                              		<c:url var="slp" value="vlist.do">
+                              			<c:param name="page" value="${p}"/>
+                              		</c:url>
+                              		   <a href="${slp}">${p}</a>
+                              </c:if>
+                           </c:forEach>
+                             <!-- 다음그룹으로 이동처리 -->
+                            <c:if test="${currentPage > 10 }">
+                            	<c:if test="${(currentPage +10) > endPage &&(currentPage + 10) < maxPage }">
+                                <c:url var="slafter" value="vlist.do">
+                                	<c:param name="page" value="${ endPage +10 }"/>
+                                </c:url>
+                                  <a href="${slafter}"><i class="xi-angle-right"></i></a>
+                                </c:if>
+                             </c:if>
+                             <!-- 맨끝 페이지로 이동처리 -->
+                             <c:if test="${currentPage >= maxPage }">
+                                <a><i class="xi-angle-right"></i></a>
+                            </c:if>
+                            <c:if test="${currentPage < maxPage}">
+                            	<c:url var="sl2" value="vlist.do">
+                               		<c:param name="page" value="${maxPage }"/>
+                                </c:url>
+                                 <a href="${sl2}"><i class="xi-angle-right"></i></a>
+                            </c:if>
                             </dd>
                         </dl>
                         </c:if>
