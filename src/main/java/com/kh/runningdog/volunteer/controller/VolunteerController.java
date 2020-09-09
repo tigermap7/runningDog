@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,6 +69,26 @@ public class VolunteerController {
 			 mv.setViewName("main/main");
 		 }
 		return mv;
+	}
+	
+	@RequestMapping(value = "vdetail.do")
+	public String selectVolunteer(HttpServletRequest request, Model model) {
+		int volno = Integer.parseInt(request.getParameter("volno"));
+		int currentPage = 1;
+		if(request.getParameter("page") != null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		Volunteer volunteer = volunteerService.selectVolunteer(volno);
+		
+		if(volunteer != null) {
+			request.setAttribute("volunteer", volunteer);
+			request.setAttribute("currentPage", currentPage);
+			return "protect/serviceView";
+		}else {
+			model.addAttribute("message", volno + "번 글 상세보기 실패!");
+			return "main/main";
+		}
 	}
 
 }

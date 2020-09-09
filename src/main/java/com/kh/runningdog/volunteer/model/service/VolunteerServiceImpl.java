@@ -25,8 +25,7 @@ public class VolunteerServiceImpl implements VolunteerService{
 
 	@Override
 	public Volunteer selectVolunteer(int volno) {
-		// TODO Auto-generated method stub
-		return null;
+		return volunteerDao.selectVolunteer(volno);
 	}
 
 	@Override

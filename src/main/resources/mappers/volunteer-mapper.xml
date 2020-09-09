@@ -57,9 +57,9 @@
 			 where rnum >= #{startRow} and rnum <= #{endRow} 
 			 ]]>
 	</select>
-	<!-- <select id="selectBoard"  parameterType="_int"  resultMap="resultBoard">
-			select * from board where board_num = #{ board_num }
-	</select> -->
+	<select id="selectVolunteer"  parameterType="_int"  resultMap="resultVolunteer">
+			select * from volunteer where volno = #{ volno }
+	</select>
 
 	<!-- <insert id="insertOriginBoard" parameterType="Board">
 			insert into board 

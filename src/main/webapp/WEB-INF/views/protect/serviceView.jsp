@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="currentPage"  value="${ requestScope.currentPage }"/>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -29,7 +30,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -103,63 +104,39 @@
                                         <tbody>
                                             <tr>
                                                 <th>제목</th>
-                                                <td colspan="3">★ '따뜻한 집' 보호센터에서 자원봉사자 여러분을 모집합니다. ★</td>
+                                                <td colspan="3">${ volunteer.voltitle }</td>
                                             </tr>
                                             <tr>
                                                 <th>보호센터</th>
-                                                <td>'따뜻한 집'</td>
+                                                <td>${volunteer.volname }</td>
                                                 <th>연락처</th>
-                                                <td>02-980-7717</td>
+                                                <td>${volunteer.voltel }</td>
                                             </tr>
                                             <tr>
                                                 <th>담당자</th>
-                                                <td>박보검 / #1971345</td>
+                                                <td>${volunteer.volwriter }</td>
                                                 <th>모집기간</th>
-                                                <td>상시모집 / <span class="serviceOn">모집중</span></td>
+                                                <td>${volunteer.volche } / <span class="serviceOn">모집중</span></td>
                                             </tr>
                                             <tr>
                                                 <th>지역</th>
-                                                <td colspan="3">서울시 종로구 종로5.6가동</td>
+                                                <td colspan="3">${volunteer.voladdress }</td>
                                             </tr>
                                             <tr>
                                                 <th>봉사기간</th>
-                                                <td colspan="3">2020.08.26 ~ 2020.09.30</td>
+                                                <td colspan="3">${volunteer.volterm }</td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <th>홈페이지</th>
                                                 <td colspan="3"><a href="https://www.naver.com" target="_blink">https://www.naver.com</a></td>
-                                            </tr>
+                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </dd>
                             </dl>
 
                             <div class="viewContent">
-                                하얗게 흐려진 그림 속 추억의 책장 속 우리<br/>
-                                그저 스쳐간 안녕<br/>
-                                돌아와 끝내 말 못하고<br/>
-                                시간 틈새로 흘러 점점 멀어진 기억<br/><br/>
-                                
-                                몇 번의 계절 지나 마주한 두 눈동자 아무 말도 못하고<br/><br/>
-                                
-                                가슴이 차가운 남자가 울어요<br/>
-                                이별에 모질던 그녀도 우네요<br/>
-                                바래진 추억 유리조각에<br/>
-                                베인 상처 흔적만 남아 초라하네요<br/><br/>
-                                
-                                파랗게 질려버린 하늘 굳어버린 입술 울컥<br/>
-                                그립다 널 외치고<br/>
-                                미련에 엉킨 인연의 끈<br/>
-                                차마 풀지 못하고 다시 묻어두네요<br/><br/>
-                                
-                                먹먹한 가슴이 참지 못하고 달려 멀어진 네 등 뒤로<br/><br/>
-                                
-                                가슴이 차가운 남자가 울어요<br/>
-                                이별에 모질던 그녀도 우네요<br/>
-                                바래진 추억 유리조각에<br/>
-                                베인 상처 흔적만 남아 머물러있는걸<br/>
-                                the stay stay again (oh stay~ stay again)<br/>
-
+                            ${volunteer.volcontent }
                             </div>
                                 
                         </div>

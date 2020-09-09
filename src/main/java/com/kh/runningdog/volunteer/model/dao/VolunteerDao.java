@@ -29,5 +29,9 @@ public class VolunteerDao {
 		List<Volunteer> list = session.selectList("volunteerMapper.selectList", vpage);
 		return (ArrayList<Volunteer>)list;
 	}
+	
+	public Volunteer selectVolunteer(int volno) {
+		return session.selectOne("volunteerMapper.selectVolunteer", volno);
+	}
 
 }

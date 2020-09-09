@@ -76,7 +76,11 @@
                                 </colgroup>
                                 <tbody>
                                   <c:forEach var="v" items="${requestScope.list}">
-                                    <tr class="serviceOn" onclick="location.href='serviceView.jsp'">
+                                  		<c:url var="vd" value="vdetail.do">
+                                  	 		<c:param name="volno" value="${v.volno}"/>
+                                  	 		<c:param name="page" value="${currentPage}"/>
+                                  		</c:url>
+                                    <tr class="serviceOn" onclick="location.href='${vd}'">
                                         <td class="img">
                                             <span>모집중</span>
                                             <img src="/runningdog/resources/images/test/animalNews04.jpg">
@@ -87,10 +91,10 @@
                                                 <li class="location"><span>지역 : </span>${v.voladdress}</li>
                                                 <li><span>센터명 : </span>${v.volname}</li>
                                                 <li><span>모집기간 : </span>${v.volche }</li>
-                                                <li><span>봉사기간 : </span>%{v.volterm}</li>
+                                                <li><span>봉사기간 : </span>${v.volterm}</li>
                                             </ul>
                                         </td>
-                                        <td><a href="serviceView.jsp">자세히 보기 <i class="xi-eye-o"></i></a></td>
+                                        <td><a href="${vd}">자세히 보기 <i class="xi-eye-o"></i></a></td>
                                     </tr>
                                    </c:forEach>
                                     <!-- <tr class="serviceOn" onclick="location.href='serviceView.jsp'">
