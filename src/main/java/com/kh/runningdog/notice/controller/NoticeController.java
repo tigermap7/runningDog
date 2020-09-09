@@ -1,5 +1,7 @@
 package com.kh.runningdog.notice.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -22,6 +24,10 @@ public class NoticeController {
 	//공지사항 리스트 페이지 이동, 출력
 	@RequestMapping(value="nlist.do")
 	public ModelAndView selectNoticeList(HttpServletRequest request, ModelAndView mv) {
+		logger.info("nlist.do run...");
+		ArrayList<Notice> list = noticeService.selectNoticeList();
+		System.out.println(list);
+		mv.addObject("list", list);
 		mv.setViewName("notice/noticeList");
 		return mv;
 	}
