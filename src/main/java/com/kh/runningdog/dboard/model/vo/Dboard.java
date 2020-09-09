@@ -25,15 +25,15 @@ public class Dboard implements java.io.Serializable{
 	private String mapY; //위도 Y
 	private String dCheck; //게시물 표시 여부
 	private String dSuccess; //분양여부
-	private String originalFile; //이미지 기존명
-	private String renameFile; //이미지 파일 변경명
+	private String viewImage; //이미지 기존명
+	private String listImage; //이미지 파일 변경명
 	
 	public Dboard () {}
 
 	public Dboard(int dNum, String userId, int uniqueNum, String dWriter, String dTitle, String dContent,
 			String dFindDate, String dFindLocal, String dGender, String dCategory, String dLocal, String dPhone,
 			String dPoint, Date dDate, Date dMdate, int dCount, String mapX, String mapY, String dCheck,
-			String dSuccess, String originalFile, String renameFile) {
+			String dSuccess, String viewImage, String listImage) {
 		super();
 		this.dNum = dNum;
 		this.userId = userId;
@@ -55,8 +55,8 @@ public class Dboard implements java.io.Serializable{
 		this.mapY = mapY;
 		this.dCheck = dCheck;
 		this.dSuccess = dSuccess;
-		this.originalFile = originalFile;
-		this.renameFile = renameFile;
+		this.viewImage = viewImage;
+		this.listImage = listImage;
 	}
 
 	public int getdNum() {
@@ -219,20 +219,20 @@ public class Dboard implements java.io.Serializable{
 		this.dSuccess = dSuccess;
 	}
 
-	public String getOriginalFile() {
-		return originalFile;
+	public String getviewImage() {
+		return viewImage;
 	}
 
-	public void setOriginalFile(String originalFile) {
-		this.originalFile = originalFile;
+	public void setviewImage(String viewImage) {
+		this.viewImage = viewImage;
 	}
 
-	public String getRenameFile() {
-		return renameFile;
+	public String getlistImage() {
+		return listImage;
 	}
 
-	public void setRenameFile(String renameFile) {
-		this.renameFile = renameFile;
+	public void setlistImage(String listImage) {
+		this.listImage = listImage;
 	}
 
 	public static long getSerialversionuid() {
@@ -246,7 +246,7 @@ public class Dboard implements java.io.Serializable{
 				+ dFindLocal + ", dGender=" + dGender + ", dCategory=" + dCategory + ", dLocal=" + dLocal + ", dPhone="
 				+ dPhone + ", dPoint=" + dPoint + ", dDate=" + dDate + ", dMdate=" + dMdate + ", dCount=" + dCount
 				+ ", mapX=" + mapX + ", mapY=" + mapY + ", dCheck=" + dCheck + ", dSuccess=" + dSuccess
-				+ ", originalFile=" + originalFile + ", renameFile=" + renameFile + "]";
+				+ ", viewImage=" + viewImage + ", listImage=" + listImage + "]";
 	}
 	
 	

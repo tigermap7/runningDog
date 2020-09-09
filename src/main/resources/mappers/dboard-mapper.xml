@@ -25,8 +25,8 @@
 		<result column="map_y" property="mapY" />
 		<result column="d_check" property="dCheck" />
 		<result column="d_success" property="dSuccess" />
-		<result column="original_file" property="originalFile" />
-		<result column="rename_file" property="renameFile" />
+		<result column="view_image" property="viewImage" />
+		<result column="list_image" property="listImage" />
 		
 			
 	</resultMap>
