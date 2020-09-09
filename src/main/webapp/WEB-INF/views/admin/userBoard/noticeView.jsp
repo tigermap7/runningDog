@@ -41,12 +41,17 @@
                 또한 「동물보호법」 제17조에 따른 공고가 있는 날부터 10일이 경과하여도 소유자 등을 알 수 없는 경우에는 「유실물법」 제12조 및 「민법」 제253조의 규정에도 불구하고 해당 시·도지사 또는 시장·군수·구청장이 그 동물의 소유권을 취득하게 됩니다.
                 </div>
 
+				<c:url var="mnuad" value="movenoticeupdate.ad">
+					<c:param name="" value=""/>
+				</c:url>
+
+
                 <!-- 버튼 -->
                 <div class="viewBtn-wrap">
                     <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                    <button class="listBtn"><i class="xi-rotate-left"></i> 목록</button>
+                    <button class="listBtn" onclick="location.href='nlist.ad'"><i class="xi-rotate-left"></i> 목록</button>
                     <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
-                    <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
+                    <button class="modifiedBtn" onclick="javascript:location.href='${ mnuad }';"><i class="xi-pen-o"></i> 수정</button>
                     <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
                 </div>
                 <!-- 버튼 끝 -->
