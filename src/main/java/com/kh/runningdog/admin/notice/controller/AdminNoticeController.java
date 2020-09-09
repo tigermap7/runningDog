@@ -27,8 +27,9 @@ public class AdminNoticeController {
 	}
 	
 	//관리자용 공지사항 수정 페이지 이동
-	//@RequestMapping(value="movenoticeupdate.ad")
+	@RequestMapping(value="movenoticeupdate.ad")
 	public ModelAndView moveAdminNoticeUpdate(Notice notice, HttpServletRequest request, ModelAndView mv) {
+		mv.setViewName("admin/userBoard/noticeUpdate");
 		return mv;
 	}
 		
