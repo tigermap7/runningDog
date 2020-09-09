@@ -55,5 +55,29 @@
 		]]>
 	</select>
 
-	
+	<insert id="insertDboard" parameterType="Dboard">
+		INSERT INTO DBOARD
+		VALUES (JBOARD_NUM_SEQ.NEXTVAL,
+			   #{ user_id },
+			   #{ unique_num },
+			   #{ d_writer },
+			   #{ d_title },
+			   #{ d_content },
+			   #{ d_find_date },
+			   #{ d_find_local },
+			   #{ d_gender },
+			   #{ d_category },
+			   #{ d_local },
+			   #{ d_phone },
+			   #{ d_point },
+			   SYSDATE,
+			   SYSDATE,
+			   DEFAULT,
+			   #{ map_x },
+			   #{ map_y },
+			   DEFAULT,
+			   DEFAULT,
+			   #{ view_image, jdbcType=VARCHAR},
+			   #{ list_image, jdbcType=VARCHAR})
+	</insert>
 </mapper>
