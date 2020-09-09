@@ -93,7 +93,7 @@
                                 </dl>
                             
                              --%>
-                             <input type="hidden" value='${userid}' id="sessionuserid">
+                             <input type="hidden" value='${sessionScope.userid}' id="sessionuserid">
                             </div>
                             <form action="" method="GET">
                             <div class="cmt_body">
@@ -159,10 +159,10 @@
 			printHTML += "</div>";
 			printHTML += "</div>"; */
 			var printHTML = "<dl class='user_left'>";
-			printHTML += "<dt>" + message;
-			printHTML += "<dd>10:45 오후</dd>";
-			printHTML += "</dt>";
-			
+			printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
+			printHTML += "<dd><p>" + message +"</p><span>10:42 오후</span></dd>";
+			printHTML += "</dl>";
+
 			$("#chatdata").append(printHTML);
 		} else{
 			/* var printHTML = "<div class='well'>";
@@ -173,7 +173,7 @@
 			var printHTML = "<dl class='user_right myChatting'>";
 			printHTML += "<dt>" + message;
 			printHTML += "<dd>10:45 오후</dd>";
-			printHTML += "</dt>";
+			printHTML += "</dt></dl>";
 			
 			$("#chatdata").append(printHTML);
 		}
