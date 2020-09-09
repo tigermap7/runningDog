@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.runningdog.notice.model.dao.NoticeDao;
 import com.kh.runningdog.notice.model.vo.Notice;
+import com.kh.runningdog.notice.model.vo.NoticePage;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService{
@@ -15,9 +16,15 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeDao noticeDao;
 
 	@Override
-	public ArrayList<Notice> selectNoticeList() {
-		return noticeDao.selectNoticeList();
+	public ArrayList<Notice> selectNoticeList(NoticePage noticePage) {
+		return noticeDao.selectNoticeList(noticePage);
 	}
+	
+	@Override
+	public int selectNoticeListCount() {
+		return noticeDao.selectNoticeListCount();
+	}
+	
 
 	@Override
 	public Notice selectNoticeOne(int noticeNo) {
@@ -48,6 +55,8 @@ public class NoticeServiceImpl implements NoticeService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 	
 	
 	
