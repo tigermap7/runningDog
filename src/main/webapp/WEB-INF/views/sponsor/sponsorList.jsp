@@ -5,7 +5,56 @@
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
-        <c:import url="/WEB-INF/views/include/head.jsp"/>
+		<c:import url="/WEB-INF/views/include/head.jsp"/>
+		
+		<style type="text/css">
+		
+			.popover {
+			  text-align: center;
+			  text-align: center;
+			  text-decoration: none;
+			  padding: 0px 0px 9px;
+			}
+			
+			.urlcopy {
+				border: 1px solid #ff869c;
+				font-size: 15px;
+				position: relative;
+				top: 9px;
+				color: #ff869c;
+				padding: 3px 5px;
+				display: block;
+			    z-index: 1;
+			}
+			
+			.urlcopy:hover {
+			    color: #fff;
+			    background-color: #fb3860;
+			    border: 1px solid #fb3860;
+			}
+			
+		</style>
+		
+		<script type="text/javascript">
+		$(function(){
+			$('[data-toggle="popover"]').popover({
+				container: 'body',
+				title: "공유하기", 
+				html: true,
+				content: function() {
+					var value = "";
+						value += "<a href='#'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px; margin:20'></a>&nbsp;&nbsp;";
+						value += "<a href='#'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px'></a>&nbsp;&nbsp;";
+						value += "<a href='#'><img src='resources/images/snsIcn/sns_face.png' style='width:30px'></a>&nbsp;&nbsp;";
+						value += "<a href='#'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px'></a><br>";
+						value += "<a href='#' class='urlcopy'>URL 복사</a>";
+					return value;
+				}
+			});
+		});
+		</script>
+		
+        
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -61,17 +110,20 @@
                             </div>
                         </div>
                         
-                        <!--리스트-->
+                        <!-- 공유하기 popover -->
+						
+					<!--리스트-->
                         <div class="sponsorList">
                             <ul>
-                                <li onclick="location='sdetail.do'">
+                                <li>
                                     <div>
-                                        <a href="#none" class="chooseIcon">후원중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a> <!-- 공유하기 버튼 -->
-                                        <img src="resources/images/test/test01.jfif">
+                                        <a href="sdetail.do" class="chooseIcon">후원중</a>
+                                        <a data-placement="bottom" data-toggle="popover" 
+                                        	class="urlIcon xi-share-alt-o" id="popover"></a>
+									<a href="sdetail.do"><img src="resources/images/test/test01.jfif"></a>
                                     </div>
-                                    <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
-                                    <p>
+                                    <h3 onclick="location='sdetail.do'">이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
+                                    <p onclick="location='sdetail.do'">
                                         이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
                                     </p>
                                     <span class="sponsorBtn">
