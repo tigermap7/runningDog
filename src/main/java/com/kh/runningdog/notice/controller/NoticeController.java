@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.notice.model.service.NoticeService;
 import com.kh.runningdog.notice.model.vo.Notice;
+import com.kh.runningdog.notice.model.vo.NoticePage;
 
 @Controller
 public class NoticeController {
@@ -25,9 +26,22 @@ public class NoticeController {
 	@RequestMapping(value="nlist.do")
 	public ModelAndView selectNoticeList(HttpServletRequest request, ModelAndView mv) {
 		logger.info("nlist.do run...");
-		ArrayList<Notice> list = noticeService.selectNoticeList();
-		System.out.println(list);
+		
+		int currentPage = 1; //기본 현제 페이지
+		
+		if(request.getParameter("page") != null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int listCount = noticeService.selectNoticeListCount();
+		
+		NoticePage noticePage = new NoticePage(currentPage, listCount);
+		System.out.println(noticePage);
+		
+		ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
+		
 		mv.addObject("list", list);
+		mv.addObject("noticePage", noticePage);
 		mv.setViewName("notice/noticeList");
 		return mv;
 	}
