@@ -27,15 +27,31 @@ public class NoticeController {
 	public ModelAndView selectNoticeList(HttpServletRequest request, ModelAndView mv) {
 		logger.info("nlist.do run...");
 		
+		//검색값 받기
+		String search = request.getParameter("searchNotice");
+		String keyword = request.getParameter("keyword");
+		if(!(keyword == null || keyword == "")) {	//공백제거
+			keyword.trim();
+		}
 		int currentPage = 1; //기본 현제 페이지
 		
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
 		
-		int listCount = noticeService.selectNoticeListCount();
+		//list 개수 받기 용 객체 생성
+		NoticePage noticeSearch = new NoticePage();
+		noticeSearch.setSearch(search);
+		noticeSearch.setKeyword(keyword);
+		
+		int listCount = noticeService.selectNoticeListCount(noticeSearch);
 		
 		NoticePage noticePage = new NoticePage(currentPage, listCount);
+		
+		//검색값 NoticePage 에 넣기 mybatis mapper로 보낼때 파라메타값 하나만 보낼 수 있어서
+		noticePage.setSearch(search);
+		noticePage.setKeyword(keyword);
+		
 		System.out.println(noticePage);
 		
 		ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
