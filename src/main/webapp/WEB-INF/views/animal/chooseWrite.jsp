@@ -78,34 +78,26 @@
                                         	maxlength="13" class="form-control w50p" placeholder="특수문자없이 숫자만 입력해 주세요" required/></td>
                                     </tr>
                                     <tr>
-                                        <td>발견장소</td>
+                                        <td>보호자 대략 위치</td>
                                         <td><select name="Dlocal" required="required">
 												<option value="">지역선택</option>
-												<option value="1" ${param.local eq"1"?"selected" :"" }>강남구</option>
-												<option value="2" ${param.local eq"2"?"selected" :"" }>강동구</option>
-												<option value="3" ${param.local eq"3"?"selected" :"" }>강북구</option>
-												<option value="4" ${param.local eq"4"?"selected" :"" }>강서구</option>
-												<option value="5" ${param.local eq"5"?"selected" :"" }>관악구</option>
-												<option value="6" ${param.local eq"6"?"selected" :"" }>광진구</option>
-												<option value="7" ${param.local eq"7"?"selected" :"" }>구로구</option>
-												<option value="8" ${param.local eq"8"?"selected" :"" }>금천구</option>
-												<option value="9" ${param.local eq"9"?"selected" :"" }>노원구</option>
-												<option value="10" ${param.local eq"10"?"selected" :"" }>도봉구</option>
-												<option value="11" ${param.local eq"11"?"selected" :"" }>동대문구</option>
-												<option value="12" ${param.local eq"12"?"selected" :"" }>동작구</option>
-												<option value="13" ${param.local eq"13"?"selected" :"" }>마포구</option>
-												<option value="14" ${param.local eq"14"?"selected" :"" }>서대문구</option>
-												<option value="15" ${param.local eq"15"?"selected" :"" }>서초구</option>
-												<option value="16" ${param.local eq"16"?"selected" :"" }>성동구</option>
-												<option value="17" ${param.local eq"17"?"selected" :"" }>성북구</option>
-												<option value="18" ${param.local eq"18"?"selected" :"" }>송파구</option>
-												<option value="19" ${param.local eq"19"?"selected" :"" }>양천구</option>
-												<option value="20" ${param.local eq"20"?"selected" :"" }>영등포구</option>
-												<option value="21" ${param.local eq"21"?"selected" :"" }>용산구</option>
-												<option value="22" ${param.local eq"22"?"selected" :"" }>은평구</option>
-												<option value="23" ${param.local eq"23"?"selected" :"" }>종로구</option>
-												<option value="24" ${param.local eq"24"?"selected" :"" }>중구</option>
-												<option value="25" ${param.local eq"25"?"selected" :"" }>중랑구</option>
+												<option value="1" >서울시</option>
+												<option value="2" >인천시</option>
+												<option value="3" >대전시</option>
+												<option value="4" >광주시</option>
+												<option value="5" >대구시</option>
+												<option value="6" >울산시</option>
+												<option value="7" >부산시</option>
+												<option value="8" >경기도</option>
+												<option value="9" >강원도</option>
+												<option value="10" >세종시</option>
+												<option value="11" >충청남도</option>
+												<option value="12" >충청북도</option>
+												<option value="13" >전라남도</option>
+												<option value="14" >전라북도</option>
+												<option value="15" >경상남도</option>
+												<option value="16" >경상북도</option>
+												<option value="17" >제주도</option>
 										</select> 
 										<input type="text" name="dFindLocal" title="" class="form-control w50p" placeholder="발견장소 입력" required/></td>
                                     </tr>
@@ -116,6 +108,41 @@
                                     <tr>
                                         <td>내용</td>
                                         <td><textarea name="dContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td>발견 장소를 클릭해 주세요</td>
+                                        <!-- 카카오 지도 출력 -->
+                                        <td><div id="map" style="width:500px;height:300px;"></div>
+                                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b"></script>
+											<script>
+											var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+											    mapOption = { 
+											        center: new kakao.maps.LatLng(36.627718, 127.967794), // 지도의 중심좌표
+											        level: 20 // 지도의 확대 레벨
+											    };
+
+											var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+											// 지도를 클릭한 위치에 표출할 마커입니다
+											var marker = new kakao.maps.Marker({ 
+											    // 지도 중심좌표에 마커를 생성합니다 
+											    position: map.getCenter() 
+											}); 
+											// 지도에 마커를 표시합니다
+											marker.setMap(map);
+
+											// 지도에 클릭 이벤트를 등록합니다
+											// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+											kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+											    
+											    // 클릭한 위도, 경도 정보를 가져옵니다 
+											    var latlng = mouseEvent.latLng; 
+											    
+											    // 마커 위치를 클릭한 위치로 옮깁니다
+											    marker.setPosition(latlng);
+											});
+											</script>
+										</td>
                                     </tr>
                                 </tbody>
                             </table>
