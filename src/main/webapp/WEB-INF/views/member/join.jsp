@@ -47,7 +47,7 @@
                                 <span><input type="password" name="userPwd2" title="비밀번호 확인" id="joinUserPwd2" class="w100p" placeholder="비밀번호 확인"/></span>
                             </div>
                             <p id="pwdWarning">
-                                <span></span>
+                                <span>사용하실 비밀번호는 특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.</span>
                             </p>
                             <div>
                                 <span><i class="xi-profile-o"></i></span>
@@ -70,14 +70,15 @@
                             </p>
                             <!--button type="button" class="userChk" onclick="phoneChk">휴대폰번호 중복체크</button-->
                             <p class="privacyCke" style="margin:1.25rem 0;">
-                                <label><input type="checkbox" name="" id=""/> 서비스의 <a href="#none" class="con1">이용약관</a>과 <a href="#none" class="con2">개인정보처리방침</a>에 동의합니다.</label>
+                                <label><input type="checkbox" name="" id="chkY"/> 서비스의 <a href="#none" class="con1">이용약관</a>과 <a href="#none" class="con2">개인정보처리방침</a>에 동의합니다.</label>
                             </p>
 
-                            <input id="joinAction" class="join_btn" type="submit" name="" value="회원가입">
+                            <!--input id="joinAction" class="join_btn" type="submit" name="" value="회원가입"-->
+                            <input id="joinAction" class="join_btn" type="button" name="" value="회원가입">
                         </div>
                         <div class="privacyCke_con">
-                            <c:import url="termsCon.do"/>
-                            <c:import url="privacyCon.do"/>
+                            <c:import url="/WEB-INF/views/include/termsCon.jsp"/>
+                            <c:import url="/WEB-INF/views/include/privacyCon.jsp"/>
                         </div>
                     </div>
 				    </form>

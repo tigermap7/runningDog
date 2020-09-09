@@ -77,84 +77,11 @@ function getCookie(cookieName) {
 }
 
 
-$(function () {    
-    $('#joinUserId').blur(function () {
-    	var id = $('#joinUserId').val().trim();
-        var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-		if (id == null || id == '' || id == 'undefined') {
-			$('#idWarning span').html("아이디(이메일)를 입력해주세요.");
-		} else if (!(id.match(regExp))) {
-			$('#idWarning span').html("올바른 이메일 형식이 아닙니다.");
-		} else {
-			$('#idWarning span').html('');
-			$('#joinUserPwd').focus();
-		}
-    });
-    $('#joinUserPwd, #joinUserPwd2').blur(function () {
-    	var pwd1 = $('#joinUserPwd').val().trim();
-    	var pwd2 = $('#joinUserPwd2').val().trim();
-        var pwqRegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-		if (pwd1 == null || pwd1 == '' || pwd1 == 'undefined') {
-			$('#pwdWarning span').html("사용하실 비밀번호를 입력해주세요.");
-		} else if (!pwqRegExp.test(pwd1)) {
-			$('#pwdWarning span').html("특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
-		} else if (!(pwd2 == pwd1)) {
-			$('#joinUserPwd2').focus();
-			$('#pwdWarning span').html("입력하신 비밀번호와 동일하게 입력해주세요.");
-		} else {
-			$('#pwdWarning span').html('');
-			$('#joinNickname').focus();
-		}
-    });
-});
-
-
-
-
-//회원가입 정규표현식
-//$(function () {
-//  $('#joinUserId').blur(function () {
-//	  var id = $('#joinUserId').val().trim();
-//      var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-//      if (id == null || id == '' || id == 'undefined') {
-//  		$('#idWarning span').html("아이디(이메일)를 입력해주세요.");
-//      } else if (!(id.match(regExp))) {
-//  		$('#idWarning span').html("올바른 이메일 형식이 아닙니다.");
-//      } else {
-//  		$('#idWarning span').html('');
-//  		$('#joinUserPwd').focus();
-//      }
-//	});
-//	$('#joinUserPwd, #joinUserPwd2').blur(function () {
-//	  var pwd1 = $('#joinUserPwd').val().trim();
-//	  var pwd2 = $('#joinUserPwd2').val().trim();
-//      var regExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-//      if (pwd1 == null || pwd1 == '' || pwd1 == 'undefined') {
-//  		$('#pwdWarning span').html("사용하실 비밀번호를 입력해주세요.");
-//      } else if (!regExp.test(pwd1)) {
-//  		$('#pwdWarning span').html("특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
-//      } else if (!(pwd2 == pwd1)) {
-//		$('#joinUserPwd2').focus();
-//		$('#pwdWarning span').html("입력하신 비밀번호와 동일하게 입력해주세요.");
-//      } else {
-//  		$('#pwdWarning span').html('');
-//  		$('#joinNickname').focus();
-//      }
-//  });
-//});
-
-//$(document).ready(function(){
-//	$('.join_btn').click(function() {
-//		var id = $('#joinUserId').val().trim();
-//		var pwd1 = $('#joinUserPwd').val().trim();
-//		var pwd2 = $('#joinUserPwd2').val().trim();
-//		var nick = $('#joinNickname').val().trim();
-//		var phone = $('#joinPhone').val().trim();
-//	    
-//	    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-//	    var pwqRegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-//	    
+//$(function () {    
+//    $('#joinUserId').blur(function () {
+//    	var id = $('#joinUserId').val().trim();
+//        var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+//
 //		if (id == null || id == '' || id == 'undefined') {
 //			$('#idWarning span').html("아이디(이메일)를 입력해주세요.");
 //		} else if (!(id.match(regExp))) {
@@ -163,7 +90,11 @@ $(function () {
 //			$('#idWarning span').html('');
 //			$('#joinUserPwd').focus();
 //		}
-//	
+//    });
+//    $('#joinUserPwd, #joinUserPwd2').blur(function () {
+//    	var pwd1 = $('#joinUserPwd').val().trim();
+//    	var pwd2 = $('#joinUserPwd2').val().trim();
+//        var pwqRegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 //		if (pwd1 == null || pwd1 == '' || pwd1 == 'undefined') {
 //			$('#pwdWarning span').html("사용하실 비밀번호를 입력해주세요.");
 //		} else if (!pwqRegExp.test(pwd1)) {
@@ -175,60 +106,89 @@ $(function () {
 //			$('#pwdWarning span').html('');
 //			$('#joinNickname').focus();
 //		}
-//		
-//		if(id != '' && pwd1 != '' && pwd2 != '' && nick != '' && phone != '' ){
-//			$.ajax({
-//	            url:'joinAction.do',
-//	            type:'post',
-//	            data : {
-//					userId : $("#joinUserId").val(),
-//					userPwd : $("#joinUserPwd").val(),
-//					userPwd2 : $("#joinUserPwd2").val(),
-//					nickname : $("#joinNickname").val(),
-//					phone : $("#joinPhone").val()
-//            	},
-//	            success : function(data) {
-//	                if (data == "notUserId") {
-//	                	alert("이미 가입된 아이디(이메일)입니다.");
-//	                } else if(data == "notNickname") {
-//	                	alert("이미 존재하는 닉네임 입니다.");
-//	                } else if(data == "notPhone") {
-//	                	alert("이미 가입된 핸드폰 번호 입니다.");
-//	                }
-//	            },
-//	    		error : function(jqXHR, textstatus, errorthrown) { // jqXHR, textstatus, errorthrown : 에러표시 함수가 있음.
-//				console.log("error : " + jqXHR + ", " + textstatus + ", "
-//						+ errorthrown);
-//	    		}
-//    		});
-//			return false;
-//		}
-//	});
+//    });
 //});
 
 
 
-////아이디 중복체크
-//function userIdChk() {
-//	$.ajax({
-//		url : "userIdChk.do",
-//		type : "post",
-//		data : {
-//			userId : $("#joinUserId").val()
-//		},
-//		success : function(data) {
-//			if (data == "ok") { // == 같다. 표현
-//				alert("사용 가능한 아이디입니다.");
-//				$("#joinUserId").focus();
-//			} else {
-//				alert("이미 사용중인 아이디입니다.\n다시 입력하세요.");
-//				$("#joinUserId").select();
-//			}
-//		},
-//		error : function(jqXHR, textstatus, errorthrown) { // jqXHR, textstatus, errorthrown : 에러표시 함수가 있음.
-//			console.log("error : " + jqXHR + ", " + textstatus + ", "
-//					+ errorthrown);
-//		}
-//	});
-//	return false;
-//}
+$(document).ready(function(){
+	$('.join_btn').click(function() {
+		var id = $('#joinUserId').val().trim();
+		var pwd1 = $('#joinUserPwd').val().trim();
+		var pwd2 = $('#joinUserPwd2').val().trim();
+		var nick = $('#joinNickname').val().trim();
+		var phone = $('#joinPhone').val().trim();
+	    
+	    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	    var pwqRegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	    
+		if (id == null || id == '' || id == 'undefined') {
+			$('#idWarning span').html("아이디(이메일)를 입력해주세요.");
+		} else if (!(id.match(regExp))) {
+			$('#idWarning span').html("올바른 이메일 형식이 아닙니다.");
+		} else {
+			$('#idWarning span').html('');
+		}
+	
+		if (pwd1 == null || pwd1 == '' || pwd1 == 'undefined') {
+			$('#pwdWarning span').html("사용하실 비밀번호는 특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
+		} else if (!pwqRegExp.test(pwd1)) {
+			$('#pwdWarning span').html("특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
+		} else if (!(pwd2 == pwd1)) {
+			$('#joinUserPwd2').focus();
+			$('#pwdWarning span').html("입력하신 비밀번호와 동일하게 입력해주세요.");
+		} else {
+			$('#pwdWarning span').html('');
+		}
+	
+		if (nick == null || nick == '' || nick == 'undefined') {
+			$('#nicknameWarning span').html("사용하실 닉네임을 입력해주세요.");
+		} else {
+			$('#nicknameWarning span').html('');
+		}
+	
+		if (phone == null || phone == '' || phone == 'undefined') {
+			$('#phoneWarning span').html("사용하실 휴대폰 번호를 입력해주세요.");
+		} else {
+			$('#phoneWarning span').html('');
+		}
+		if ($("#chkY").is(":checked") == false) {
+			console.log('체크된 상태');
+			alert("서비스 이용약관, 개인정보처리방침 동의 시 회원가입이 가능합니다.");
+			$('#chkY').focus();
+		}
+		
+		if(id != '' && pwd1 != '' && pwd2 != '' && nick != '' && phone != '' && $("#chkY").is(":checked") == true){
+			$.ajax({
+	            url:'joinAction.do',
+	            type:'post',
+	            data : {
+					userId : $("#joinUserId").val(),
+					userPwd : $("#joinUserPwd").val(),
+					userPwd2 : $("#joinUserPwd2").val(),
+					nickname : $("#joinNickname").val(),
+					phone : $("#joinPhone").val()
+            	},
+	            success : function(data) {
+	                if (data == "notUserId") {
+	        			$('#idWarning span').html("이미 가입된 아이디(이메일)입니다.");
+	                	$("#joinUserId").val().focus();
+	                } else if(data == "notNickname") {
+	        			$('#nicknameWarning span').html("이미 존재하는 닉네임 입니다.");
+	                	nickname.focus();
+	                } else if(data == "notPhone") {
+	        			$('#phoneWarning span').html("이미 가입된 핸드폰 번호 입니다.");
+	                	phone.focus();
+	                } else if(data == "joinOk") {
+	                	alert("회원가입을 축하합니다.\n로그인 후 '지금 달려갈 개'의 서비스를 이용하실 수 있습니다.");
+	    				location.reload();
+	                	window.location.href = "login.do";
+	                }
+	            },
+	    		error : function(jqXHR, textstatus, errorthrown) { console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);}
+    		});
+			return false;
+		}
+	});
+});
+

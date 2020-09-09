@@ -46,7 +46,7 @@
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
-		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, NULL, DEFAULT, DEFAULT, null, DEFAULT)
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{profleImg}, DEFAULT, DEFAULT, null, DEFAULT)
 	</insert>
 	
 	
