@@ -18,8 +18,8 @@ public class NoticePage {
 		this.currentPage = currentPage;
 		this.listCount = listCount;
 		this.maxPage = (int)((double)listCount / limit + 0.9);	// 37/6+0.9=5.9 => 5페이지
-		this.startPage = (((int)((double)currentPage / limit + 0.9)) - 1) * limit + 1;	// 1/6+0.9= 0*6 + 1 = 1 => 페이지 시작 수
-		this.endPage = startPage + limit -1; // 1+6-1 = 6 페이지 마지막 수
+		this.startPage = (((int)((double)currentPage / 5 + 0.9)) - 1) * 5 + 1;	// 1/6+0.9= 0*6 + 1 = 1 => 페이지 시작 수
+		this.endPage = startPage + 5 -1; // 1+6-1 = 6 페이지 마지막 수
 		if( this.maxPage < this.endPage) {
 			this.endPage = this.maxPage;
 		}

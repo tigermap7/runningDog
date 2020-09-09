@@ -39,7 +39,6 @@ public class NoticeController {
 		System.out.println(noticePage);
 		
 		ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
-		
 		mv.addObject("list", list);
 		mv.addObject("noticePage", noticePage);
 		mv.setViewName("notice/noticeList");

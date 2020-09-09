@@ -50,7 +50,7 @@
                         <!--서브 검색 끝-->
                         
                         <div class="sort-area">  
-                            <h4>전체 150개의 영상/이슈</h4>
+                            <h4>전체 ${ noticePage.listCount }개의 공지사항</h4>
                             <div>
                                 <a href="movenoticeinsert.do" class="writeBtn">글쓰기</a>
                             </div>
@@ -183,23 +183,43 @@
                         <!-- 페이징 -->
                         <dl class="list-paging">
                             <dd>
-                                <a href="#none"><i class="xi-angle-left"></i></a>
+                            <!-- 이전 그룹 페이지 이동 -->
+                            	<c:if test="${ (noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) >= 1 }">
+								<c:url var="np1" value="nlist.do">
+								<c:param name="page" value="${ noticePage.startPage - 5 }"/>
+								</c:url>
+									 <a href="${ np1 }"><i class="xi-angle-left"></i></a>
+								</c:if>
+								<c:if test="${ !((noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) >= 1) }">
+								<!-- 	<a href="#none"><i class="xi-angle-left"></i></a> -->
+								</c:if>
+                               
+                                
+                                <!-- 현재 페이지가 속한 페이지그룹의 숫자 출력 처리  -->
                                 <c:forEach var="p" begin="${ noticePage.startPage }" end="${ noticePage.endPage }" step="1">
                                		<c:if test="${ p eq noticePage.currentPage }">
                                 		<a href="#none" class="active">${ p }</a>
  	                                </c:if>
  	                                <c:if test="${ p ne noticePage.currentPage }">
- 	                                	<c:url var="nlp" value="nlist.do">
+ 	                                	<c:url var="nlp2" value="nlist.do">
  	                                		<c:param name="page" value="${ p }"/>
  	                                	</c:url>
- 	                                	<a href="${ nlp }">${ p }</a>
+ 	                                	<a href="${ nlp2 }">${ p }</a>
  	                                </c:if>
                                 </c:forEach>
-<!--                                 <a href="#none">2</a>
-                                <a href="#none">3</a>
-                                <a href="#none">4</a>
-                                <a href="#none">5</a> -->
-                                <a href="#none"><i class="xi-angle-right"></i></a>
+                                
+                            <!-- 다음 그룹 페이지 이동 -->
+                            	<c:if test="${ (noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage }">
+								<c:url var="np3" value="nlist.do">
+								<c:param name="page" value="${ noticePage.startPage + 5 }"/>
+								</c:url>
+									 <a href="${ np3 }"><i class="xi-angle-right"></i></a>
+								</c:if>
+								<c:if test="${ !((noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage) }">
+									<!-- <a href="#none"><i class="xi-angle-right"></i></a> -->
+								</c:if>
+                               
+                                
                             </dd>
                         </dl>
                         <!-- //페이징 -->
