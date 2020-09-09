@@ -57,9 +57,9 @@
                     <!-- 버튼 -->
                     <div class="viewBtn-wrap">
                         <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                        <button class="listBtn" onclick="javascript:history.go(-1);"><i class="xi-rotate-left"></i> 목록</button>
+                        <button class="listBtn" onclick="location.href='nlist.do'"><i class="xi-rotate-left"></i> 목록</button>
                         <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
-                        <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
+                        <button class="modifiedBtn" onclick="location.href='movenoticeupdate.do'"><i class="xi-pen-o"></i> 수정</button>
                         <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
                     </div>
                     <!-- 버튼 끝 -->

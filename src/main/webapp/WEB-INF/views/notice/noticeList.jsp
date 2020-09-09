@@ -52,7 +52,7 @@
                         <div class="sort-area">  
                             <h4>전체 150개의 영상/이슈</h4>
                             <div>
-                                <a href="noticeWrite.jsp" class="writeBtn">글쓰기</a>
+                                <a href="movenoticeinsert.do" class="writeBtn">글쓰기</a>
                             </div>
                         </div>
                         
