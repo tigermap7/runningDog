@@ -63,42 +63,44 @@
                                     </div>
                                 </dt>
                             </dl>
-                            <div class="chattingView">
-            	                <div>
-									<div>
-										<input type="text" id="message"/>
-							    		<input type="button" id="sendBtn" value="전송"/>
-    								</div>
+                            <div class="chattingView" id="chatdata">
+                                <legend>2020.08.31</legend>
+                                <div>
+                                    <h3><i class="xi-comment-o"></i> 채팅안내</h3>
+                                    <p>욕설, 모욕, 상대방이 불쾌할 수 있는 언어의 사용을 금지합니다. 이웃끼리 매너있는 채팅문화를 만들어주세요.</p>
+                                </div>
+                                <%-- 	
+                                <div>
+									<input type="text" id="message"/>
+						    		<input type="button" id="sendBtn" value="전송"/>
+    							</div>
     							<br>
 						    	<div class="well" id="chatdata">
 						    		<!-- User Session Info Hidden -->
 						    		<input type="hidden" value='${userid}' id="sessionuserid">
 						    	</div>
-                                <!-- <legend>2020.08.31</legend>
-                                <div>
-                                    <h3><i class="xi-comment-o"></i> 채팅안내</h3>
-                                    <p>욕설, 모욕, 상대방이 불쾌할 수 있는 언어의 사용을 금지합니다. 이웃끼리 매너있는 채팅문화를 만들어주세요.</p>
-                                </div>
                                 <dl class="user_right myChatting">
                                     <dt>안녕하세요. 유기동물에 대해 여쭤봐도 될까요?</dt>
                                     <dd>10:40 오후</dd>
                                 </dl>
                                 <dl class="user_left">
-                                    <dt><img src="/runningdog/resources/images/common/userBg.png"></dt>
+                                    <dt><img src="resources/images/common/userBg.png"></dt>
                                     <dd><p>네 안녕하세요~ 유기동물보호센터입니다. 어떤게 궁금하신가요?</p><span>10:42 오후</span></dd>
                                 </dl>
                                 <dl class="user_right myChatting">
                                     <dt>네, 제가 유기동물 공고를 보고 있는데 해당 아이가 아직 분양이 가능한가 해서 연락드렸어요.</dt>
                                     <dd>10:45 오후</dd>
                                 </dl>
+                            
+                             --%>
+                             <input type="hidden" value='${userid}' id="sessionuserid">
                             </div>
                             <form action="" method="GET">
                             <div class="cmt_body">
-                                <div><textarea name="" placeholder="메세지를 입력하세요." class="form-control"></textarea></div>
-                                <button class="xi-send" type="submit"></button>
-                            </form> -->
-                            	</div>
+                                <div><textarea name="" placeholder="메세지를 입력하세요." class="form-control" id="message"></textarea></div>
+                                <button class="xi-send" type="button" id="sendBtn"></button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -108,6 +110,7 @@
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
 	</body>
+	
 <script type="text/javascript">
 	//websocket을 지정한 URL로 연결
 	var sock= new SockJS("<c:url value='/echo'/>");
@@ -125,6 +128,7 @@
 	function sendMessage(){      
 		//websocket으로 메시지를 보내겠다.
 	  	sock.send($("#message").val());     
+        $('#message').val('');
 	}
 	            
 	//evt 파라미터는 websocket이 보내준 데이터다.
@@ -149,19 +153,27 @@
 		
 		//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
 		if(sessionid == currentuser_session){
-			var printHTML = "<div class='well'>";
+			/* var printHTML = "<dl class='user_left'>";
 			printHTML += "<div class='alert alert-info'>";
 			printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
 			printHTML += "</div>";
-			printHTML += "</div>";
+			printHTML += "</div>"; */
+			var printHTML = "<dl class='user_left'>";
+			printHTML += "<dt>" + message;
+			printHTML += "<dd>10:45 오후</dd>";
+			printHTML += "</dt>";
 			
 			$("#chatdata").append(printHTML);
 		} else{
-			var printHTML = "<div class='well'>";
+			/* var printHTML = "<div class='well'>";
 			printHTML += "<div class='alert alert-warning'>";
 			printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
 			printHTML += "</div>";
-			printHTML += "</div>";
+			printHTML += "</div>"; */
+			var printHTML = "<dl class='user_right myChatting'>";
+			printHTML += "<dt>" + message;
+			printHTML += "<dd>10:45 오후</dd>";
+			printHTML += "</dt>";
 			
 			$("#chatdata").append(printHTML);
 		}

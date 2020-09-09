@@ -3,6 +3,8 @@ package com.kh.runningdog.websocket.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +31,13 @@ public class EchoHandler extends TextWebSocketHandler{
 		logger.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
 		
 		for (WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(/* session.getPrincipal().getName() + "|" + */message.getPayload()));
+			sess.sendMessage(new TextMessage(session.getId()/* session.getPrincipal().getName() */ + "|" + message.getPayload()));
 		}
 	}
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessionList.remove(session);
-		
 		logger.info("{} 연결 끊김", session.getId());
 	}
 }
