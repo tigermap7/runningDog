@@ -6,4 +6,7 @@ import com.kh.runningdog.dboard.model.vo.Dboard;
 
 public interface DboardService {
 	ArrayList<Dboard> selectNew4();
+
+	int insertDboard(Dboard dboard);
+	
 }

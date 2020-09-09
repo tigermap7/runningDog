@@ -27,8 +27,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class Image {
 
-    BufferedImage img;
-    ImageType sourceType = ImageType.UNKNOWN;
+    static BufferedImage img;
+    static ImageType sourceType = ImageType.UNKNOWN;
 
     /**
      * Load image from InputStream
@@ -60,7 +60,7 @@ public class Image {
     /**
      * @return Width of the image in pixels
      */
-    public int getWidth() {
+    public static int getWidth() {
         return img.getWidth();
     }
 

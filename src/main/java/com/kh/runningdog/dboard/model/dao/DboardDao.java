@@ -21,4 +21,9 @@ public class DboardDao {
 		List<Dboard> list = session.selectList("dboardMapper.selectNew4");
 		return (ArrayList<Dboard>)list;
 	}
+
+
+	public int insertDboard(Dboard dboard) {
+		return session.insert("dboardMapper.insertDboard", dboard);
+	}
 }

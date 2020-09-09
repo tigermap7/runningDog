@@ -35,7 +35,7 @@
 
                     <div class="subContent">
                         <!--상세-->
-                        <form name="formname" method="post" enctype="" action="" class="form-inline">
+                        <form name="formname" method="post" enctype="multipart/form-data" action="dinsert.do" class="form-inline">
                         <div class="write-area">
                         
                             <h2>유기동물 주인찾기 작성</h2>
@@ -53,7 +53,7 @@
                                     </tr>
                                     <tr>
                                         <td>썸네일</td>
-                                        <td><input type="file" name="ofile" title="" required/></td>
+                                        <td><input type="file" name="upfile" title="" required/></td>
                                     </tr>
                                     <tr>
                                         <td>발견날짜</td>
@@ -113,7 +113,7 @@
                                         <td>발견 장소를 클릭해 주세요</td>
                                         <!-- 카카오 지도 출력 -->
                                         <td><div id="map" style="width:500px;height:300px;"></div>
-                                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b"></script>
+                                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
 											<script>
 											var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 											    mapOption = { 
@@ -134,14 +134,20 @@
 											// 지도에 클릭 이벤트를 등록합니다
 											// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
 											kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-											    
+												
 											    // 클릭한 위도, 경도 정보를 가져옵니다 
-											    var latlng = mouseEvent.latLng; 
 											    
+											    var latlng = mouseEvent.latLng;
+											    marker.getPosition();
+											    var mapX = latlng.getLng(); //경도
+											    var mapY = latlng.getLat(); //위도
 											    // 마커 위치를 클릭한 위치로 옮깁니다
 											    marker.setPosition(latlng);
+											   
 											});
-											</script>
+ 											</script>
+											<input type="hidden" name="mapX" id="mapX">
+											<input type="hidden" name="mapY" id="mapY">
 										</td>
                                     </tr>
                                 </tbody>

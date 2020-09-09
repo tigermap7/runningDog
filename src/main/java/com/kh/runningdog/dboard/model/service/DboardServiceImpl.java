@@ -18,4 +18,10 @@ public class DboardServiceImpl implements DboardService{
 	public ArrayList<Dboard> selectNew4(){
 		return dboardDao.selectNew4();
 	}
+	
+	@Override
+	public int insertDboard(Dboard dboard) {
+	    return dboardDao.insertDboard(dboard);
+	}
+	
 }

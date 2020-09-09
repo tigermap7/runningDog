@@ -10,7 +10,15 @@
 			 <!-- _언더바가 카멜표기법으로 맵핑처리해주는 것 -->
 			<setting name="mapUnderscoreToCamelCase" value="true"/>
 	    </settings>
-
+		
+		
+		<typeAliases>
+			<typeAlias type="com.kh.runningdog.dboard.model.vo.Dboard" alias="Dboard" />
+		</typeAliases>
+		
+		<mappers>
+			<mapper resource="mappers/dboard-mapper.xml" />
+		</mappers>
 	<!-- <typeAliases>
 		<typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.kh.second.notice.model.vo.Notice" alias="Notice" />
