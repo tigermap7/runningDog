@@ -35,15 +35,31 @@
                     <div class="subContent">
                         <!--서브 검색-->                
                         <div class="search_wrap">
-                            <form action="" name="">
-                            <select>
-                                <option value="" class="fontColor-dark">제목</option>
-                                <option value="" class="fontColor-dark">내용</option>
-                                <option value="" class="fontColor-dark">제목 + 내용</option>
+                            <form action="nlist.do" name="">
+                            <select name="searchNotice">
+                                
+                                <c:if test="${ !empty noticePage.search or noticePage.search ne ''}">
+                                ${ noticePage.search }
+                                	<c:if test="${ noticePage.search eq title}">
+                              		  <option value="title" class="fontColor-dark" selected="selected">제목</option>
+                              	  </c:if>
+                           	  	  <c:if test="${ noticePage.search eq content}">
+                              		  <option value="content" class="fontColor-dark" selected="selected">내용</option>
+                             	   </c:if>
+                              	  <c:if test="${ noticePage.search eq both}">
+                             	 	  <option value="both" class="fontColor-dark" selected="selected">제목 + 내용</option>
+                             	   </c:if>
+                                </c:if>
+                                <c:if test="${ empty noticePage.search or noticePage.search eq ''}">
+                                	<option value="title" class="fontColor-dark">제목</option>
+                                	<option value="content" class="fontColor-dark">내용</option>
+                                	<option value="both" class="fontColor-dark">제목 + 내용</option>
+                                </c:if>
+                                
                             </select>
                             <div class="search-box">
-                                <input type="text" placeholder="원하시는 키워드를 검색해주세요.">
-                                <button onclick="#none" class="xi-search"></button>
+                                <input type="text" placeholder="원하시는 키워드를 검색해주세요." name="keyword" value="${ noticePage.keyword }"><!-- 검색값 유지 -->
+                                <button type="submit" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
@@ -68,7 +84,7 @@
                                 
                         	<!-- 공지사항 new 알람을 위한 한달 전 날짜 -->
                             <jsp:useBean id="nowDate" class="java.util.Date"/>
-							<jsp:setProperty name="nowDate" property="time" value="${nowDate.time - 86400000 * 31}"/>
+							<jsp:setProperty name="nowDate" property="time" value="${nowDate.time - 86400000 * 32}"/>
 							<fmt:formatDate value="${nowDate}" type="date" pattern="yyyy/MM/dd" var="monthAgo"/>
                                 
                                 <c:forEach items="${ requestScope.list }" var="n">
@@ -203,6 +219,9 @@
  	                                <c:if test="${ p ne noticePage.currentPage }">
  	                                	<c:url var="nlp2" value="nlist.do">
  	                                		<c:param name="page" value="${ p }"/>
+ 	                                		<!-- 검색값 유지 -->
+ 	                                		<c:param name="searchNotice" value="${ noticePage.search }"/>
+											<c:param name="keyword" value="${ noticePage.keyword }"/>
  	                                	</c:url>
  	                                	<a href="${ nlp2 }">${ p }</a>
  	                                </c:if>
