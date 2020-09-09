@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -47,23 +47,35 @@
                                 </colgroup>
                                 <tbody>
                                     <tr>
-                                        <td>공지</td>
-                                        <td><label><input type="radio"" name="" title=""/>공지여부</label></td>
+                                        <td>알림</td>
+                                        <td><label><input type="radio"" name="" title=""/>필수여부</label></td>
                                     </tr>
                                     <tr>
                                         <td>제목</td>
                                         <td><input type="text" name="" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
                                     </tr>
+                      			    <tr>
+                    			        <td>작성자</td>
+                          			    <td><input type="text" name="" title="" class="form-control w100p" readonly value="관리자"></td>
+                    			    </tr>                                    
                                     <tr>
                                         <td>내용</td>
                                         <td><textarea name="" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
                                     </tr>
+                                    <tr>
+                          			    <td>첨부파일</td>
+                       			        <td>
+                          			    	<input type="file" name="" title="" class="mb5">
+                           			    	<input type="file" name="" title="" class="mb5">
+                               			    <input type="file" name="" title="" class="mb5">
+                          			    </td>
+                        			</tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="write-btn">
-                            <input type="button" class="btn btn-list" value="목록으로">
+                            <input type="button" class="btn btn-list" onclick="location.href='nlist.do'" value="목록으로">
                             <input type="reset" class="btn btn-cancel" value="취소하기">
                             <input type="submit" class="btn btn-success" value="작성하기">
                         </div>
