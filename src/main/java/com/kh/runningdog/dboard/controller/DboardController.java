@@ -43,7 +43,7 @@ public class DboardController {
 	public String insertDboard(Dboard dboard, HttpServletRequest request, 
 			@RequestParam(name="upfile", required=false) MultipartFile file) {
 		logger.info("dinsert.do run..." + dboard + "Image file : " + file.getOriginalFilename());
-		
+	
 		String viewImage = file.getOriginalFilename();
 		dboard.setviewImage(viewImage);
 

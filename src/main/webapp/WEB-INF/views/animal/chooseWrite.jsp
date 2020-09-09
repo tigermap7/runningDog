@@ -79,8 +79,7 @@
                                     </tr>
                                     <tr>
                                         <td>보호자 대략 위치</td>
-                                        <td><select name="Dlocal" required="required">
-												<option value="">지역선택</option>
+                                        <td><select name="dLocal" required="required">
 												<option value="1" >서울시</option>
 												<option value="2" >인천시</option>
 												<option value="3" >대전시</option>
@@ -99,7 +98,7 @@
 												<option value="16" >경상북도</option>
 												<option value="17" >제주도</option>
 										</select> 
-										<input type="text" name="dFindLocal" title="" class="form-control w50p" placeholder="발견장소 입력" required/></td>
+										<input type="text" name="dFindLocal" title="" class="form-control w50p" placeholder="발견장소 입력 구/동" required/></td>
                                     </tr>
                                     <tr>
                                         <td>특이사항</td>
@@ -143,7 +142,13 @@
 											    var mapY = latlng.getLat(); //위도
 											    // 마커 위치를 클릭한 위치로 옮깁니다
 											    marker.setPosition(latlng);
-											   
+											    
+											    var resultDiv = document.getElementById('clickLatlng'); 
+								
+											   console.log("mapX : " +mapX);
+											   console.log("mapY : " +mapY);
+											   document.formname.mapX.value=mapX;
+											   document.formname.mapY.value=mapY;
 											});
  											</script>
 											<input type="hidden" name="mapX" id="mapX">
