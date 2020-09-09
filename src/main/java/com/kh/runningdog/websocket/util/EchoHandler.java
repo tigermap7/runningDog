@@ -39,19 +39,23 @@ public class EchoHandler extends TextWebSocketHandler {
 		for (WebSocketSession sess : sessionList) {
 			sess.sendMessage(new TextMessage(
 					getHttpSessionValue(session)/* session.getPrincipal().getName() */ + "|" + message.getPayload()));
-			//String txt = "[" + getHttpSessionValue(session) + "]" + message.getPayload();
-			String txt = "테스트입니다";
+			String txt = "[" + getHttpSessionValue(session) + "]" + message.getPayload();
 			logger.info(txt);
-			String path = System.getProperty("user.home") + "/Desktop/tigermap/";
+			String path1 = System.getProperty("user.home") + "/Desktop/chatlog/";
+			String path2 = System.getProperty("user.home") + "/Desktop/chatlog/tigermap/";
 			String fileName = "text11.txt";
-			File folder = new File(path);
-			if (!folder.exists()) {
-				folder.mkdir();
+			File folder1 = new File(path1);
+			File folder2 = new File(path2);
+			if (!folder1.exists()) {
+				folder1.mkdir();
+			}
+			if (!folder2.exists()) {
+				folder2.mkdir();
 			}
 				try {
 					// 파일 객체 생성
 					// true 지정시 파일의 기존 내용에 이어서 작성
-					File file = new File(path + fileName);
+					File file = new File(path2 + fileName);
 					FileWriter fw = new FileWriter(file, true);
 					// 파일안에 문자열 쓰기
 					fw.write(txt);
