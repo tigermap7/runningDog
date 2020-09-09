@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.notice.model.service.NoticeService;
+import com.kh.runningdog.notice.model.vo.Notice;
 
 @Controller
 public class NoticeController {
@@ -48,6 +49,20 @@ public class NoticeController {
 	//메인페이지에 필수, new 공지사항 출력하기
 	//@RequestMapping(value="nstate.do")
 	public ModelAndView selectNoticeState(ModelAndView mv) {
+		return mv;
+	}
+	
+	//공지사항 등록 페이지 이동
+	@RequestMapping(value="movenoticeinsert.do")
+	public ModelAndView moveNoticeInsert(Notice notice, HttpServletRequest request, ModelAndView mv) {
+		mv.setViewName("notice/noticeWrite");
+		return mv;
+	}
+	
+	//공지사항 수정 페이지 이동
+	@RequestMapping(value="movenoticeupdate.do")
+	public ModelAndView moveNoticeUpdate(Notice notice, HttpServletRequest request, ModelAndView mv) {
+		mv.setViewName("notice/noticeUpdate");
 		return mv;
 	}
 	
