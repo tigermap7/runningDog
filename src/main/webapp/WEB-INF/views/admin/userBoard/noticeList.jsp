@@ -5,14 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <c:import url="../include/admin_head.jsp"/>
+    <c:import url="/WEB-INF/views/admin/include/admin_head.jsp"/>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
-        <c:import url="../include/admin_header.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_header.jsp"/>
 
         <div id="container">
-            <c:import url="../include/admin_util.jsp"/>
+            <c:import url="/WEB-INF/views/admin/include/admin_util.jsp"/>
 
             <!-- 상단 타이틀 -->
             <div class="pageTitle">
@@ -32,6 +32,8 @@
                     <div class="searchBox">
                         <select name="search" class="ListSelect">
                                 <option value="">제목</option>
+                                <option value="">내용</option>
+                                <option value="">제목 + 내용</option>
                         </select>
                         <div>
                             <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
@@ -68,14 +70,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='noticeView.jsp'">6</td>
-                            <td class="kinds" onclick="location='noticeView.jsp'"><span class="protect">공지</span></td>
-                            <td class="title" onclick="location='noticeView.jsp'">유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</td>
-                            <td class="name" onclick="location='noticeView.jsp'">관리자</td>
-                            <td class="date" onclick="location='noticeView.jsp'">2020.09.01</td>
-                            <td class="file" onclick="location='noticeView.jsp'"><i class="xi-file-text"></i></td>
+                        <tr onclick="location='ndetail.ad'">
+                            <td onclick="event.cancelBubble=true"><input type="checkbox" name="" id="" value=""></td>
+                            <td class="number">6</td>
+                            <td class="kinds"><span class="protect">공지</span></td>
+                            <td class="title">유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</td>
+                            <td class="name">관리자</td>
+                            <td class="date">2020.09.01</td>
+                            <td class="file"><i class="xi-file-text"></i></td>
                         </tr>
                         <tr>
                             <td><input type="checkbox" name="" id="" value=""></td>
@@ -124,7 +126,7 @@
                         </tr>
 						<tr class="list-no">
 							<td colspan="7">
-								<p><img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
+								<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
 								<h1>목록이 없습니다.</h1>
 							</td>
 						</tr>
@@ -156,7 +158,7 @@
 
             </div>
         </div>
-        <c:import url="../include/admin_footer.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_footer.jsp"/>
     </div>
 </body>
 </html>
