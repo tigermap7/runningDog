@@ -184,15 +184,29 @@
                         <dl class="list-paging">
                             <dd>
                                 <a href="#none"><i class="xi-angle-left"></i></a>
-                                <a href="#none" class="active">1</a>
-                                <a href="#none">2</a>
+                                <c:forEach var="p" begin="${ noticePage.startPage }" end="${ noticePage.endPage }" step="1">
+                               		<c:if test="${ p eq noticePage.currentPage }">
+                                		<a href="#none" class="active">${ p }</a>
+ 	                                </c:if>
+ 	                                <c:if test="${ p ne noticePage.currentPage }">
+ 	                                	<c:url var="nlp" value="nlist.do">
+ 	                                		<c:param name="page" value="${ p }"/>
+ 	                                	</c:url>
+ 	                                	<a href="${ nlp }">${ p }</a>
+ 	                                </c:if>
+                                </c:forEach>
+<!--                                 <a href="#none">2</a>
                                 <a href="#none">3</a>
                                 <a href="#none">4</a>
-                                <a href="#none">5</a>
+                                <a href="#none">5</a> -->
                                 <a href="#none"><i class="xi-angle-right"></i></a>
                             </dd>
                         </dl>
                         <!-- //페이징 -->
+                        
+                        
+                        
+                        
                     </div>
                 </div>
             </div>
