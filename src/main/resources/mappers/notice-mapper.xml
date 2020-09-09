@@ -20,9 +20,20 @@
 		<result column="NOTICE_RENAME_FILENAME3" property="noticeRenameFilename3" />
 	</resultMap>
 
-	<select id="selectList" resultMap="resultNotice">
-		select * from notice order by notice_state nulls last, notice_date desc
+	
+	<select id="selectList" resultMap="resultNotice" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
+		<![CDATA[
+			SELECT * 
+			FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_READCOUNT, NOTICE_STATE, NOTICE_ORIGINAL_FILENAME1, NOTICE_RENAME_FILENAME1,  
+					NOTICE_ORIGINAL_FILENAME2, NOTICE_RENAME_FILENAME2, NOTICE_ORIGINAL_FILENAME3, NOTICE_RENAME_FILENAME3
+			  FROM (select * from notice order by notice_state nulls last, notice_date desc)) 
+			  WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>		  
 	</select>
-
+	
+	
+	<select id="getListCount" resultType="_int">
+		select count(*) from notice
+	</select>
 
 </mapper>
