@@ -14,7 +14,8 @@
                 <li><a class="hover_line01" href="/runningdog/views/member/join.jsp">회원가입</a></li>
                 <li><a class="hover_line01" href="#none">로그아웃</a></li>
                 <li><a class="hover_line01" href="/runningdog/views/mypage/myInfo.jsp">마이페이지</a></li>
-                <li><a class="hover_line01" href="/runningdog/views/admin/member/allMember.jsp">관리자페이지</a></li>
+                <!-- <li><a class="hover_line01" href="/runningdog/views/admin/member/allMember.jsp">관리자페이지</a></li> -->
+            	<li><a class="hover_line01" href="nlist.ad">관리자페이지</a></li>
             </ul>
         </div>
     </div>
@@ -53,7 +54,7 @@
                     </ul>
                 </div>
             </li>
-           <li><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
+           <%-- <li><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li> --%>
            <li><a href="nlist.do">공지사항</a></li>
         </ul>
     </div>
