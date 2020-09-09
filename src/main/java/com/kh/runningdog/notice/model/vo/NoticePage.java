@@ -10,6 +10,8 @@ public class NoticePage {
 	private int endPage;	//해당 페이지 마지막 수
 	private int startRow;	//DB에서 해당 페이지 시작되는 행
 	private int endRow;		//DB에서 해당 페이지 마지막 행
+	private String keyword;
+	private String search;
 	
 	public NoticePage() {
 	}
@@ -38,6 +40,23 @@ public class NoticePage {
 		this.endPage = endPage;
 		this.startRow = startRow;
 		this.endRow = endRow;
+	}
+	
+	
+
+	public NoticePage(int currentPage, int limit, int listCount, int maxPage, int startPage, int endPage, int startRow,
+			int endRow, String keyword, String search) {
+		super();
+		this.currentPage = currentPage;
+		this.limit = limit;
+		this.listCount = listCount;
+		this.maxPage = maxPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
+		this.startRow = startRow;
+		this.endRow = endRow;
+		this.keyword = keyword;
+		this.search = search;
 	}
 
 	public int getCurrentPage() {
@@ -103,13 +122,33 @@ public class NoticePage {
 	public void setEndRow(int endRow) {
 		this.endRow = endRow;
 	}
+	
+
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
 
 	@Override
 	public String toString() {
 		return "NoticePage [currentPage=" + currentPage + ", limit=" + limit + ", listCount=" + listCount + ", maxPage="
 				+ maxPage + ", startPage=" + startPage + ", endPage=" + endPage + ", startRow=" + startRow + ", endRow="
-				+ endRow + "]";
+				+ endRow + ", keyword=" + keyword + ", search=" + search + "]";
 	}
+
+
 	
 	
 	

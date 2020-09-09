@@ -24,8 +24,8 @@ public class NoticeDao {
 		return (ArrayList<Notice>)list;
 	}
 	
-	public int selectNoticeListCount() {
-		return session.selectOne("noticeMapper.getListCount");
+	public int selectNoticeListCount(NoticePage noticeSearch) {
+		return session.selectOne("noticeMapper.getListCount", noticeSearch);
 	}
 
 }

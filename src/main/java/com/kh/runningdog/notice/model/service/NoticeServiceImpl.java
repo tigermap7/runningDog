@@ -21,8 +21,8 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 	
 	@Override
-	public int selectNoticeListCount() {
-		return noticeDao.selectNoticeListCount();
+	public int selectNoticeListCount(NoticePage noticeSearch) {
+		return noticeDao.selectNoticeListCount(noticeSearch);
 	}
 	
 

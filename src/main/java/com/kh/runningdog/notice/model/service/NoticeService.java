@@ -7,7 +7,7 @@ import com.kh.runningdog.notice.model.vo.NoticePage;
 
 public interface NoticeService {
 	ArrayList<Notice> selectNoticeList(NoticePage noticePage);
-	int selectNoticeListCount();
+	int selectNoticeListCount(NoticePage noticeSearch);
 	Notice selectNoticeOne(int noticeNo);
 	ArrayList<Notice> selectNoticeStateList();
 	int insertNotice(Notice notice);
