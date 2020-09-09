@@ -19,7 +19,7 @@
                 <a href="../userBoard/chooseList.jsp">유기동물 주인찾기 관리</a>
                 <a href="../userBoard/serviceList.jsp">자원봉사모집 관리</a>
                 <a href="../userBoard/sponsorList.jsp">후원하기 관리</a>
-                <a href="../userBoard/noticeList.jsp">공지사항 관리</a>
+                <a href="nlist.ad">공지사항 관리</a>
             </div>
         </li>
         <li>
