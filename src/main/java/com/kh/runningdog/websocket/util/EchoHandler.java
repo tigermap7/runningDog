@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+@RequestMapping("/echo")
 public class EchoHandler extends TextWebSocketHandler{
 	//private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
@@ -27,7 +29,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		logger.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
 		
 		for (WebSocketSession sess : sessionList) {
-			sess.sendMessage(new TextMessage(session.getPrincipal().getName() + "|" + message.getPayload()));
+			sess.sendMessage(new TextMessage(/* session.getPrincipal().getName() + "|" + */message.getPayload()));
 		}
 	}
 	
