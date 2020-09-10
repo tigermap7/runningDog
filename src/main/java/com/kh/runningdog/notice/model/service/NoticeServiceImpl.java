@@ -35,6 +35,16 @@ public class NoticeServiceImpl implements NoticeService{
 	public void updateNoticeReadCount(int noticeNo) {
 		noticeDao.updateNoticeReadCount(noticeNo);
 	}
+	
+	@Override
+	public Integer selectNoticePre(NoticePage noticePage) {
+		return noticeDao.selectNoticePre(noticePage);
+	}
+
+	@Override
+	public Integer selectNoticeNext(NoticePage noticePage) {
+		return noticeDao.selectNoticeNext(noticePage);
+	}
 
 	@Override
 	public ArrayList<Notice> selectNoticeStateList() {
@@ -59,6 +69,8 @@ public class NoticeServiceImpl implements NoticeService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 
 
