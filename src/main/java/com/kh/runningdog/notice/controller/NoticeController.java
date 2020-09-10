@@ -35,7 +35,7 @@ public class NoticeController {
 			//keyword.replaceAll("\\p{Z}", ""); //사이 공백
 			keyword = keyword.replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");  //앞뒤 공백 제거
 		}
-		int currentPage = 1; //기본 현제 페이지
+		int currentPage = 1; //기본 현재 페이지
 		
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
@@ -46,15 +46,13 @@ public class NoticeController {
 		noticeSearch.setSearch(search);
 		noticeSearch.setKeyword(keyword);
 		
-		int listCount = noticeService.selectNoticeListCount(noticeSearch);
+		int listCount = noticeService.selectNoticeListCount(noticeSearch);	//목록 갯수
 		
-		NoticePage noticePage = new NoticePage(currentPage, listCount);
+		NoticePage noticePage = new NoticePage(currentPage, listCount); //현재 페이지와 총 갯수 보내서, startPage, endpage등.. 값 만들기
 		
-		//검색값 NoticePage 에 넣기 mybatis mapper로 보낼때 파라메타값 하나만 보낼 수 있어서
+		//검색값 NoticePage 에 넣기 (mybatis mapper로 보낼때 파라메타값 하나만 보낼 수 있어서)
 		noticePage.setSearch(search);
 		noticePage.setKeyword(keyword);
-		
-		System.out.println(noticePage);
 		
 		ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
 		
@@ -67,18 +65,28 @@ public class NoticeController {
 	//공지사항 상세 페이지 이동, 출력
 	@RequestMapping(value="ndetail.do")
 	public ModelAndView selectNoticeDetail(HttpServletRequest request, ModelAndView mv, NoticePage noticePage) {
+		logger.info("ndetail.do run...");
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-		System.out.println(noticeNo + ", " +  noticePage);
 		
 		Notice notice = noticeService.selectNoticeOne(noticeNo);
 		
 		if(notice != null) {
 			noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
+			noticePage.setNoticeNo(noticeNo);	//이전, 다음글 번호 조회할 때 객체 하나로 보내야해서 추가
+			
+			Integer preNo = noticeService.selectNoticePre(noticePage); //이전글 번호 조회, int는 null값을 못 받아서 integer사용
+			Integer nextNo = noticeService.selectNoticeNext(noticePage); //다음글 번호 조회
+			if(preNo == null) preNo = 0;	//이전글이 없을 때 0으로 설정
+			if(nextNo == null) nextNo = 0;	//다음글이 없울 때 0으로 설정 
+			
+			mv.addObject("preNo", preNo);
+			mv.addObject("nextNo", nextNo);
 			mv.addObject("notice", notice);
-			mv.setViewName("notice/noticeView");
 			mv.addObject("noticePage", noticePage);
+			mv.setViewName("notice/noticeView");
 		} else {
-			System.out.println("공지사항 상세페이지 이동 실패");
+			mv.addObject("message", "공지사항 상세페이지 이동 실패");
+			mv.setViewName("common/error");
 		}
 		return mv;
 	}
