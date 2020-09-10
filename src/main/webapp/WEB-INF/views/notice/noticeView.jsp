@@ -33,23 +33,39 @@
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
-
+					
+					<!-- 공지사항 new 알람을 위한 한달 전 날짜 -->
+                    <jsp:useBean id="nowDate" class="java.util.Date"/>
+					<jsp:setProperty name="nowDate" property="time" value="${nowDate.time - 86400000 * 32}"/>
+					<fmt:formatDate value="${nowDate}" type="date" pattern="yyyy/MM/dd" var="monthAgo"/>
+							
                     <!-- 상세 -->
                     <div class="view-area">
-                        <h3><span>공지</span></h3>
-                        <h2>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
+                    	현재 페이지 : ${ noticePage.currentPage }
+                    	검색 : ${ noticePage.keyword }, ${ noticePage.search }
+                    	상세번호 : ${ notice.noticeNo }
+                    	
+                    	<c:if test="${ !empty notice.noticeState }">
+                        	<h3><span>공지</span></h3>
+                        </c:if>
+                        
+                        <c:if test="${ empty notice.noticeState }">
+                        <fmt:formatDate value="${notice.noticeDate}" type="date" pattern="yyyy/MM/dd" var="ndate"/>
+                        	<c:if test="${ monthAgo < ndate }">
+                        		<h3><span>new</span></h3>
+                       		</c:if>
+                        </c:if>
+                        
+                        <h2>${ notice.noticeTitle }</h2>
                         <ul>
-                            <li><span>작성자 : </span>관리자</li>
-                            <li><span>등록일 : </span>2020.08.28</li>
-                            <li><span>조회수 : </span>102</li>
+                            <li><span>작성자 : </span>${ notice.noticeWriter }</li>
+                            <li><span>등록일 : </span>${ notice.noticeDate }</li>
+                            <li><span>조회수 : </span>${ notice.noticeReadcount }</li>
                             <li><span>첨부파일 : </span><a href="#none" download>asdasddsa.hwp</a></li>
                         </ul>
 
                         <div class="view-ctn">
-                        「동물보호법」 제17조, 시행령7조 및 동법 시행규칙 제20조에 따라 유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.<br/><br/>
-                        공고 중인 동물 소유자는 해당 시군구 및 동물보호센터에 문의하시어 동물을 찾아가시기 바랍니다.<br/>
-                        다만, 「동물보호법」 제19조 및 동법 시행규칙 제21조에 따라 소유자에게 보호비용이 청구될 수 있습니다.<br/>
-                        또한 「동물보호법」 제17조에 따른 공고가 있는 날부터 10일이 경과하여도 소유자 등을 알 수 없는 경우에는 「유실물법」 제12조 및 「민법」 제253조의 규정에도 불구하고 해당 시·도지사 또는 시장·군수·구청장이 그 동물의 소유권을 취득하게 됩니다.
+                       		${ notice.noticeContent }
                         </div>
                     </div>
                     <!-- 상세 끝 -->
@@ -57,7 +73,12 @@
                     <!-- 버튼 -->
                     <div class="viewBtn-wrap">
                         <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                        <button class="listBtn" onclick="location.href='nlist.do'"><i class="xi-rotate-left"></i> 목록</button>
+						<c:url var="nlisturl" value="nlist.do">
+							<c:param name="page" value="${ noticePage.currentPage }"/>
+							<c:param name="searchNotice" value="${ noticePage.search }"/>
+							<c:param name="keyword" value="${ noticePage.keyword }"/>
+						</c:url>
+                        <button class="listBtn" onclick="location.href='${nlisturl}'"><i class="xi-rotate-left"></i> 목록</button>
                         <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
                         <button class="modifiedBtn" onclick="location.href='movenoticeupdate.do'"><i class="xi-pen-o"></i> 수정</button>
                         <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
