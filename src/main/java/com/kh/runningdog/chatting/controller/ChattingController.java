@@ -28,4 +28,9 @@ public class ChattingController {
 //		System.out.println("id : " + session.getId());
 		return mv;
 	}
+	
+	@RequestMapping("testForm.do")
+	public void testForm() {
+		logger.info("form run...");
+	}
 }
