@@ -36,4 +36,11 @@ public class NoticeDao {
 		session.update("noticeMapper.updateReadCount", noticeNo);
 	}
 
+	public Integer selectNoticePre(NoticePage noticePage) {
+		return session.selectOne("noticeMapper.selectNoticePre", noticePage);
+	}
+
+	public Integer selectNoticeNext(NoticePage noticePage) {
+		return session.selectOne("noticeMapper.selectNoticeNext", noticePage);
+	}
 }
