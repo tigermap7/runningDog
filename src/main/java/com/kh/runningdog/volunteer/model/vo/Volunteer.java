@@ -19,6 +19,8 @@ public class Volunteer implements java.io.Serializable{
 	private String volre2;
 	private String volor3;
 	private String volre3;
+	private String volor4;
+	private String volre4;
 	private String voladdress;
 	private String volche;
 	
@@ -26,7 +28,7 @@ public class Volunteer implements java.io.Serializable{
 
 	public Volunteer(int volno, String voltitle, String volwriter, String volcontent, Date voldate, String voltel,
 			String volterm, String volname, String volor1, String volre1, String volor2, String volre2, String volor3,
-			String volre3, String voladdress, String volche) {
+			String volre3, String volor4, String volre4, String voladdress, String volche) {
 		super();
 		this.volno = volno;
 		this.voltitle = voltitle;
@@ -42,6 +44,8 @@ public class Volunteer implements java.io.Serializable{
 		this.volre2 = volre2;
 		this.volor3 = volor3;
 		this.volre3 = volre3;
+		this.volor4 = volor4;
+		this.volre4 = volre4;
 		this.voladdress = voladdress;
 		this.volche = volche;
 	}
@@ -158,6 +162,22 @@ public class Volunteer implements java.io.Serializable{
 		this.volre3 = volre3;
 	}
 
+	public String getVolor4() {
+		return volor4;
+	}
+
+	public void setVolor4(String volor4) {
+		this.volor4 = volor4;
+	}
+
+	public String getVolre4() {
+		return volre4;
+	}
+
+	public void setVolre4(String volre4) {
+		this.volre4 = volre4;
+	}
+
 	public String getVoladdress() {
 		return voladdress;
 	}
@@ -183,10 +203,9 @@ public class Volunteer implements java.io.Serializable{
 		return "Volunteer [volno=" + volno + ", voltitle=" + voltitle + ", volwriter=" + volwriter + ", volcontent="
 				+ volcontent + ", voldate=" + voldate + ", voltel=" + voltel + ", volterm=" + volterm + ", volname="
 				+ volname + ", volor1=" + volor1 + ", volre1=" + volre1 + ", volor2=" + volor2 + ", volre2=" + volre2
-				+ ", volor3=" + volor3 + ", volre3=" + volre3 + ", voladdress=" + voladdress + ", volche=" + volche
-				+ "]";
+				+ ", volor3=" + volor3 + ", volre3=" + volre3 + ", volor4=" + volor4 + ", volre4=" + volre4
+				+ ", voladdress=" + voladdress + ", volche=" + volche + "]";
 	}
-	
-	
+
 
 }
