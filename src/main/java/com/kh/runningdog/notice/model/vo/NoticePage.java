@@ -12,6 +12,7 @@ public class NoticePage {
 	private int endRow;		//DB에서 해당 페이지 마지막 행
 	private String keyword;
 	private String search;
+	private int noticeNo;
 	
 	public NoticePage() {
 	}
@@ -146,6 +147,14 @@ public class NoticePage {
 		return "NoticePage [currentPage=" + currentPage + ", limit=" + limit + ", listCount=" + listCount + ", maxPage="
 				+ maxPage + ", startPage=" + startPage + ", endPage=" + endPage + ", startRow=" + startRow + ", endRow="
 				+ endRow + ", keyword=" + keyword + ", search=" + search + "]";
+	}
+
+	public int getNoticeNo() {
+		return noticeNo;
+	}
+
+	public void setNoticeNo(int noticeNo) {
+		this.noticeNo = noticeNo;
 	}
 
 
