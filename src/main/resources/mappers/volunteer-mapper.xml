@@ -61,24 +61,14 @@
 			select * from volunteer where volno = #{ volno }
 	</select>
 
-	<!-- <insert id="insertOriginBoard" parameterType="Board">
-			insert into board 
-			 <if test="board_original_filename != null">
-			values ((select max(board_num) + 1 from board), 
-								  #{board_title}, #{board_writer}, #{board_content}, 
-								  #{board_original_filename}, #{board_rename_filename},  
-								  sysdate, 0, (select max(board_num) +1 from board), default, default, default)
-			</if>
-		    <if test="board_original_filename == null">	
-		    (board_num, board_title, board_writer, board_content, 
-		     board_date, board_level, board_ref, board_reply_ref, board_reply_seq, board_readcount)
-		    values ((select max(board_num) + 1 from board), 
-								  #{board_title}, #{board_writer}, #{board_content}, 
-								  sysdate, 0, 
-								  (select max(board_num) +1 from board), default, default, default)
-			</if>			    
+	<insert id="insertVolunteer" parameterType="Volunteer">
+			insert into volunteer 
+			values ((select max(volno) + 1 from volunteer), 
+								  #{voltitle}, #{volwriter}, #{volcontent}, sysdate
+								  #{voltel}, #{volterm}, #{volname}, #{volor1}, #{volre1}
+								  #{volor2}, #{volre2}, #{volor3}, #{volre3}, #{voladdress}, default)			    
 	</insert>
-	<insert id="insertReply1" parameterType="Board">
+	<!-- <insert id="insertReply1" parameterType="Board">
 				insert into board 
 				values ((select max(board_num) + 1 from board), 
 									   #{board_title}, #{board_writer}, #{board_content}, 
@@ -91,24 +81,25 @@
 					 #{board_title}, #{board_writer}, #{board_content}, 
 					 null, null, sysdate, 2, #{board_ref}, 
 					 #{board_reply_ref}, #{board_reply_seq}, default)
-	</insert> -->
-	<!-- <update id="updateOrigin" parameterType="Board">
-			update board 
-			set board_title = #{board_title}, 
-				  board_content = #{board_content}
-				 <if test="board_original_filename != null">
-				  , 
-				  board_original_filename = #{board_original_filename}, 
-				  board_rename_filename = #{board_rename_filename}  
-				  </if>
-				  <if test="board_original_filename == null">
-				  , 
-				  board_original_filename = null, 
-				  board_rename_filename = null  
-				  </if>
-			where board_num = #{board_num}
+	</insert> --> 
+	<update id="updateVolunteer" parameterType="Volunteer">
+			update volunteer 
+			set voltitle = #{voltitle}, 
+			    volwriter = #{volwriter}, 
+				volcontent = #{volcontent}, 
+				voltel = #{voltel},
+				volterm = #{volterm}, 
+				volor1 = #{volor1}, 
+				volre1 = #{volre1},
+				volor2 = #{volor2}, 
+				volre2 = #{volre2},
+				volor3 = #{volor3}, 
+				volre3 = #{volre3},
+				voladdress = #{voladdress},
+				volche = #{volche} 
+			where volno = #{volno}
 	</update>
-	<update id="updateReply" parameterType="Board">
+	<!-- <update id="updateReply" parameterType="Board">
 			update board 
 			set board_title = #{board_title}, 
 				  board_content = #{board_content}
@@ -126,23 +117,16 @@
 	    	where board_ref = #{board_ref} 
 	    	and board_level = #{board_level} 
 	    	and board_reply_ref = #{board_reply_ref}
-	</update>
-	<update id="addReadCount" parameterType="_int">
+	</update> -->
+	<!-- <update id="addReadCount" parameterType="_int">
 	    	update board 
 	    	set board_readcount = board_readcount + 1  
 	    	where board_num = #{board_num}
-	</update>
+	</update> -->
 	<delete id="deleteBoard" parameterType="Board">
-			delete from board
-			<if test="board_level == 0">
-				where board_ref = #{ board_num }
-			</if>
-			<if test="board_level == 1">
-				where board_reply_ref = #{ board_num }
-			</if>
-			<if test="board_level == 2">
-				where board_num = #{ board_num }
-			</if>
-	</delete> -->
+			delete from volunteer
+				   where volno = #{ volno }
+		
+	</delete>
 	
 </mapper>
