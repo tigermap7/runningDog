@@ -55,4 +55,16 @@ public class MemberDao {
 		return session.delete("memberMapper.deleteMember", userId);
 	}
 
+
+	public Member selectUserIdCheck(String userId) {
+		return session.selectOne("memberMapper.selectUserIdCheck", userId);
+	}
+	public Member selectNicknameCheck(String nickname) {
+		return session.selectOne("memberMapper.selectNicknameCheck", nickname);
+	}
+
+	public Member selectPhoneCheck(String phone) {
+		return session.selectOne("memberMapper.selectPhoneCheck", phone);
+	}
+
 }

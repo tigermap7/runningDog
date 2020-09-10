@@ -76,41 +76,7 @@ function getCookie(cookieName) {
     return unescape(cookieValue);
 }
 
-
-//$(function () {    
-//    $('#joinUserId').blur(function () {
-//    	var id = $('#joinUserId').val().trim();
-//        var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-//
-//		if (id == null || id == '' || id == 'undefined') {
-//			$('#idWarning span').html("아이디(이메일)를 입력해주세요.");
-//		} else if (!(id.match(regExp))) {
-//			$('#idWarning span').html("올바른 이메일 형식이 아닙니다.");
-//		} else {
-//			$('#idWarning span').html('');
-//			$('#joinUserPwd').focus();
-//		}
-//    });
-//    $('#joinUserPwd, #joinUserPwd2').blur(function () {
-//    	var pwd1 = $('#joinUserPwd').val().trim();
-//    	var pwd2 = $('#joinUserPwd2').val().trim();
-//        var pwqRegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-//		if (pwd1 == null || pwd1 == '' || pwd1 == 'undefined') {
-//			$('#pwdWarning span').html("사용하실 비밀번호를 입력해주세요.");
-//		} else if (!pwqRegExp.test(pwd1)) {
-//			$('#pwdWarning span').html("특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
-//		} else if (!(pwd2 == pwd1)) {
-//			$('#joinUserPwd2').focus();
-//			$('#pwdWarning span').html("입력하신 비밀번호와 동일하게 입력해주세요.");
-//		} else {
-//			$('#pwdWarning span').html('');
-//			$('#joinNickname').focus();
-//		}
-//    });
-//});
-
-
-
+//회원가입 구동/정규식
 $(document).ready(function(){
 	$('.join_btn').click(function() {
 		var id = $('#joinUserId').val().trim();
@@ -119,36 +85,50 @@ $(document).ready(function(){
 		var nick = $('#joinNickname').val().trim();
 		var phone = $('#joinPhone').val().trim();
 	    
-	    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		//아이디(이메일)정규식
+	    var emailRegExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	    //비밀번호 정규식
 	    var pwqRegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	    //휴대폰번호 정규식
+	    var phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/;
 	    
 		if (id == null || id == '' || id == 'undefined') {
 			$('#idWarning span').html("아이디(이메일)를 입력해주세요.");
-		} else if (!(id.match(regExp))) {
-			$('#idWarning span').html("올바른 이메일 형식이 아닙니다.");
+			return false;
+		} else if (!emailRegExp.test(id)) {
+			$('#idWarning span').html("올바른 형식의 이메일이 아닙니다.");
+			return false;
 		} else {
 			$('#idWarning span').html('');
 		}
 	
 		if (pwd1 == null || pwd1 == '' || pwd1 == 'undefined') {
 			$('#pwdWarning span').html("사용하실 비밀번호는 특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
+			return false;
 		} else if (!pwqRegExp.test(pwd1)) {
 			$('#pwdWarning span').html("특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
+			return false;
 		} else if (!(pwd2 == pwd1)) {
 			$('#joinUserPwd2').focus();
 			$('#pwdWarning span').html("입력하신 비밀번호와 동일하게 입력해주세요.");
+			return false;
 		} else {
 			$('#pwdWarning span').html('');
 		}
 	
 		if (nick == null || nick == '' || nick == 'undefined') {
 			$('#nicknameWarning span').html("사용하실 닉네임을 입력해주세요.");
+			return false;
 		} else {
 			$('#nicknameWarning span').html('');
 		}
 	
 		if (phone == null || phone == '' || phone == 'undefined') {
 			$('#phoneWarning span').html("사용하실 휴대폰 번호를 입력해주세요.");
+			return false;
+		} else if(!phoneRegExp.test(phone)) {
+			$('#phoneWarning span').html("올바른 형식의 휴대폰번호가 아닙니다.");
+			return false;
 		} else {
 			$('#phoneWarning span').html('');
 		}
@@ -156,19 +136,19 @@ $(document).ready(function(){
 			console.log('체크된 상태');
 			alert("서비스 이용약관, 개인정보처리방침 동의 시 회원가입이 가능합니다.");
 			$('#chkY').focus();
+			return false;
 		}
 		
 		if(id != '' && pwd1 != '' && pwd2 != '' && nick != '' && phone != '' && $("#chkY").is(":checked") == true){
+			
+			//joinAction 객페생성
+			var joinAction = new $("form[name='joinAction']").serialize();
+			
 			$.ajax({
-	            url:'joinAction.do',
 	            type:'post',
-	            data : {
-					userId : $("#joinUserId").val(),
-					userPwd : $("#joinUserPwd").val(),
-					userPwd2 : $("#joinUserPwd2").val(),
-					nickname : $("#joinNickname").val(),
-					phone : $("#joinPhone").val()
-            	},
+	            enctype: 'multipart/form-data',
+	            url:'joinAction.do',
+	            data : joinAction,
 	            success : function(data) {
 	                if (data == "notUserId") {
 	        			$('#idWarning span').html("이미 가입된 아이디(이메일)입니다.");
@@ -187,7 +167,6 @@ $(document).ready(function(){
 	            },
 	    		error : function(jqXHR, textstatus, errorthrown) { console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);}
     		});
-			return false;
 		}
 	});
 });

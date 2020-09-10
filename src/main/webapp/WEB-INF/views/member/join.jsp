@@ -25,7 +25,7 @@
 			<div id="content">
 				<!-- 로그인 -->
                 <div class="member_wrap">
-                    <form method="post" action="joinAction.do">
+                    <form method="post" action="joinAction.do" name="joinAction" enctype="multipart/form-data">
                     <legend>회원가입</legend>
                     <div class="login_wrap">
                         <h1 onclick="location='/runningdog/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>

@@ -3,6 +3,7 @@ package com.kh.runningdog.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,6 +69,7 @@ public class MemberController {
 		String url = null;
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
 			if (bcryptoPasswordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd())) {
+				//session 이용해서 보여지는 영역이 다르도록 처리
 				session.setAttribute("loginMember", loginMember);
 				status.setComplete();
 				url = "main/main";
@@ -91,6 +93,7 @@ public class MemberController {
 	public String logoutActionMethod(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession(false);
 		
+		//세션 이용해서 로그아웃 처리
 		if(session != null) {
 			session.invalidate();
 			return "main/main";
@@ -100,9 +103,10 @@ public class MemberController {
 		}
 	}
 	
+	
 	@RequestMapping(value="joinAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String joinActionMethod(Member member, Model model, @RequestParam("userId") String userId, @RequestParam("nickname") String nickname, @RequestParam("phone") String phone,@RequestParam(name = "profleImg", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String joinActionMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profleImg", required = false) MultipartFile profleImg) throws IOException {
 		logger.info("member : " + member);
 		
 		//암호화 처리
@@ -111,36 +115,58 @@ public class MemberController {
 		// 파일 저장 경로 지정
 		String savePath = request.getSession().getServletContext().getRealPath("resources/images/memberImg");
 		
-		//아이디(이메일), 닉네임, 핸드폰 번호 유효성검사
-		Member userIdChk = memberService.selectUserIdCheck(member);
-		Member nicknameChk = memberService.selectNicknameCheck(member);
-		Member phoneChk = memberService.selectPhoneCheck(member);
-
 		logger.info("savePath : " + savePath);
 
 		logger.info("확인 : ");
-		
-		// 업로드된 파일을 지정한 폴더로 옮기기
-		file.transferTo(new File(savePath + "\\" + file.getOriginalFilename()));
+		logger.info("profleImg : " + profleImg);
 		
 		
 		String url = null;
 		int pChk = 0, iChk = 0, nChk = 0;
 
+		logger.info("member : " + member);
+		
+		logger.info("member.getUserId() : " + member.getUserId());
+		logger.info("member.getNickname() : " + member.getNickname());
+		logger.info("member.getPhone() : " + member.getPhone());
+		
+		//아이디(이메일), 닉네임, 핸드폰 번호 유효성검사
+		Member userIdChk = memberService.selectUserIdCheck(member);
+		Member nicknameChk = memberService.selectNicknameCheck(member);
+		Member phoneChk = memberService.selectPhoneCheck(member);
+		
+		logger.info("userIdChk : " + userIdChk);
+		logger.info("nicknameChk : " + nicknameChk);
+		logger.info("phoneChk : " + phoneChk);
+
 		if(userIdChk != null) {
-			iChk = (userIdChk.getUserId().equals(userId)) ? 1 : 0;
+			logger.info("확인1 : ");
+			iChk = (member.getUserId().equals(member)) ? 1 : 0;
+			logger.info("확인2 : " + member.getUserId().equals(member));
 			if(iChk > 0) {
 				url = "notUserId";
 			}
 		} else if(nicknameChk != null) {
-			nChk = (nicknameChk.getNickname().equals(nickname)) ? 1 : 0;
+			logger.info("확인1 : ");
+			nChk = (member.getNickname().equals(member)) ? 1 : 0;
+			logger.info("확인2 : " + member.getNickname().equals(member));
 			if(nChk > 0) {
 				url = "notNickname";
 			}
 		} else if(phoneChk != null) {
-			pChk = (phoneChk.getPhone().equals(phone)) ? 1 : 0;
+			logger.info("확인1 : ");
+			pChk = (member.getPhone().equals(member)) ? 1 : 0;
+			logger.info("확인2 : " + member.getNickname().equals(member));
 			if(pChk > 0) {
 				url = "notPhone";
+			}
+		} else if(profleImg != null) {
+			try {
+				logger.info("profleImg2 : " + profleImg);
+				profleImg.transferTo(new File(savePath + "\\" + profleImg.getOriginalFilename()));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				return "common/error";
 			}
 		} else if(iChk == 0 && nChk == 0 && pChk == 0 && memberService.insertMember(member) > 0) {
 			url = "joinOk";
@@ -151,40 +177,36 @@ public class MemberController {
 		return url;
 	}
 	
-//	@RequestMapping(value="joinAction.do", method=RequestMethod.POST)
-//	public String joinActionMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-//
-//		logger.info("member : " + member);
-//
-//		member.setUserPwd(bcryptoPasswordEncoder.encode(member.getUserPwd()));
-//		
-//		int result = memberService.insertMember(member);
-//		
-//		logger.info("result : " + result);
-//		if (result > 0) {
-//				return "main/main";
-//		} else {
-//			model.addAttribute("message", "암호화 회원가입 실패!");
-//			return "common/error";
-//		}
-//	}
-
+	
+	
+	
 	
 //	@RequestMapping(value="joinAction.do", method=RequestMethod.POST)
 //	@ResponseBody
-//	public String joinActionMethod(Member member, Model model, @RequestParam("userId") String userId, @RequestParam("nickname") String nickname, @RequestParam("phone") String phone, HttpServletRequest request, HttpServletResponse response) throws IOException {
+//	public String joinActionMethod(Member member, Model model, 
+//			@RequestParam("userId") String userId, @RequestParam("nickname") String nickname, @RequestParam("phone") String phone, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profleImg", required = false) MultipartFile profleImg) throws IOException {
 //		logger.info("member : " + member);
 //		
+//		//암호화 처리
+//		member.setUserPwd(bcryptoPasswordEncoder.encode(member.getUserPwd()));
+//		
+//		// 파일 저장 경로 지정
+//		String savePath = request.getSession().getServletContext().getRealPath("resources/images/memberImg");
+//		
+//		//아이디(이메일), 닉네임, 핸드폰 번호 유효성검사
 //		Member userIdChk = memberService.selectUserIdCheck(member);
 //		Member nicknameChk = memberService.selectNicknameCheck(member);
 //		Member phoneChk = memberService.selectPhoneCheck(member);
 //
+//		logger.info("savePath : " + savePath);
+//
+//		logger.info("확인 : ");
+//		logger.info("profleImg : " + profleImg);
+//		
+//		
 //		String url = null;
 //		int pChk = 0, iChk = 0, nChk = 0;
 //
-//		member.setUserPwd(bcryptoPasswordEncoder.encode(member.getUserPwd()));
-//		
-//		logger.info("pChk1 : " + pChk);
 //		if(userIdChk != null) {
 //			iChk = (userIdChk.getUserId().equals(userId)) ? 1 : 0;
 //			if(iChk > 0) {
@@ -200,6 +222,14 @@ public class MemberController {
 //			if(pChk > 0) {
 //				url = "notPhone";
 //			}
+//		} else if(profleImg != null) {
+//			try {
+//				logger.info("profleImg2 : " + profleImg);
+//				profleImg.transferTo(new File(savePath + "\\" + profleImg.getOriginalFilename()));
+//			} catch (IllegalStateException | IOException e) {
+//				e.printStackTrace();
+//				return "common/error";
+//			}
 //		} else if(iChk == 0 && nChk == 0 && pChk == 0 && memberService.insertMember(member) > 0) {
 //			url = "joinOk";
 //		} else {
@@ -208,6 +238,7 @@ public class MemberController {
 //		}
 //		return url;
 //	}
+	
 	
 	
 	

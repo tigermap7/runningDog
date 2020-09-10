@@ -14,4 +14,7 @@ public interface MemberService {
 	Member selectUserIdCheck(Member member);
 	Member selectNicknameCheck(Member member);
 	Member selectPhoneCheck(Member member);
+	Member selectUserIdCheck(String userId);
+	Member selectNicknameCheck(String nickname);
+	Member selectPhoneCheck(String phone);
 }
