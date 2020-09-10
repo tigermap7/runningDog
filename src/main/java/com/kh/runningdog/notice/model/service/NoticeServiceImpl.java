@@ -28,8 +28,12 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public Notice selectNoticeOne(int noticeNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return noticeDao.selectNoticeOne(noticeNo);
+	}
+	
+	@Override
+	public void updateNoticeReadCount(int noticeNo) {
+		noticeDao.updateNoticeReadCount(noticeNo);
 	}
 
 	@Override
@@ -55,6 +59,8 @@ public class NoticeServiceImpl implements NoticeService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 
 	

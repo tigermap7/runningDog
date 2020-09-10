@@ -9,8 +9,10 @@ public interface NoticeService {
 	ArrayList<Notice> selectNoticeList(NoticePage noticePage);
 	int selectNoticeListCount(NoticePage noticeSearch);
 	Notice selectNoticeOne(int noticeNo);
+	void updateNoticeReadCount(int noticeNo);
 	ArrayList<Notice> selectNoticeStateList();
 	int insertNotice(Notice notice);
 	int updateNotice(Notice notice);
 	int deleteNotice(int noticeNo);
+	
 }
