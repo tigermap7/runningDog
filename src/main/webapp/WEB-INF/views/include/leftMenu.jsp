@@ -15,7 +15,7 @@
     <ul class="leftGnb">
         <li><a href="mypage.do">나의 프로필</a></li>
         <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
-        <li><a href="/WEB-INF/views/mypage/myChatting.jsp">나의 채팅</a></li>
+        <li><a href="moveChatting.do">나의 채팅</a></li>
         <li><a href="/WEB-INF/views/mypage/myComment.jsp">나의 댓글</a></li>
     </ul>
 
@@ -27,7 +27,7 @@
             </p>
         </li>
         <li onclick="location='/WEB-INF/views/notice/noticeList.jsp'">
-            <h2><i class="xi-bell-o"></i> 공지사항 확인</i></h2>
+            <h2><i class="xi-bell-o"></i> 공지사항 확인</h2>
             <p>'지금 달려갈 개'의 공지사항을 꼭 확인해주세요.<br>&nbsp;</p>
         </li>
     </ul>
