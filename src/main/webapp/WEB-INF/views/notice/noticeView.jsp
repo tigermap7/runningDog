@@ -69,18 +69,74 @@
                     
                     <!-- 버튼 -->
                     <div class="viewBtn-wrap">
-                        <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
+                    
+                    	<!-- 이전글 -->
+						<c:url var="npre" value="ndetail.do">
+							<c:param name="noticeNo" value="${ preNo }"/>
+							<c:param name="currentPage" value="${ noticePage.currentPage }"/>
+							<c:param name="search" value="${ noticePage.search }"/>
+							<c:param name="keyword" value="${ noticePage.keyword }"/>
+						</c:url>                 
+						    	
+						<c:if test="${ preNo ne 0 }">
+                        	<button class="nextBtn" onclick="movePreDetail()"><i class="xi-angle-left-min"></i> 이전</button>
+                        </c:if>
+                        <c:if test="${ preNo eq 0 }">
+                        	<button class="nextBtn offBtn" onclick="movePreDetail()"><i class="xi-angle-left-min"></i> 이전</button>
+                        </c:if>
+						
+						<!-- 목록 -->
 						<c:url var="nlisturl" value="nlist.do">
 							<c:param name="page" value="${ noticePage.currentPage }"/>
 							<c:param name="searchNotice" value="${ noticePage.search }"/>
 							<c:param name="keyword" value="${ noticePage.keyword }"/>
 						</c:url>
                         <button class="listBtn" onclick="location.href='${nlisturl}'"><i class="xi-rotate-left"></i> 목록</button>
+                        
+                        <!-- 삭제 -->
                         <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
+                        
+                        <!-- 수정 -->
                         <button class="modifiedBtn" onclick="location.href='movenoticeupdate.do'"><i class="xi-pen-o"></i> 수정</button>
-                        <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
+
+						<!-- 다음글 -->
+						<c:url var="nnext" value="ndetail.do">
+							<c:param name="noticeNo" value="${ nextNo }"/>
+							<c:param name="currentPage" value="${ noticePage.currentPage }"/>
+							<c:param name="search" value="${ noticePage.search }"/>
+							<c:param name="keyword" value="${ noticePage.keyword }"/>
+						</c:url>                        
+                        <c:if test="${ nextNo ne 0 }">
+                       		<button class="prevBtn" onclick="moveNextDetail()">다음 <i class="xi-angle-right-min"></i></button>
+                        </c:if>
+                        <c:if test="${ nextNo eq 0 }">
+                        	<button class="prevBtn offBtn" onclick="moveNextDetail()">다음 <i class="xi-angle-right-min"></i></button>
+                        </c:if>
+                        
                     </div>
                     <!-- 버튼 끝 -->
+                    
+                    <!-- 이전글, 다음글 이동 -->
+                    <script type="text/javascript">
+                    function movePreDetail(){
+                    	var nPre = ${ preNo }
+                   		if(nPre == 0){
+                   			alert("이전글이 없습니다.");
+                   		} else {
+							location.href='${npre}';
+                   		}
+                    }
+                    
+                    function moveNextDetail(){
+                    	var nNext = ${ nextNo }
+                   		if(nNext == 0){
+                   			alert("다음글 없습니다.");
+                   		} else {
+							location.href='${nnext}';
+                   		}
+                    }
+                    </script>
+                    
                 </div>
             </div>
             <!-- 컨텐츠 끝 -->
