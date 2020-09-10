@@ -18,13 +18,11 @@
 <script src="resources/common/js/jquery-3.5.1.min.js"></script>
 <script src="resources/common/js/bootstrap.js"></script>
 <script src="resources/common/js/common.js"></script>
-<script src="resources/common/js/cssmenu.js"></script>
-<script src="resources/common/js/crosscover.js"></script>
 <script src="resources/common/js/vegas.js"></script>
-<script src="resources/common/js/easing.js"></script>
 <script src="resources/common/js/masonry-docs.min.js"></script>
 <script src="resources/common/js/swiper.min.js"></script>
 <script src="resources/common/js/summernote-ko-KR.js"></script>
+<script src="resources/common/js/member.js"></script>
 
 <!--티스토리 불펌금지-->
 
