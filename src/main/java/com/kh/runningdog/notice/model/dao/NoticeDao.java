@@ -43,4 +43,8 @@ public class NoticeDao {
 	public Integer selectNoticeNext(NoticePage noticePage) {
 		return session.selectOne("noticeMapper.selectNoticeNext", noticePage);
 	}
+	
+	public int insertNotice(Notice notice) {
+		return session.insert("noticeMapper.insertNotice", notice);
+	}
 }
