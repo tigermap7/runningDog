@@ -6,6 +6,8 @@
 <html>
 <head>
     <c:import url="../include/admin_head.jsp"/>
+    <script type="text/javascript">
+    </script>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
@@ -46,7 +48,7 @@
                         </tr>
                         <tr>
                             <td>내용</td>
-                            <td><textarea name="" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                            <td><textarea id="summernote" name="" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
                         </tr>
                     </tbody>
                 </table>

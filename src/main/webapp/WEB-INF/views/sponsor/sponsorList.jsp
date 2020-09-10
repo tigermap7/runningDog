@@ -11,7 +11,6 @@
 		
 			.popover {
 			  text-align: center;
-			  text-align: center;
 			  text-decoration: none;
 			  padding: 0px 0px 9px;
 			}
@@ -25,12 +24,14 @@
 				padding: 3px 5px;
 				display: block;
 			    z-index: 1;
+			    text-decoration: none;
 			}
 			
 			.urlcopy:hover {
 			    color: #fff;
 			    background-color: #fb3860;
 			    border: 1px solid #fb3860;
+			    text-decoration: none;
 			}
 			
 		</style>
@@ -43,15 +44,47 @@
 				html: true,
 				content: function() {
 					var value = "";
-						value += "<a href='#'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px; margin:20'></a>&nbsp;&nbsp;";
-						value += "<a href='#'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px'></a>&nbsp;&nbsp;";
-						value += "<a href='#'><img src='resources/images/snsIcn/sns_face.png' style='width:30px'></a>&nbsp;&nbsp;";
-						value += "<a href='#'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px'></a><br>";
-						value += "<a href='#' class='urlcopy'>URL 복사</a>";
+						value += "<a href='javascript:snsGo(1);'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px; margin:20' alt='네이버'></a>&nbsp;&nbsp;";
+						value += "<a href='javascript:snsGo(2);'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
+						value += "<a href='javascript:snsGo(3);'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
+						value += "<a href='javascript:snsGo(4);'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
+						value += "<a href='javascript:CopyUrlToClipboard(2);' class='urlcopy'>URL 복사</a>";
 					return value;
 				}
 			});
 		});
+		
+		$(document).on('click', function (e) {
+		    $('[data-toggle="popover"],[data-original-title]').each(function () {
+		        //the 'is' for buttons that trigger popups
+		        //the 'has' for icons within a button that triggers a popup
+		        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {                
+		            (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
+		        }
+
+		    });
+		});
+		
+		function CopyUrlToClipboard(num) {
+			//window.document.location.href 현재 url정보 얻는 방법
+			var obShareUrl = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + num;
+			/* obShareUrl.select();
+			document.execCommand("copy");
+			obShareUrl.blur(); */ //수정!!!!!!!!!!!!!!!!!!!1
+			alert("URL이 클립보드에 복사되었습니다\n" + obShareUrl);
+		}
+		
+		function snsGo(e) {
+			
+			//작업중!!!!!!!!!!!!!!!!!
+			switch(e) {
+			case 1 : break;
+			case 2 : break;
+			case 3 : break;
+			case 4 : break;
+			}
+		}
+		
 		</script>
 		
         
@@ -118,8 +151,7 @@
                                 <li>
                                     <div>
                                         <a href="sdetail.do" class="chooseIcon">후원중</a>
-                                        <a data-placement="bottom" data-toggle="popover" 
-                                        	class="urlIcon xi-share-alt-o" id="popover"></a>
+                                        <a data-placement="bottom" data-toggle="popover" class="urlIcon xi-share-alt-o"></a>
 									<a href="sdetail.do"><img src="resources/images/test/test01.jfif"></a>
                                     </div>
                                     <h3 onclick="location='sdetail.do'">이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
