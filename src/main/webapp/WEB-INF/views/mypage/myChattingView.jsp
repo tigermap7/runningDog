@@ -95,10 +95,10 @@
                              --%>
                              <input type="hidden" value='${sessionScope.userid}' id="sessionuserid">
                             </div>
-                            <form action="" method="GET">
+                            <form action="testForm.do" method="post" onsubmit="return false;">
                             <div class="cmt_body">
                                 <div><textarea name="" placeholder="메세지를 입력하세요." class="form-control" id="message"></textarea></div>
-                                <button class="xi-send" type="button" id="sendBtn"></button>
+                                <button class="xi-send" type="submit" id="sendBtn"></button>
                             </div>
                             </form>
                         </div>
