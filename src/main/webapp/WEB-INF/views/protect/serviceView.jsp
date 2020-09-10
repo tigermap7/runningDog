@@ -116,7 +116,12 @@
                                                 <th>담당자</th>
                                                 <td>${volunteer.volwriter }</td>
                                                 <th>모집기간</th>
+                                               <c:if test="${ volunteer.volche eq Y }">
                                                 <td>${volunteer.volche } / <span class="serviceOn">모집중</span></td>
+                                               </c:if>
+                                               <c:if test="${ volunteer.volche ne Y }">
+                                                <td>${volunteer.volche } / <span class="serviceOn">모집완료</span></td>
+                                               </c:if>
                                             </tr>
                                             <tr>
                                                 <th>지역</th>
