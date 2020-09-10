@@ -67,7 +67,7 @@
                                 <legend>2020.08.31</legend>
                                 <div>
                                     <h3><i class="xi-comment-o"></i> 채팅안내</h3>
-                                    <p>욕설, 모욕, 상대방이 불쾌할 수 있는 언어의 사용을 금지합니다. 이웃끼리 매너있는 채팅문화를 만들어주세요.</p>
+                                    <p>욕설, 모욕, 상대방이 불쾌할 수 있는 언어의 사용을 금지합니다. 이웃끼리 매너있는 채팅문화를 만들어주세요."</p>
                                 </div>
                                 <%-- 	
                                 <div>
@@ -93,7 +93,7 @@
                                 </dl>
                             
                              --%>
-                             <input type="hidden" value='${sessionScope.userid}' id="sessionuserid">
+                             <input type="hidden" value="${ sessionScope.loginMember.getNickname() }" id="sessionuserid">
                             </div>
                             <form action="testForm.do" method="post" onsubmit="return false;">
                             <div class="cmt_body">
@@ -160,10 +160,10 @@
 			printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
 			printHTML += "</div>";
 			printHTML += "</div>"; */
-			var printHTML = "<dl class='user_left'>";
-			printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
-			printHTML += "<dd><p>" + message +"</p><span>" + chatTime + "</span></dd>";
-			printHTML += "</dl>";
+			var printHTML = "<dl class='user_right myChatting'>";
+			printHTML += "<dt>" + message;
+			printHTML += "<dd>" + chatTime + "</dd>";
+			printHTML += "</dt></dl>";
 
 			$("#chatdata").append(printHTML);
 		} else{
@@ -172,10 +172,10 @@
 			printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
 			printHTML += "</div>";
 			printHTML += "</div>"; */
-			var printHTML = "<dl class='user_right myChatting'>";
-			printHTML += "<dt>" + message;
-			printHTML += "<dd>" + chatTime + "</dd>";
-			printHTML += "</dt></dl>";
+			var printHTML = "<dl class='user_left'>";
+			printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
+			printHTML += "<dd><p>" + message +"</p><span>" + chatTime + "</span></dd>";
+			printHTML += "</dl>";
 			
 			$("#chatdata").append(printHTML);
 		}

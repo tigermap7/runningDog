@@ -5,9 +5,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +12,8 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import com.kh.runningdog.member.model.vo.Member;
 
 @RequestMapping("/echo")
 public class EchoHandler extends TextWebSocketHandler {
@@ -27,56 +26,30 @@ public class EchoHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// sessions.put(session.getId(), session);
 		sessionList.add(session);
-		logger.info("{} 연결됨", session.getId());
+		logger.info("{} 연결됨", getHttpSessionValue(session).getNickname());
 
-		logger.info("인터셉터 : " + getHttpSessionValue(session));
 	}
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		logger.info("{}로 부터 {} 받음", getHttpSessionValue(session), message.getPayload());
+		logger.info("{}로 부터 {} 받음", getHttpSessionValue(session).getNickname(), message.getPayload());
 
 		for (WebSocketSession sess : sessionList) {
 			sess.sendMessage(new TextMessage(
-					getHttpSessionValue(session)/* session.getPrincipal().getName() */ + "|" + message.getPayload()));
-			String txt = "[" + getHttpSessionValue(session) + "]" + message.getPayload();
-			logger.info(txt);
-			String path1 = System.getProperty("user.home") + "/Desktop/chatlog/";
-			String path2 = System.getProperty("user.home") + "/Desktop/chatlog/tigermap/";
-			String fileName = "text11.txt";
-			File folder1 = new File(path1);
-			File folder2 = new File(path2);
-			if (!folder1.exists()) {
-				folder1.mkdir();
-			}
-			if (!folder2.exists()) {
-				folder2.mkdir();
-			}
-				try {
-					// 파일 객체 생성
-					// true 지정시 파일의 기존 내용에 이어서 작성
-					File file = new File(path2 + fileName);
-					FileWriter fw = new FileWriter(file, true);
-					// 파일안에 문자열 쓰기
-					fw.write(txt);
-					fw.flush();
-					// 객체 닫기
-					fw.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+					getHttpSessionValue(session).getNickname()/* session.getPrincipal().getName() */ + "|" + message.getPayload()));
+			
 		}
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		sessionList.remove(session);
-		logger.info("{} 연결 끊김", getHttpSessionValue(session));
+		logger.info("{} 연결 끊김", getHttpSessionValue(session).getNickname());
 	}
 
-	public Object getHttpSessionValue(WebSocketSession session) {
+	public Member getHttpSessionValue(WebSocketSession session) {
 		Map<String, Object> map = session.getAttributes();
-		Object value = map.get("userid");
+		Member value = (Member)map.get("loginMember");
 		return value;
 	}
 }
