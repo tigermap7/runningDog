@@ -57,6 +57,7 @@ public class NoticeController {
 		System.out.println(noticePage);
 		
 		ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
+		
 		mv.addObject("list", list);
 		mv.addObject("noticePage", noticePage);
 		mv.setViewName("notice/noticeList");
@@ -65,8 +66,20 @@ public class NoticeController {
 	
 	//공지사항 상세 페이지 이동, 출력
 	@RequestMapping(value="ndetail.do")
-	public ModelAndView selectNoticeDetail(HttpServletRequest request, ModelAndView mv) {
-		mv.setViewName("notice/noticeView");
+	public ModelAndView selectNoticeDetail(HttpServletRequest request, ModelAndView mv, NoticePage noticePage) {
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		System.out.println(noticeNo + ", " +  noticePage);
+		
+		Notice notice = noticeService.selectNoticeOne(noticeNo);
+		
+		if(notice != null) {
+			noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
+			mv.addObject("notice", notice);
+			mv.setViewName("notice/noticeView");
+			mv.addObject("noticePage", noticePage);
+		} else {
+			System.out.println("공지사항 상세페이지 이동 실패");
+		}
 		return mv;
 	}
 	
