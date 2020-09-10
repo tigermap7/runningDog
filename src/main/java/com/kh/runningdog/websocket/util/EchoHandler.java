@@ -1,7 +1,5 @@
 package com.kh.runningdog.websocket.util;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
