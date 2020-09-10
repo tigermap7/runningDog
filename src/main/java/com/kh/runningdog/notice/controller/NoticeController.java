@@ -30,8 +30,10 @@ public class NoticeController {
 		//검색값 받기
 		String search = request.getParameter("searchNotice");
 		String keyword = request.getParameter("keyword");
-		if(!(keyword == null || keyword == "")) {	//공백제거
-			keyword.trim();
+		
+		if(!(keyword == null || keyword == "")) {	//키워드가 있을 경우
+			//keyword.replaceAll("\\p{Z}", ""); //사이 공백
+			keyword = keyword.replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");  //앞뒤 공백 제거
 		}
 		int currentPage = 1; //기본 현제 페이지
 		
