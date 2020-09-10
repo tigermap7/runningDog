@@ -34,7 +34,6 @@
 
                     <div class="subContent">
                         <!--서브 검색-->        
-        
                         <div class="search_wrap">
                             <form action="nlist.do" name="">
                             <select name="searchNotice">
@@ -56,7 +55,6 @@
                                 	<option value="content" class="fontColor-dark">내용</option>
                                 	<option value="both" class="fontColor-dark" selected="selected">제목 + 내용</option>
                                 </c:if>
-
                             </select>
                             <div class="search-box">
                                 <input type="text" placeholder="원하시는 키워드를 검색해주세요." name="keyword" value="${ noticePage.keyword }"><!-- 검색값 유지 -->
@@ -88,6 +86,7 @@
 							<jsp:setProperty name="nowDate" property="time" value="${nowDate.time - 86400000 * 32}"/>
 							<fmt:formatDate value="${nowDate}" type="date" pattern="yyyy/MM/dd" var="monthAgo"/>
                                 
+                                <!-- 공지사항 목록 출력 -->
                                 <c:forEach items="${ requestScope.list }" var="n">
                                 
                                 <!-- 알림설정 되어있는 경우 -->
@@ -130,7 +129,6 @@
                                         <td class="number">${n.noticeNo}</td>
                                         <td class="title">
                                         <fmt:formatDate value="${n.noticeDate}" type="date" pattern="yyyy/MM/dd" var="ndate"/>
-
                                             <h2>
 											<c:if test="${monthAgo < ndate}"> <!-- 공지사항 작성일이 한달안에 작성된 공지사항은 new 알림-->
 												<span>new</span>
@@ -142,57 +140,14 @@
                                             </ul>
                                         </td>
                                         <td class="fileIcon">
-                                        <c:if test="${ !empty n.noticeOriginalFilename1 || !empty n.noticeOriginalFilename2 || !empty n.noticeOriginalFilename3 }">
+                                        <c:if test="${ !empty n.noticeOriginalFilename1 || !empty n.noticeOriginalFilename2 || !empty n.noticeOriginalFilename3 }"><!-- 첨부파일이 하나라도 있을경우 -->
                                       	  <i class="xi-file-text"></i>
                                         </c:if>
                                         </td>
                                     </tr>
                                  </c:if>   
                                 </c:forEach>
-<!--                                    <tr onclick="location.href='noticeView.jsp';">
-                                        <td class="number">4</td>
-                                        <td class="title">
-                                            <h2>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="fileIcon"><i class="xi-file-text"></i></td>
-                                    </tr>
-                                    <tr onclick="location.href='noticeView.jsp';">
-                                        <td class="number">3</td>
-                                        <td class="title">
-                                            <h2>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="fileIcon"><i class="xi-file-text"></i></td>
-                                    </tr>
-                                    <tr onclick="location.href='noticeView.jsp';">
-                                        <td class="number">2</td>
-                                        <td class="title">
-                                            <h2>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="fileIcon"><i class="xi-file-text"></i></td>
-                                    </tr>
-                                    <tr onclick="location.href='noticeView.jsp';">
-                                        <td class="number">1</td>
-                                        <td class="title">
-                                            <h2>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="fileIcon"><i class="xi-file-text"></i></td>
-                                    </tr> -->
+                                <!-- 공지사항 목록 출력 끝 -->
                                     
                                     <!-- 목록이 없을 때 -->
                                     <c:if test="${ noticePage.listCount eq 0 }">
@@ -256,8 +211,6 @@
 								<c:if test="${ !((noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage) }">
 									<!-- <a href="#none"><i class="xi-angle-right"></i></a> -->
 								</c:if>
-                               
-                                
                             </dd>
                         </dl>
                         <!-- //페이징 -->
