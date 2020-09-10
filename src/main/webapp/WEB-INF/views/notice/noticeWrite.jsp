@@ -34,7 +34,7 @@
 
                     <div class="subContent">
                         <!--상세-->
-                        <form name="formname" method="post" enctype="" action="" class="form-inline">
+                        <form name="formname" method="post" enctype="multipart/form-data" action="ninsert.do" class="form-inline">
                         <div class="write-area">
                         
                             <h2>공지사항 작성</h2>
@@ -48,26 +48,26 @@
                                 <tbody>
                                     <tr>
                                         <td>알림</td>
-                                        <td><label><input type="radio"" name="" title=""/>필수여부</label></td>
+                                        <td><label><input type="radio"" name="noticeState" value="checked"/>필수여부</label></td>
                                     </tr>
                                     <tr>
                                         <td>제목</td>
-                                        <td><input type="text" name="" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
+                                        <td><input type="text" name="noticeTitle" class="form-control w100p" placeholder="제목 입력" required/></td>
                                     </tr>
                       			    <tr>
                     			        <td>작성자</td>
-                          			    <td><input type="text" name="" title="" class="form-control w100p" readonly value="관리자"></td>
+                          			    <td><input type="text" name="noticeWriter" class="form-control w100p" readonly value="관리자" ></td>
                     			    </tr>                                    
                                     <tr>
                                         <td>내용</td>
-                                        <td><textarea name="" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                                        <td><textarea name="noticeContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" required></textarea></td>
                                     </tr>
                                     <tr>
                           			    <td>첨부파일</td>
                        			        <td>
-                          			    	<input type="file" name="" title="" class="mb5">
-                           			    	<input type="file" name="" title="" class="mb5">
-                               			    <input type="file" name="" title="" class="mb5">
+                          			    	<input type="file" name="ofile1" class="mb5">
+	                           			    <input type="file" name="ofile2" class="mb5">
+                               			    <input type="file" name="ofile3" class="mb5">
                           			    </td>
                         			</tr>
                                 </tbody>
