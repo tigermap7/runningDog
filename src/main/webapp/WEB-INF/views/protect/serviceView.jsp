@@ -151,7 +151,10 @@
                         <div class="viewBtn-wrap">
                             <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
                             <button class="listBtn"><i class="xi-rotate-left"></i> 목록</button>
-                            <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
+                            <c:url var="vdel" value="vdelete.do">
+                            	<c:param name="volno" value="${volunteer.volno}"/>
+                            </c:url>
+                            <button class="deleteBtn" onclick="javascript:location.href=${vdel}"><i class="xi-cut"></i> 삭제</button>
                             <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
                             <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
                         </div>
