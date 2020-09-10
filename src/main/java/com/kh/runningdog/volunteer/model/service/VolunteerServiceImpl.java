@@ -30,20 +30,17 @@ public class VolunteerServiceImpl implements VolunteerService{
 
 	@Override
 	public int insertVolunteer(Volunteer volunteer) {
-		// TODO Auto-generated method stub
-		return 0;
+		return volunteerDao.insertVolunteer(volunteer);
 	}
 
 	@Override
 	public int updateVolunteer(Volunteer volunteer) {
-		// TODO Auto-generated method stub
-		return 0;
+		return volunteerDao.updateVolunteer(volunteer);
 	}
 
 	@Override
 	public int deleteVolunteer(Volunteer volunteer) {
-		// TODO Auto-generated method stub
-		return 0;
+		return volunteerDao.deleteVolunteer(volunteer);
 	}
 	
 	

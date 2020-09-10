@@ -33,5 +33,17 @@ public class VolunteerDao {
 	public Volunteer selectVolunteer(int volno) {
 		return session.selectOne("volunteerMapper.selectVolunteer", volno);
 	}
+	
+	public int insertVolunteer( Volunteer volunteer) {
+		return session.insert("volunteerMapper.insertVolunteer", volunteer);
+	}
+	
+	public int updateVolunteer( Volunteer volunteer) {
+		return session.update("volunteerMapper.updateVolunteer", volunteer);
+	}
+	
+	public int deleteVolunteer( Volunteer volunteer) {
+		return session.delete("volunteerMapper.deleteVolunteer", volunteer);
+	}
 
 }
