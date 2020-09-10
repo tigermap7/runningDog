@@ -1,5 +1,8 @@
+//탑메뉴
 $(document).ready(function() {
 	$('.menuAll > ul > li.menuAll_close').on('click', function() {
+		$('.menuBtn').removeClass('on')
+		$(this).removeClass('on');
 		$('#header').removeClass('active');
 		$('.menuAll').slideUp(200);
 		$('.menuAll').removeClass('on');
@@ -28,6 +31,20 @@ $(document).ready(function() {
 		}
 	});
 });
+
+
+//탑메뉴
+//$(document).ready(function() {
+//	$('#mHeader dl dt button.xi-align-justify').on('click', function() {
+//		if ($(this).removeClass('collapsed')) {
+//			$('#mHeader').addClass('on');
+//		} else {
+//			$('#mHeader').removeClass('on');
+//		}
+//	});
+//});
+
+
 
 // 서브 비주얼 //
 $(document).ready(function() {

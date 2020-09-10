@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+	<resultMap type="Member" id="resultMember">
+		<id property="uniqueNum" column="unique_num"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPwd" column="user_pwd"/>
+		<result property="nickname" column="nickname"/>
+		<result property="phone" column="phone"/>
+		<result property="profleImg" column="profle_img"/>
+		<result property="joinDate" column="join_date"/>
+		<result property="lastAccessDate" column="last_access_date"/>
+		<result property="loginType" column="login_type"/>
+		<result property="loginLimit" column="login_limit"/>
+	</resultMap>
+
+	<resultMap type="Member" id="resultList">
+		<result property="uniqueNum" column="unique_num"/>
+		<result property="userId" column="user_id"/>
+		<result property="userPwd" column="user_pwd"/>
+		<result property="nickname" column="nickname"/>
+		<result property="phone" column="phone"/>
+		<result property="profleImg" column="profle_img"/>
+		<result property="joinDate" column="join_date"/>
+		<result property="lastAccessDate" column="last_access_date"/>
+		<result property="loginType" column="login_type"/>
+		<result property="loginLimit" column="login_limit"/>
+	</resultMap>
+	
+	<select id="selectLogin" parameterType="Member" resultMap="resultMember">
+		select * from member where user_id = #{ userId }
+	</select>
+	
+	<select id="selectUserIdCheck" parameterType="Member" resultMap="resultMember">
+		select user_id from member where user_id = #{ userId }
+	</select>
+	
+	<select id="selectNicknameCheck" parameterType="Member" resultMap="resultMember">
+		select nickname from member where  nickname = #{ nickname }
+	</select>
+	
+	<select id="selectPhoneCheck" parameterType="Member" resultMap="resultMember">
+		select phone from member where  phone = #{ phone }
+	</select>
+	
+	<insert id="insertMember" parameterType="Member">
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{profleImg}, DEFAULT, DEFAULT, null, DEFAULT)
+	</insert>
+	
+	
+	
+	<update id="updateMember" parameterType="Member">
+
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+
+	</delete>
+</mapper>
