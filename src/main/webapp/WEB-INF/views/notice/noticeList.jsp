@@ -90,8 +90,16 @@
                                 
                                 <c:forEach items="${ requestScope.list }" var="n">
                                 
+                                <!-- 알림설정 되어있는 경우 -->
                                 <c:if test="${ !empty n.noticeState }">
-                                     <tr onclick="location.href='ndetail.do';" class="active">
+                                	 <c:url var="ndurl" value="ndetail.do">
+                                	 	<c:param name="noticeNo" value="${ n.noticeNo }"/>
+                                	 	<c:param name="currentPage" value="${ noticePage.currentPage}"/>
+ 	                                		<!-- 검색값 유지 -->
+ 	                                	<c:param name="search" value="${ noticePage.search }"/>
+										<c:param name="keyword" value="${ noticePage.keyword }"/>
+                                	 </c:url>
+                                     <tr onclick="location.href='${ ndurl }';" class="active">
                                         <td class="number">${n.noticeNo}</td>
                                         <td class="title">
                                             <h2><span>공지</span>${ n.noticeTitle }</h2>
@@ -108,9 +116,17 @@
                                         
                                     </tr> 
                                 </c:if> 
-                                    
-                                <c:if test="${ empty n.noticeState }">    
-                                    <tr onclick="location.href='noticeView.jsp';">
+                                
+                                <!-- 알림설정이 안되어있는 경우 -->
+                                <c:if test="${ empty n.noticeState }">
+                                     <c:url var="ndurl" value="ndetail.do">
+                                	 	<c:param name="noticeNo" value="${ n.noticeNo }"/>
+                                	 	<c:param name="currentPage" value="${ noticePage.currentPage}"/>
+ 	                                		<!-- 검색값 유지 -->
+ 	                                	<c:param name="search" value="${ noticePage.search }"/>
+										<c:param name="keyword" value="${ noticePage.keyword }"/>
+                                	 </c:url>    
+                                    <tr onclick="location.href='${ ndurl}';">
                                         <td class="number">${n.noticeNo}</td>
                                         <td class="title">
                                         <fmt:formatDate value="${n.noticeDate}" type="date" pattern="yyyy/MM/dd" var="ndate"/>
@@ -204,10 +220,10 @@
                             <dd>
                             <!-- 이전 그룹 페이지 이동 -->
                             	<c:if test="${ (noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) >= 1 }">
-								<c:url var="np1" value="nlist.do">
+								<c:url var="npurl1" value="nlist.do">
 								<c:param name="page" value="${ noticePage.startPage - 5 }"/>
 								</c:url>
-									 <a href="${ np1 }"><i class="xi-angle-left"></i></a>
+									 <a href="${ npurl1 }"><i class="xi-angle-left"></i></a>
 								</c:if>
 								<c:if test="${ !((noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) >= 1) }">
 								<!-- 	<a href="#none"><i class="xi-angle-left"></i></a> -->
@@ -220,22 +236,22 @@
                                 		<a href="#none" class="active">${ p }</a>
  	                                </c:if>
  	                                <c:if test="${ p ne noticePage.currentPage }">
- 	                                	<c:url var="nlp2" value="nlist.do">
+ 	                                	<c:url var="npurl2" value="nlist.do">
  	                                		<c:param name="page" value="${ p }"/>
  	                                		<!-- 검색값 유지 -->
  	                                		<c:param name="searchNotice" value="${ noticePage.search }"/>
 											<c:param name="keyword" value="${ noticePage.keyword }"/>
  	                                	</c:url>
- 	                                	<a href="${ nlp2 }">${ p }</a>
+ 	                                	<a href="${ npurl2 }">${ p }</a>
  	                                </c:if>
                                 </c:forEach>
                                 
                             <!-- 다음 그룹 페이지 이동 -->
                             	<c:if test="${ (noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage }">
-								<c:url var="np3" value="nlist.do">
+								<c:url var="npurl3" value="nlist.do">
 								<c:param name="page" value="${ noticePage.startPage + 5 }"/>
 								</c:url>
-									 <a href="${ np3 }"><i class="xi-angle-right"></i></a>
+									 <a href="${ nprul3 }"><i class="xi-angle-right"></i></a>
 								</c:if>
 								<c:if test="${ !((noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage) }">
 									<!-- <a href="#none"><i class="xi-angle-right"></i></a> -->
