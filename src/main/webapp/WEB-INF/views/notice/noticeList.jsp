@@ -37,25 +37,19 @@
                         <div class="search_wrap">
                             <form action="nlist.do" name="">
                             <select name="searchNotice">
-                            	<!-- 검색분류가 비었거나 제목일 경우 -->
-                                <c:if test="${ empty noticePage.search or noticePage.search eq 'title' or noticePage.search eq null}">
+                            	<!-- 검색분류가 비었을 경우 -->
+                                <c:if test="${ empty noticePage.search or noticePage.search eq null}">
                                 	<option value="title" class="fontColor-dark">제목</option>
                                 	<option value="content" class="fontColor-dark">내용</option>
                                 	<option value="both" class="fontColor-dark">제목 + 내용</option>
                                 </c:if>
-                                <!-- 검색분류가 내용일 경우 -->
-                                <c:if test="${ noticePage.search eq 'content' }">
-                                	<option value="title" class="fontColor-dark">제목</option>
-                                	<option value="content" class="fontColor-dark" selected="selected">내용</option>
-                                	<option value="both" class="fontColor-dark">제목 + 내용</option>
+                                <!-- 검색분류가 있을 경우 해당값 선택되어있게 하기 -->
+                                <c:if test="${ !empty noticePage.search }">
+                                	<option value="title" class="fontColor-dark" ${ noticePage.search eq 'title' ? 'selected' : '' }>제목</option>
+                                	<option value="content" class="fontColor-dark" ${ noticePage.search eq 'content' ? 'selected' : '' }>내용</option>
+                                	<option value="both" class="fontColor-dark" ${ noticePage.search eq 'both' ? 'selected' : '' }>제목 + 내용</option>
                                 </c:if>
-                                <!-- 검색분류가 제목 + 내용일 경우 -->
-                                <c:if test="${ noticePage.search eq 'both' }">
-                                	<option value="title" class="fontColor-dark">제목</option>
-                                	<option value="content" class="fontColor-dark">내용</option>
-                                	<option value="both" class="fontColor-dark" selected="selected">제목 + 내용</option>
-                                </c:if>
-                            </select>
+                            </select>                                                        
                             <div class="search-box">
                                 <input type="text" placeholder="원하시는 키워드를 검색해주세요." name="keyword" value="${ noticePage.keyword }"><!-- 검색값 유지 -->
                                 <button type="submit" class="xi-search"></button>
