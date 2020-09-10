@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.volunteer.model.service.VolunteerService;
@@ -70,7 +71,7 @@ public class VolunteerController {
 		 }
 		return mv;
 	}
-	
+	//상세보기 페이지 출력
 	@RequestMapping(value = "vdetail.do")
 	public String selectVolunteer(HttpServletRequest request, Model model) {
 		int volno = Integer.parseInt(request.getParameter("volno"));
@@ -90,5 +91,15 @@ public class VolunteerController {
 			return "main/main";
 		}
 	}
+	//글등록하기
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public String insertVolunteer()
+	//글수정하기
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public String updateVolunteer()
+	
+	//글삭제하기
+	@RequestMapping(value="vdelete.do", method=RequestMethod.POST)
+	public String updateVolunteer()
 
 }

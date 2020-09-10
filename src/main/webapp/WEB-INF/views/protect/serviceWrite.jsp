@@ -34,7 +34,7 @@
 
                     <div class="subContent">
                         <!--상세-->
-                        <form name="formname" method="post" enctype="" action="" class="form-inline">
+                        <form name="formname" method="post" enctype="" action="vinsert.do" class="form-inline">
                         <div class="write-area">
                         
                             <h2>자원봉사모집 작성</h2>
