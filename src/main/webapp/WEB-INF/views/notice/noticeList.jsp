@@ -33,29 +33,30 @@
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
-                        <!--서브 검색-->                
+                        <!--서브 검색-->        
+        
                         <div class="search_wrap">
                             <form action="nlist.do" name="">
                             <select name="searchNotice">
-                                
-                                <c:if test="${ !empty noticePage.search or noticePage.search ne ''}">
-                                ${ noticePage.search }
-                                	<c:if test="${ noticePage.search eq title}">
-                              		  <option value="title" class="fontColor-dark" selected="selected">제목</option>
-                              	  </c:if>
-                           	  	  <c:if test="${ noticePage.search eq content}">
-                              		  <option value="content" class="fontColor-dark" selected="selected">내용</option>
-                             	   </c:if>
-                              	  <c:if test="${ noticePage.search eq both}">
-                             	 	  <option value="both" class="fontColor-dark" selected="selected">제목 + 내용</option>
-                             	   </c:if>
-                                </c:if>
-                                <c:if test="${ empty noticePage.search or noticePage.search eq ''}">
+                            	<!-- 검색분류가 비었거나 제목일 경우 -->
+                                <c:if test="${ empty noticePage.search or noticePage.search eq 'title' or noticePage.search eq null}">
                                 	<option value="title" class="fontColor-dark">제목</option>
                                 	<option value="content" class="fontColor-dark">내용</option>
                                 	<option value="both" class="fontColor-dark">제목 + 내용</option>
                                 </c:if>
-                                
+                                <!-- 검색분류가 내용일 경우 -->
+                                <c:if test="${ noticePage.search eq 'content' }">
+                                	<option value="title" class="fontColor-dark">제목</option>
+                                	<option value="content" class="fontColor-dark" selected="selected">내용</option>
+                                	<option value="both" class="fontColor-dark">제목 + 내용</option>
+                                </c:if>
+                                <!-- 검색분류가 제목 + 내용일 경우 -->
+                                <c:if test="${ noticePage.search eq 'both' }">
+                                	<option value="title" class="fontColor-dark">제목</option>
+                                	<option value="content" class="fontColor-dark">내용</option>
+                                	<option value="both" class="fontColor-dark" selected="selected">제목 + 내용</option>
+                                </c:if>
+
                             </select>
                             <div class="search-box">
                                 <input type="text" placeholder="원하시는 키워드를 검색해주세요." name="keyword" value="${ noticePage.keyword }"><!-- 검색값 유지 -->
@@ -178,17 +179,19 @@
                                     </tr> -->
                                     
                                     <!-- 목록이 없을 때 -->
-<!--                                     <tr>
+                                    <c:if test="${ noticePage.listCount eq 0 }">
+                                    <tr>
                                         <td colspan="3">
                                             <div class="list-no">
                                                 <p>
-                                                    <img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png"
+                                                    <img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png"
                                                         alt="" title="" />
                                                 </p>
                                                 <h1>목록이 없습니다.</h1>
                                             </div>
                                         </td>
-                                    </tr> -->
+                                    </tr>
+                                    </c:if>
                                     
                                     
                                 </tbody>
