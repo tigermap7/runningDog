@@ -1,6 +1,10 @@
 package com.kh.runningdog.notice.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.notice.model.service.NoticeService;
@@ -116,6 +123,60 @@ public class NoticeController {
 		mv.setViewName("notice/noticeWrite");
 		return mv;
 	}
+	
+	//공지사항 등록
+	@RequestMapping(value="ninsert.do", method=RequestMethod.POST)
+	public String insertAdminNotice(Notice notice, HttpServletRequest request, @RequestParam Map<String, MultipartFile> fileMap) {
+		logger.info("ninsert.do run...");
+		String returnView = null;
+		int i = 1;
+		
+		String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles"); //파일 저장할 폴더 위치
+		
+		Map<String, MultipartFile> fileMap2 = new HashMap<String, MultipartFile>();
+		
+		//파일이 있을 경우만 것만 다시 꺼내서 map에 저장하기(파일이 없어도 그냥 다 저장됨)
+		for(String k : fileMap.keySet()) {
+			if(fileMap.get(k).getOriginalFilename() != "") {
+				fileMap2.put("ofile" + i,fileMap.get(k));
+				i++;
+			}
+		}
+
+		for(String key : fileMap2.keySet()) {
+			String originalFilename = fileMap2.get(key).getOriginalFilename();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
+			renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
+			
+			try {
+				fileMap2.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			for(int j = 0; j < fileMap2.size(); j++) { //파일명 notice에 set하기
+				switch (j) {
+				case 0 : notice.setNoticeOriginalFilename1(originalFilename);
+					     notice.setNoticeRenameFilename1(renamefilename); break;
+				case 1 : notice.setNoticeOriginalFilename2(originalFilename);
+						 notice.setNoticeRenameFilename2(renamefilename); break;
+				case 2 : notice.setNoticeOriginalFilename3(originalFilename);
+						 notice.setNoticeRenameFilename3(renamefilename); break;
+				}
+			}
+		}
+		
+		if(noticeService.insertNotice(notice) > 0) {
+			returnView = "redirect:/nlist.do";
+		} else {
+			request.setAttribute("message", "새 공지사항 등록 처리 실패");
+			returnView = "common/error";
+		}
+		
+		return returnView;
+	}
+	
 	
 	//공지사항 수정 페이지 이동
 	@RequestMapping(value="movenoticeupdate.do")
