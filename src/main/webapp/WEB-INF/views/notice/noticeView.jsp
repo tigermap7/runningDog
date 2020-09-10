@@ -61,8 +61,8 @@
                             <li><span>첨부파일 : </span><a href="#none" download>asdasddsa.hwp</a></li>
                         </ul>
 
-                        <div class="view-ctn">
-                       		${ notice.noticeContent }
+                        <div class="view-ctn" style="white-space:pre;">
+                        	<c:out value="${ notice.noticeContent }" />
                         </div>
                     </div>
                     <!-- 상세 끝 -->
