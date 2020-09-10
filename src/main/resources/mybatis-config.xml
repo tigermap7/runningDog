@@ -4,18 +4,20 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
  	
- 		<settings>
- 		 	 <!-- null일때 null값 넣기 -->
-			<setting name="jdbcTypeForNull" value="NULL"/>
-			 <!-- _언더바가 카멜표기법으로 맵핑처리해주는 것 -->
-			<setting name="mapUnderscoreToCamelCase" value="true"/>
-	    </settings>
+	<settings>
+		<!-- null일때 null값 넣기 -->
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<!-- _언더바가 카멜표기법으로 맵핑처리해주는 것 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
 
 	<typeAliases>
 		<!-- <typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.kh.second.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.kh.second.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.kh.second.test.model.vo.CryptoUser" alias="CryptoUser" /> -->
+		<typeAlias type="com.kh.runningdog.member.model.vo.Member"
+			alias="Member" />
 		<typeAlias type="com.kh.runningdog.sponsor.model.vo.Sponsor" alias="Sponsor"/>
 	</typeAliases>
 	<mappers>
@@ -23,6 +25,7 @@
 		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/test-mapper.xml"/> -->
+		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/sponsor-mapper.xml" />
 	</mappers>
 </configuration> 
