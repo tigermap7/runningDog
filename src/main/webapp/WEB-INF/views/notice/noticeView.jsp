@@ -41,10 +41,7 @@
 							
                     <!-- 상세 -->
                     <div class="view-area">
-                    	현재 페이지 : ${ noticePage.currentPage }
-                    	검색 : ${ noticePage.keyword }, ${ noticePage.search }
-                    	상세번호 : ${ notice.noticeNo }
-                    	
+ 
                     	<c:if test="${ !empty notice.noticeState }">
                         	<h3><span>공지</span></h3>
                         </c:if>
@@ -89,6 +86,7 @@
             <!-- 컨텐츠 끝 -->
 
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
+			</div>
 		</div>
 	</body>
 </html>
