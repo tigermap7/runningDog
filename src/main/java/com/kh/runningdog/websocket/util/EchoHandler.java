@@ -15,8 +15,7 @@ import com.kh.runningdog.member.model.vo.Member;
 
 @RequestMapping("/echo")
 public class EchoHandler extends TextWebSocketHandler {
-	// private Map<String, WebSocketSession> sessions = new HashMap<String,
-	// WebSocketSession>();
+	// private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
 
