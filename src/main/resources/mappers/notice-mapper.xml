@@ -64,4 +64,33 @@
 		update notice set notice_readcount = notice_readcount + 1 where notice_no = #{ noticeNo }
 	</update>
 
+
+	<select id="selectNoticePre" resultType="Integer" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
+		select lagnum from (select notice_no, lag(notice_no) over(order by notice_state nulls last, notice_date desc) lagnum from notice
+			<if test="search == 'title'">
+				WHERE NOTICE_TITLE LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'content'">
+	  			WHERE NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'both'">
+	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+			</if>	
+		) where notice_no = #{ noticeNo }
+	</select>
+	
+	<select id="selectNoticeNext" resultType="Integer" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
+		select leadnum from (select notice_no, lead(notice_no) over(order by notice_state nulls last, notice_date desc) leadnum from notice
+			<if test="search == 'title'">
+				WHERE NOTICE_TITLE LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'content'">
+	  			WHERE NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'both'">
+	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+			</if>	
+		) where notice_no = #{ noticeNo }
+	</select>
+
 </mapper>
