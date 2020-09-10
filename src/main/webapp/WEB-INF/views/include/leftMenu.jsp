@@ -5,7 +5,7 @@
 <div class="leftMenu_wrap">
     <div class="leftProfile">
         <div><img src="/runningdog/resources/images/test/animalImg03.jpg"></div>
-        <h3>멍무이 님</h3>
+        <h3><c:out value="${ sessionScope.loginMember.getNickname() } 님"/></h3>
         <p>회원번호 #1971345</p>
         <ul>
             <li><b>게시글 12</b></li>
