@@ -4,7 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="noticeMapper">
 
-	<resultMap type="Notice" id="resultNotice">
+<!-- 	<resultMap type="Notice" id="resultNotice">
 		<id column="NOTICE_NO" property="noticeNo" />
 		<result column="NOTICE_WRITER" property="noticeWriter" />
 		<result column="NOTICE_TITLE" property="noticeTitle" />
@@ -18,10 +18,10 @@
 		<result column="NOTICE_RENAME_FILENAME2" property="noticeRenameFilename2" />
 		<result column="NOTICE_ORIGINAL_FILENAME3" property="noticeOriginalFilename3" />
 		<result column="NOTICE_RENAME_FILENAME3" property="noticeRenameFilename3" />
-	</resultMap>
+	</resultMap> -->
 
 	
-	<select id="selectList" resultMap="resultNotice" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
+	<select id="selectList" resultType="Notice" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
 			SELECT * 
 			FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_READCOUNT, NOTICE_STATE, NOTICE_ORIGINAL_FILENAME1, NOTICE_RENAME_FILENAME1,  
 				  NOTICE_ORIGINAL_FILENAME2, NOTICE_RENAME_FILENAME2, NOTICE_ORIGINAL_FILENAME3, NOTICE_RENAME_FILENAME3
@@ -54,5 +54,14 @@
 	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
 			</if>
 	</select>
+	
+	
+	<select id="selectNotice" resultType="Notice" parameterType="_int">
+		select * from notice where notice_no = #{ noticeNo }
+	</select>
+	
+	<update id="updateReadCount" parameterType="_int">
+		update notice set notice_readcount = notice_readcount + 1 where notice_no = #{ noticeNo }
+	</update>
 
 </mapper>
