@@ -1,9 +1,7 @@
 package com.kh.runningdog.websocket.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +39,7 @@ public class EchoHandler extends TextWebSocketHandler {
         String sessionId = "";
         while (sessionIds.hasNext()) {
             sessionId = sessionIds.next();
-            sessions.get(sessionId).sendMessage(new TextMessage(getHttpSessionValue(session).getNickname() + "|" + message.getPayload()));
+            sessions.get(sessionId).sendMessage(new TextMessage(getHttpSessionValue(session).getNickname() + "|" + message.getPayload() + "|" + getHttpSessionValue(session).getUniqueNum()));
             
         }
 	}
