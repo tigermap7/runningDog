@@ -8,15 +8,7 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
-<script type="text/javascript">
-    //페이지 이동
-    function fn_movePage(val){
-        jQuery("input[name=pageNo]").val(val);
-        jQuery("form[name=frm]").attr("method", "post");
-        jQuery("form[name=frm]").attr("action","").submit();
-    }
 
-</script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 	
@@ -56,7 +48,7 @@
                             </select>
                             <div class="search-box">
                                 <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ pageVO.searchValue }">
-                                <button type="submit" value="SEARCH"  onclick ="fn_search();" class="xi-search"></button>
+                                <button type="submit" value="SEARCH" class="xi-search"></button>
                                
                             </div>
                         </div>
@@ -68,11 +60,19 @@
                             <div>
                                 <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
                                 <div>
-                                <!-- <form action="" name=""> -->
-                                    <a class="active" href="dboardList.do?dCategory=e">전체</a>
-                                    <a href="dboardList.do?dCategory=d">강아지</a>
-                                    <a href="dboardList.do?dCategory=c">고양이</a>
-                                <!-- </form> -->
+                                
+                                <c:url var = "dCate" value= "dboardList.do">
+									<c:param name="pageNo" value="${ pageVO.pageNo}"/>
+									<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
+									<c:param name="searchValue" value="${pageVO.searchValue }"/>
+								</c:url>
+                                <form action="" name="dCategory">
+                                    <a ${dCategory eq "d"?'class="active"' : "" }href="${dCate}&dCategory=d">강아지</a>
+                                    <a ${dCategory eq "c"?'class="active"' : "" }href="${dCate}&dCategory=c">고양이</a>
+                                    <a ${dCategory eq "e"?'class="active"' : "" }href="${dCate}&dCategory=e">기타</a>
+                                    <a ${empty dCategory ?'class="active"' : "" }href="${dCate}">전체</a>
+                                    
+                                 </form>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                         <!-- 페이징 -->
                         <dl class="list-paging">
                             <dd>
-								<c:if test="${pageVO.pageNo !=0 }">
+								<c:if test="${pageVO.pageNo >0 }">
 									<c:if test="${pageVO.startPageNo >5 }">
 										<c:url var = "dl1" value="dboardList.do">
 											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
@@ -166,7 +166,6 @@
 								</c:if>
 							</dd>
                         </dl>
-                        </form>
                         <!-- //페이징 -->
                     </div>
                 </div>

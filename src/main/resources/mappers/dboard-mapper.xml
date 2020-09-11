@@ -62,6 +62,9 @@
 		<if test="searchFiled != null and searchFiled !=''">
 			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 		</if>
+		<if test="dCategory != null and dCategory !=''">
+			AND d_category LIKE  '%' || #{dCategory} || '%'
+		</if>
 	</select>
 	
 	<select id="selectList" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="com.kh.runningdog.dboard.model.vo.Dboard">
@@ -73,6 +76,9 @@
 			  		FROM DBOARD WHERE D_CHECK = 'y' 
 			  		<if test="searchFiled != null and searchFiled !=''">
 					AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+					</if>
+					<if test="dCategory != null and dCategory !=''">
+					AND d_category LIKE  '%' || #{dCategory} || '%'
 					</if>
 					ORDER BY D_NUM DESC))
 		WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}

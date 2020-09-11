@@ -97,7 +97,7 @@ public class DboardController {
 		
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
-		
+		dboard.setdCategory(request.getParameter("dCategory"));
 		 logger.info("SearchFiled : " + dboard.getSearchFiled());
 		 logger.info("SearchValue : " + dboard.getSearchValue());
 		 int totalCount = dboardService.selectListCount(dboard); //게시물 총갯수를 구한다
@@ -117,7 +117,7 @@ public class DboardController {
 		 
 		 ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
 		 
-		 
+		 model.addAttribute("dCategory",dboard.getdCategory());
 		 model.addAttribute("totalCount",totalCount);
 		 model.addAttribute("dboardList",dboardList);
 		 
