@@ -142,7 +142,9 @@ public class NoticeController {
 				i++;
 			}
 		}
-
+		
+		int j = 1;
+		
 		for(String key : fileMap2.keySet()) {
 			String originalFilename = fileMap2.get(key).getOriginalFilename();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -154,17 +156,15 @@ public class NoticeController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			for(int j = 0; j < fileMap2.size(); j++) { //파일명 notice에 set하기
 				switch (j) {
-				case 0 : notice.setNoticeOriginalFilename1(originalFilename);
+				case 1 : notice.setNoticeOriginalFilename1(originalFilename);
 					     notice.setNoticeRenameFilename1(renamefilename); break;
-				case 1 : notice.setNoticeOriginalFilename2(originalFilename);
+				case 2 : notice.setNoticeOriginalFilename2(originalFilename);
 						 notice.setNoticeRenameFilename2(renamefilename); break;
-				case 2 : notice.setNoticeOriginalFilename3(originalFilename);
+				case 3 : notice.setNoticeOriginalFilename3(originalFilename);
 						 notice.setNoticeRenameFilename3(renamefilename); break;
-				}
 			}
+				j++;
 		}
 		
 		if(noticeService.insertNotice(notice) > 0) {
@@ -184,6 +184,28 @@ public class NoticeController {
 		mv.setViewName("notice/noticeUpdate");
 		return mv;
 	}
+	
+	//공지사항 삭제
+	@RequestMapping(value="ndelete.do")
+	public String deleteAdminNotice(HttpServletRequest request) {
+		String returnView = null;
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		if(noticeService.deleteNotice(noticeNo) > 0) {
+			String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles"); //저장된 파일 위치
+			for(int i = 1; i < 4; i++ ) {
+				String renameFilename = request.getParameter("rfile" + i);	//첨부파일 있나 확인하는 용도
+				if(renameFilename != null) {
+					new File(savePath + "\\" + renameFilename).delete();
+				}
+			}
+			returnView = "redirect:/nlist.do";
+		} else {
+			request.setAttribute("message", "공지사항 삭제 처리 실패");
+			returnView = "common/error";
+		}
+
+		return returnView;
+	}	
 	
 	
 }
