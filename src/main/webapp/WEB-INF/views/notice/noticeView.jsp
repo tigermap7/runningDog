@@ -58,10 +58,9 @@
                             <li><span>작성자 : </span>${ notice.noticeWriter }</li>
                             <li><span>등록일 : </span>${ notice.noticeDate }</li>
                             <li><span>조회수 : </span>${ notice.noticeReadcount }</li>
-
-                            
                         </ul>
                         
+                        <!-- 파일 순서대로 저장했기때문에 단계별로 보여주기 -->
                         <c:if test="${ !empty notice.noticeOriginalFilename1 }">
                             <ul><li><span>첨부파일 : </span>
                             		<c:url var="nfdurl1" value="nfdown.do">
@@ -103,7 +102,6 @@
 							<c:param name="search" value="${ noticePage.search }"/>
 							<c:param name="keyword" value="${ noticePage.keyword }"/>
 						</c:url>                 
-						    	
 						<c:if test="${ preNo ne 0 }">
                         	<button class="nextBtn" onclick="movePreDetail()"><i class="xi-angle-left-min"></i> 이전</button>
                         </c:if>
@@ -129,7 +127,10 @@
                         <button class="deleteBtn" onclick="location.href='${ndelurl}'"><i class="xi-cut"></i> 삭제</button>
                         
                         <!-- 수정 -->
-                        <button class="modifiedBtn" onclick="location.href='movenoticeupdate.do'"><i class="xi-pen-o"></i> 수정</button>
+                        <c:url var="nupviewurl" value="nupview.do">
+                        	<c:param name="noticeNo" value="${ notice.noticeNo }"/>
+                        </c:url>
+                        <button class="modifiedBtn" onclick="location.href='${nupviewurl}'"><i class="xi-pen-o"></i> 수정</button>
 
 						<!-- 다음글 -->
 						<c:url var="nnext" value="ndetail.do">
