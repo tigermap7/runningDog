@@ -214,6 +214,7 @@ public class MemberController {
 	public String searchChatUser(Member member, Model model) {
 		ArrayList<Member> list = memberService.selectNicknameCheckList(member);
 		int userCount = memberService.selectNicknameCount(member);
+		
 		if (list != null) {
 			model.addAttribute("list", list);
 		}

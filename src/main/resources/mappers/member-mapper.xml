@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="selectNicknameCheckList" parameterType="Member" resultMap="resultList">
-		select nickname from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
+		select * from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
 	</select>
 	
 	<select id="selectNicknameCount" parameterType="Member" resultType="_int">
