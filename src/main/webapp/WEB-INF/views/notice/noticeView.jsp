@@ -94,7 +94,13 @@
                         <button class="listBtn" onclick="location.href='${nlisturl}'"><i class="xi-rotate-left"></i> 목록</button>
                         
                         <!-- 삭제 -->
-                        <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
+                        <c:url var="ndelurl" value="ndelete.do">
+							<c:param name="noticeNo" value="${ notice.noticeNo }"/>
+							<c:param name="rfile1" value="${ notice.noticeRenameFilename1 }"/>
+							<c:param name="rfile2" value="${ notice.noticeRenameFilename2 }"/>
+							<c:param name="rfile3" value="${ notice.noticeRenameFilename3 }"/>
+						</c:url>
+                        <button class="deleteBtn" onclick="location.href='${ndelurl}'"><i class="xi-cut"></i> 삭제</button>
                         
                         <!-- 수정 -->
                         <button class="modifiedBtn" onclick="location.href='movenoticeupdate.do'"><i class="xi-pen-o"></i> 수정</button>
