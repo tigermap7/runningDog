@@ -50,32 +50,14 @@
                       	 <div class="search_wrap" id ="search">
                             <input type="hidden" name="dCategory" value="${ d.dCategory }">
                             <select name="searchFiled" id="searchS">
-                            <c:if test="${ !empty dboard.searchFiled or dboard.searchFiled.getBytes().length!=0}">
-                            	<c:if test="${ dboard.searchFiled eq 'd_title'}">
-                                <option value="d_title" class="fontColor-dark" selected="selected">제목</option>
-                                </c:if>
-                                <c:if test="${ dboard.searchFiled eq 'd_writer'}">
-                                <option value="d_writer" class="fontColor-dark" selected="selected">임시보호자</option>
-                                </c:if>
-                                <c:if test="${ dboard.searchFiled eq 'd_local'}">
-                                <option value="d_local" class="fontColor-dark" selected="selected">발견지역</option>
-                                </c:if>
-                             </c:if>
-                             <c:if test="${ empty dboard.searchFiled or dboard.searchFiled.getBytes().length==0 }">
-                              <option value="d_title" class="fontColor-dark" selected="selected">제목</option>
-                              <option value="d_writer" class="fontColor-dark">임시보호자</option>
-                              <option value="d_local" class="fontColor-dark">발견지역</option>
-                              </c:if> 
+                                <option value="d_title" class="fontColor-dark" ${pageVO.searchFiled eq"d_title"?"selected":""}>제목</option>
+                                <option value="d_writer" class="fontColor-dark" ${pageVO.searchFiled eq"d_writer"?"selected":""}>임시보호자</option>
+                                <option value="d_local" class="fontColor-dark" ${pageVO.searchFiled eq"d_local"?"selected":""}>발견지역</option>
                             </select>
                             <div class="search-box">
-                            	<c:if test="${ !empty dboard.searchValue or dboard.searchValue.getBytes().length!=0}">
-                                <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ dboard.searchValue }">
+                                <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ pageVO.searchValue }">
                                 <button type="submit" value="SEARCH"  onclick ="fn_search();" class="xi-search"></button>
-                                </c:if>
-                                <c:if test="${ empty dboard.searchValue or dobard.searchValue.getBytes().length==0}">
-                                <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ dboard.searchValue }">
-                                <button type="submit" value="SEARCH"  onclick ="fn_search();" class="xi-search"></button>
-                                </c:if>
+                               
                             </div>
                         </div>
                        </form> 
@@ -143,10 +125,6 @@
                             </ul>
                         </div>
                         <!-- 리스트 끝 -->
-                    <form name="frm">
-                    <input type= "hidden" name="pageNo"/>
-					<input type= "hidden" name="searchFiled" value="${ pageVO.searchFiled }"/>
-					<input type= "hidden" name="searchValue" value="${ pageVO.searchValue }"/>
                         <!-- 페이징 -->
                         <dl class="list-paging">
                             <dd>
