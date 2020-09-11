@@ -35,12 +35,12 @@
                     <div class="subContent">
                         <!--서브 검색-->
                         <div class="search_wrap">
-                            <form action="searchChatUser.do" name="">
-                            <select>
+                            <form action="searchChatUser.do" method="get">
+                            <select name="searchnickname">
                                 <option value="" class="fontColor-dark">이름</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" placeholder="회원의 이름를 검색해주세요.">
+                                <input type="text" placeholder="회원의 이름를 검색해주세요." name="nickname">
                                 <button class="xi-search"></button>
                             </div>
                             </form>

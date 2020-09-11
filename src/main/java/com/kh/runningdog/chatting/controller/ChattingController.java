@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.runningdog.member.model.vo.Member;
+
 @Controller
 public class ChattingController {
 	private Logger logger = LoggerFactory.getLogger(getClass());
@@ -21,8 +23,4 @@ public class ChattingController {
 		return "mypage/myChattingView";
 	}
 	
-	@RequestMapping("searchChatUser.do")
-	public String moveSearchUser() {
-		return "mypage/findUser";
-	}
 }

@@ -14,4 +14,6 @@ public interface MemberService {
 	Member selectUserIdCheck(Member member);
 	Member selectNicknameCheck(Member member);
 	Member selectPhoneCheck(Member member);
+	ArrayList<Member> selectNicknameCheckList(Member member);
+	int selectNicknameCount(Member member);
 }

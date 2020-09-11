@@ -35,20 +35,20 @@
                     <div class="subContent">
                         <!--서브 검색-->
                         <div class="search_wrap">
-                            <form action="" name="">
-                            <select>
+                            <form action="searchChatUser.do" method="get">
+                            <select name="searchnickname">
                                 <option value="" class="fontColor-dark">이름</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" placeholder="회원의 이름를 검색해주세요.">
-                                <button onclick="#none" class="xi-search"></button>
+                                <input type="text" placeholder="회원의 이름를 검색해주세요." name="nickname">
+                                <button class="xi-search"></button>
                             </div>
                             </form>
                         </div>
                         <!--서브 검색 끝-->
 
                         <div class="sort-area">  
-                            <h4>전체 15명의 유저</h4>
+                            <h4>전체 ${ usercount }명의 유저</h4>
                         </div>
                         <table class="chattingList">
                             <colgroup>
@@ -57,14 +57,21 @@
                                 <col width="10%">
                             </colgroup>
                             <tbody>
-                                <tr onclick="location='moveChattingView.do'">
-                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
-                                    <td class="title">
-                                        <h2>멍무이</h2>
-                                        <!-- <p>안녕하세요. 유기동물 공고보고 연락드렸습니다. 강아지를 지금 보러갈까 하는데 괜찮을까요?</p> -->
-                                    </td>
-                                    <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-                                </tr>
+                            	<c:if test="${ !empty list }">
+	                            	<c:forEach var="user" items="${ list }">
+		                                <tr onclick="location='moveChattingView.do'">
+		                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
+		                                    <td class="title">
+		                                        <h2>${ user.nickname }</h2>
+		                                        <!-- <p>안녕하세요. 유기동물 공고보고 연락드렸습니다. 강아지를 지금 보러갈까 하는데 괜찮을까요?</p> -->
+		                                    </td>
+		                                    <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
+		                                </tr>
+	                            	</c:forEach>
+                            	</c:if>
+                            	<c:if test="${ empty list }">
+                            		검색결과 없음
+                            	</c:if>
                             </tbody>
                         </table>
                         <!-- 페이징 -->

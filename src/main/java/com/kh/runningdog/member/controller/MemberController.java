@@ -3,6 +3,7 @@ package com.kh.runningdog.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -209,7 +210,16 @@ public class MemberController {
 //		return url;
 //	}
 	
-	
+	@RequestMapping("searchChatUser.do")
+	public String searchChatUser(Member member, Model model) {
+		ArrayList<Member> list = memberService.selectNicknameCheckList(member);
+		int userCount = memberService.selectNicknameCount(member);
+		if (list != null) {
+			model.addAttribute("list", list);
+		}
+		model.addAttribute("usercount", userCount);
+		return "mypage/findUser";
+	}
 	
 	
 }

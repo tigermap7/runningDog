@@ -41,6 +41,14 @@
 		select nickname from member where  nickname = #{ nickname }
 	</select>
 	
+	<select id="selectNicknameCheckList" parameterType="Member" resultMap="resultList">
+		select nickname from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
+	</select>
+	
+	<select id="selectNicknameCount" parameterType="Member" resultType="_int">
+		select count(nickname) from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
+	</select>
+	
 	<select id="selectPhoneCheck" parameterType="Member" resultMap="resultMember">
 		select phone from member where  phone = #{ phone }
 	</select>

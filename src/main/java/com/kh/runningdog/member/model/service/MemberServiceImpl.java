@@ -57,4 +57,15 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteMember(String userId) {
 		return memberDao.deleteMember(userId);
 	}
+
+	// 채팅에서 유저검색
+	@Override
+	public ArrayList<Member> selectNicknameCheckList(Member member) {
+		return memberDao.selectNicknameCheckList(member);
+	}
+
+	@Override
+	public int selectNicknameCount(Member member) {
+		return memberDao.selectNicknameCount(member);
+	}
 }
