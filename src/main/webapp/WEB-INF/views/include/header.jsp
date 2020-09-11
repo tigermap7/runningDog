@@ -38,7 +38,7 @@
                 <div class="dep2Wrap">
                     <ul class="dep2">
                         <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
-                        <li><a href="${ pageContext.servletContext.contextPath }/dlistPage.do">유기동물 주인찾기</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/dboardList.do">유기동물 주인찾기</a></li>
                     </ul>
                 </div>
             

@@ -26,4 +26,16 @@ public class DboardDao {
 	public int insertDboard(Dboard dboard) {
 		return session.insert("dboardMapper.insertDboard", dboard);
 	}
+
+
+
+	public int selectListCount() {
+		return session.selectOne("dboardMapper.selectListCount");
+	}
+
+
+	public ArrayList<Dboard> selectList(Dboard dboard) {
+		List<Dboard> list = session.selectList("dboardMapper.selectList", dboard);
+		return (ArrayList<Dboard>)list;
+	}
 }

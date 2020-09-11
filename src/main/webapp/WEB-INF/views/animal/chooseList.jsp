@@ -2,12 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="listCount" value="${ requestScope.totalCount }" />
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+	<form name="frm">
+		<input type= "hidden" name="pageNo" />
+		<input type= "hidden" name="searchFiled" value="${ dboard.searchFiled }"/>
+		<input type= "hidden" name="searchValue" value="${ dboard.searchValue }"/>
 		<div id="wrap">
             <c:import url="/WEB-INF/views/include/header.jsp"/>
 			<!-- 컨텐츠 -->
@@ -34,25 +39,22 @@
 
                     <div class="subContent">
                         <!--서브 검색-->                
-                        <div class="search_wrap">
-                            <form action="" name="">
-                            <select>
-                                <option value="" class="fontColor-dark">전체</option>
-                                <option value="" class="fontColor-dark">제목</option>
-                                <option value="" class="fontColor-dark">임시보호자</option>
-                                <option value="" class="fontColor-dark">발견날짜</option>
-                                <option value="" class="fontColor-dark">발견지역</option>
+                        <div class="search_wrap" id ="search">
+                            <input type="hidden" name="dCategory" value="${ d.dCategory }">
+                            <select id="searchS">
+                                <option value="d_title" class="fontColor-dark">제목</option>
+                                <option value="d_writer" class="fontColor-dark">임시보호자</option>
+                                <option value="d_local" class="fontColor-dark">발견지역</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" placeholder="작은 천사들을 검색해주세요.">
-                                <button onclick="#none" class="xi-search"></button>
+                                <input type="text" id="searchI" name="keyword" placeholder="작은 천사들을 검색해주세요.">
+                                <button type="submit" class="xi-search"></button>
                             </div>
-                            </form>
                         </div>
                         <!--서브 검색 끝-->
                         
                         <div class="sort-area">  
-                            <h4>전체 150마리 '작은 천사'</h4>
+                            <h4>전체 ${ requestScope.totalCount }마리 '작은 천사'</h4>
                             <div>
                                 <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
                                 <div>
@@ -69,230 +71,43 @@
                         <div class="animalList">
                             <ul class="grid">
                                 <li class="grid-sizer"></li>
+                                 <c:forEach items="${ requestScope.dboardList }" var="d">
+                                 <c:if test = "${d.dSuccess eq 'n'}">
                                 <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
                                     <div>
                                         <a href="#none" class="chooseIcon">보호중</a>
+                                        
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
+                                        <img src="/runningdog/resources/dboard/dboardImage/${d.listImage }">
                                     </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
+                                    <h3>${ d.dTitle }</h3>
                                     <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
+                                        임시보호자 : ${ d.dWriter }<br/>
+                                        발견날짜 : ${ d.dFindDate }<br/>
+                                        발견지역 : ${ d.dLocal } ${ d.dFindLocal }<br/>
+                                        <span>등록일 : ${ d.dDate }</span>
                                     </p>
                                 </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg03.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews02.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg01.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg03.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg04.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
+                                </c:if>
+                                <c:if test = "${d.dSuccess eq 'y'}">
                                 <li class="grid-item close" onclick="location='chooseView.jsp'">
                                     <div>
-                                        <a href="#none" class="closeIcon">인계완료</a>
+                                        <a href="#none" class="chooseIcon">인계완료</a>
+                                        
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg01.jpg">
+                                        <img src="/runningdog/resources/dboard/dboardImage/${d.listImage }">
                                     </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
+                                    <h3>${ d.dTitle }</h3>
                                     <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
+                                        임시보호자 : ${ d.dWriter }<br/>
+                                        발견날짜 : ${ d.dFindDate }<br/>
+                                        발견지역 : ${ d.dLocal } ${ d.dFindLocal }<br/>
+                                        <span>등록일 : ${ d.dDate }</span>
                                     </p>
                                 </li>
-                                <li class="grid-item close" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="closeIcon">인계완료</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg02.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item close" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="closeIcon">인계완료</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg03.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item close" onclick="location='chooseView.jsp'">
-                                    <div>
-                                        <a href="#none" class="closeIcon">인계완료</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg04.jpg">
-                                    </div>
-                                    <h3>강아지가 혼자 밖에서 울고 있었어요.</h3>
-                                    <p>
-                                        임시보호자 : 멍무이<br/>
-                                        발견날짜 : 2020.08.26<br/>
-                                        발견지역 : 서울시 도봉구 우이천로 부근<br/>
-                                        <span>등록일 : 2020.08.28</span>
-                                    </p>
-                                </li>
+                                </c:if>
+                                </c:forEach>
+                               
                             </ul>
                         </div>
                         <!-- 리스트 끝 -->
@@ -314,8 +129,8 @@
                 </div>
             </div>
             <!-- 컨텐츠 끝 -->
-
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
+		</form>
 	</body>
 </html>

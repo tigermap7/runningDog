@@ -180,7 +180,7 @@
                                         <button>수정</button>
                                     </div>
                                     <div class="Subcmt_form">
-                                        <form action="" method="">
+                                        <form action="dboardList.do" method="post">
                                             <fieldset>
                                                 <div class="cmt_form">
                                                     <div class="cmt_body">

@@ -54,6 +54,29 @@
 		WHERE RNUM >=1 AND RNUM <=4
 		]]>
 	</select>
+	
+	<select id="selectListCount" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="int">
+		SELECT COUNT(*)
+		FROM DBOARD
+		WHERE 1=1
+		<if test="searchFiled != null and SearchFiled !=''">
+			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+		</if>
+	</select>
+	
+	<select id="selectList" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="com.kh.runningdog.dboard.model.vo.Dboard">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, D_NUM, USER_ID, UNIQUE_NUM, D_WRITER, D_TITLE, D_CONTENT, D_FIND_DATE,
+			  D_FIND_LOCAL, D_GENDER, D_CATEGORY, D_LOCAL, D_PHONE, D_POINT, D_DATE, D_MDATE, D_COUNT,
+			  MAP_X, MAP_Y, D_CHECK, D_SUCCESS, VIEW_IMAGE, LIST_IMAGE
+			  FROM (SELECT *
+			  		FROM DBOARD WHERE D_CHECK = 'y' 
+			  		<if test="searchFiled != null and SearchFiled !=''">
+					AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+					</if>
+					ORDER BY D_NUM DESC))
+		WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}
+	</select>
 
 	<insert id="insertDboard" parameterType="Dboard">
 		INSERT INTO DBOARD

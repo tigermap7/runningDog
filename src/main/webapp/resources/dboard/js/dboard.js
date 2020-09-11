@@ -1,4 +1,24 @@
 
+    //페이지 이동
+    function fn_movePage(val){
+        $("input[name=pageNo]").val(val);
+        $("form[name=frm]").attr("method", "post");
+        $("form[name=frm]").attr("action","").submit();
+    }
+    //검색 버튼
+    function fn_search(){
+        if( $("#searchS").val() == "" ){
+            return;
+        }else{
+            $("input[name=searchFiled]").val($("#searchS").val());
+        }
+        var searchValue = $("#searchI").val();
+        $("input[name=searchValue]").val(searchValue);
+   
+        $("input[name=pageNo]").val("1");
+        $("form[name=frm]").attr("method", "post");
+        $("form[name=frm]").attr("action","").submit();
+    }
 
 /*연락처 입력 폼*/
 function inputTelNumber(obj) {

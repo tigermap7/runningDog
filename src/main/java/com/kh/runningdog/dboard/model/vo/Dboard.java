@@ -2,7 +2,7 @@ package com.kh.runningdog.dboard.model.vo;
 
 import java.sql.Date;
 
-public class Dboard implements java.io.Serializable{
+public class Dboard extends PageVO implements java.io.Serializable{
 	private static final long serialVersionUID = 6L;
 	
 	private int dNum;  //글번호
