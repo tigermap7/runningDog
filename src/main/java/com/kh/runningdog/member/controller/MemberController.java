@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.runningdog.member.model.service.FindUtil;
+import com.kh.runningdog.member.model.service.MailUtil;
 import com.kh.runningdog.member.model.service.MemberService;
 import com.kh.runningdog.member.model.vo.Member;
 
@@ -33,9 +36,17 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bcryptoPasswordEncoder;
+	
+	@Autowired
+	private MailUtil mailUtil;
+
+	@Autowired
+	private FindUtil findUtil;
+
+
 
 	@RequestMapping("login.do")
 	public String loginPage() {
@@ -111,7 +122,7 @@ public class MemberController {
 	//회원가입컨트롤러
 	@RequestMapping(value="joinAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String joinActionMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImage) throws IOException {
+	public String joinActionMethod(Member member, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImage) throws IOException {
 		logger.info("member : " + member);
 		
 		//암호화 처리
@@ -169,14 +180,87 @@ public class MemberController {
 	}
 	
 	
+	//아이디(이메일) 찾기 컨트롤러
+	@RequestMapping(value="idFindAction.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String idFindActionMethod(Member member, ModelAndView mv, HttpServletResponse response, HttpSession session) throws IOException {
+		
+		Member phoneChk = memberService.selectPhoneCheck(member);
+		
+		String url = null;
+		
+		if(phoneChk != null) {
+			String selectId = phoneChk.getUserId();
+			logger.info("selectId : " + selectId);
+			if(phoneChk.getUserId() != null) {
+				mv.setViewName("idFindAction.do");
+				mv.addObject("selectId", "selectId");
+				url = "selectId";
+			}
+		} else {
+			url = "notSelectId";
+		}
+		return url;
+	}
 	
 	
+	//비밀번호 찾기 컨트롤러
+	@RequestMapping(value="pwdFindAction.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String pwdFindActionMethod(Member member, Model model, HttpServletResponse response, HttpSession session) throws IOException {
+
+		logger.info("member :" + member);
+		Member userIdPhoneChk = memberService.selectUserIdPhoneCheck(member);
+		
+		String url = null;
+		
+		if(userIdPhoneChk != null) {
+			
+			String keyCode = FindUtil.createKey();
+			session.setAttribute("keyCode", keyCode);
+			
+			String subject = "[지금 달려갈 개] 임시 비밀번호 전송";
+			
+			String msg = "";
+			msg += "<div style='float: left; text-align:center; font-weight:700; border: 2px solid #ff92a8; color:#ff92a8; font-size:14px; padding:80px 50px; margin:50px 0; font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', '돋움', sans-serif !important;'>";
+			msg += "<h1 style='margin: 0 0 10px;'><img src='http://127.0.0.1:9392/runningdog/resources/images/common/logo_over.png'></h1>";
+			msg += "<h3 style=' margin-bottom:5px;'>안녕하세요. " + userIdPhoneChk.getNickname() + " 님.</h3>";
+			msg += "<p>";
+			msg += "임시 비밀번호는 <b style='color:#333'>";
+			msg += keyCode + "</b> 입니다. 로그인 후 꼭 마이페이지 프로필변경에서 비밀번호를 변경하시기 바랍니다.</p></div>";
+			
+			MailUtil.sendMail(member.getUserId(), subject, msg);
+
+			logger.info("확인확인확인1111 : ");
+			logger.info("userIdPhoneChk : " + userIdPhoneChk);
+			
+
+			logger.info("확인확인확인222 : " + keyCode);
+			logger.info("확인확인확인333 : " + bcryptoPasswordEncoder.encode(keyCode));
+			member.setUserPwd(keyCode);
+			logger.info("확인확인확인222 : " + keyCode);
+			
+
+			logger.info("확인확인확인444 : " + memberService.updateMemberPwd(member));
+			if(memberService.updateMemberPwd(member) > 0) {
+				logger.info("확인확인확인555 : ");
+				url = "selectIdPhoneChk";
+			} else {
+				logger.info("확인확인확인666 : ");
+	            response.setContentType("text/html; charset=UTF-8");
+	            PrintWriter out = response.getWriter();
+	            out.println("<script>alert(''); history.go(-1);</script>");
+	            out.flush();
+			}
+		
+		} else {
+			url = "notSelectIdPhoneChk";
+		}
+		
+		return url;
+	}
 	
-	
-	
-	
-	
-	
+
 	
 	
 //	@RequestMapping(value="joinAction.do", method=RequestMethod.POST)

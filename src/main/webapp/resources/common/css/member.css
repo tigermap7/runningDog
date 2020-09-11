@@ -267,10 +267,36 @@
     background-color: #ff92a8;
     margin-top: 0.9375rem;
 }
+
+
+.login_wrap .idFine, .login_wrap .pwdFind {
+	position: relative;
+    width: 100%;
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 2.5rem 0.625rem;
+    display: none;
+}
+.login_wrap .idFine p, .login_wrap .pwdFind p {
+    width: 100%;
+    font-size: 1.125rem;
+    margin-bottom: 1.25rem;
+}
+.login_wrap .idFine a, .login_wrap .pwdFind a {
+    display: inline-block;
+    line-height: 2.5rem;
+    color: #fff;
+    border: 1px solid #ff92a8;
+    background-color: #ff92a8;
+    padding: 0 2.5rem;
+    border-radius: 0.3125rem;
+}
+
 @media all and (max-width:479px) {
     .login_wrap {
         max-width: 90%;
     }
+    
 }
 
 

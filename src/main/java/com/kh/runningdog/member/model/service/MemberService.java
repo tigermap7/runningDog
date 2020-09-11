@@ -14,4 +14,8 @@ public interface MemberService {
 	Member selectUserIdCheck(Member member);
 	Member selectNicknameCheck(Member member);
 	Member selectPhoneCheck(Member member);
+	Member selectUserIdPhoneCheck(Member member);
+	int updateMemberPwd(Member member);
+
+
 }

@@ -1,7 +1,9 @@
 package com.kh.runningdog.member.model.vo;
 
 import java.sql.Date;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Member implements java.io.Serializable {
 	private static final long serialVersionUID = 1111L;
 	

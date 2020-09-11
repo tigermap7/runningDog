@@ -34,15 +34,19 @@
 	</select>
 	
 	<select id="selectUserIdCheck" parameterType="Member" resultMap="resultMember">
-		select user_id from member where user_id = #{ userId }
+		select * from member where user_id = #{ userId }
 	</select>
 	
 	<select id="selectNicknameCheck" parameterType="Member" resultMap="resultMember">
-		select nickname from member where  nickname = #{ nickname }
+		select * from member where nickname = #{ nickname }
 	</select>
 	
 	<select id="selectPhoneCheck" parameterType="Member" resultMap="resultMember">
-		select phone from member where  phone = #{ phone }
+		select * from member where phone = #{ phone }
+	</select>
+	
+	<select id="selectUserIdPhoneCheck" parameterType="Member" resultMap="resultMember">
+		select * from member where user_id = #{ userId } and phone = #{ phone }
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
@@ -50,6 +54,10 @@
 	</insert>
 	
 	
+	
+	<update id="updateMemberPwd" parameterType="Member">
+		update member set user_pwd = #{ userPwd } where user_id = #{ userId } and phone = #{ phone }
+	</update>
 	
 	<update id="updateMember" parameterType="Member">
 

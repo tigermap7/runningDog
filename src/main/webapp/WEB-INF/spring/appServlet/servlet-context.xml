@@ -73,16 +73,4 @@
 			<beans:bean id="loginCheckInterceptor" class="com.kh.runningdog.common.interceptor.LoginCheckInterceptor" />
 		</interceptor>
 	</interceptors> -->
-	
-	<!-- Websocket -->
-	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/echo"/>
-		<websocket:handshake-interceptors>
-			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
-		</websocket:handshake-interceptors>
-		<websocket:sockjs/>
-	</websocket:handlers>
-	
-	<beans:bean id="echoHandler" class="com.kh.runningdog.websocket.util.EchoHandler"/>
-	
 </beans:beans>

@@ -14,43 +14,53 @@
 				<!-- 로그인 -->
                 <div class="member_wrap">
                     <div class="login_wrap">
-                        <form name="idFind" method="post" action="#">
+                        <form name="idFind" method="post" id="idFind">
                         <legend>아이디(이메일) 찾기</legend>
-                        <h1 onclick="location='/WEB-INF/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>
+                        <h1 onclick="location='/runningdog/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>
                         <div class="loginInfo">
-                            <h4>등록된 휴대폰 번호로 아이디(이메일) 찾기</h4>
-                            <div>
-                                <span><i class="xi-user-o"></i></span>
-                                <span><input type="text" name="" title="이름" class="w100p" placeholder="이름" required/></span>
-                            </div>
+                            <h4>아이디(이메일) 찾기</h4>
                             <div>
                                 <span><i class="xi-call"></i></span>
-                                <span><input type="tel" name="" title="휴대폰번호" class="w100p" placeholder="휴대폰번호('-'포함 입력)" required/></span>
+                                <span><input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="w100p" placeholder="휴대폰번호('-'포함 입력)" required/></span>
                             </div>
-                            <p>
-                                <span>등록된 연락처가 아닙니다.</span>
+                            <p id="phoneWarning">
+                                <span></span>
                             </p>
-                            <input class="find_btn" type="submit" name="" value="아이디(이메일) 찾기">
+                            <input class="find_btn idFindBtn" type="button" name="" value="아이디(이메일) 찾기">
+                        </div>
+                        <div class="idFine">
+                        	<p>회원님의 계정 아이디(이메일)는 <b>${ selectId }</b> 입니다.</p>
+                        	<a href="login.do">로그인</a>
                         </div>
                         </form>
                         <hr/>
-                        <form name="idFind" method="post" action="pwdChange.jsp">
+                        <form name="pwdFind" method="post" id="pwdFind">
                         <legend>비밀번호 찾기</legend>
                         <div class="loginInfo">
                             <h4>비밀번호 찾기</h4>
                             <div>
-                                <span><i class="xi-user-o"></i></span>
-                                <span><input type="text" name="" title="이름" class="w100p" placeholder="이름" required/></span>
-                            </div>
-                            <div>
                                 <span><i class="xi-mail-o"></i></span>
-                                <span><input type="email" name="" title="아이디" class="w100p" placeholder="아이디(이메일)" required/></span>
+                                <span><input type="email" name="userId" title="아이디(이메일)" id="userIdChk" class="w100p" placeholder="아이디(이메일)" required/></span>
                             </div>
-                            <p>
-                                <span>아이디(이메일)를 입력해주세요.</span>
-                                <span>아이디(이메일)가 이메일 형식이 아닙니다.</span>
+                            <p id="idWarning">
+                                <span></span>
                             </p>
-                            <input class="find_btn" type="submit" name="" value="비밀번호 찾기">
+                            <div>
+                                <span><i class="xi-call"></i></span>
+                                <span><input type="tel" name="phone" title="휴대폰번호" id="phoneChk2" class="w100p" placeholder="휴대폰번호('-'포함 입력)" required/></span>
+                            </div>
+                            <p id="phoneWarning2">
+                                <span></span>
+                            </p>
+                            <p id="userIdPhoneWarning">
+                                <span></span>
+                            </p>
+                            <input type="hidden" name="userPwd" title="비밀번호" id="userPwdChk" class="w100p" placeholder="비밀번호"/>
+                            <input class="find_btn pwdFindBtn" type="button" name="" value="비밀번호 찾기">
+                        </div>
+                        <div class="pwdFind">
+                        	<p>회원님의 <b>${ selectId }</b>으로 임시 비밀번호가 전송되었습니다. 이메일을 받지 못하셨나요? 스팸함을 확인해보세요.</p>
+                        	<a href="login.do">로그인</a>
                         </div>
                         </form>
                     </div>

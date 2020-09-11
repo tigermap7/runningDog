@@ -32,18 +32,18 @@
                         <div class="loginInfo">
                             <div>
                                 <span><i class="xi-mail-o"></i></span>
-                                <span><input type="email" name="userId" title="아이디" id="joinUserId" class="w100p" placeholder="아이디(이메일)"/></span>
+                                <span><input type="email" name="userId" title="아이디" id="userIdChk" class="w100p" placeholder="아이디(이메일)"/></span>
                             </div>
                             <p id="idWarning">
                                 <span></span>
                             </p>
                             <div>
                                 <span><i class="xi-lock-o"></i></span>
-                                <span><input type="password" name="userPwd" title="비밀번호" id="joinUserPwd" class="w100p" placeholder="비밀번호"/></span>
+                                <span><input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="w100p" placeholder="비밀번호"/></span>
                             </div>
                             <div>
                                 <span><i class="xi-lock"></i></span>
-                                <span><input type="password" name="userPwd2" title="비밀번호 확인" id="joinUserPwd2" class="w100p" placeholder="비밀번호 확인"/></span>
+                                <span><input type="password" name="userPwd2" title="비밀번호 확인" id="userPwdChk2" class="w100p" placeholder="비밀번호 확인"/></span>
                             </div>
                             <p id="pwdWarning">
                                 <span>사용하실 비밀번호는 특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.</span>
@@ -56,14 +56,14 @@
                             </div>
                             <div>
                                 <span><i class="xi-user-o"></i></span>
-                                <span><input type="text" name="nickname" title="닉네임" id="joinNickname" class="w100p" placeholder="닉네임"/></span>
+                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임"/></span>
                             </div>
                             <p id="nicknameWarning">
                                 <span></span>
                             </p>
                             <div>
                                 <span><i class="xi-call"></i></span>
-                                <span><input type="tel" name="phone" title="휴대폰번호" id="joinPhone" class="w100p" placeholder="휴대폰번호('-'포함 입력)"/></span>
+                                <span><input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="w100p" placeholder="휴대폰번호('-'포함 입력)"/></span>
                             </div>
                             <p id="phoneWarning">
                                 <span></span>

@@ -67,4 +67,14 @@ public class MemberDao {
 		return session.selectOne("memberMapper.selectPhoneCheck", phone);
 	}
 
+
+	public Member selectUserIdPhoneCheck(Member member) {
+		return session.selectOne("memberMapper.selectUserIdPhoneCheck", member);
+	}
+
+
+	public int updateMemberPwd(Member member) {
+		return session.update("memberMapper.updateMemberPwd", member);
+	}
+
 }
