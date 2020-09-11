@@ -18,8 +18,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">자원봉사모집</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="/runningdog/vlist.do">자원봉사모집</a></li>
                             </ul>
                         </div>
                         <h2><span>자원봉사모집</span></h2>
@@ -45,10 +45,10 @@
                                     <div class="viewImg">                                        
                                         <div class="swiper-container gallery-top">
                                             <ul class="swiper-wrapper">
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre1 }"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre2 }"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre3 }"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre4 }"/></li>
                                             </ul>
                                             <!-- Add Arrows -->
                                             <div class="swiper-button-next swiper-button-white"></div>
@@ -56,10 +56,14 @@
                                         </div>
                                         <div class="swiper-container gallery-thumbs">
                                             <ol class="swiper-wrapper">
+                                                <!-- <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
                                                 <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
                                                 <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li> -->
+                                                <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre1 }"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre2 }"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre3 }"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre4 }"/></li>
                                             </ol>
                                         </div>
                                         <!-- Initialize Swiper -->
@@ -116,11 +120,13 @@
                                                 <th>담당자</th>
                                                 <td>${volunteer.volwriter }</td>
                                                 <th>모집기간</th>
-                                               <c:if test="${ volunteer.volche eq Y }">
-                                                <td>${volunteer.volche } / <span class="serviceOn">모집중</span></td>
-                                               </c:if>
-                                               <c:if test="${ volunteer.volche ne Y }">
-                                                <td>${volunteer.volche } / <span class="serviceOn">모집완료</span></td>
+                                               <c:if test="${ !empty volunteer.volche }">
+                                               		<c:if test="${ volunteer.volche eq Y }">
+                                                 		 <td><span class="serviceOn">상시모집중</span></td>
+                                               		</c:if>
+                                               		<c:if test="${ volunteer.volche eq N }">
+                                                 		 <td><span class="serviceOn">모집완료</span></td>
+                                               		</c:if>
                                                </c:if>
                                             </tr>
                                             <tr>
@@ -129,6 +135,8 @@
                                             </tr>
                                             <tr>
                                                 <th>봉사기간</th>
+                                                <%-- <fmt:parseDate value="${volunteer.volterm}" var="dateFmt" pattern="yyyy-MM-dd,yyyy-MM-dd"/>
+                                                <fmt:formatDate value="${dateFmt}" type="text" pattern="yyyy-MM-dd ~ yyyy-MM-dd"/> --%>
                                                 <td colspan="3">${volunteer.volterm }</td>
                                             </tr>
                                             <!-- <tr>
@@ -149,14 +157,18 @@
                     
                         <!-- 버튼 -->
                         <div class="viewBtn-wrap">
-                            <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                            <button class="listBtn"><i class="xi-rotate-left"></i> 목록</button>
+                            <button class="nextBtn"><i class="xi-angle-left-min"></i>이전</button>
+                            <button class="listBtn"><i class="xi-rotate-left" onclick="location.href='vlist.do'"></i>목록</button>
                             <c:url var="vdel" value="vdelete.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
                             </c:url>
-                            <button class="deleteBtn" onclick="javascript:location.href=${vdel}"><i class="xi-cut"></i> 삭제</button>
-                            <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
-                            <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
+                            <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
+                            <c:url var="vup" value="vUpdateView.do">
+                            	<c:param name="volno" value="${volunteer.volno}"/>
+                            	<c:param name="page" value="${currentPage}"/>
+                            </c:url>
+                            <button class="modifiedBtn" onclick="javascript:location.href='${vup}'"><i class="xi-pen-o"></i>수정</button>
+                            <button class="prevBtn">다음<i class="xi-angle-right-min"></i></button>
                         </div>
                         <!-- 버튼 끝 -->
 

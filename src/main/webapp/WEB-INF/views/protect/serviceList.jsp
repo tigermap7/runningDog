@@ -82,7 +82,12 @@
                                   		</c:url>
                                     <tr class="serviceOn" onclick="location.href='${vd}'">
                                         <td class="img">
-                                            <span>모집중</span>
+                                           <c:if test="${ volunteer.volche eq Y }">  
+                                              <span>모집중</span>
+                                           </c:if>
+                                           <c:if test="${ volunteer.volche ne Y }">
+                                          	  <span>마감</span>
+                                           </c:if>
                                             <img src="/runningdog/resources/images/test/animalNews04.jpg">
                                         </td>
                                         <td>
@@ -97,38 +102,22 @@
                                         <td><a href="${vd}">자세히 보기 <i class="xi-eye-o"></i></a></td>
                                     </tr>
                                    </c:forEach>
-                                    <!-- <tr class="serviceOn" onclick="location.href='serviceView.jsp'">
-                                        <td class="img">
-                                            <span>모집중</span>
-                                            <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                        </td>
-                                        <td>
-                                            <h3>작은 생명을 위한 도움의 손길이 필요합니다.</h3>
-                                            <ul>
-                                                <li class="location"><span>지역 : </span>서울시 종로구 신설동</li>
-                                                <li><span>센터명 : </span>조남동 쉼터</li>
-                                                <li><span>모집기간 : </span>상시모집</li>
-                                                <li><span>봉사기간 : </span>2020.08.26 ~ 2020.09.30</li>
-                                            </ul>
-                                        </td>
-                                        <td><a href="serviceView.jsp">자세히 보기 <i class="xi-eye-o"></i></a></td>
-                                    </tr> -->
-                                    <!-- <tr class="serviceOut" onclick="location.href='serviceView.jsp'">
+                                    <%--  <tr class="serviceOut" onclick="location.href='serviceView.jsp'">
                                         <td class="img">
                                             <span>마감</span>
                                             <img src="/runningdog/resources/images/test/animalNews04.jpg">
                                         </td>
                                         <td>
-                                            <h3>작은 생명을 위한 도움의 손길이 필요합니다.</h3>
+                                            <h3>${ v.voltitle }</h3>
                                             <ul>
-                                                <li class="location"><span>지역 : </span>서울시 종로구 신설동</li>
-                                                <li><span>센터명 : </span>조남동 쉼터</li>
-                                                <li><span>모집기간 : </span>상시모집</li>
-                                                <li><span>봉사기간 : </span>2020.08.26 ~ 2020.09.30</li>
+                                                <li class="location"><span>지역 : </span>${v.voladdress}</li>
+                                                <li><span>센터명 : </span>${v.volname}</li>
+                                                <li><span>모집기간 : </span>${v.volche }</li>
+                                                <li><span>봉사기간 : </span>${v.volterm}</li>
                                             </ul>
                                         </td>
-                                        <td><a href="serviceView.jsp">자세히 보기 <i class="xi-eye-o"></i></a></td>
-                                    </tr> -->
+                                        <td><a href="${vd}">자세히 보기 <i class="xi-eye-o"></i></a></td>
+                                    </tr>  --%>
                                 </tbody>
                             </table>
                         <!-- 리스트 끝 -->

@@ -1,6 +1,13 @@
 package com.kh.runningdog.volunteer.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.DuplicateFormatFlagsException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,10 +18,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.volunteer.model.service.VolunteerService;
 import com.kh.runningdog.volunteer.model.vo.Volunteer;
+import com.sun.imageio.plugins.common.ImageUtil;
 
 @Controller
 public class VolunteerController {
@@ -67,7 +78,7 @@ public class VolunteerController {
 		 }
 		 else {
 			 mv.addObject("message", currentPage + "페이지에 대한 목록 조회 실패!");
-			 mv.setViewName("main/main");
+			 mv.setViewName("common/error");
 		 }
 		return mv;
 	}
@@ -88,18 +99,100 @@ public class VolunteerController {
 			return "protect/serviceView";
 		}else {
 			model.addAttribute("message", volno + "번 글 상세보기 실패!");
-			return "main/main";
+			return  "common/error";
 		}
 	}
-	//글등록하기
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String insertVolunteer()
+	 //글등록하기
+	@RequestMapping(value = "vinsert.do", method = RequestMethod.POST) 
+	public String insertVolunteer(Volunteer volunteer, HttpServletRequest request, 
+			@RequestParam Map<String, MultipartFile> fileMap) {
+		      logger.info("vinsert.do run...");
+		      String returnView = null;
+		      int i = 1;
+		      
+		      String savePath = request.getSession().getServletContext().getRealPath("resources/vfiles"); //파일 저장할 폴더 위치
+		      
+		      for(String key : fileMap.keySet()) {
+		         if(fileMap.get(key).getOriginalFilename() != "") {
+		         String originalFilename = fileMap.get(key).getOriginalFilename();
+		         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		         String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
+		         renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
+		         
+		         try {
+		            fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+		         } catch (Exception e) {
+		            e.printStackTrace();
+		         }
+		            switch (i) {
+		            case 1 : volunteer.setVolor1(originalFilename);
+		                     volunteer.setVolre1(renamefilename); break;
+		            case 2 : volunteer.setVolor2(originalFilename);
+                    		 volunteer.setVolre2(renamefilename); break;
+		            case 3 : volunteer.setVolor3(originalFilename);
+                    		 volunteer.setVolre3(renamefilename); break;
+		            case 4 : volunteer.setVolor4(originalFilename);
+		            		 volunteer.setVolre4(renamefilename); break;
+		         }
+		            i++;
+		         }
+		      }
+		      
+		      if(volunteerService.insertVolunteer(volunteer) > 0) {
+		         returnView = "redirect:/vlist.do";
+		      } else {
+		         request.setAttribute("message", "새 공지사항 등록 처리 실패");
+		         returnView = "common/error";
+		      }
+		      
+		      return returnView;
+		   }
+	//수정페이지로 이동
+	@RequestMapping(value = "vUpdateView.do")
+	public String moveVolunteerUpdateView(HttpServletRequest request, Model model) {
+		int volno = Integer.parseInt(request.getParameter("volno"));
+		int currentPage = Integer.parseInt(request.getParameter("page"));
+		
+		Volunteer volunteer = volunteerService.selectVolunteer(volno);
+		
+		if(volunteer != null) {
+			request.setAttribute("volunteer", volunteer);
+			request.setAttribute("page", currentPage);
+			return "protect/serviceUpdate";
+		}else {
+			request.setAttribute("message", volno + "번 글 수정페이지로 이동 실패!");
+			return  "common/error";
+		}
+		
+	}
 	//글수정하기
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String updateVolunteer()
-	
+	//@RequestMapping(value = "vupdate.do", method = RequestMethod.POST) 
+	//public String updateVolunteer(HttpServletRequest request, Volunteer volunteer, 
+	//		@RequestParam(name="ofile", required=false) MultipartFile file) {
+		
+	//}
+	  
 	//글삭제하기
-	@RequestMapping(value="vdelete.do", method=RequestMethod.POST)
-	public String updateVolunteer()
+	@RequestMapping(value="vdelete.do") 
+	public String updateVolunteer(HttpServletRequest request, Volunteer volunteer, Model model) {
+		int volno = Integer.parseInt(request.getParameter("volno"));
+		
+		volunteer.setVolno(volno);
+		
+		if(volunteerService.deleteVolunteer(volunteer) > 0) {
+			for (int i = 1; i < 5; i++) {
+				String renameFileName = request.getParameter("rfile"+ i);
+				if(renameFileName != null) {
+					String savePath = request.getSession().getServletContext().getRealPath("resources/vfiles");
+					new File(savePath + "\\" + renameFileName).delete();
+			}
+		}
+			return "redirect:/vlist.do";
+		}else {
+			model.addAttribute("message", volno + "번 글 삭제 실패!");
+			return  "common/error";
+		}
+		
+	}
 
 }
