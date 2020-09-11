@@ -61,7 +61,7 @@
                         <div class="sort-area">  
                             <h4>전체 ${ noticePage.listCount }개의 공지사항</h4>
                             <div>
-                                <a href="movenoticeinsert.do" class="writeBtn">글쓰기</a>
+                                <a href="ninview.do" class="writeBtn">글쓰기</a>
                             </div>
                         </div>
 
