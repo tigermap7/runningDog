@@ -124,6 +124,7 @@ public class NoticeController {
 		return mv;
 	}
 	
+	
 	//공지사항 등록
 	@RequestMapping(value="ninsert.do", method=RequestMethod.POST)
 	public String insertAdminNotice(Notice notice, HttpServletRequest request, @RequestParam Map<String, MultipartFile> fileMap) {
@@ -133,30 +134,19 @@ public class NoticeController {
 		
 		String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles"); //파일 저장할 폴더 위치
 		
-		Map<String, MultipartFile> fileMap2 = new HashMap<String, MultipartFile>();
-		
-		//파일이 있을 경우만 것만 다시 꺼내서 map에 저장하기(파일이 없어도 그냥 다 저장됨)
-		for(String k : fileMap.keySet()) {
-			if(fileMap.get(k).getOriginalFilename() != "") {
-				fileMap2.put("ofile" + i,fileMap.get(k));
-				i++;
-			}
-		}
-		
-		int j = 1;
-		
-		for(String key : fileMap2.keySet()) {
-			String originalFilename = fileMap2.get(key).getOriginalFilename();
+		for(String key : fileMap.keySet()) {
+			if(fileMap.get(key).getOriginalFilename() != "") {
+			String originalFilename = fileMap.get(key).getOriginalFilename();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 			String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
 			renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
 			
 			try {
-				fileMap2.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+				fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-				switch (j) {
+				switch (i) {
 				case 1 : notice.setNoticeOriginalFilename1(originalFilename);
 					     notice.setNoticeRenameFilename1(renamefilename); break;
 				case 2 : notice.setNoticeOriginalFilename2(originalFilename);
@@ -164,7 +154,8 @@ public class NoticeController {
 				case 3 : notice.setNoticeOriginalFilename3(originalFilename);
 						 notice.setNoticeRenameFilename3(renamefilename); break;
 			}
-				j++;
+				i++;
+			}
 		}
 		
 		if(noticeService.insertNotice(notice) > 0) {
