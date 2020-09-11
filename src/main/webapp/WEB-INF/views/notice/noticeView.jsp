@@ -58,12 +58,38 @@
                             <li><span>작성자 : </span>${ notice.noticeWriter }</li>
                             <li><span>등록일 : </span>${ notice.noticeDate }</li>
                             <li><span>조회수 : </span>${ notice.noticeReadcount }</li>
-                            <li><span>첨부파일 : </span><a href="#none" download>asdasddsa.hwp</a></li>
-                        </ul>
 
+                            
+                        </ul>
+                        
+                        <c:if test="${ !empty notice.noticeOriginalFilename1 }">
+                            <ul><li><span>첨부파일 : </span>
+                            		<c:url var="nfdurl1" value="nfdown.do">
+									<c:param name="ofile" value="${ notice.noticeOriginalFilename1 }"/>
+									<c:param name="rfile" value="${ notice.noticeRenameFilename1 }"/>
+									</c:url>
+                            <a href="${nfdurl1}">${ notice.noticeOriginalFilename1 }</a></li>
+                        	<c:if test="${ !empty notice.noticeOriginalFilename2 }">
+                        		    <c:url var="nfdurl2" value="nfdown.do">
+									<c:param name="ofile" value="${ notice.noticeOriginalFilename2 }"/>
+									<c:param name="rfile" value="${ notice.noticeRenameFilename2 }"/>
+									</c:url>
+                        		<li><a href="${nfdurl2}">${ notice.noticeOriginalFilename2 }</a></li>
+                        	</c:if>
+                        		    <c:url var="nfdurl3" value="nfdown.do">
+									<c:param name="ofile" value="${ notice.noticeOriginalFilename3 }"/>
+									<c:param name="rfile" value="${ notice.noticeRenameFilename3 }"/>
+									</c:url>                        	
+                        		<c:if test="${ !empty notice.noticeOriginalFilename3 }">
+                        			<li><a href="${ nfdurl3 }">${ notice.noticeOriginalFilename3 }</a></li>	    
+                            	</c:if>
+                            </ul>
+                        </c:if>  
+						
                         <div class="view-ctn" style="white-space:pre;">
                         	<c:out value="${ notice.noticeContent }" />
                         </div>
+                      
                     </div>
                     <!-- 상세 끝 -->
                     
