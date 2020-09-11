@@ -155,11 +155,6 @@
 		
 		//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
 		if(sessionid == currentuser_session){
-			/* var printHTML = "<dl class='user_left'>";
-			printHTML += "<div class='alert alert-info'>";
-			printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
-			printHTML += "</div>";
-			printHTML += "</div>"; */
 			var printHTML = "<dl class='user_right myChatting'>";
 			printHTML += "<dt>" + message;
 			printHTML += "<dd>" + chatTime + "</dd>";
@@ -167,11 +162,6 @@
 
 			$("#chatdata").append(printHTML);
 		} else{
-			/* var printHTML = "<div class='well'>";
-			printHTML += "<div class='alert alert-warning'>";
-			printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
-			printHTML += "</div>";
-			printHTML += "</div>"; */
 			var printHTML = "<dl class='user_left'>";
 			printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
 			printHTML += "<dd><p>" + message +"</p><span>" + chatTime + "</span></dd>";
