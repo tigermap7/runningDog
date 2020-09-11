@@ -37,6 +37,9 @@
                         <!--상세-->
                         <form name="formname" method="post" enctype="multipart/form-data" action="dinsert.do" class="form-inline">
                         <div class="write-area">
+                        <input type="hidden" name="userId" value="${ sessionScope.loginMember.userId }">
+                        <input type="hidden" name="uniqueNum" value="${ sessionScope.loginMember.uniqueNum }">
+                        <input type="hidden" name="dWriter" value="${ sessionScope.loginMember.nickname }">
                         
                             <h2>유기동물 주인찾기 작성</h2>
                             <p>가족을 잃은 동물들에게 가족을 찾아주세요.</p>

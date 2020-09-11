@@ -25,8 +25,8 @@ public class Dboard implements java.io.Serializable{
 	private String mapY; //위도 Y
 	private String dCheck; //게시물 표시 여부
 	private String dSuccess; //분양여부
-	private String viewImage; //이미지 기존명
-	private String listImage; //이미지 파일 변경명
+	private String viewImage; //view 이미지
+	private String listImage; //list 이미지
 	
 	public Dboard () {}
 
