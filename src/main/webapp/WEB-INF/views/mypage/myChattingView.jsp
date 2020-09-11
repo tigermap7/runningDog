@@ -127,7 +127,14 @@
 	        
 	function sendMessage(){      
 		//websocket으로 메시지를 보내겠다.
-	  	sock.send($("#message").val());     
+		const message = {
+			type: 'message',
+			data: {
+				chatId: '',
+				message: $("#message").val(),
+			},
+		};
+	  	sock.send(JSON.stringify(message));     
         $('#message').val('');
 	}
 	            
@@ -140,42 +147,43 @@
 		var message = null;
 		var no = null;
 		
-		//문자열을 splite//
-		var strArray = data.split('|');
-		
-		for(var i=0; i<strArray.length; i++){
-			console.log('str['+i+']: ' + strArray[i]);
-		}
+		var receivedMessage = JSON.parse(data);
 		
 		//current session id//
 		var currentuser_session = $('#sessionuserid').val();
 		console.log('current session id: ' + currentuser_session);
 		
-		sessionid = strArray[0]; //현재 메세지를 보낸 사람의 세션 등록//
-		message = strArray[1]; //현재 메세지를 저장//
-		no = strArray[2];
-		
-		//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
-		if (no == ${ sessionScope.loginMember.getUniqueNum() }) {
+		switch (receivedMessage.type) {
+		case 'message':
+			sessionid = receivedMessage.data.sessionId; //현재 메세지를 보낸 사람의 세션 등록//
+			message = receivedMessage.data.message; //현재 메세지를 저장//
+			no = receivedMessage.data.no;
 			
-			if(sessionid == currentuser_session){
-				var printHTML = "<dl class='user_right myChatting'>";
-				printHTML += "<dt>" + message;
-				printHTML += "<dd>" + chatTime + "</dd>";
-				printHTML += "</dt></dl>";
-	
-				$("#chatdata").append(printHTML);
-			} else{
-				var printHTML = "<dl class='user_left'>";
-				printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
-				printHTML += "<dd><p>" + message +"</p><span>" + chatTime + "</span></dd>";
-				printHTML += "</dl>";
+			//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
+			if (no == ${ sessionScope.loginMember.getUniqueNum() }) {
 				
-				$("#chatdata").append(printHTML);
-			}
-			
-			console.log('chatting data: ' + data);
+				if(sessionid == currentuser_session){
+					var printHTML = "<dl class='user_right myChatting'>";
+					printHTML += "<dt>" + message;
+					printHTML += "<dd>" + chatTime + "</dd>";
+					printHTML += "</dt></dl>";
 		
+					$("#chatdata").append(printHTML);
+				} else{
+					var printHTML = "<dl class='user_left'>";
+					printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
+					printHTML += "<dd><p>" + message +"</p><span>" + chatTime + "</span></dd>";
+					printHTML += "</dl>";
+					
+					$("#chatdata").append(printHTML);
+				}
+				
+				console.log('chatting data: ' + data);
+			
+			}
+			break;
+		default:
+			console.log('Unknown message type: ' + receivedMessage.type + '\n%o', receivedMessage);
 		}
 	  	/* sock.close(); */
 	}
