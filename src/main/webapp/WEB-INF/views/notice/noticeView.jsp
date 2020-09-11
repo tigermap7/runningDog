@@ -60,6 +60,7 @@
                             <li><span>조회수 : </span>${ notice.noticeReadcount }</li>
                         </ul>
                         
+                        
                         <!-- 파일 순서대로 저장했기때문에 단계별로 보여주기 -->
                         <c:if test="${ !empty notice.noticeOriginalFilename1 }">
                             <ul><li><span>첨부파일 : </span>
@@ -68,6 +69,7 @@
 									<c:param name="rfile" value="${ notice.noticeRenameFilename1 }"/>
 									</c:url>
                             <a href="${nfdurl1}">${ notice.noticeOriginalFilename1 }</a></li>
+                        
                         	<c:if test="${ !empty notice.noticeOriginalFilename2 }">
                         		    <c:url var="nfdurl2" value="nfdown.do">
 									<c:param name="ofile" value="${ notice.noticeOriginalFilename2 }"/>
@@ -75,18 +77,22 @@
 									</c:url>
                         		<li><a href="${nfdurl2}">${ notice.noticeOriginalFilename2 }</a></li>
                         	</c:if>
+                        	
+                        	<c:if test="${ !empty notice.noticeOriginalFilename3 }">
                         		    <c:url var="nfdurl3" value="nfdown.do">
 									<c:param name="ofile" value="${ notice.noticeOriginalFilename3 }"/>
 									<c:param name="rfile" value="${ notice.noticeRenameFilename3 }"/>
 									</c:url>                        	
-                        		<c:if test="${ !empty notice.noticeOriginalFilename3 }">
+                        	
                         			<li><a href="${ nfdurl3 }">${ notice.noticeOriginalFilename3 }</a></li>	    
-                            	</c:if>
+                            </c:if>
                             </ul>
-                        </c:if>  
+                        </c:if> 
+                            
+                         
 						
-                        <div class="view-ctn" style="white-space:pre;">
-                        	<c:out value="${ notice.noticeContent }" />
+                        <div class="view-ctn">
+                        	<pre style="background-color: rgba( 255, 0, 0, 0 );"><c:out value="${ notice.noticeContent }" /></pre>
                         </div>
                       
                     </div>
