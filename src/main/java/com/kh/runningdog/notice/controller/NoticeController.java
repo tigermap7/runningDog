@@ -127,7 +127,7 @@ public class NoticeController {
 	}
 	
 	//공지사항 등록 페이지 이동
-	@RequestMapping(value="movenoticeinsert.do")
+	@RequestMapping(value="ninview.do")
 	public ModelAndView moveNoticeInsert(Notice notice, HttpServletRequest request, ModelAndView mv) {
 		mv.setViewName("notice/noticeWrite");
 		return mv;
@@ -179,11 +179,114 @@ public class NoticeController {
 	
 	
 	//공지사항 수정 페이지 이동
-	@RequestMapping(value="movenoticeupdate.do")
-	public ModelAndView moveNoticeUpdate(Notice notice, HttpServletRequest request, ModelAndView mv) {
-		mv.setViewName("notice/noticeUpdate");
+	@RequestMapping(value="nupview.do")
+	public ModelAndView moveNoticeUpdate(HttpServletRequest request, ModelAndView mv) {
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		Notice notice = noticeService.selectNoticeOne(noticeNo);
+		if(notice != null) {
+			mv.addObject("notice", notice);
+			mv.setViewName("notice/noticeUpdate");
+		} else {
+			mv.addObject("message", "공지사항 수정페이지 이동 실패");
+			mv.setViewName("common/error");
+		}
+		
 		return mv;
 	}
+	
+	//공지사항 수정
+	@RequestMapping(value="nupdate.do")
+	public String updateAdminNotice(Notice notice, HttpServletRequest request, @RequestParam Map<String, MultipartFile> fileMap) {
+		logger.info("nupdate.do run...");
+		String returnView = null;
+		String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles"); //파일 저장할 폴더 위치
+		int i = 1;
+		
+		String fileWhether  = notice.getNoticeRenameFilename1();
+		
+		System.out.println();System.out.println();System.out.println();System.out.println();
+		System.out.println("기존 : " + notice);System.out.println(fileMap.size());System.out.println(fileWhether.length());
+		System.out.println();System.out.println();System.out.println();System.out.println();
+		
+		System.out.println("");
+		
+        //기존에 파일이 하나라도 없는경우 차례대로 저장하기
+		if(fileWhether == null || fileWhether == "" || fileWhether.length() == 0) {
+			for(String key : fileMap.keySet()) {
+				if(fileMap.get(key).getOriginalFilename() != "") {
+				String originalFilename = fileMap.get(key).getOriginalFilename();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+				String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
+				renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
+				
+				try {
+					fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+					switch (i) {
+					case 1 : notice.setNoticeOriginalFilename1(originalFilename);
+						     notice.setNoticeRenameFilename1(renamefilename); break;
+					case 2 : notice.setNoticeOriginalFilename2(originalFilename);
+							 notice.setNoticeRenameFilename2(renamefilename); break;
+					case 3 : notice.setNoticeOriginalFilename3(originalFilename);
+							 notice.setNoticeRenameFilename3(renamefilename); break;
+				}
+					System.out.println(i + " 새로 추가된 파일 : " + originalFilename );
+					i++;
+				}//if문
+			} //for문
+		} else { //첨부파일 수정시 기존파일 자리에 파일 삭제하고 변경하기 (삭제하고 파일 첨부까지)
+			for(String key : fileMap.keySet()) {
+				if(fileMap.get(key).getOriginalFilename() != "") {
+					String originalFilename = fileMap.get(key).getOriginalFilename();
+					System.out.println(i + " 변경된 이름 : " + originalFilename);
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+					String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
+					renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
+					
+					try {
+						fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));	
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					switch (i) {	//파일 순서 별 변경하기
+					case 1 : 
+						if (notice.getNoticeRenameFilename1() != null) {	//기존파일있으면 
+							new File(savePath + "\\" + notice.getNoticeRenameFilename1()).delete();
+						}
+						notice.setNoticeOriginalFilename1(originalFilename);
+						notice.setNoticeRenameFilename1(renamefilename); break;
+					case 2 : 
+					    if (notice.getNoticeRenameFilename2() != null) {	
+					        new File(savePath + "\\" + notice.getNoticeRenameFilename2()).delete();
+					    }
+					    notice.setNoticeOriginalFilename2(originalFilename);
+						notice.setNoticeRenameFilename2(renamefilename); break;
+					case 3 : 
+					    if (notice.getNoticeRenameFilename3() != null) {	
+					    	new File(savePath + "\\" + notice.getNoticeRenameFilename3()).delete();
+					    }
+					    notice.setNoticeOriginalFilename3(originalFilename);
+						notice.setNoticeRenameFilename3(renamefilename); break;
+					} //switch문
+				} //if문
+				System.out.println(key + i);
+				i++;
+			} //for문
+		}//else if문
+		
+		System.out.println("변경된 공지사항 : " + notice);
+		
+		if(noticeService.updateNotice(notice) > 0) {
+			returnView = "redirect:/nlist.do";
+		} else {
+			request.setAttribute("message", notice.getNoticeNo() + "번 공지사항 수정 실패");
+			returnView = "common/error";
+		}
+		return returnView;
+	}	
 	
 	//공지사항 삭제
 	@RequestMapping(value="ndelete.do")
