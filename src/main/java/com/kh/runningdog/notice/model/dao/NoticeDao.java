@@ -48,7 +48,13 @@ public class NoticeDao {
 		return session.insert("noticeMapper.insertNotice", notice);
 	}
 	
+	public int updateNotice(Notice notice) {
+		return session.update("noticeMapper.updateNotice", notice);
+	}
+	
 	public int deleteNotice(int noticeNo) {
 		return session.delete("noticeMapper.deleteNotice", noticeNo);
 	}
+	
+
 }
