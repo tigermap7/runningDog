@@ -18,7 +18,11 @@
                         <legend>아이디(이메일) 찾기</legend>
                         <h1 onclick="location='/WEB-INF/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>
                         <div class="loginInfo">
-                            <h4>아이디(이메일) 찾기</h4>
+                            <h4>등록된 휴대폰 번호로 아이디(이메일) 찾기</h4>
+                            <div>
+                                <span><i class="xi-user-o"></i></span>
+                                <span><input type="text" name="" title="이름" class="w100p" placeholder="이름" required/></span>
+                            </div>
                             <div>
                                 <span><i class="xi-call"></i></span>
                                 <span><input type="tel" name="" title="휴대폰번호" class="w100p" placeholder="휴대폰번호('-'포함 입력)" required/></span>

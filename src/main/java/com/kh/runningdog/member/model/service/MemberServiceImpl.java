@@ -58,18 +58,4 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.deleteMember(userId);
 	}
 
-	@Override
-	public Member selectUserIdCheck(String userId) {
-		return memberDao.selectUserIdCheck(userId);
-	}
-
-	@Override
-	public Member selectNicknameCheck(String nickname) {
-		return memberDao.selectNicknameCheck(nickname);
-	}
-
-	@Override
-	public Member selectPhoneCheck(String phone) {
-		return memberDao.selectPhoneCheck(phone);
-	}
 }

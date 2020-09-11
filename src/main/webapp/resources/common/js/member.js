@@ -94,7 +94,6 @@ $(document).ready(function(){
 	    
 		if (id == null || id == '' || id == 'undefined') {
 			$('#idWarning span').html("아이디(이메일)를 입력해주세요.");
-			return false;
 		} else if (!emailRegExp.test(id)) {
 			$('#idWarning span').html("올바른 형식의 이메일이 아닙니다.");
 			return false;
@@ -104,7 +103,6 @@ $(document).ready(function(){
 	
 		if (pwd1 == null || pwd1 == '' || pwd1 == 'undefined') {
 			$('#pwdWarning span').html("사용하실 비밀번호는 특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
-			return false;
 		} else if (!pwqRegExp.test(pwd1)) {
 			$('#pwdWarning span').html("특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.");
 			return false;
@@ -118,14 +116,12 @@ $(document).ready(function(){
 	
 		if (nick == null || nick == '' || nick == 'undefined') {
 			$('#nicknameWarning span').html("사용하실 닉네임을 입력해주세요.");
-			return false;
 		} else {
 			$('#nicknameWarning span').html('');
 		}
 	
 		if (phone == null || phone == '' || phone == 'undefined') {
 			$('#phoneWarning span').html("사용하실 휴대폰 번호를 입력해주세요.");
-			return false;
 		} else if(!phoneRegExp.test(phone)) {
 			$('#phoneWarning span').html("올바른 형식의 휴대폰번호가 아닙니다.");
 			return false;
@@ -141,18 +137,21 @@ $(document).ready(function(){
 		
 		if(id != '' && pwd1 != '' && pwd2 != '' && nick != '' && phone != '' && $("#chkY").is(":checked") == true){
 			
-			//joinAction 객페생성
-			var joinAction = new $("form[name='joinAction']").serialize();
+			//formData 객체생성
+			var formData = new FormData($('#joinForm')[0]);
 			
 			$.ajax({
 	            type:'post',
 	            enctype: 'multipart/form-data',
 	            url:'joinAction.do',
-	            data : joinAction,
+	            data: formData, // 필수
+	            processData: false, // 필수
+	            contentType: false, // 필수
+	            cache: false,
 	            success : function(data) {
 	                if (data == "notUserId") {
 	        			$('#idWarning span').html("이미 가입된 아이디(이메일)입니다.");
-	                	$("#joinUserId").val().focus();
+	                	$("#joinUserId").focus();
 	                } else if(data == "notNickname") {
 	        			$('#nicknameWarning span').html("이미 존재하는 닉네임 입니다.");
 	                	nickname.focus();

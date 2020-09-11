@@ -25,7 +25,7 @@
 			<div id="content">
 				<!-- 로그인 -->
                 <div class="member_wrap">
-                    <form method="post" action="joinAction.do" name="joinAction" enctype="multipart/form-data">
+                    <form method="post" id="joinForm" name="joinAction" enctype="multipart/form-data">
                     <legend>회원가입</legend>
                     <div class="login_wrap">
                         <h1 onclick="location='/runningdog/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>
@@ -37,7 +37,6 @@
                             <p id="idWarning">
                                 <span></span>
                             </p>
-                            <!--button type="button" class="userChk" onclick="userIdChk">아이디(이메일) 중복체크</button-->
                             <div>
                                 <span><i class="xi-lock-o"></i></span>
                                 <span><input type="password" name="userPwd" title="비밀번호" id="joinUserPwd" class="w100p" placeholder="비밀번호"/></span>
@@ -51,7 +50,9 @@
                             </p>
                             <div>
                                 <span><i class="xi-profile-o"></i></span>
-                                <span><input type="file" name="profleImg" title="프로필 사진" class="w100p"/></span>
+                                <span>
+	                                <input type="file" name="profilImage" title="프로필 사진" id="profil" class="w100p"/>
+                                </span>
                             </div>
                             <div>
                                 <span><i class="xi-user-o"></i></span>
@@ -60,7 +61,6 @@
                             <p id="nicknameWarning">
                                 <span></span>
                             </p>
-                            <!--button type="button" class="userChk" onclick="nicknameChk">닉네임 중복체크</button-->
                             <div>
                                 <span><i class="xi-call"></i></span>
                                 <span><input type="tel" name="phone" title="휴대폰번호" id="joinPhone" class="w100p" placeholder="휴대폰번호('-'포함 입력)"/></span>
@@ -68,12 +68,10 @@
                             <p id="phoneWarning">
                                 <span></span>
                             </p>
-                            <!--button type="button" class="userChk" onclick="phoneChk">휴대폰번호 중복체크</button-->
                             <p class="privacyCke" style="margin:1.25rem 0;">
                                 <label><input type="checkbox" name="" id="chkY"/> 서비스의 <a href="#none" class="con1">이용약관</a>과 <a href="#none" class="con2">개인정보처리방침</a>에 동의합니다.</label>
                             </p>
 
-                            <!--input id="joinAction" class="join_btn" type="submit" name="" value="회원가입"-->
                             <input id="joinAction" class="join_btn" type="button" name="" value="회원가입">
                         </div>
                         <div class="privacyCke_con">

@@ -9,7 +9,7 @@
 		<result property="userPwd" column="user_pwd"/>
 		<result property="nickname" column="nickname"/>
 		<result property="phone" column="phone"/>
-		<result property="profleImg" column="profle_img"/>
+		<result property="profilImg" column="profil_img"/>
 		<result property="joinDate" column="join_date"/>
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
@@ -22,7 +22,7 @@
 		<result property="userPwd" column="user_pwd"/>
 		<result property="nickname" column="nickname"/>
 		<result property="phone" column="phone"/>
-		<result property="profleImg" column="profle_img"/>
+		<result property="profilImg" column="profil_img"/>
 		<result property="joinDate" column="join_date"/>
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
@@ -46,7 +46,7 @@
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
-		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{profleImg}, DEFAULT, DEFAULT, null, DEFAULT)
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{profilImg}, DEFAULT, DEFAULT, null, DEFAULT)
 	</insert>
 	
 	
