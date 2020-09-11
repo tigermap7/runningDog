@@ -2,27 +2,7 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="volunteerMapper">
-
-	<resultMap type="Volunteer" id="resultVolunteer">
-		<result column="volno" property="volno" />
-		<result column="voltitle" property="voltitle" />
-		<result column="volwriter" property="volwriter" />
-		<result column="volcontent" property="volcontent" />
-		<result column="voldate" property="voldate" />
-		<result column="voltel" property="voltel"/>
-		<result column="volterm" property="volterm" />
-		<result column="volname" property="volname" />
-		<result column="volor1" property="volor1" />
-		<result column="volre1" property="volre1" />
-		<result column="volor2" property="volor2" />
-		<result column="volre2" property="volre2" />
-		<result column="volor3" property="volor3" />
-		<result column="volre3" property="volre3" />
-		<result column="voladdress" property="voladdress" />
-		<result column="volche" property="volche" />
-		
-	</resultMap>
+<mapper namespace="vreplyMapper">
 	
 	<resultMap type="Vreply" id="resultVreply">
 	 	<result column="vreply_no" property="vreply_no" />
@@ -37,11 +17,8 @@
 	<!-- 비교연산자를 쿼리문에 그냥 사용하면 태그 엘리먼트 '< , >, &' 과 혼동하는 문제가 발생할 수 있다. -->
 	<!-- 이 문제를 미연에 방지하기 위해 xml 코드 중 xml parser에 의해 해석하지 말고, 문장 그대로 해석하라는 뜻으로  
 	       <![CDATA[ 쿼리문장 ]]> 사용함-->
-	
- 	<select id="getListCount" resultType="_int">
-			select count(*) from volunteer
-	</select>
-	<select id="selectList" parameterType="com.kh.runningdog.volunteer.model.vo.VolunteerPage" resultMap="resultVolunteer">
+
+	<!-- <select id="selectList" parameterType="com.kh.runningdog.volunteer.model.vo.VolunteerPage" resultMap="resultVolunteer">
 			<![CDATA[  
 			select * from (select rownum rnum, volno, voltitle, volwriter, volcontent, voldate, 
 											voltel, volterm, volname, volor1, volre1, volor2, volre2 volor3, volre3, voladdress,volche  
@@ -51,21 +28,13 @@
 			 where rnum >= #{startRow} and rnum <= #{endRow} 
 			 ]]>
 	</select>
-	<select id="selectVolunteer"  parameterType="_int"  resultMap="resultVolunteer">
+	<select id="selectVreply"  parameterType="_int"  resultMap="resultVolunteer">
 			select * from volunteer where volno = #{ volno }
 	</select>
-
-	<insert id="insertVolunteer" parameterType="Volunteer">
-			insert into volunteer 
-			values ((select max(volno) + 1 from volunteer), 
-								  #{voltitle}, #{volwriter}, #{volcontent}, sysdate,
-								  #{voltel}, #{volterm}, #{volname}, #{volor1}, #{volre1},
-								  #{volor2}, #{volre2}, #{volor3}, #{volre3}, #{volor4}, #{volre4}, #{voladdress}, default)			    
-	</insert>
 	<insert id="insertVreply" parameterType="Vreply">
-				insert into vreply (VREPLY_NO, VOLNO, NICKNAME, VREPLY_DATE, VREPLY_CONTENT)
+				insert into vreply (vreply_no, volno, nickname, vreply_date, vreply_content)
 				values(VREPLY_SEQ.NEXTVAL, #{volno}, #{nickname}, sysdate, #{vreply_content}) 
-	</insert>
+	</insert> -->
 	<!-- <insert id="insertReply2" parameterType="Board">
 			insert into board 
 			values ((select max(board_num) + 1 from board), 
@@ -73,25 +42,7 @@
 					 null, null, sysdate, 2, #{board_ref}, 
 					 #{board_reply_ref}, #{board_reply_seq}, default)
 	</insert> --> 
-	<update id="updateVolunteer" parameterType="Volunteer">
-			update volunteer 
-			set voltitle = #{voltitle}, 
-			    volwriter = #{volwriter}, 
-				volcontent = #{volcontent}, 
-				voltel = #{voltel},
-				volterm = #{volterm}, 
-				volor1 = #{volor1}, 
-				volre1 = #{volre1},
-				volor2 = #{volor2}, 
-				volre2 = #{volre2},
-				volor3 = #{volor3}, 
-				volre3 = #{volre3},
-				volor4 = #{volor4}, 
-				volre4 = #{volre4},
-				voladdress = #{voladdress},
-				volche = #{volche} 
-			where volno = #{volno}
-	</update>
+	
 	<!-- <update id="updateReply" parameterType="Board">
 			update board 
 			set board_title = #{board_title}, 
@@ -111,10 +62,10 @@
 	    	and board_level = #{board_level} 
 	    	and board_reply_ref = #{board_reply_ref}
 	</update> -->
-	<delete id="deleteVolunteer" parameterType="Volunteer">
-			delete from volunteer
-				   where volno = #{ volno }
+	<!-- <delete id="deleteVreply" parameterType="Vreply">
+			delete from vreply
+				   where VREPLY_NO = #{ volno }
 		
-	</delete>
+	</delete> -->
 	
 </mapper>

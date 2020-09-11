@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.runningdog.volunteer.model.vo.Volunteer;
 import com.kh.runningdog.volunteer.model.vo.VolunteerPage;
+import com.kh.runningdog.volunteer.model.vo.Vreply;
 
 @Repository("volunteerDao")
 public class VolunteerDao {
@@ -44,6 +45,18 @@ public class VolunteerDao {
 	
 	public int deleteVolunteer( Volunteer volunteer) {
 		return session.delete("volunteerMapper.deleteVolunteer", volunteer);
+	}
+	public ArrayList<Vreply> selectVreplyList(int volno){
+		return session.selectOne("vreplyMapper.selectVreply", volno );
+	}
+	public int insertVreply(Vreply vreply) {
+		return session.insert("vreplyMapper.insertVreply", vreply);
+	}
+	public int updateVreply(Vreply vreply) {
+		return session.update("vreplyMapper.updateVreply", vreply);
+	}
+	public int deleteVreply(Vreply vreply) {
+		return session.delete("vreplyMapper.deleteVreply", vreply);
 	}
 
 }

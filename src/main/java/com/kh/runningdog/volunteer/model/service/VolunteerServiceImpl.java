@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.runningdog.volunteer.model.dao.VolunteerDao;
 import com.kh.runningdog.volunteer.model.vo.Volunteer;
+import com.kh.runningdog.volunteer.model.vo.Vreply;
 
 @Service("volunteerService")
 public class VolunteerServiceImpl implements VolunteerService{
@@ -41,6 +42,30 @@ public class VolunteerServiceImpl implements VolunteerService{
 	@Override
 	public int deleteVolunteer(Volunteer volunteer) {
 		return volunteerDao.deleteVolunteer(volunteer);
+	}
+
+	@Override
+	public ArrayList<Vreply> selectVreplyList(int volno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insertVreply(Vreply vreply) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateVreply(Vreply vreply) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteVreply(Vreply vreply) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	
