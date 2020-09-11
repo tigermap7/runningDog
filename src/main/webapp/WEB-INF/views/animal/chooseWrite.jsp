@@ -83,23 +83,23 @@
                                     <tr>
                                         <td>보호자 대략 위치</td>
                                         <td><select name="dLocal" required="required">
-												<option value="1" >서울시</option>
-												<option value="2" >인천시</option>
-												<option value="3" >대전시</option>
-												<option value="4" >광주시</option>
-												<option value="5" >대구시</option>
-												<option value="6" >울산시</option>
-												<option value="7" >부산시</option>
-												<option value="8" >경기도</option>
-												<option value="9" >강원도</option>
-												<option value="10" >세종시</option>
-												<option value="11" >충청남도</option>
-												<option value="12" >충청북도</option>
-												<option value="13" >전라남도</option>
-												<option value="14" >전라북도</option>
-												<option value="15" >경상남도</option>
-												<option value="16" >경상북도</option>
-												<option value="17" >제주도</option>
+												<option value="0" >서울시</option>
+												<option value="1" >인천시</option>
+												<option value="2" >대전시</option>
+												<option value="3" >광주시</option>
+												<option value="4" >대구시</option>
+												<option value="5" >울산시</option>
+												<option value="6" >부산시</option>
+												<option value="7" >경기도</option>
+												<option value="8" >강원도</option>
+												<option value="9" >세종시</option>
+												<option value="10" >충청남도</option>
+												<option value="11" >충청북도</option>
+												<option value="12" >전라남도</option>
+												<option value="13" >전라북도</option>
+												<option value="14" >경상남도</option>
+												<option value="15" >경상북도</option>
+												<option value="16" >제주도</option>
 										</select> 
 										<input type="text" name="dFindLocal" title="" class="form-control w50p" placeholder="발견장소 입력 구/동" required/></td>
                                     </tr>

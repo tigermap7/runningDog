@@ -59,7 +59,7 @@
 		SELECT COUNT(*)
 		FROM DBOARD
 		WHERE 1=1
-		<if test="searchFiled != null and SearchFiled !=''">
+		<if test="searchFiled != null and searchFiled !=''">
 			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 		</if>
 	</select>

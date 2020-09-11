@@ -29,8 +29,8 @@ public class DboardDao {
 
 
 
-	public int selectListCount() {
-		return session.selectOne("dboardMapper.selectListCount");
+	public int selectListCount(Dboard dboard) {
+		return session.selectOne("dboardMapper.selectListCount", dboard);
 	}
 
 

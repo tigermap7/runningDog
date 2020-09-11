@@ -26,7 +26,7 @@ public class DboardServiceImpl implements DboardService{
 	}
 	@Override
 	public int selectListCount(Dboard dboard) {
-		return dboardDao.selectListCount();
+		return dboardDao.selectListCount(dboard);
 	}
 
 	@Override

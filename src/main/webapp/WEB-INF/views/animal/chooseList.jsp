@@ -2,41 +2,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<% String[] localArr = {"서울시", "인천시", "대전시", "광주시", "대구시", "울산시", "부산시", "경기도", "강원도", "세종시", "충청남도", "충청북도", "전라남도","경상북도" ,"제주도"}; 
-%>
+
 <c:set var="listCount" value="${ requestScope.totalCount }" />
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
-       <script type="text/javascript">
+<script type="text/javascript">
     //페이지 이동
     function fn_movePage(val){
         jQuery("input[name=pageNo]").val(val);
         jQuery("form[name=frm]").attr("method", "post");
         jQuery("form[name=frm]").attr("action","").submit();
     }
-    //검색 버튼
-    function fn_search(){
-        if( jQuery("#searchS").val() == "" ){
-            return;
-        }else{
-            jQuery("input[name=searchFiled]").val(jQuery("#searchS").val());
-        }
-        var searchValue = jQuery("#searchI").val();
-        jQuery("input[name=searchValue]").val(searchValue);
-   
-        jQuery("input[name=pageNo]").val("1");
-        jQuery("form[name=frm]").attr("method", "post");
-        jQuery("form[name=frm]").attr("action","").submit();
-    }
+
 </script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
-	<form name="frm">
-		<input type= "hidden" name="pageNo" />
-		<input type= "hidden" name="searchFiled" value="${ dboard.searchFiled }"/>
-		<input type= "hidden" name="searchValue" value="${ dboard.searchValue }"/>
+	
 		<div id="wrap">
             <c:import url="/WEB-INF/views/include/header.jsp"/>
 			<!-- 컨텐츠 -->
@@ -63,18 +46,39 @@
 
                     <div class="subContent">
                         <!--서브 검색-->                
-                        <div class="search_wrap" id ="search">
+                       <form action="dboardList.do" method="post">
+                      	 <div class="search_wrap" id ="search">
                             <input type="hidden" name="dCategory" value="${ d.dCategory }">
-                            <select id="searchS">
-                                <option value="d_title" class="fontColor-dark">제목</option>
-                                <option value="d_writer" class="fontColor-dark">임시보호자</option>
-                                <option value="d_local" class="fontColor-dark">발견지역</option>
+                            <select name="searchFiled" id="searchS">
+                            <c:if test="${ !empty dboard.searchFiled or dboard.searchFiled.getBytes().length!=0}">
+                            	<c:if test="${ dboard.searchFiled eq 'd_title'}">
+                                <option value="d_title" class="fontColor-dark" selected="selected">제목</option>
+                                </c:if>
+                                <c:if test="${ dboard.searchFiled eq 'd_writer'}">
+                                <option value="d_writer" class="fontColor-dark" selected="selected">임시보호자</option>
+                                </c:if>
+                                <c:if test="${ dboard.searchFiled eq 'd_local'}">
+                                <option value="d_local" class="fontColor-dark" selected="selected">발견지역</option>
+                                </c:if>
+                             </c:if>
+                             <c:if test="${ empty dboard.searchFiled or dboard.searchFiled.getBytes().length==0 }">
+                              <option value="d_title" class="fontColor-dark" selected="selected">제목</option>
+                              <option value="d_writer" class="fontColor-dark">임시보호자</option>
+                              <option value="d_local" class="fontColor-dark">발견지역</option>
+                              </c:if> 
                             </select>
                             <div class="search-box">
-                                <input type="text" id="searchI" name="keyword" placeholder="작은 천사들을 검색해주세요.">
-                                <button type="submit" class="xi-search"></button>
+                            	<c:if test="${ !empty dboard.searchValue or dboard.searchValue.getBytes().length!=0}">
+                                <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ dboard.searchValue }">
+                                <button type="submit" value="SEARCH"  onclick ="fn_search();" class="xi-search"></button>
+                                </c:if>
+                                <c:if test="${ empty dboard.searchValue or dobard.searchValue.getBytes().length==0}">
+                                <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ dboard.searchValue }">
+                                <button type="submit" value="SEARCH"  onclick ="fn_search();" class="xi-search"></button>
+                                </c:if>
                             </div>
                         </div>
+                       </form> 
                         <!--서브 검색 끝-->
                         
                         <div class="sort-area">  
@@ -83,9 +87,9 @@
                                 <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
                                 <div>
                                 <!-- <form action="" name=""> -->
-                                    <a class="active" href="#none">전체</a>
-                                    <a href="#none">강아지</a>
-                                    <a href="#none">고양이</a>
+                                    <a class="active" href="dboardList.do?dCategory=e">전체</a>
+                                    <a href="dboardList.do?dCategory=d">강아지</a>
+                                    <a href="dboardList.do?dCategory=c">고양이</a>
                                 <!-- </form> -->
                                 </div>
                             </div>
@@ -108,7 +112,11 @@
                                     <p>
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
-                                        발견지역 : ${ d.dLocal } ${ d.dFindLocal }<br/>
+                                        발견지역 :  
+                                        <c:forEach items="${fn:split('서울시|인천시|대전시|광주시|대구시|울산시|부산시|경기도|강원도|세종시|충청남도|충청북도|전라남도|경상북도|제주시', '|') }"
+                                         var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
+										</c:forEach>
+                                         ${ d.dFindLocal }<br/>
                                         <span>등록일 : ${ d.dDate }</span>
                                     </p>
                                 </li>
@@ -135,32 +143,52 @@
                             </ul>
                         </div>
                         <!-- 리스트 끝 -->
-                    
+                    <form name="frm">
+                    <input type= "hidden" name="pageNo"/>
+					<input type= "hidden" name="searchFiled" value="${ pageVO.searchFiled }"/>
+					<input type= "hidden" name="searchValue" value="${ pageVO.searchValue }"/>
                         <!-- 페이징 -->
                         <dl class="list-paging">
                             <dd>
 								<c:if test="${pageVO.pageNo !=0 }">
 									<c:if test="${pageVO.startPageNo >5 }">
-										<a href="javascript:fn_movePage(${pageVO.startPageNo-5})"><i class="xi-angle-left"></i></a>
+										<c:url var = "dl1" value="dboardList.do">
+											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
+											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
+											<c:param name="searchValue" value="${pageVO.searchValue }"/>
+										</c:url>
+										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
 									<c:forEach var="i" begin="${pageVO.startPageNo}"
 										end="${ pageVO.endPageNo }" step="1">
+										<c:url var = "dl2" value="dboardList.do">
+												<c:param name="pageNo" value="${ i }"/>
+												<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
+												<c:param name="searchValue" value="${pageVO.searchValue }"/>
+											</c:url>
 										<c:choose>
 											<c:when test="${i eq pageVO.pageNo }">
-												<a href="javascript:fn_movePage(${i})" class="active">${ i }</a>
+											
+												<a href="${dl2}" class="active">${ i }</a>
 											</c:when>
 											<c:otherwise>
-												<a href="javascript:fn_movePage(${i})" class="">${ i }</a>
+												<a href="${dl2}" class="">${ i }</a>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
 									<c:if test="${pageVO.pageNo !=pageVO.finalPageNo }">
-										<a href="javascript:fn_movePage(${pageVO.endPageNo +1 })"><i
+										<c:url var = "dl3" value= "dboardList.do">
+											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
+											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
+											<c:param name="searchValue" value="${pageVO.searchValue }"/>
+										</c:url>
+										<a href="${dl3 }"><i
 											class="xi-angle-right"></i></a>
 									</c:if>
 								</c:if>
 							</dd>
                         </dl>
+                        </form>
                         <!-- //페이징 -->
                     </div>
                 </div>
@@ -168,6 +196,6 @@
             <!-- 컨텐츠 끝 -->
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
-		</form>
+		
 	</body>
 </html>

@@ -75,7 +75,7 @@ public class DboardController {
 				img = ImageLoader.fromFile(listPath);
 
 				//너비 300으로 리사이징 처리 화질은 최대한 보정
-				img.getResizedToWidth (400) .soften (0.0f) .writeToJPG (new File (listPath), 0.95f);
+				img.getResizedToWidth (300) .soften (0.0f) .writeToJPG (new File (listPath), 0.95f);
 
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
@@ -86,7 +86,7 @@ public class DboardController {
 	      } 
 	      
 	      if(dboardService.insertDboard(dboard) > 0) {
-	         return "redirect:dlistPage.do";
+	         return "redirect:dboardList.do";
 	      } else {
 	         request.setAttribute("message", "새 공지사항 등록 처리 실패");
 	         return "common/error";
@@ -95,9 +95,11 @@ public class DboardController {
 	@RequestMapping(value="dboardList.do" ,method= {RequestMethod.POST,RequestMethod.GET})
 	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard")Dboard dboard){
 		
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		
 		 logger.info("SearchFiled : " + dboard.getSearchFiled());
 		 logger.info("SearchValue : " + dboard.getSearchValue());
-		 System.out.println(dboard.getPageNo()+" 잘나오냐");
 		 int totalCount = dboardService.selectListCount(dboard); //게시물 총갯수를 구한다
 		 dboard.setTotalCount(totalCount); //페이징 처리를 위한 setter 호출
 		 model.addAttribute("pageVO", dboard);
@@ -112,9 +114,9 @@ public class DboardController {
 		 logger.info("StartPageNo // 시작 페이지 (페이징 네비 기준) : " + dboard.getStartPageNo());
 		 logger.info("EndPageNo // 끝 페이지 (페이징 네비 기준) : " + dboard.getEndPageNo());
 		 logger.info("totalCount // 게시 글 전체 수 : " + totalCount);
-		 logger.info("좀나와야지" + dboard.getStartRowNo());
 		 
 		 ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
+		 
 		 
 		 model.addAttribute("totalCount",totalCount);
 		 model.addAttribute("dboardList",dboardList);
