@@ -34,10 +34,17 @@
 
                     <div class="subContent">
                         <!--상세-->
-                        <form name="formname" method="post" enctype="" action="" class="form-inline">
+                        <form name="formname" method="post" enctype="multipart/form-data" action="nupdate.do" id="noticeUpdateForm" class="form-inline">
+                        <input type="hidden" name="noticeNo" value="${ notice.noticeNo }">
+                        <input type="hidden" name="noticeOriginalFilename1" value="${ notice.noticeOriginalFilename1 }">
+						<input type="hidden" name="noticeOriginalFilename2" value="${ notice.noticeOriginalFilename2 }">
+						<input type="hidden" name="noticeOriginalFilename3" value="${ notice.noticeOriginalFilename3 }">
+						<input type="hidden" name="noticeRenameFilename1" value="${ notice.noticeRenameFilename1 }">
+						<input type="hidden" name="noticeRenameFilename2" value="${ notice.noticeRenameFilename2 }">
+						<input type="hidden" name="noticeRenameFilename3" value="${ notice.noticeRenameFilename3 }">
                         <div class="write-area">
                         
-                            <h2>1번글 공지사항 수정</h2>
+                            <h2>${ notice.noticeNo }번 공지사항 수정</h2>
                             <p>수정사항을 입력해주세요.</p>
                             
                             <table>
@@ -48,36 +55,110 @@
                                 <tbody>
                                     <tr>
                                         <td>알림</td>
-                                        <td><label><input type="radio"" name="" title=""/>필수여부</label></td>
+                                        <td>
+                                        	<label><input type="radio" name="noticeState" id="state" value="checked" ${ notice.noticeState }/>필수여부</label>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>제목</td>
-                                        <td><input type="text" name="" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
+                                        <td><input type="text" name="noticeTitle" class="form-control w100p" placeholder="제목 입력" required value="${ notice.noticeTitle }"/></td>
                                     </tr>
                       			    <tr>
                     			        <td>작성자</td>
-                          			    <td><input type="text" name="" title="" class="form-control w100p" readonly value="관리자"></td>
+                          			    <td><input type="text" name="noticeWriter" class="form-control w100p" readonly value="관리자"></td>
                     			    </tr>                                    
                                     <tr>
                                         <td>내용</td>
-                                        <td><textarea name="" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                                        <td><textarea name="noticeContent" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;">${ notice.noticeContent }</textarea></td>
                                     </tr>
                                     <tr>
                           			    <td>첨부파일</td>
-                       			        <td>
-                          			    	<input type="file" name="" title="" class="mb5"><input type="checkbox" name="deleteFlag" id="" value=""> 파일삭제
-                           			    	<input type="file" name="" title="" class="mb5"><input type="checkbox" name="deleteFlag" id="" value=""> 파일삭제
-                               			    <input type="file" name="" title="" class="mb5"><input type="checkbox" name="deleteFlag" id="" value=""> 파일삭제
+                       			        <td id="files">
+                       			        <!-- 첨부파일 여부에 따라 보이는거 다르게 하기 -->
+										<c:if test="${ !empty notice.noticeOriginalFilename1 }">
+											<p id="original1">${ notice.noticeOriginalFilename1 }&nbsp;&nbsp;   
+											<button class="deleteBtn" onclick="showFileSelect1()"><i class="xi-cut"></i> 파일삭제</button></p>
+										</c:if>
+										<c:if test="${ empty notice.noticeOriginalFilename1 }">
+											<input type="file" name="newfile1" class="mb5">
+										</c:if>
+										<input type="file" id="showSelect1" name="refile1" class="mb5">
+										
+										<c:if test="${ !empty notice.noticeOriginalFilename2 }">
+											<p id="original2">${ notice.noticeOriginalFilename2 }&nbsp;&nbsp;   
+											<button class="deleteBtn" onclick="showFileSelect2()"><i class="xi-cut"></i> 파일삭제</button></p>
+										</c:if>
+										<c:if test="${ empty notice.noticeOriginalFilename2 }">
+											<input type="file" name="newfile2" class="mb5">
+										</c:if>
+										<input type="file" id="showSelect2" name="refile2" class="mb5">
+										
+										<c:if test="${ !empty notice.noticeOriginalFilename3 }">
+											<p id="original3">${ notice.noticeOriginalFilename3 }&nbsp;&nbsp;   
+											<button class="deleteBtn" onclick="showFileSelect3()"><i class="xi-cut"></i> 파일삭제</button></p>
+										</c:if>
+										<c:if test="${ empty notice.noticeOriginalFilename3 }">
+											<input type="file" name="newfile3" class="mb5">
+										</c:if>
+										<input type="file" id="showSelect3" name="refile3" class="mb5">
                           			    </td>
                         			</tr>
                                 </tbody>
                             </table>
                         </div>
+                        
+                        <script type="text/javascript">
+                        /* 라디오버튼 동적 체크하기 */
+                       	$("input[id='state']").on('click',function(){
+                       		console.log("버튼클릭함");
+                       		if($('#state').val() == 'checked'){
+                       			console.log("체크되어있음");
+                       			$('#state').prop('checked', false);
+                       			$('#state').val("unchecked");
+                       		} else {
+                       			console.log("체크안되어있음");
+                       			$('#state').prop('checked', true);
+                       			$('#state').val("checked");
+                       		}
+                       	});
+                       	
+                       	/* 첨부파일 선택창 숨기기 */
+                       	$(document).ready(function(){
+                       		$('#showSelect1').hide();
+                       		$('#showSelect2').hide();
+                       		$('#showSelect3').hide();
+                       	});
+                       	
+                       	/* 파일 삭제 누르면 첨부파일 선택창 나오게 하기 */
+                       	function showFileSelect1(){
+                       		var files = document.getElementById("files");
+                       		var originalFile = document.getElementById("original1");
+                       		files.removeChild(originalFile);
+                       		$('#showSelect1').show();
+                       	}
+                       	function showFileSelect2(){
+                       		var files = document.getElementById("files");
+                       		var originalFile = document.getElementById("original2");
+                       		files.removeChild(originalFile);
+                       		$('#showSelect2').show();
+                       	}
+                       	function showFileSelect3(){
+                       		var files = document.getElementById("files");
+                       		var originalFile = document.getElementById("original3");
+                       		files.removeChild(originalFile);
+                       		$('#showSelect3').show();
+                       	}
+                       
+                       	/* 수정 최소하기 버튼 눌리면 새로고침하기 */
+                       	function Refresh(){
+                       		window.location.reload();
+                       	}
+                        </script>
 
                         <div class="write-btn">
-                            <input type="button" class="btn btn-list" onclick="location.href='nlist.do'" value="목록으로">
-                            <input type="reset" class="btn btn-cancel" value="취소하기">
-                            <input type="submit" class="btn btn-success" value="작성하기">
+                            <input type="button" class="btn btn-list" onclick="javascript:history.go(-1); return false;" value="이전으로">
+                            <input type="reset" class="btn btn-cancel" onclick="Refresh()" value="취소하기">
+                            <input type="submit" class="btn btn-success" value="수정하기">
                         </div>
                         </form>
                         <!-- 글쓰기 끝 -->
