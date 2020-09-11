@@ -68,7 +68,6 @@
                     </ul>
                 </div>
             </li>
-           <%-- <li><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li> --%>
            <li><a href="nlist.do">공지사항</a></li>
         </ul>
     </div>
