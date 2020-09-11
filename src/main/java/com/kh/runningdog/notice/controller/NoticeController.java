@@ -202,81 +202,111 @@ public class NoticeController {
 		String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles"); //파일 저장할 폴더 위치
 		int i = 1;
 		
-		String fileWhether  = notice.getNoticeRenameFilename1();
+		String deleteFilename1 = request.getParameter("deleteFilename1");
+		String deleteFilename2 = request.getParameter("deleteFilename2");
+		String deleteFilename3 = request.getParameter("deleteFilename3");
 		
-		System.out.println();System.out.println();System.out.println();System.out.println();
-		System.out.println("기존 : " + notice);System.out.println(fileMap.size());System.out.println(fileWhether.length());
-		System.out.println();System.out.println();System.out.println();System.out.println();
+		//삭제할 파일이 넘겨져왔을 때 삭제하기
+		if(!(deleteFilename1 == null || deleteFilename1.length() == 0)) {
+			System.out.println(notice.getNoticeRenameFilename1() + " 삭제");
+			new File(savePath + "\\" + notice.getNoticeRenameFilename1()).delete();
+			notice.setNoticeOriginalFilename1(null);
+			notice.setNoticeRenameFilename1(null);
+		}
+		if(!(deleteFilename2 == null || deleteFilename2.length() == 0)) {
+			System.out.println(notice.getNoticeRenameFilename2() + " 삭제");
+			new File(savePath + "\\" + notice.getNoticeRenameFilename2()).delete();
+			notice.setNoticeOriginalFilename2(null);
+			notice.setNoticeRenameFilename2(null);
+		}
+		if(!(deleteFilename3 == null || deleteFilename3.length() == 0)) {
+			new File(savePath + "\\" + notice.getNoticeRenameFilename3()).delete();
+			notice.setNoticeOriginalFilename3(null);
+			notice.setNoticeRenameFilename3(null);
+		}
 		
-		System.out.println("");
-		
-        //기존에 파일이 하나라도 없는경우 차례대로 저장하기
-		if(fileWhether == null || fileWhether == "" || fileWhether.length() == 0) {
-			for(String key : fileMap.keySet()) {
-				if(fileMap.get(key).getOriginalFilename() != "") {
-				String originalFilename = fileMap.get(key).getOriginalFilename();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-				String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
-				renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
-				
-				try {
-					fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
-				} catch (Exception e) {
-					e.printStackTrace();
+		//파일 저장순서 변경하기 (1이 삭제되고 2, 3이 남으면 1, 2 이렇게 변경)
+		if(notice.getNoticeOriginalFilename1() == null) {	//1번이 없는 경우(삭제된 경우)
+			if(notice.getNoticeOriginalFilename2() != null) {	//2번이 있는 경우
+				notice.setNoticeOriginalFilename1(notice.getNoticeOriginalFilename2());
+				notice.setNoticeRenameFilename1(notice.getNoticeRenameFilename2());
+				if(notice.getNoticeOriginalFilename3() != null) {	//3번이 있는 경우
+					notice.setNoticeOriginalFilename2(notice.getNoticeOriginalFilename3());
+					notice.setNoticeRenameFilename2(notice.getNoticeRenameFilename3());
+					notice.setNoticeOriginalFilename3(null);
+					notice.setNoticeRenameFilename3(null);
+				} else {	//3번이 없는 경우
+					notice.setNoticeOriginalFilename2(null);
+					notice.setNoticeRenameFilename2(null);
 				}
-					switch (i) {
-					case 1 : notice.setNoticeOriginalFilename1(originalFilename);
-						     notice.setNoticeRenameFilename1(renamefilename); break;
-					case 2 : notice.setNoticeOriginalFilename2(originalFilename);
-							 notice.setNoticeRenameFilename2(renamefilename); break;
-					case 3 : notice.setNoticeOriginalFilename3(originalFilename);
-							 notice.setNoticeRenameFilename3(renamefilename); break;
+			} else {	//2번도 없는 경우
+				if(notice.getNoticeOriginalFilename3() != null) {	//3번만 있는 경우
+					notice.setNoticeOriginalFilename1(notice.getNoticeOriginalFilename3());
+					notice.setNoticeRenameFilename1(notice.getNoticeRenameFilename3());
+					notice.setNoticeOriginalFilename3(null);
+					notice.setNoticeRenameFilename3(null);
 				}
-					System.out.println(i + " 새로 추가된 파일 : " + originalFilename );
-					i++;
-				}//if문
-			} //for문
-		} else { //첨부파일 수정시 기존파일 자리에 파일 삭제하고 변경하기 (삭제하고 파일 첨부까지)
-			for(String key : fileMap.keySet()) {
-				if(fileMap.get(key).getOriginalFilename() != "") {
-					String originalFilename = fileMap.get(key).getOriginalFilename();
-					System.out.println(i + " 변경된 이름 : " + originalFilename);
-					
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-					String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
-					renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
-					
-					try {
-						fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));	
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					switch (i) {	//파일 순서 별 변경하기
-					case 1 : 
-						if (notice.getNoticeRenameFilename1() != null) {	//기존파일있으면 
-							new File(savePath + "\\" + notice.getNoticeRenameFilename1()).delete();
-						}
+			}
+		} else {
+			if(notice.getNoticeOriginalFilename2() == null) {	//2번이 없는 경우
+				if(notice.getNoticeOriginalFilename3() != null) {	//3번이 있는 경우
+					notice.setNoticeOriginalFilename2(notice.getNoticeOriginalFilename3());
+					notice.setNoticeRenameFilename2(notice.getNoticeRenameFilename3());
+					notice.setNoticeOriginalFilename3(null);
+					notice.setNoticeRenameFilename3(null);
+				}
+			}
+		}
+		
+		System.out.println("기존에 있던 공지사항 : " + notice);	
+		//새로 첨부된 파일 있을 경우 파일 추가하기
+		for(String key : fileMap.keySet()) {
+			if(fileMap.get(key).getOriginalFilename() != "") {
+			String originalFilename = fileMap.get(key).getOriginalFilename();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
+			renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
+			
+			try {
+				fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println(i + ", "+ notice.getNoticeOriginalFilename1().length());
+				switch (i) {
+				case 1 : 
+					if(notice.getNoticeOriginalFilename1().length() == 0) {	//1번 파일이 없을 때
 						notice.setNoticeOriginalFilename1(originalFilename);
-						notice.setNoticeRenameFilename1(renamefilename); break;
-					case 2 : 
-					    if (notice.getNoticeRenameFilename2() != null) {	
-					        new File(savePath + "\\" + notice.getNoticeRenameFilename2()).delete();
-					    }
-					    notice.setNoticeOriginalFilename2(originalFilename);
-						notice.setNoticeRenameFilename2(renamefilename); break;
-					case 3 : 
-					    if (notice.getNoticeRenameFilename3() != null) {	
-					    	new File(savePath + "\\" + notice.getNoticeRenameFilename3()).delete();
-					    }
-					    notice.setNoticeOriginalFilename3(originalFilename);
-						notice.setNoticeRenameFilename3(renamefilename); break;
-					} //switch문
-				} //if문
-				System.out.println(key + i);
+						notice.setNoticeRenameFilename1(renamefilename);
+					} else { //1번파일이 있을 때
+						if(notice.getNoticeOriginalFilename2().length() == 0) {	//2번파일이 없을 때
+							notice.setNoticeOriginalFilename2(originalFilename);
+							notice.setNoticeRenameFilename2(renamefilename);							
+						} else {
+							notice.setNoticeOriginalFilename3(originalFilename);
+							notice.setNoticeRenameFilename3(renamefilename);							
+						}
+					}
+					break;
+				case 2 :
+					if(notice.getNoticeOriginalFilename2().length() == 0) {	//2번파일이 없을 때
+						notice.setNoticeOriginalFilename2(originalFilename);
+						notice.setNoticeRenameFilename2(renamefilename);						
+					} else {
+						notice.setNoticeOriginalFilename3(originalFilename);
+						notice.setNoticeRenameFilename3(renamefilename); 						
+					}
+					break;
+				case 3 : 
+						notice.setNoticeOriginalFilename3(originalFilename);
+						notice.setNoticeRenameFilename3(renamefilename); 
+					break;
+			}
+				System.out.println(i + " 새로 추가된 파일 : " + originalFilename );
 				i++;
-			} //for문
-		}//else if문
-		
+			}//if문
+		} //for문
+	
 		System.out.println("변경된 공지사항 : " + notice);
 		
 		if(noticeService.updateNotice(notice) > 0) {
