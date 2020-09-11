@@ -97,7 +97,7 @@ public class DboardController {
 		
 		 logger.info("SearchFiled : " + dboard.getSearchFiled());
 		 logger.info("SearchValue : " + dboard.getSearchValue());
-		 
+		 System.out.println(dboard.getPageNo()+" 잘나오냐");
 		 int totalCount = dboardService.selectListCount(dboard); //게시물 총갯수를 구한다
 		 dboard.setTotalCount(totalCount); //페이징 처리를 위한 setter 호출
 		 model.addAttribute("pageVO", dboard);

@@ -71,7 +71,7 @@
 			  MAP_X, MAP_Y, D_CHECK, D_SUCCESS, VIEW_IMAGE, LIST_IMAGE
 			  FROM (SELECT *
 			  		FROM DBOARD WHERE D_CHECK = 'y' 
-			  		<if test="searchFiled != null and SearchFiled !=''">
+			  		<if test="searchFiled != null and searchFiled !=''">
 					AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 					</if>
 					ORDER BY D_NUM DESC))

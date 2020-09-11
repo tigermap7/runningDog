@@ -2,11 +2,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% String[] localArr = {"서울시", "인천시", "대전시", "광주시", "대구시", "울산시", "부산시", "경기도", "강원도", "세종시", "충청남도", "충청북도", "전라남도","경상북도" ,"제주도"}; 
+%>
 <c:set var="listCount" value="${ requestScope.totalCount }" />
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+       <script type="text/javascript">
+    //페이지 이동
+    function fn_movePage(val){
+        jQuery("input[name=pageNo]").val(val);
+        jQuery("form[name=frm]").attr("method", "post");
+        jQuery("form[name=frm]").attr("action","").submit();
+    }
+    //검색 버튼
+    function fn_search(){
+        if( jQuery("#searchS").val() == "" ){
+            return;
+        }else{
+            jQuery("input[name=searchFiled]").val(jQuery("#searchS").val());
+        }
+        var searchValue = jQuery("#searchI").val();
+        jQuery("input[name=searchValue]").val(searchValue);
+   
+        jQuery("input[name=pageNo]").val("1");
+        jQuery("form[name=frm]").attr("method", "post");
+        jQuery("form[name=frm]").attr("action","").submit();
+    }
+</script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 	<form name="frm">
@@ -58,11 +82,11 @@
                             <div>
                                 <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
                                 <div>
-                                <form action="" name="">
+                                <!-- <form action="" name=""> -->
                                     <a class="active" href="#none">전체</a>
                                     <a href="#none">강아지</a>
                                     <a href="#none">고양이</a>
-                                </form>
+                                <!-- </form> -->
                                 </div>
                             </div>
                         </div>
@@ -115,14 +139,27 @@
                         <!-- 페이징 -->
                         <dl class="list-paging">
                             <dd>
-                                <a href="#none"><i class="xi-angle-left"></i></a>
-                                <a href="#none" class="active">1</a>
-                                <a href="#none">2</a>
-                                <a href="#none">3</a>
-                                <a href="#none">4</a>
-                                <a href="#none">5</a>
-                                <a href="#none"><i class="xi-angle-right"></i></a>
-                            </dd>
+								<c:if test="${pageVO.pageNo !=0 }">
+									<c:if test="${pageVO.startPageNo >5 }">
+										<a href="javascript:fn_movePage(${pageVO.startPageNo-5})"><i class="xi-angle-left"></i></a>
+									</c:if>
+									<c:forEach var="i" begin="${pageVO.startPageNo}"
+										end="${ pageVO.endPageNo }" step="1">
+										<c:choose>
+											<c:when test="${i eq pageVO.pageNo }">
+												<a href="javascript:fn_movePage(${i})" class="active">${ i }</a>
+											</c:when>
+											<c:otherwise>
+												<a href="javascript:fn_movePage(${i})" class="">${ i }</a>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<c:if test="${pageVO.pageNo !=pageVO.finalPageNo }">
+										<a href="javascript:fn_movePage(${pageVO.endPageNo +1 })"><i
+											class="xi-angle-right"></i></a>
+									</c:if>
+								</c:if>
+							</dd>
                         </dl>
                         <!-- //페이징 -->
                     </div>
