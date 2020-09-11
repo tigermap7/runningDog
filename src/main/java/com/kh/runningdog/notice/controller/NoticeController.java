@@ -105,9 +105,18 @@ public class NoticeController {
 	}
 	
 	//공지사항 첨부파일 다운로드
-	//@RequestMapping(value="nfdown.do")
+	@RequestMapping(value="nfdown.do")
 	public ModelAndView noticeFileDownload(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView();
+		logger.info("nfdown.do run...");
+		String renameFilename = request.getParameter("rfile");
+		String originalFilename = request.getParameter("ofile");
+		
+		String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles");
+		File downFile = new File(savePath + "\\" + renameFilename);
+		
+		ModelAndView mv = new ModelAndView("noticeFiledown", "downFile", downFile);
+		mv.addObject("fileName", originalFilename);
+		
 		return mv;
 	}
 	
