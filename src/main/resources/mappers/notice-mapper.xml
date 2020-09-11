@@ -99,5 +99,9 @@
         #{ noticeOriginalFilename1, jdbcType=VARCHAR }, #{ noticeRenameFilename1, jdbcType=VARCHAR }, #{ noticeOriginalFilename2, jdbcType=VARCHAR }, 
         #{ noticeRenameFilename2, jdbcType=VARCHAR }, #{ noticeOriginalFilename3, jdbcType=VARCHAR }, #{ noticeRenameFilename3, jdbcType=VARCHAR })
 	</insert>
+	
+	<delete id="deleteNotice" parameterType="_int">
+		DELETE FROM NOTICE WHERE NOTICE_NO = #{ noticeNo }
+	</delete>
 
 </mapper>
