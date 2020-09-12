@@ -168,16 +168,18 @@
                         <dl class="list-paging">
                             <dd>
                             <!-- 이전 그룹 페이지 이동 -->
-                            	<c:if test="${ (noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) >= 1 }">
+                            	<c:if test="${ (noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) ge 1 }">
 								<c:url var="npurl1" value="nlist.do">
 								<c:param name="page" value="${ noticePage.startPage - 5 }"/>
+								<!-- 검색값 유지 -->
+								<c:param name="searchNotice" value="${ noticePage.search }"/>
+								<c:param name="keyword" value="${ noticePage.keyword }"/>
 								</c:url>
 									 <a href="${ npurl1 }"><i class="xi-angle-left"></i></a>
 								</c:if>
-								<c:if test="${ !((noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) >= 1) }">
-								<!-- 	<a href="#none"><i class="xi-angle-left"></i></a> -->
-								</c:if>
-                               
+								<%-- <c:if test="${ !((noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) >= 1) }">
+								 	<a href="#none"><i class="xi-angle-left"></i></a>
+								</c:if> --%>
                                 
                                 <!-- 현재 페이지가 속한 페이지그룹의 숫자 출력 처리  -->
                                 <c:forEach var="p" begin="${ noticePage.startPage }" end="${ noticePage.endPage }" step="1">
@@ -196,22 +198,22 @@
                                 </c:forEach>
                                 
                             <!-- 다음 그룹 페이지 이동 -->
-                            	<c:if test="${ (noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage }">
+                            	<c:if test="${ (noticePage.currentPage + 5) gt noticePage.endPage and noticePage.endPage lt noticePage.maxPage }">
 								<c:url var="npurl3" value="nlist.do">
 								<c:param name="page" value="${ noticePage.startPage + 5 }"/>
+								<!-- 검색값 유지 -->
+								<c:param name="searchNotice" value="${ noticePage.search }"/>
+								<c:param name="keyword" value="${ noticePage.keyword }"/>
 								</c:url>
-									 <a href="${ nprul3 }"><i class="xi-angle-right"></i></a>
+									 <a href="${ npurl3 }"><i class="xi-angle-right"></i></a>
 								</c:if>
-								<c:if test="${ !((noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage) }">
-									<!-- <a href="#none"><i class="xi-angle-right"></i></a> -->
-								</c:if>
+								<%-- <c:if test="${ !((noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage) }">
+									<a href="#none"><i class="xi-angle-right"></i></a>
+								</c:if> --%>
                             </dd>
                         </dl>
                         <!-- //페이징 -->
-                        
-                        
-                        
-                        
+
                     </div>
                 </div>
             </div>
