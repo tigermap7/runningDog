@@ -38,4 +38,9 @@ public class DboardDao {
 		List<Dboard> list = session.selectList("dboardMapper.selectList", dboard);
 		return (ArrayList<Dboard>)list;
 	}
+
+
+	public Dboard selectOne(int dNum) {
+		return session.selectOne("dboardMapper.selectOne", dNum);
+	}
 }

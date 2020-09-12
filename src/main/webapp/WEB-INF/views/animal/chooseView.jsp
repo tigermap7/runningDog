@@ -55,10 +55,13 @@
                                        </colgroup>
                                         <tbody>
                                             <tr>
-                                                <th>견종</th>
-                                                <td>[강아지] 푸들</td>
+                                                <th>반려 동물 종류</th>
+                                                <td>${ dbaord.dCategory eq "d"?"강아지": "" }
+                                                	${ dbaord.dCategory eq "c"?"고양이": "" }
+                                                	${ dbaord.dCategory eq "e"?"기  타": "" }
+                                                </td>
                                                 <th>발견날짜</th>
-                                                <td>2020.08.28</td>
+                                                <td>${ dboard.dFindDate }</td>
                                             </tr>
                                             <tr>
                                                 <th>성별</th>

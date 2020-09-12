@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +45,8 @@ public class DboardController {
 	}
 	
 	@RequestMapping(value="dinsert.do", method=RequestMethod.POST)
-	public String insertDboard(Dboard dboard, HttpServletRequest request, 
-			@RequestParam(name="upfile", required=false) MultipartFile file) {
+	public String insertDboard(Dboard dboard, HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(name="upfile", required=false) MultipartFile file) throws IOException {
 		logger.info("dinsert.do run..." + dboard + "Image file : " + file.getOriginalFilename());
 	
 		String viewImage = file.getOriginalFilename();
@@ -84,16 +86,20 @@ public class DboardController {
 	         dboard.setviewImage(viewRename);
 	         dboard.setlistImage(listRename);
 	      } 
-	      
+	      String url="";
 	      if(dboardService.insertDboard(dboard) > 0) {
-	         return "redirect:dboardList.do";
+	         url= "redirect:dboardList.do";
 	      } else {
-	         request.setAttribute("message", "새 공지사항 등록 처리 실패");
-	         return "common/error";
+	    	  response.setContentType("text/html; charset=UTF-8");
+	          PrintWriter out = response.getWriter();
+	          out.println("<script>alert('게시글 등록에 실패했습니다.'); history.go(-1);</script>");
+	          out.flush();
 	      }
+	      return url;
 		}
 	@RequestMapping(value="dboardList.do" ,method= {RequestMethod.POST,RequestMethod.GET})
-	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard")Dboard dboard){
+	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard")Dboard dboard,
+								HttpServletResponse response) throws IOException{
 		
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
@@ -117,12 +123,40 @@ public class DboardController {
 		 
 		 ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
 		 
-		 model.addAttribute("dCategory",dboard.getdCategory());
-		 model.addAttribute("totalCount",totalCount);
-		 model.addAttribute("dboardList",dboardList);
-		 
-		 return "animal/chooseList";
-		 
-		
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("dboardList", dboardList);
+
+		String url = "";
+		if (dboardList.size() > 0) {
+			url = "animal/chooseList";
+		}else {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('게시글 목록 조회 실패!'); history.go(-1);</script>");
+			out.flush();
+		}
+		return url;
 	}
+	@RequestMapping("dboardView.do")
+	public String selectOne(@RequestParam("dNum") int dNum, @RequestParam("pageNo") int pageNo, Model model,
+							HttpServletResponse response) throws IOException {
+		Dboard dboard = dboardService.selectOne(dNum);
+		logger.info("dboard View게시글 번호" + dNum);
+		logger.info("dboard View페이지 번호" + pageNo);
+		String url = "";
+		if(dboard != null) {
+			model.addAttribute("dboard", dboard);
+			model.addAttribute("pageNo", pageNo);
+			url ="animal/chooseView";
+		}else {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('게시글 보기 실패'); history.go(-1);</script>");
+            out.flush();
+		}
+		return url;
+	}
+	
+	
 }

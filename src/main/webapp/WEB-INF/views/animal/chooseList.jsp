@@ -86,7 +86,12 @@
                                 <li class="grid-sizer"></li>
                                  <c:forEach items="${ requestScope.dboardList }" var="d">
                                  <c:if test = "${d.dSuccess eq 'n'}">
-                                <li class="grid-item chooseIcon" onclick="location='chooseView.jsp'">
+                                 <c:url var="dboardView" value="dboardView.do">
+                                 	<c:param name="pageNo" value="${ pageVO.pageNo }"/>
+                                 	<c:param name="dNum" value="${ d.dNum }"/>
+                                 </c:url>
+                                 	
+                                <li class="grid-item chooseIcon" onclick="location='${dboardView}'">
                                     <div>
                                         <a href="#none" class="chooseIcon">보호중</a>
                                         
@@ -98,7 +103,7 @@
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
                                         발견지역 :  
-                                        <c:forEach items="${fn:split('서울시|인천시|대전시|광주시|대구시|울산시|부산시|경기도|강원도|세종시|충청남도|충청북도|전라남도|경상북도|제주시', '|') }"
+                                        <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
                                          var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
 										</c:forEach>
                                          ${ d.dFindLocal }<br/>
@@ -107,7 +112,7 @@
                                 </li>
                                 </c:if>
                                 <c:if test = "${d.dSuccess eq 'y'}">
-                                <li class="grid-item close" onclick="location='chooseView.jsp'">
+                                <li class="grid-item close" onclick="location='dboardView.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">인계완료</a>
                                         
@@ -118,7 +123,11 @@
                                     <p>
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
-                                        발견지역 : ${ d.dLocal } ${ d.dFindLocal }<br/>
+                                        발견지역 : 
+										 <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
+                                         var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
+										</c:forEach>
+										 ${ d.dFindLocal }<br/>
                                         <span>등록일 : ${ d.dDate }</span>
                                     </p>
                                 </li>

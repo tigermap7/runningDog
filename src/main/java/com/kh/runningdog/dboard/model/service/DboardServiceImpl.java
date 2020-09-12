@@ -1,7 +1,6 @@
 package com.kh.runningdog.dboard.model.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +31,10 @@ public class DboardServiceImpl implements DboardService{
 	@Override
 	public ArrayList<Dboard> selectList(Dboard dboard) {
 		return dboardDao.selectList(dboard);
+	}
+
+	@Override
+	public Dboard selectOne(int dNum) {
+		return dboardDao.selectOne(dNum);
 	}
 }
