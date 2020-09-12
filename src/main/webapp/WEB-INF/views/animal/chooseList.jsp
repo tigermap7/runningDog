@@ -76,7 +76,10 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        <c:if test="${ totalCount == 0}">
+                       <script>alert('검색결과에 해당하는 게시물이 없습니다.');
+                       	history.go(-1);</script>
+                        </c:if>
                         <!--리스트-->
                         <div class="animalList">
                             <ul class="grid">
