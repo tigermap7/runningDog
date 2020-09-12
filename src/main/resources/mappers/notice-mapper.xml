@@ -118,5 +118,14 @@
 	<delete id="deleteNotice" parameterType="_int">
 		DELETE FROM NOTICE WHERE NOTICE_NO = #{ noticeNo }
 	</delete>
+	
+	<select id="selectStateList" resultType="Notice">
+		<![CDATA[
+			select * 
+			from notice 
+			where notice_state is not null
+			or notice_date > (select to_char(add_months(sysdate -1, -1), 'yyyy/mm/dd') from dual)
+		]]>
+	</select>
 
 </mapper>
