@@ -56,26 +56,32 @@
                                         <tbody>
                                             <tr>
                                                 <th>반려 동물 종류</th>
-                                                <td>${ dbaord.dCategory eq "d"?"강아지": "" }
-                                                	${ dbaord.dCategory eq "c"?"고양이": "" }
-                                                	${ dbaord.dCategory eq "e"?"기  타": "" }
+                                                <td>${ dboard.dCategory eq "d"?"강아지": "" }
+                                                	${ dboard.dCategory eq "c"?"고양이": "" }
+                                                	${ dboard.dCategory eq "e"?"기  타": "" }
                                                 </td>
                                                 <th>발견날짜</th>
                                                 <td>${ dboard.dFindDate }</td>
                                             </tr>
                                             <tr>
                                                 <th>성별</th>
-                                                <td>남/男</td>
-                                                <th>색상</th>
-                                                <td>흰색+회색</td>
+                                                <td>
+                                                ${ dboard.dGender eq "m"?"남/男" : "" }
+                                                ${ dboard.dGender eq "f"?"여/女" : "" }
+												</td>
+                                                <th>분양 여부</th>
+                                                <td>
+                                                ${ dboard.dSuccess eq "y"? "주인을 기다리고 있어요" : ""}
+                                                ${ dboard.dSuccess eq "n"? "새로운 주인을 찾았어요" : ""}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>발견장소</th>
-                                                <td colspan="3">서울시 도봉구 창동 우이천로 부근</td>
+                                                <td colspan="3">${ dboard.dFindLocal }</td>
                                             </tr>
                                             <tr>
                                                 <th>특이사항</th>
-                                                <td colspan="3">목걸이 착용. 이름이 뭉이라고 되어 있어요.</td>
+                                                <td colspan="3">${ dboard.dPoint }</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -91,19 +97,25 @@
                                         <tbody>
                                             <tr>
                                                 <th>임시보호자</th>
-                                                <td>멍무이 / #1971345</td>
-                                                <th>작성일</th>
-                                                <td>2020.08.28</td>
+                                                <td>${ dboard.dWriter } / # ${ dboard.uniqueNum }</td>
+                                                <th>${ dboard.dDate ne dboard.dMdate ?"수정일": "작성일"}</th>
+                                                <td>${ dboard.dDate eq dboard.dMdate ?dboard.dDate : "dboard.dMdate"}
+                                                
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>연락처</th>
-                                                <td>010-3387-****</td>
+                                                <td>${dboard.dPhone }</td>
                                                 <th>이메일</th>
-                                                <td>taeung103@naver.com</td>
+                                                <td>${dboard.userId }</td>
                                             </tr>
                                             <tr>
                                                 <th>지역</th>
-                                                <td colspan="3">서울시 도봉구 *****</td>
+                                                <td colspan="3">
+                                                <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
+                                         		var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
+												</c:forEach>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -111,31 +123,7 @@
                             </dl>
 
                             <div class="viewContent">
-                                하얗게 흐려진 그림 속 추억의 책장 속 우리<br>
-                                그저 스쳐간 안녕<br>
-                                돌아와 끝내 말 못하고<br>
-                                시간 틈새로 흘러 점점 멀어진 기억<br><br>
-                                
-                                몇 번의 계절 지나 마주한 두 눈동자 아무 말도 못하고<br><br>
-                                
-                                가슴이 차가운 #1971345가 울어요<br>
-                                이별에 모질던 그녀도 우네요<br>
-                                바래진 추억 유리조각에<br>
-                                베인 상처 흔적만 남아 초라하네요<br><br>
-                                
-                                파랗게 질려버린 하늘 굳어버린 입술 울컥<br>
-                                그립다 널 외치고<br>
-                                미련에 엉킨 인연의 끈<br>
-                                차마 풀지 못하고 다시 묻어두네요<br><br>
-                                
-                                먹먹한 가슴이 참지 못하고 달려 멀어진 네 등 뒤로<br><br>
-                                
-                                가슴이 차가운 #1971345가 울어요<br>
-                                이별에 모질던 그녀도 우네요<br>
-                                바래진 추억 유리조각에<br>
-                                베인 상처 흔적만 남아 머물러있는걸<br>
-                                the stay stay again (oh stay~ stay again)<br>
-
+                            
                             </div>
                             
                             <div class="textCon">

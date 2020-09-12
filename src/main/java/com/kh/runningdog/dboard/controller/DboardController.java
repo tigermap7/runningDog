@@ -51,7 +51,7 @@ public class DboardController {
 	
 		String viewImage = file.getOriginalFilename();
 		dboard.setviewImage(viewImage);
-
+		dboard.setdContent(dboard.getdContent().replace("\r\n","<br>"));
         Image img = null;
 		if(!(viewImage == null || viewImage.equals(" "))) {
 			 String savePath = request.getSession().getServletContext().getRealPath("resources/dboard/dboardImage");
