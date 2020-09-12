@@ -38,12 +38,13 @@ public class NoticeController {
 		String search = request.getParameter("searchNotice");
 		String keyword = request.getParameter("keyword");
 		
-		if(!(keyword == null || keyword == "")) {	//키워드가 있을 경우
+		//키워드 있을경우 앞뒤 공백제거
+		if(!(keyword == null || keyword == "")) {	
 			//keyword.replaceAll("\\p{Z}", ""); //사이 공백
 			keyword = keyword.replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");  //앞뒤 공백 제거
 		}
-		int currentPage = 1; //기본 현재 페이지
 		
+		int currentPage = 1; //기본 현재 페이지
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
@@ -56,11 +57,11 @@ public class NoticeController {
 		int listCount = noticeService.selectNoticeListCount(noticeSearch);	//목록 갯수
 		
 		NoticePage noticePage = new NoticePage(currentPage, listCount); //현재 페이지와 총 갯수 보내서, startPage, endpage등.. 값 만들기
-		
+
 		//검색값 NoticePage 에 넣기 (mybatis mapper로 보낼때 파라메타값 하나만 보낼 수 있어서)
 		noticePage.setSearch(search);
-		noticePage.setKeyword(keyword);
-		
+		noticePage.setKeyword(keyword);	
+
 		ArrayList<Notice> list = noticeService.selectNoticeList(noticePage);
 		
 		mv.addObject("list", list);
@@ -68,6 +69,7 @@ public class NoticeController {
 		mv.setViewName("notice/noticeList");
 		return mv;
 	}
+	
 	
 	//공지사항 상세 페이지 이동, 출력
 	@RequestMapping(value="ndetail.do")
@@ -83,8 +85,8 @@ public class NoticeController {
 			
 			Integer preNo = noticeService.selectNoticePre(noticePage); //이전글 번호 조회, int는 null값을 못 받아서 integer사용
 			Integer nextNo = noticeService.selectNoticeNext(noticePage); //다음글 번호 조회
-			if(preNo == null) preNo = 0;	//이전글이 없을 때 0으로 설정
-			if(nextNo == null) nextNo = 0;	//다음글이 없울 때 0으로 설정 
+			if(preNo == null){ preNo = 0;}	//이전글이 없을 때 0으로 설정
+			if(nextNo == null){ nextNo = 0;}	//다음글이 없울 때 0으로 설정 
 			
 			mv.addObject("preNo", preNo);
 			mv.addObject("nextNo", nextNo);
@@ -98,11 +100,6 @@ public class NoticeController {
 		return mv;
 	}
 	
-	//공지사항 이전/다음 페이지 검색후 이동
-	//@RequestMapping(value="nprenext.do")
-	public ModelAndView selectNoticePreNext(HttpServletRequest request, ModelAndView mv) {
-		return mv;
-	}
 	
 	//공지사항 첨부파일 다운로드
 	@RequestMapping(value="nfdown.do")
@@ -120,15 +117,11 @@ public class NoticeController {
 		return mv;
 	}
 	
-	//메인페이지에 필수, new 공지사항 출력하기
-	//@RequestMapping(value="nstate.do")
-	public ModelAndView selectNoticeState(ModelAndView mv) {
-		return mv;
-	}
 	
 	//공지사항 등록 페이지 이동
 	@RequestMapping(value="ninview.do")
 	public ModelAndView moveNoticeInsert(Notice notice, HttpServletRequest request, ModelAndView mv) {
+		logger.info("ninview.do run...");
 		mv.setViewName("notice/noticeWrite");
 		return mv;
 	}
@@ -181,6 +174,7 @@ public class NoticeController {
 	//공지사항 수정 페이지 이동
 	@RequestMapping(value="nupview.do")
 	public ModelAndView moveNoticeUpdate(HttpServletRequest request, ModelAndView mv) {
+		logger.info("nupview.do run...");
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 		Notice notice = noticeService.selectNoticeOne(noticeNo);
 		if(notice != null) {
@@ -193,6 +187,7 @@ public class NoticeController {
 		
 		return mv;
 	}
+	
 	
 	//공지사항 수정
 	@RequestMapping(value="nupdate.do")
@@ -208,13 +203,11 @@ public class NoticeController {
 		
 		//삭제할 파일이 넘겨져왔을 때 삭제하기
 		if(!(deleteFilename1 == null || deleteFilename1.length() == 0)) {
-			System.out.println(notice.getNoticeRenameFilename1() + " 삭제");
 			new File(savePath + "\\" + notice.getNoticeRenameFilename1()).delete();
 			notice.setNoticeOriginalFilename1(null);
 			notice.setNoticeRenameFilename1(null);
 		}
 		if(!(deleteFilename2 == null || deleteFilename2.length() == 0)) {
-			System.out.println(notice.getNoticeRenameFilename2() + " 삭제");
 			new File(savePath + "\\" + notice.getNoticeRenameFilename2()).delete();
 			notice.setNoticeOriginalFilename2(null);
 			notice.setNoticeRenameFilename2(null);
@@ -247,7 +240,7 @@ public class NoticeController {
 					notice.setNoticeRenameFilename3(null);
 				}
 			}
-		} else {
+		} else {	//1번이 있는 경우
 			if(notice.getNoticeOriginalFilename2() == null) {	//2번이 없는 경우
 				if(notice.getNoticeOriginalFilename3() != null) {	//3번이 있는 경우
 					notice.setNoticeOriginalFilename2(notice.getNoticeOriginalFilename3());
@@ -258,7 +251,7 @@ public class NoticeController {
 			}
 		}
 		
-		System.out.println("기존에 있던 공지사항 : " + notice);	
+		
 		//새로 첨부된 파일 있을 경우 파일 추가하기
 		for(String key : fileMap.keySet()) {
 			if(fileMap.get(key).getOriginalFilename() != "") {
@@ -272,7 +265,6 @@ public class NoticeController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			System.out.println(i + ", "+ notice.getNoticeOriginalFilename1().length());
 				switch (i) {
 				case 1 : 
 					if(notice.getNoticeOriginalFilename1().length() == 0) {	//1번 파일이 없을 때
@@ -302,12 +294,9 @@ public class NoticeController {
 						notice.setNoticeRenameFilename3(renamefilename); 
 					break;
 			}
-				System.out.println(i + " 새로 추가된 파일 : " + originalFilename );
 				i++;
 			}//if문
 		} //for문
-	
-		System.out.println("변경된 공지사항 : " + notice);
 		
 		if(noticeService.updateNotice(notice) > 0) {
 			returnView = "redirect:/nlist.do";
@@ -315,19 +304,22 @@ public class NoticeController {
 			request.setAttribute("message", notice.getNoticeNo() + "번 공지사항 수정 실패");
 			returnView = "common/error";
 		}
+		
 		return returnView;
 	}	
+	
 	
 	//공지사항 삭제
 	@RequestMapping(value="ndelete.do")
 	public String deleteAdminNotice(HttpServletRequest request) {
+		logger.info("ndelete.do run...");
 		String returnView = null;
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 		if(noticeService.deleteNotice(noticeNo) > 0) {
 			String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles"); //저장된 파일 위치
 			for(int i = 1; i < 4; i++ ) {
-				String renameFilename = request.getParameter("rfile" + i);	//첨부파일 있나 확인하는 용도
-				if(renameFilename != null) {
+				String renameFilename = request.getParameter("rfile" + i);	
+				if(renameFilename != null) { //첨부파일 있을경우 삭제
 					new File(savePath + "\\" + renameFilename).delete();
 				}
 			}
@@ -339,6 +331,13 @@ public class NoticeController {
 
 		return returnView;
 	}	
+	
+	
+	//메인페이지에 필수, new 공지사항 출력하기
+	//@RequestMapping(value="nstate.do")
+	public ModelAndView selectNoticeState(ModelAndView mv) {
+		return mv;
+	}
 	
 	
 }
