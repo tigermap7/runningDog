@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatroomMapper">
+	<resultMap type="Chatroom" id="resultChatroom">
+		<id property="roomNo" column="roomNo"/>
+		<result property="memberNo" column="memberNo"/>
+		<result property="nickname" column="nickname"/>
+		<result property="lastMessage" column="lastMessage"/>
+		<result property="lastDate" column="lastDate"/>
+	</resultMap>
+
+	<resultMap type="Chatroom" id="resultList">
+		<result property="roomNo" column="roomNo"/>
+		<result property="memberNo" column="memberNo"/>
+		<result property="nickname" column="nickname"/>
+		<result property="lastMessage" column="lastMessage"/>
+		<result property="lastDate" column="lastDate"/>
+	</resultMap>
+	
+	<select id="selectMyChatMember" parameterType="Chatroom" resultMap="resultList">
+		select * from chatroom where memberno != #{memberNo}
+	</select>
+
+</mapper>

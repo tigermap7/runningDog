@@ -12,8 +12,8 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.kh.runningdog.member.model.vo.Member"
-			alias="Member" />
+		<typeAlias type="com.kh.runningdog.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.kh.runningdog.chatting.model.vo.Chatroom" alias="Chatroom" />
 		<!-- <typeAlias type="com.kh.second.notice.model.vo.Notice"
 			alias="Notice" />
 		<typeAlias type="com.kh.second.board.model.vo.Board"
@@ -23,6 +23,7 @@
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
+		<mapper resource="mappers/chatroom-mapper.xml" />
 		<!-- <mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/test-mapper.xml" />-->
