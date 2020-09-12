@@ -3,7 +3,7 @@ package com.kh.runningdog.notice.model.vo;
 public class NoticePage {
 	
 	private int currentPage = 1; //기본 페이지, 현재 해당 페이지
-	private int limit = 6; //한 페이지당 출력할 목록 갯수 지정
+	private int limit; //한 페이지당 출력할 목록 갯수 지정
 	private int listCount; //전체 목록 갯수 조회
 	private int maxPage;	//마지막 페이지
 	private int startPage;	//해당 페이지 시작수
@@ -17,9 +17,10 @@ public class NoticePage {
 	public NoticePage() {
 	}
 	
-	public NoticePage(int currentPage, int listCount) {
+	public NoticePage(int currentPage, int listCount, int limit) {
 		this.currentPage = currentPage;
 		this.listCount = listCount;
+		this.limit = limit;
 		this.maxPage = (int)((double)listCount / limit + 0.9);	// 37/6+0.9=5.9 => 5페이지
 		this.startPage = (((int)((double)currentPage / 5 + 0.9)) - 1) * 5 + 1;	// 1/6+0.9= 0*6 + 1 = 1 => 페이지 시작 수
 		this.endPage = startPage + 5 -1; // 1+6-1 = 6 페이지 마지막 수
