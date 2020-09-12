@@ -1,63 +1,177 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <c:import url="/WEB-INF/views/admin/include/admin_head.jsp"/>
+<c:import url="/WEB-INF/views/admin/include/admin_head.jsp" />
 </head>
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
-    <div id="wrap">
-        <c:import url="/WEB-INF/views/admin/include/admin_header.jsp"/>
+<body oncontextmenu="return false" onselectstart="return false"
+	ondragstart="return false">
+	<div id="wrap">
+		<c:import url="/WEB-INF/views/admin/include/admin_header.jsp" />
 
-        <div id="container">
-            <c:import url="/WEB-INF/views/admin/include/admin_util.jsp"/>
+		<div id="container">
+			<c:import url="/WEB-INF/views/admin/include/admin_util.jsp" />
 
-            <!-- 상단 타이틀 -->
-            <div class="pageTitle">
-                <div class="adminPath">
-                    <h3>공지사항 관리</h3>
-                    <h2>| 상세</h2>
-                </div>
-            </div>
-            <!-- //상단 타이틀 -->
+			<!-- 상단 타이틀 -->
+			<div class="pageTitle">
+				<div class="adminPath">
+					<h3>공지사항 관리</h3>
+					<h2>| 상세</h2>
+				</div>
+			</div>
+			<!-- //상단 타이틀 -->
 
-            <!-- 본문내용 -->
-            <div class="view-area">
-                <h3><span>공지</span></h3>
-                <h2>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                <ul>
-                    <li><span>작성자 : </span>관리자</li>
-                    <li><span>등록일 : </span>2020.08.28</li>
-                    <li><span>조회수 : </span>102</li>
-                    <li><span>첨부파일 : </span><a href="#none" download="">asdasddsa.hwp</a></li>
-                </ul>
+			<!-- 공지사항 new 알람을 위한 한달 전 날짜 -->
+			<jsp:useBean id="nowDate" class="java.util.Date" />
+			<jsp:setProperty name="nowDate" property="time" value="${nowDate.time - 86400000 * 32}" />
+			<fmt:formatDate value="${nowDate}" type="date" pattern="yyyy/MM/dd" var="monthAgo" />
 
-                <div class="view-ctn">
-                「동물보호법」 제17조, 시행령7조 및 동법 시행규칙 제20조에 따라 유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.<br><br>
-                공고 중인 동물 소유자는 해당 시군구 및 동물보호센터에 문의하시어 동물을 찾아가시기 바랍니다.<br>
-                다만, 「동물보호법」 제19조 및 동법 시행규칙 제21조에 따라 소유자에게 보호비용이 청구될 수 있습니다.<br>
-                또한 「동물보호법」 제17조에 따른 공고가 있는 날부터 10일이 경과하여도 소유자 등을 알 수 없는 경우에는 「유실물법」 제12조 및 「민법」 제253조의 규정에도 불구하고 해당 시·도지사 또는 시장·군수·구청장이 그 동물의 소유권을 취득하게 됩니다.
-                </div>
+			<!-- 본문내용 -->
+			<div class="view-area">
+				<!-- 공지사항 알림 여부에 따라 표시 -->
+				<c:if test="${ !empty notice.noticeState }">
+					<h3>
+						<span>공지</span>
+					</h3>
+				</c:if>
+				<c:if test="${ empty notice.noticeState }">
+					<fmt:formatDate value="${notice.noticeDate}" type="date" pattern="yyyy/MM/dd" var="ndate" />
+					<c:if test="${ monthAgo < ndate }">
+						<h3>
+							<span>new</span>
+						</h3>
+					</c:if>
+				</c:if>
 
-				<c:url var="mnuad" value="movenoticeupdate.ad">
-					<c:param name="" value=""/>
-				</c:url>
+				<h2>${ notice.noticeTitle }</h2>
+				<ul>
+					<li><span>작성자 : </span>${ notice.noticeWriter }</li>
+					<li><span>등록일 : </span>${ notice.noticeDate }</li>
+					<li><span>조회수 : </span>${ notice.noticeReadcount }</li>
+				</ul>
 
+				<!-- 파일 순서대로 저장했기때문에 단계별로 보여주기 -->
+				<c:if test="${ !empty notice.noticeOriginalFilename1 }">
+					<ul>
+						<li><span>첨부파일 : </span> 
+						<c:url var="nfdurl1" value="nfdown.do">
+							<c:param name="ofile" value="${ notice.noticeOriginalFilename1 }" />
+							<c:param name="rfile" value="${ notice.noticeRenameFilename1 }" />
+						</c:url> <a href="${nfdurl1}">${ notice.noticeOriginalFilename1 }</a></li>
 
-                <!-- 버튼 -->
-                <div class="viewBtn-wrap">
-                    <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                    <button class="listBtn" onclick="location.href='nlist.ad'"><i class="xi-rotate-left"></i> 목록</button>
-                    <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
-                    <button class="modifiedBtn" onclick="javascript:location.href='${ mnuad }';"><i class="xi-pen-o"></i> 수정</button>
-                    <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
-                </div>
-                <!-- 버튼 끝 -->
-            </div>
-        </div>
-        <c:import url="/WEB-INF/views/admin/include/admin_footer.jsp"/>
-    </div>
+						<c:if test="${ !empty notice.noticeOriginalFilename2 }">
+							<c:url var="nfdurl2" value="nfdown.do">
+								<c:param name="ofile" value="${ notice.noticeOriginalFilename2 }" />
+								<c:param name="rfile" value="${ notice.noticeRenameFilename2 }" />
+							</c:url>
+							<li><a href="${nfdurl2}">${ notice.noticeOriginalFilename2 }</a></li>
+						</c:if>
+
+						<c:if test="${ !empty notice.noticeOriginalFilename3 }">
+							<c:url var="nfdurl3" value="nfdown.do">
+								<c:param name="ofile" value="${ notice.noticeOriginalFilename3 }" />
+								<c:param name="rfile" value="${ notice.noticeRenameFilename3 }" />
+							</c:url>
+							<li><a href="${ nfdurl3 }">${ notice.noticeOriginalFilename3 }</a></li>
+						</c:if>
+					</ul>
+				</c:if>
+
+				<div class="view-ctn" style="white-space: pre">
+					<c:out value="${ notice.noticeContent }" />
+				</div>
+
+				<!-- 버튼 -->
+				<div class="viewBtn-wrap">
+
+					<!-- 이전글 -->
+					<c:url var="npre" value="ndetail.ad">
+						<c:param name="noticeNo" value="${ preNo }" />
+						<c:param name="currentPage" value="${ noticePage.currentPage }" />
+						<c:param name="search" value="${ noticePage.search }" />
+						<c:param name="keyword" value="${ noticePage.keyword }" />
+					</c:url>
+					<c:if test="${ preNo ne 0 }">
+						<button class="nextBtn" onclick="movePreDetail()"><i class="xi-angle-left-min"></i> 이전</button>
+					</c:if>
+					<c:if test="${ preNo eq 0 }">
+						<button class="nextBtn offBtn" onclick="movePreDetail()"><i class="xi-angle-left-min"></i> 이전</button>
+					</c:if>
+
+					<!-- 목록 -->
+					<c:url var="nlisturl" value="nlist.ad">
+						<c:param name="page" value="${ noticePage.currentPage }" />
+						<c:param name="searchNotice" value="${ noticePage.search }" />
+						<c:param name="keyword" value="${ noticePage.keyword }" />
+					</c:url>
+					<button class="listBtn" onclick="location.href='${nlisturl}'">
+						<i class="xi-rotate-left"></i> 목록
+					</button>
+
+					<!-- 삭제 -->
+					<c:url var="ndelurl" value="ndelete.do">
+						<c:param name="noticeNo" value="${ notice.noticeNo }" />
+						<c:param name="rfile1" value="${ notice.noticeRenameFilename1 }" />
+						<c:param name="rfile2" value="${ notice.noticeRenameFilename2 }" />
+						<c:param name="rfile3" value="${ notice.noticeRenameFilename3 }" />
+					</c:url>
+					<button class="deleteBtn" onclick="location.href='${ndelurl}'">
+						<i class="xi-cut"></i> 삭제
+					</button>
+
+					<!-- 수정 -->
+					<c:url var="nupviewurl" value="nupview.ad">
+						<c:param name="noticeNo" value="${ notice.noticeNo }" />
+					</c:url>
+					<button class="modifiedBtn" onclick="location.href='${nupviewurl}'">
+						<i class="xi-pen-o"></i> 수정
+					</button>
+
+					<!-- 다음글 -->
+					<c:url var="nnext" value="ndetail.ad">
+						<c:param name="noticeNo" value="${ nextNo }" />
+						<c:param name="currentPage" value="${ noticePage.currentPage }" />
+						<c:param name="search" value="${ noticePage.search }" />
+						<c:param name="keyword" value="${ noticePage.keyword }" />
+					</c:url>
+					<c:if test="${ nextNo ne 0 }">
+						<button class="prevBtn" onclick="moveNextDetail()">다음 <i class="xi-angle-right-min"></i></button>
+					</c:if>
+					<c:if test="${ nextNo eq 0 }">
+						<button class="prevBtn offBtn" onclick="moveNextDetail()">다음 <i class="xi-angle-right-min"></i> </button>
+					</c:if>
+
+				</div>
+				<!-- 버튼 끝 -->
+			</div>
+		</div>
+		<c:import url="/WEB-INF/views/admin/include/admin_footer.jsp" />
+	</div>
+
+	<script type="text/javascript">
+    <!-- 이전글, 다음글 이동 -->
+        function movePreDetail(){
+        	var nPre = ${ preNo }
+            if(nPre == 0){
+            	alert("이전글이 없습니다.");
+            } else {
+				location.href='${npre}';
+            }
+        }
+             
+        function moveNextDetail(){
+        	var nNext = ${ nextNo }
+        	if(nNext == 0){
+        		alert("다음글 없습니다.");
+        	} else {
+				location.href='${nnext}';
+        	}
+        }
+        </script>
+
 </body>
 </html>
