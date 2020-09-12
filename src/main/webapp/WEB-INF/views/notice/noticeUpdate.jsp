@@ -111,7 +111,22 @@
                             </table>
                         </div>
                        
-	    <script type="text/javascript">
+                        <div class="write-btn">
+                            <input type="button" class="btn btn-list" onclick="javascript:history.go(-1); return false;" value="이전으로">
+                            <input type="reset" class="btn btn-cancel" onclick="Refresh()" value="취소하기">
+                            <input type="submit" class="btn btn-success" value="수정하기">
+                        </div>
+                        </form>
+                        <!-- 글쓰기 끝 -->
+                    </div>
+                </div>
+            </div>
+            <!-- 컨텐츠 끝 -->
+
+            <c:import url="/WEB-INF/views/include/footer.jsp"/>
+		</div>
+		
+		<script type="text/javascript">
 	   /* 라디오버튼 동적 체크하기 */
 	  	$("input[id='state']").on('click',function(){
 	  		
@@ -178,21 +193,7 @@
 	  	function Refresh(){
 	  		window.location.reload();
 	  	}
-	   </script> 
-
-                        <div class="write-btn">
-                            <input type="button" class="btn btn-list" onclick="javascript:history.go(-1); return false;" value="이전으로">
-                            <input type="reset" class="btn btn-cancel" onclick="Refresh()" value="취소하기">
-                            <input type="submit" class="btn btn-success" value="수정하기">
-                        </div>
-                        </form>
-                        <!-- 글쓰기 끝 -->
-                    </div>
-                </div>
-            </div>
-            <!-- 컨텐츠 끝 -->
-
-            <c:import url="/WEB-INF/views/include/footer.jsp"/>
-		</div>
+	   </script>
+	   
 	</body>
 </html>

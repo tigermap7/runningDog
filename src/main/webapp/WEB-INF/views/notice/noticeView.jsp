@@ -154,28 +154,6 @@
                         
                     </div>
                     <!-- 버튼 끝 -->
-                    
-                    <!-- 이전글, 다음글 이동 -->
-                    <script type="text/javascript">
-                    function movePreDetail(){
-                    	var nPre = ${ preNo }
-                   		if(nPre == 0){
-                   			alert("이전글이 없습니다.");
-                   		} else {
-							location.href='${npre}';
-                   		}
-                    }
-                    
-                    function moveNextDetail(){
-                    	var nNext = ${ nextNo }
-                   		if(nNext == 0){
-                   			alert("다음글 없습니다.");
-                   		} else {
-							location.href='${nnext}';
-                   		}
-                    }
-                    </script>
-                    
                 </div>
             </div>
             <!-- 컨텐츠 끝 -->
@@ -183,5 +161,28 @@
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 			</div>
 		</div>
+		
+        
+      	<script type="text/javascript">
+      	<!-- 이전글, 다음글 이동 -->
+        function movePreDetail(){
+        	var nPre = ${ preNo }
+            if(nPre == 0){
+            	alert("이전글이 없습니다.");
+            } else {
+				location.href='${npre}';
+            }
+        }
+             
+        function moveNextDetail(){
+        	var nNext = ${ nextNo }
+        	if(nNext == 0){
+        		alert("다음글 없습니다.");
+        	} else {
+				location.href='${nnext}';
+        	}
+        }
+        </script>
+		
 	</body>
 </html>
