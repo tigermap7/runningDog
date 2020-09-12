@@ -5,11 +5,14 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.notice.model.service.NoticeService;
@@ -165,11 +168,34 @@ public class NoticeController {
 	
 	
 	//메인페이지에 필수, new 공지사항 출력하기
-	//@RequestMapping(value="nstate.do")
+	@RequestMapping(value="nstate.do")
+	@ResponseBody
 	public ModelAndView selectNoticeState(ModelAndView mv) {
 		logger.info("nstate.do run...");
 		ArrayList<Notice> list = noticeService.selectNoticeStateList();
+//		System.out.println(list);
 		
+		//전송용 json 객체 준비
+		JSONObject sendJson = new JSONObject();
+		//json 배열 객체 생성
+		JSONArray jarr = new JSONArray();
+		
+		//list json 배열로 옮기기
+		for(Notice notice : list) {
+			JSONObject job = new JSONObject();
+			
+			String noticeState = (notice.getNoticeState() != null) ? "공지" : "new"; 
+			
+			job.put("no", notice.getNoticeNo());
+			job.put("title", notice.getNoticeTitle());
+			job.put("state", noticeState);
+			
+			jarr.add(job);
+		}
+		sendJson.put("list", jarr);
+//		System.out.println(jarr.size() + "," + sendJson);
+		
+//		mv.setViewName("redirect:/nlist.do");
 		return mv;
 	}
 	
