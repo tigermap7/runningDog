@@ -6,8 +6,43 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+<style>
+.map_wrap {
+	position: relative;
+	width: 100%;
+	height: 350px;
+}
 
-	</head>
+.title {
+	font-weight: bold;
+	display: block;
+}
+
+.hAddr {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	border-radius: 2px;
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	z-index: 1;
+	padding: 5px;
+}
+
+#centerAddr {
+	display: block;
+	margin-top: 2px;
+	font-weight: normal;
+}
+
+.bAddr {
+	padding: 5px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+</style>
+</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
             <c:import url="/WEB-INF/views/include/header.jsp"/>
@@ -101,21 +136,25 @@
 												<option value="15" >경상북도</option>
 												<option value="16" >제주도</option>
 										</select> 
-										<input type="text" name="dFindLocal" title="" class="form-control w50p" placeholder="발견장소 입력 구/동" required/></td>
+										<!-- <input type="text" name="dFindLocal" title="" class="form-control w50p" placeholder="발견장소 입력 구/동" required/> -->
+										</td>
                                     </tr>
                                     <tr>
                                         <td>특이사항</td>
                                         <td><input type="text" name="dPoint" title="" class="form-control w100p" placeholder="특징/성향/색상 입력" /></td>
                                     </tr>
                                     <tr>
-                                        <td>내용</td>
-                                        <td><textarea name="dContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea></td>
-                                    </tr>
-                                    <tr>
                                         <td>발견 장소를 클릭해 주세요</td>
                                         <!-- 카카오 지도 출력 -->
-                                        <td><div id="map" style="width:500px;height:300px;"></div>
-                                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
+										<td>
+											<div class="map_wrap">
+												<div class="hAddr">
+													<div id="map"
+														style="width: 750px; height: 300px; position: relative; overflow: hidden;">
+													</div>
+												</div>
+											</div> <script type="text/javascript"
+												src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
 											<script>
 											var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 											    mapOption = { 
@@ -141,18 +180,15 @@
 											kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 											    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
 											        if (status === kakao.maps.services.Status.OK) {
-											            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-											            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+											            var detailAddr = result[0].address.address_name;
 											            
-											            var content = '<div class="bAddr">' +
-											                            '<span class="title">법정동 주소정보</span>' + 
-											                            detailAddr + 
-											                        '</div>';
+											            var content = '<div class="bAddr">' + 
+											                            detailAddr ;
 															
 											            // 마커를 클릭한 위치에 표시합니다 
 											            marker.setPosition(mouseEvent.latLng);
 											            marker.setMap(map);
-											            var dFindLocal= result[0].road_address.address_name;
+											            var dFindLocal= detailAddr;
 											            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
 											            infowindow.setContent(content);
 											            infowindow.open(map, marker);
@@ -169,6 +205,7 @@
 										
 													   console.log("mapX : " +mapX);
 													   console.log("mapY : " +mapY);
+													   console.log("dFindLocal : " +dFindLocal);
 													   document.formname.mapX.value=mapX;
 													   document.formname.mapY.value=mapY;
 													   document.formname.dFindLocal.value=dFindLocal;
@@ -206,13 +243,17 @@
 											        }
 											    } 
 											}
-											</script>
-											
-											<input type="text" name="mapX" id="mapX">
-											<input type="text" name="mapY" id="mapY">
-											<input type="text" name="dFindLocal" id="dFindLocal">
+											</script> 
+											<input type="hidden" name="mapX" id="mapX"> 
+											<input type="hidden" name="mapY" id="mapY">
+											<input type="hidden" name="dFindLocal" id="dFindLocal">
 										</td>
+									</tr>
+                                    <tr>
+                                        <td>내용</td>
+                                        <td><textarea name="dContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea></td>
                                     </tr>
+                                    
                                 </tbody>
                             </table>
                         </div>
