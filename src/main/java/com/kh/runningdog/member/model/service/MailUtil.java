@@ -23,7 +23,7 @@ public class MailUtil {
 		
 		//보내는 사람
 		String fromEmail = "spark720@naver.com"; //보내는 사람 메일
-		String fromName = "[지금 달려갈 개] 관리자"; //보내는 사람 이름
+		String fromName = "지금 달려갈 개"; //보내는 사람 이름
 		
 		// email 전송
 		try {

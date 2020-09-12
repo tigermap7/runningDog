@@ -154,6 +154,7 @@ $(function () {
   //아이디(이메일) 찾기 컨트롤러
 	$('.idFindBtn').click(function() {
 	    var phone = $('#phoneChk').val().trim();
+        
 		if(phone == null || phone == '' || phone == 'undefined'){
     		$('#phoneWarning span').html("휴대폰번호를 입력해주세요.");
 		} else if (!(phone.match(phoneRegExp))) {
@@ -163,10 +164,10 @@ $(function () {
 	            type:'post',
 	            url:'idFindAction.do',
 	            data: {phone: $("#phoneChk").val()},
+	            dataType : "html",
 	            success : function(data) {
 	            	if(data == "selectId") {
-	        			$('form[name="idFind"] .loginInfo').css("display", "none");
-	        			$('.idFine').css("display", "block");
+	            		location.href="idFindComplete.do";
 	                } else if(data == "notSelectId") {
 	        			$('#phoneWarning span').html("가입된 휴대폰번호가 아닙니다.\n다시 입력해주세요.");
 	                }
@@ -210,7 +211,7 @@ $(function () {
 					console.log(id, phone);
 	            	if(data == "selectIdPhoneChk") {
 	        			$('form[name="pwdFind"] .loginInfo').css("display", "none");
-	        			$('.pwdFind').css("display", "block");
+	        			$('.pwdFindView').css("display", "block");
 	                } else if(data == "notSelectIdPhoneChk") {
 	        			$('#userIdPhoneWarning span').html("가입된 계정이 존재하지 않습니다.\n다시 입력해주세요.");
 	                } else if(data == "notSelectPhone") {

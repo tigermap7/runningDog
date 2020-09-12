@@ -269,7 +269,14 @@
 }
 
 
-.login_wrap .idFine, .login_wrap .pwdFind {
+.login_wrap .idFineView {
+	position: relative;
+    width: 100%;
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 2.5rem 0.625rem;
+}
+.login_wrap .pwdFindView {
 	position: relative;
     width: 100%;
     text-align: center;
@@ -277,12 +284,12 @@
     padding: 2.5rem 0.625rem;
     display: none;
 }
-.login_wrap .idFine p, .login_wrap .pwdFind p {
+.login_wrap .idFineView p, .login_wrap .pwdFindView p {
     width: 100%;
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin-bottom: 1.25rem;
 }
-.login_wrap .idFine a, .login_wrap .pwdFind a {
+.login_wrap .idFineView a, .login_wrap .pwdFindView a {
     display: inline-block;
     line-height: 2.5rem;
     color: #fff;

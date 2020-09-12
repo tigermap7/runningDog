@@ -9,7 +9,7 @@
 		<result property="userPwd" column="user_pwd"/>
 		<result property="nickname" column="nickname"/>
 		<result property="phone" column="phone"/>
-		<result property="profilImg" column="profil_img"/>
+		<result property="profileImg" column="profile_img"/>
 		<result property="joinDate" column="join_date"/>
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
@@ -22,7 +22,7 @@
 		<result property="userPwd" column="user_pwd"/>
 		<result property="nickname" column="nickname"/>
 		<result property="phone" column="phone"/>
-		<result property="profilImg" column="profil_img"/>
+		<result property="profileImg" column="profile_img"/>
 		<result property="joinDate" column="join_date"/>
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
@@ -30,33 +30,33 @@
 	</resultMap>
 	
 	<select id="selectLogin" parameterType="Member" resultMap="resultMember">
-		select * from member where user_id = #{ userId }
+		select * from member where user_id = #{userId}
 	</select>
 	
 	<select id="selectUserIdCheck" parameterType="Member" resultMap="resultMember">
-		select * from member where user_id = #{ userId }
+		select * from member where user_id = #{userId}
 	</select>
 	
 	<select id="selectNicknameCheck" parameterType="Member" resultMap="resultMember">
-		select * from member where nickname = #{ nickname }
+		select * from member where nickname = #{nickname}
 	</select>
 	
 	<select id="selectPhoneCheck" parameterType="Member" resultMap="resultMember">
-		select * from member where phone = #{ phone }
+		select * from member where phone = #{phone}
 	</select>
 	
 	<select id="selectUserIdPhoneCheck" parameterType="Member" resultMap="resultMember">
-		select * from member where user_id = #{ userId } and phone = #{ phone }
+		select * from member where user_id = #{userId} and phone = #{phone}
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
-		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{profilImg}, DEFAULT, DEFAULT, null, DEFAULT)
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{profileImg}, DEFAULT, DEFAULT, null, DEFAULT)
 	</insert>
 	
 	
 	
 	<update id="updateMemberPwd" parameterType="Member">
-		update member set user_pwd = #{ userPwd } where user_id = #{ userId } and phone = #{ phone }
+		update member set user_pwd = #{userPwd} where user_id = #{userId} and phone = #{phone}
 	</update>
 	
 	<update id="updateMember" parameterType="Member">

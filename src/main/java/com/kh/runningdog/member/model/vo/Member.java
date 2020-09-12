@@ -12,7 +12,7 @@ public class Member implements java.io.Serializable {
 	private String userPwd;
 	private String nickname;
 	private String phone;
-	private String profilImg;
+	private String profileImg;
 	private java.sql.Date joinDate;
 	private java.sql.Date lastAccessDate;
 	private String loginType;
@@ -20,7 +20,7 @@ public class Member implements java.io.Serializable {
 	
 	public Member() {}
 
-	public Member(int uniqueNum, String userId, String userPwd, String nickname, String phone, String profilImg,
+	public Member(int uniqueNum, String userId, String userPwd, String nickname, String phone, String profileImg,
 			Date joinDate, Date lastAccessDate, String loginType, String loginLimit) {
 		super();
 		this.uniqueNum = uniqueNum;
@@ -28,7 +28,7 @@ public class Member implements java.io.Serializable {
 		this.userPwd = userPwd;
 		this.nickname = nickname;
 		this.phone = phone;
-		this.profilImg = profilImg;
+		this.profileImg = profileImg;
 		this.joinDate = joinDate;
 		this.lastAccessDate = lastAccessDate;
 		this.loginType = loginType;
@@ -75,12 +75,12 @@ public class Member implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	public String getProfilImg() {
-		return profilImg;
+	public String getProfileImg() {
+		return profileImg;
 	}
 
-	public void setProfilImg(String profilImg) {
-		this.profilImg = profilImg;
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
 	}
 
 	public java.sql.Date getJoinDate() {
@@ -122,11 +122,9 @@ public class Member implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Member [uniqueNum=" + uniqueNum + ", userId=" + userId + ", userPwd=" + userPwd + ", nickname="
-				+ nickname + ", phone=" + phone + ", profilImg=" + profilImg + ", joinDate=" + joinDate
+				+ nickname + ", phone=" + phone + ", profileImg=" + profileImg + ", joinDate=" + joinDate
 				+ ", lastAccessDate=" + lastAccessDate + ", loginType=" + loginType + ", loginLimit=" + loginLimit
 				+ "]";
 	}
-
-	
 	
 }

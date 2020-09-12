@@ -9,24 +9,20 @@
             <ul class="sosBell">
                 <li onclick="location='#none'"><i class="xi-lightbulb-o"></i><span>[서울시 강북구 미아동]</span>흰색 포메리안을 강아지를 찾습니다.</li>
             </ul>
-            <c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
             <ul class="util">
+            	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
                 <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
                 <li><a class="hover_line01" href="admin.do">관리자페이지</a></li>
-            </ul>
-            </c:if>
-            <c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
-            <ul class="util">
+                </c:if>
+            	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
                 <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
                 <li><a class="hover_line01" href="mypage.do">마이페이지</a></li>
-            </ul>
-            </c:if>
-            <c:if test="${ empty sessionScope.loginMember }">
-            <ul class="util">
+            	</c:if>
+            	<c:if test="${ empty sessionScope.loginMember }">
                 <li><a class="hover_line01" href="login.do">로그인</a></li>
                 <li><a class="hover_line01" href="join.do">회원가입</a></li>
+            	</c:if>
             </ul>
-            </c:if>
         </div>
     </div>
     <div class="gnbWrap clearfix">

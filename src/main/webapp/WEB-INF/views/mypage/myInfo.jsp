@@ -42,7 +42,7 @@
                                 <tbody>
                                     <tr>
                                         <td>아이디(이메일)</td>
-                                        <td><input type="text" name="" title="아이디(이메일)" class="form-control w80p" placeholder="taeung103@naver.com" readonly/></td>
+                                        <td><input type="text" name="" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" readonly/></td>
                                     </tr>
                                     <tr>
                                         <td>프로필 사진</td>
@@ -50,11 +50,11 @@
                                     </tr>
                                     <tr>
                                         <td>닉네임</td>
-                                        <td><input type="text" name="" title="이름" class="form-control w80p" placeholder="공지철" readonly/></td>
+                                        <td><input type="text" name="" title="이름" class="form-control w80p" placeholder="닉네임" value="${sessionScope.loginMember.nickname}"/></td>
                                     </tr>
                                     <tr>
                                         <td>휴대폰번호</td>
-                                        <td class="telArea"><input type="tel" name="" title="휴대폰번호" class="form-control w80p" placeholder="'-' 포함 입력"/></td>
+                                        <td class="telArea"><input type="tel" name="" title="휴대폰번호" class="form-control w80p" placeholder="'-' 포함 입력"  value="${sessionScope.loginMember.phone}"/></td>
                                     </tr>
                                     <tr>
                                         <td>비밀번호</td>

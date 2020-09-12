@@ -4,19 +4,24 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="leftMenu_wrap">
     <div class="leftProfile">
-        <div><img src="/runningdog/resources/images/test/animalImg03.jpg"></div>
-        <h3>멍무이 님</h3>
-        <p>회원번호 #1971345</p>
+        <div><img src="/runningdog/resources/images/test/animalImg03.jpg"><spring:url value='/runningdog/resources/images/memberImg/${loginMember.profileImg}'/></div>
+        <h3>${sessionScope.loginMember.nickname} 님 </h3>
+        <p>회원번호 #${sessionScope.loginMember.uniqueNum}</p>
         <ul>
             <li><b>게시글 12</b></li>
             <li><button type="button">로그아웃</button></li>
         </ul>
     </div>
     <ul class="leftGnb">
-        <li><a href="mypage.do">나의 프로필</a></li>
-        <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
-        <li><a href="/WEB-INF/views/mypage/myChatting.jsp">나의 채팅</a></li>
-        <li><a href="/WEB-INF/views/mypage/myComment.jsp">나의 댓글</a></li>
+	   	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
+	        <li><a href="admin.do">관리자페이지</a></li>
+	       </c:if>
+	   	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
+	        <li><a href="mypage.do">나의 프로필</a></li>
+	        <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
+	        <li><a href="/WEB-INF/views/mypage/myChatting.jsp">나의 채팅</a></li>
+	        <li><a href="/WEB-INF/views/mypage/myComment.jsp">나의 댓글</a></li>
+	   	</c:if>
     </ul>
 
     <ul class="leftBanner">

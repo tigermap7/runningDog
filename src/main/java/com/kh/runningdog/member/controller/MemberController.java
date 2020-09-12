@@ -68,6 +68,11 @@ public class MemberController {
 		return "mypage/myInfo";
 	}
 	
+	@RequestMapping("idFindComplete.do")
+	public String idFindCompletePage() {
+		return "member/idFindComplete";
+	}
+	
 	@RequestMapping("admin.do")
 	public String adminMemberPage() {
 		return "admin/member/allMember";
@@ -122,7 +127,7 @@ public class MemberController {
 	//회원가입컨트롤러
 	@RequestMapping(value="joinAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String joinActionMethod(Member member, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImage) throws IOException {
+	public String joinActionMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImage) throws IOException {
 		logger.info("member : " + member);
 		
 		//암호화 처리
@@ -163,7 +168,7 @@ public class MemberController {
 					e.printStackTrace();
 				}
 				
-				member.setProfilImg(profilImage.getOriginalFilename()); //이미지 이름 저장
+				member.setProfileImg(profilImage.getOriginalFilename()); //이미지 이름 저장
 				
 				if(memberService.insertMember(member) > 0) {
 					url = "joinOk";
@@ -174,6 +179,7 @@ public class MemberController {
 				}
 			}
 		} else {
+			model.addAttribute("message", "회원가입 실패.");
 			return "common/error";
 		}
 		return url;
@@ -183,18 +189,16 @@ public class MemberController {
 	//아이디(이메일) 찾기 컨트롤러
 	@RequestMapping(value="idFindAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String idFindActionMethod(Member member, ModelAndView mv, HttpServletResponse response, HttpSession session) throws IOException {
-		
+	public String idFindActionMethod(Member member, HttpServletResponse response, HttpSession session) throws IOException {
+
 		Member phoneChk = memberService.selectPhoneCheck(member);
-		
 		String url = null;
-		
+				
 		if(phoneChk != null) {
 			String selectId = phoneChk.getUserId();
-			logger.info("selectId : " + selectId);
+			
 			if(phoneChk.getUserId() != null) {
-				mv.setViewName("idFindAction.do");
-				mv.addObject("selectId", "selectId");
+				session.setAttribute("selectId", selectId);
 				url = "selectId";
 			}
 		} else {
@@ -209,54 +213,36 @@ public class MemberController {
 	@ResponseBody
 	public String pwdFindActionMethod(Member member, Model model, HttpServletResponse response, HttpSession session) throws IOException {
 
-		logger.info("member :" + member);
 		Member userIdPhoneChk = memberService.selectUserIdPhoneCheck(member);
-		
 		String url = null;
-		
+
 		if(userIdPhoneChk != null) {
+			String selectId2 = userIdPhoneChk.getUserId();			
 			
 			String keyCode = FindUtil.createKey();
 			session.setAttribute("keyCode", keyCode);
 			
-			String subject = "[지금 달려갈 개] 임시 비밀번호 전송";
+			String subject = "'지금 달려갈 개' 임시 비밀번호 전송";
 			
 			String msg = "";
 			msg += "<div style='float: left; text-align:center; font-weight:700; border: 2px solid #ff92a8; color:#ff92a8; font-size:14px; padding:80px 50px; margin:50px 0; font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', '돋움', sans-serif !important;'>";
 			msg += "<h1 style='margin: 0 0 10px;'><img src='http://127.0.0.1:9392/runningdog/resources/images/common/logo_over.png'></h1>";
 			msg += "<h3 style=' margin-bottom:5px;'>안녕하세요. " + userIdPhoneChk.getNickname() + " 님.</h3>";
 			msg += "<p>";
-			msg += "임시 비밀번호는 <b style='color:#333'>";
-			msg += keyCode + "</b> 입니다. 로그인 후 꼭 마이페이지 프로필변경에서 비밀번호를 변경하시기 바랍니다.</p></div>";
+			msg += "지금 달려갈게 로그인 임시 비밀번호는 <b style='color:#333'>" + keyCode + "</b> 입니다.<br/>";
+			msg += "로그인 후 꼭 마이페이지 프로필변경에서 비밀번호를 변경하시기 바랍니다.</p></div>";
 			
 			MailUtil.sendMail(member.getUserId(), subject, msg);
 
-			logger.info("확인확인확인1111 : ");
-			logger.info("userIdPhoneChk : " + userIdPhoneChk);
-			
+			//member.setUserPwd(keyCode);
+			member.setUserPwd(bcryptoPasswordEncoder.encode(keyCode));
 
-			logger.info("확인확인확인222 : " + keyCode);
-			logger.info("확인확인확인333 : " + bcryptoPasswordEncoder.encode(keyCode));
-			member.setUserPwd(keyCode);
-			logger.info("확인확인확인222 : " + keyCode);
-			
-
-			logger.info("확인확인확인444 : " + memberService.updateMemberPwd(member));
 			if(memberService.updateMemberPwd(member) > 0) {
-				logger.info("확인확인확인555 : ");
 				url = "selectIdPhoneChk";
-			} else {
-				logger.info("확인확인확인666 : ");
-	            response.setContentType("text/html; charset=UTF-8");
-	            PrintWriter out = response.getWriter();
-	            out.println("<script>alert(''); history.go(-1);</script>");
-	            out.flush();
 			}
-		
 		} else {
 			url = "notSelectIdPhoneChk";
 		}
-		
 		return url;
 	}
 	

@@ -17,16 +17,9 @@
                         <form name="idFind" method="post" id="idFind">
                         <legend>아이디(이메일) 찾기</legend>
                         <h1 onclick="location='/runningdog/'"><img src="/runningdog/resources/images/common/logo_over.png" alt="logo"></h1>
-                        <div class="loginInfo">
-                            <h4>아이디(이메일) 찾기</h4>
-                            <div>
-                                <span><i class="xi-call"></i></span>
-                                <span><input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="w100p" placeholder="휴대폰번호('-'포함 입력)" required/></span>
-                            </div>
-                            <p id="phoneWarning">
-                                <span></span>
-                            </p>
-                            <input class="find_btn idFindBtn" type="button" name="" value="아이디(이메일) 찾기">
+                        <div id="idFineView" class="idFineView">
+                        	<p>회원님의 계정 아이디(이메일)는 <b>${ selectId }</b> 입니다.</p>
+                        	<a href="login.do">로그인</a>
                         </div>
                         </form>
                         <hr/>
