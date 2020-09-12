@@ -6,6 +6,19 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+        <script type="text/javascript">
+
+ function fnImgPop(url){
+  var img=new Image();
+  img.src=url;
+  var img_width=img.width;
+  var win_width=img.width+25;
+  var img_height=img.height;
+  var win=img.height+30;
+  var OpenWindow=window.open('','_blank', 'width='+img_width+', height='+img_height+', menubars=no, scrollbars=auto');
+  OpenWindow.document.write("<style>body{margin:0px;}</style><img src='"+url+"' width='"+win_width+"'>");
+ }
+</script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -39,7 +52,8 @@
                             <p class="topText">*「동물보호법」 제17조, 시행령7조 및 동법 시행규칙 제20조에 따라 유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</p>
                             <dl>
                                 <dt>
-                                    <div class="viewImg"><img src="/runningdog/resources/images/test/animalImg01.jpg"></div>
+                                	클릭하시면 원본 이미지 크기를 팝업합니다.
+                                    <div class="viewImg"><img id="imgControll" onclick="fnImgPop(this.src)" src="/runningdog/resources/dboard/dboardImage/${dboard.viewImage }"></div>
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
                                     <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
@@ -123,12 +137,12 @@
                             </dl>
 
                             <div class="viewContent">
-                            
+                            ${ dboard.dContent }
                             </div>
                             
                             <div class="textCon">
                                 상기 동물을 분실하신 소유주께서는 보호센터로 문의하시어 동물을 찾아가시기 바라며, 동물보호 법 제17조의 규정에 따른 공고가 있는 날부터 10일이 경과하여도 소유자 등을 알 수 없는 경우에는 유실물법 제12조 및 민법 제253조의 규정에 불구하고 해당 시,군,구 자치구가 그 동물의 소유권을 취득하게 됩니다.<br/>
-                                2020년 08월 25일
+                                ${ dboard.dDate }
                             </div>
                                 
                         </div>

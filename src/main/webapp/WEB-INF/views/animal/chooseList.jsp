@@ -37,12 +37,15 @@
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
-                        <!--서브 검색-->                
+                        <!--서브 검색-->
+                        
+                        <!-- searchFiled 로 구분하고 값은 searchValue 로 받음 -->
                        <form action="dboardList.do" method="post">
                       	 <div class="search_wrap" id ="search">
                             <input type="hidden" name="dCategory" value="${ dCategory }">
-                            <input type="hidden" name="dLocal" value="${dLocal }">
+                            <input type="hidden" name="dLocal" value="${ dLocal }">
                             <select name="searchFiled" id="searchS">
+                            <!-- 삼항연산자로 selected 여부 구분 -->
                                 <option value="d_title" class="fontColor-dark" ${pageVO.searchFiled eq"d_title"?"selected":""}>제목</option>
                                 <option value="d_writer" class="fontColor-dark" ${pageVO.searchFiled eq"d_writer"?"selected":""}>임시보호자</option>
                                 <option value="d_local" class="fontColor-dark" ${pageVO.searchFiled eq"d_local"?"selected":""}>발견지역</option>
@@ -50,43 +53,41 @@
                             <div class="search-box">
                                 <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ pageVO.searchValue }">
                                 <button type="submit" value="SEARCH" class="xi-search"></button>
-                               
                             </div>
                         </div>
                        </form> 
                         <!--서브 검색 끝-->
                         
                         <div class="sort-area"> 
-                         
+                         	<!-- 게시물 조회한 숫자 출력 -->
                             <h4>전체 ${ requestScope.totalCount }마리 '작은 천사'</h4>
                             <form action="dboardList.do" name="dLocal">
                             <input type="hidden" name="dCategory" value="${ dCategory }">
 								<select name="dLocal" class="LocationSelect"   onchange=this.form.submit()>
-                                    <option value="0"  ${param.local > 17 ?"selected" :"" }>전체보기</option>
-                                    <option value="1" ${param.local eq"1"?"selected" :"" }>서울시</option>
-                                    <option value="2" ${param.local eq"2"?"selected" :"" }>인천시</option>
-                                    <option value="3" ${param.local eq"3"?"selected" :"" }>대전시</option>
-                                    <option value="4" ${param.local eq"4"?"selected" :"" }>광주시</option>
-                                    <option value="5" ${param.local eq"5"?"selected" :"" }>대구시</option>
-                                    <option value="6" ${param.local eq"6"?"selected" :"" }>울산시</option>
-                                    <option value="7" ${param.local eq"7"?"selected" :"" }>부산시</option>
-                                    <option value="8" ${param.local eq"8"?"selected" :"" }>경기도</option>
-                                    <option value="9" ${param.local eq"9"?"selected" :"" }>강원도</option>
-                                    <option value="10" ${param.local eq"10"?"selected" :"" }>세종시</option>
-                                    <option value="11" ${param.local eq"11"?"selected" :"" }>충청남도</option>
-                                    <option value="12" ${param.local eq"12"?"selected" :"" }>충청북도</option>
-                                    <option value="13" ${param.local eq"13"?"selected" :"" }>전라남도</option>
-                                    <option value="14" ${param.local eq"14"?"selected" :"" }>전라북도</option>
-                                    <option value="15" ${param.local eq"15"?"selected" :"" }>경상남도</option>
-                                    <option value="16" ${param.local eq"16"?"selected" :"" }>경상북도</option>
-                                    <option value="17" ${param.local eq"17"?"selected" :"" }>제주도</option>
+                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체보기</option>
+                                    <option value="0" ${ dLocal eq"0"?"selected" :"" }>서울시</option>
+                                    <option value="1" ${ dLocal eq"1"?"selected" :"" }>인천시</option>
+                                    <option value="2" ${ dLocal eq"2"?"selected" :"" }>대전시</option>
+                                    <option value="3" ${ dLocal eq"3"?"selected" :"" }>광주시</option>
+                                    <option value="4" ${ dLocal eq"4"?"selected" :"" }>대구시</option>
+                                    <option value="5" ${ dLocal eq"5"?"selected" :"" }>울산시</option>
+                                    <option value="6" ${ dLocal eq"6"?"selected" :"" }>부산시</option>
+                                    <option value="7" ${ dLocal eq"7"?"selected" :"" }>경기도</option>
+                                    <option value="8" ${ dLocal eq"8"?"selected" :"" }>강원도</option>
+                                    <option value="9" ${ dLocal eq"9"?"selected" :"" }>세종시</option>
+                                    <option value="10" ${ dLocal eq"10"?"selected" :"" }>충청남도</option>
+                                    <option value="11" ${ dLocal eq"11"?"selected" :"" }>충청북도</option>
+                                    <option value="12" ${ dLocal eq"12"?"selected" :"" }>전라남도</option>
+                                    <option value="13" ${ dLocal eq"13"?"selected" :"" }>전라북도</option>
+                                    <option value="14" ${ dLocal eq"14"?"selected" :"" }>경상남도</option>
+                                    <option value="15" ${ dLocal eq"15"?"selected" :"" }>경상북도</option>
+                                    <option value="16" ${ dLocal eq"16"?"selected" :"" }>제주도</option>
                             </select>
 								</form>
                             <div>
                                 <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
                                 <div>
                                 <c:url var = "dCate" value= "dboardList.do">
-									<c:param name="pageNo" value="${ pageVO.pageNo}"/>
 									<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 									<c:param name="searchValue" value="${pageVO.searchValue }"/>
 									<c:param name="dLocal" value="${ dLocal }"/>
@@ -102,6 +103,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 게시물이 0개라면 경고창을 띄우고 전 페이지로 이동 -->
                         <c:if test="${ totalCount == 0}">
                        <script>alert('검색결과에 해당하는 게시물이 없습니다.');
                        	history.go(-1);</script>
@@ -110,6 +112,7 @@
                         <div class="animalList">
                             <ul class="grid">
                                 <li class="grid-sizer"></li>
+                                <!-- 게시물 리스트 출력 -->
                                  <c:forEach items="${ requestScope.dboardList }" var="d">
                                  <c:if test = "${d.dSuccess eq 'n'}">
                                  <c:url var="dboardView" value="dboardView.do">
