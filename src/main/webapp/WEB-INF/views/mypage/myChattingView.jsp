@@ -160,8 +160,6 @@
 			no = receivedMessage.data.no;
 			
 			//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
-			if (no == ${ sessionScope.loginMember.getUniqueNum() }) {
-				
 				if(sessionid == currentuser_session){
 					var printHTML = "<dl class='user_right myChatting'>";
 					printHTML += "<dt>" + message;
@@ -179,8 +177,6 @@
 				}
 				
 				console.log('chatting data: ' + data);
-			
-			}
 			break;
 		default:
 			console.log('Unknown message type: ' + receivedMessage.type + '\n%o', receivedMessage);
