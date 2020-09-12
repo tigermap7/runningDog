@@ -210,6 +210,7 @@ public class MemberController {
 //		return url;
 //	}
 	
+	// 나의 채팅에서 유저검색
 	@RequestMapping("searchChatUser.do")
 	public String searchChatUser(Member member, Model model) {
 		ArrayList<Member> list = memberService.selectNicknameCheckList(member);
