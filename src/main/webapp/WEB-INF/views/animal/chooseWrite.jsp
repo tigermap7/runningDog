@@ -91,7 +91,8 @@
                                     </tr>
                                     <tr>
                                         <td>썸네일</td>
-                                        <td><input type="file" name="upfile" title="" required/></td>
+                                        <td><input type="file" name="upfile" title="" accept="image/jpeg,image/png,image/jpeg,image/bmp" 
+                                        onchange='chk_file_type(this)' required/></td>
                                     </tr>
                                     <tr>
                                         <td>발견날짜</td>
@@ -153,7 +154,9 @@
 														style="width: 750px; height: 300px; position: relative; overflow: hidden;">
 													</div>
 												</div>
-											</div> <script type="text/javascript"
+											</div>
+											
+											 <script type="text/javascript"
 												src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
 											<script>
 											var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -234,13 +237,7 @@
 											    if (status === kakao.maps.services.Status.OK) {
 											        var infoDiv = document.getElementById('centerAddr');
 
-											        for(var i = 0; i < result.length; i++) {
-											            // 행정동의 region_type 값은 'H' 이므로
-											            if (result[i].region_type === 'H') {
-											                infoDiv.innerHTML = result[i].address_name;
-											                break;
-											            }
-											        }
+											        
 											    } 
 											}
 											</script> 
