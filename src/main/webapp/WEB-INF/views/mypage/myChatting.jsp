@@ -48,7 +48,7 @@
                         <!--서브 검색 끝-->
 
                         <div class="sort-area">  
-                            <h4>전체 15개의 채팅</h4>
+                            <h4>전체 ${listcount}개의 채팅</h4>
                         </div>
                         <table class="chattingList">
                             <colgroup>

@@ -32,7 +32,9 @@ public class ChattingController {
 			room.setMemberNo(member.getUniqueNum());
 			room.setNickname(member.getNickname());
 			ArrayList<Chatroom> list = chatroomService.selectMyChatMember(room);
+			int listcount = chatroomService.selectMyChatCount(room);
 			model.addAttribute("list", list);
+			model.addAttribute("listcount", listcount);
 		}
 		return "mypage/myChatting";
 	}

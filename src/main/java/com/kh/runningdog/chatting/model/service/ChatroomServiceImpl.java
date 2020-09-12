@@ -18,4 +18,9 @@ public class ChatroomServiceImpl implements ChatroomService{
 		return chatroomDao.selectMyChatMember(room);
 	}
 
+	@Override
+	public int selectMyChatCount(Chatroom room) {
+		return chatroomDao.selectMyChatCount(room);
+	}
+
 }

@@ -7,5 +7,5 @@ import com.kh.runningdog.chatting.model.vo.Chatroom;
 public interface ChatroomService {
 
 	ArrayList<Chatroom> selectMyChatMember(Chatroom room);
-
+	int selectMyChatCount(Chatroom room);
 }
