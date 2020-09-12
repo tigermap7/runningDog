@@ -46,7 +46,7 @@ public class DboardController {
 	
 	@RequestMapping(value="dinsert.do", method=RequestMethod.POST)
 	public String insertDboard(Dboard dboard, HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(name="upfile", required=false) MultipartFile file) throws IOException {
+			@RequestParam(name="upfile", required=false) MultipartFile file, Model model)  {
 		logger.info("dinsert.do run..." + dboard + "Image file : " + file.getOriginalFilename());
 	
 		String viewImage = file.getOriginalFilename();
@@ -90,20 +90,20 @@ public class DboardController {
 	      if(dboardService.insertDboard(dboard) > 0) {
 	         url= "redirect:dboardList.do";
 	      } else {
-	    	  response.setContentType("text/html; charset=UTF-8");
-	          PrintWriter out = response.getWriter();
-	          out.println("<script>alert('게시글 등록에 실패했습니다.'); history.go(-1);</script>");
-	          out.flush();
+	    	model.addAttribute("msg", "게시글 등록 실패 다시 확인해 주세요");
+	    	model.addAttribute("url","dboardList.do");
+	    	url ="common/errorDboard";
 	      }
 	      return url;
 		}
 	@RequestMapping(value="dboardList.do" ,method= {RequestMethod.POST,RequestMethod.GET})
 	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard")Dboard dboard,
-								HttpServletResponse response) throws IOException{
+								HttpServletResponse response) {
 		
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
 		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
 		 logger.info("SearchFiled : " + dboard.getSearchFiled());
 		 logger.info("SearchValue : " + dboard.getSearchValue());
 		 int totalCount = dboardService.selectListCount(dboard); //게시물 총갯수를 구한다
@@ -122,25 +122,25 @@ public class DboardController {
 		 logger.info("totalCount // 게시 글 전체 수 : " + totalCount);
 		 
 		 ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
-		 
+		
+		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("dboardList", dboardList);
 
 		String url = "";
-		if (dboardList.size() > 0) {
+		if (totalCount > 0) {
 			url = "animal/chooseList";
 		}else {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('게시글 목록 조회 실패!'); history.go(-1);</script>");
-			out.flush();
+	    	model.addAttribute("msg", "검색 결과가 존재 하지 않습니다");
+	    	model.addAttribute("url","dboardList.do");
+	    	url ="common/errorDboard";
 		}
 		return url;
 	}
 	@RequestMapping("dboardView.do")
 	public String selectOne(@RequestParam("dNum") int dNum, @RequestParam("pageNo") int pageNo, Model model,
-							HttpServletResponse response) throws IOException {
+							HttpServletResponse response) {
 		Dboard dboard = dboardService.selectOne(dNum);
 		logger.info("dboard View게시글 번호" + dNum);
 		logger.info("dboard View페이지 번호" + pageNo);
@@ -150,10 +150,9 @@ public class DboardController {
 			model.addAttribute("pageNo", pageNo);
 			url ="animal/chooseView";
 		}else {
-			response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('게시글 보기 실패'); history.go(-1);</script>");
-            out.flush();
+	    	model.addAttribute("msg", "게시글 보기 실패");
+	    	model.addAttribute("url","dboardList.do");
+	    	url ="common/errorDboard";
 		}
 		return url;
 	}
