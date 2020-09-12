@@ -73,8 +73,8 @@
 												</td>
                                                 <th>분양 여부</th>
                                                 <td>
-                                                ${ dboard.dSuccess eq "y"? "주인을 기다리고 있어요" : ""}
-                                                ${ dboard.dSuccess eq "n"? "새로운 주인을 찾았어요" : ""}
+                                                ${ dboard.dSuccess eq "y"? "새로운 가족을 찾았어요" : ""}
+                                                ${ dboard.dSuccess eq "n"? "가족을 기다리고 있어요" : ""}
                                                 </td>
                                             </tr>
                                             <tr>
