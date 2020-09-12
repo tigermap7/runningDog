@@ -12,10 +12,10 @@ public interface NoticeService {
 	void updateNoticeReadCount(int noticeNo);
 	Integer selectNoticePre(NoticePage noticePage);
 	Integer selectNoticeNext(NoticePage noticePage);
-	ArrayList<Notice> selectNoticeStateList();
 	int insertNotice(Notice notice);
 	int updateNotice(Notice notice);
 	int deleteNotice(int noticeNo);
+	ArrayList<Notice> selectNoticeStateList();
 
 	
 }

@@ -56,5 +56,10 @@ public class NoticeDao {
 		return session.delete("noticeMapper.deleteNotice", noticeNo);
 	}
 	
+	public ArrayList<Notice> selectNoticeStateList(){
+		List<Notice> list = session.selectList("noticeMapper.selectStateList");
+		return (ArrayList<Notice>)list;
+	}
+	
 
 }

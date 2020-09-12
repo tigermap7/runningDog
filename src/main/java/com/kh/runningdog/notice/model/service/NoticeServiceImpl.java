@@ -25,7 +25,6 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.selectNoticeListCount(noticeSearch);
 	}
 	
-
 	@Override
 	public Notice selectNoticeOne(int noticeNo) {
 		return noticeDao.selectNoticeOne(noticeNo);
@@ -47,12 +46,6 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public ArrayList<Notice> selectNoticeStateList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int insertNotice(Notice notice) {
 		return noticeDao.insertNotice(notice);
 	}
@@ -67,6 +60,11 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.deleteNotice(noticeNo);
 	}
 
+
+	@Override
+	public ArrayList<Notice> selectNoticeStateList() {
+		return noticeDao.selectNoticeStateList();
+	}
 
 
 
