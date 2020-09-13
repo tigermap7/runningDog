@@ -43,8 +43,14 @@
                                 	클릭하시면 원본 이미지 크기를 팝업합니다.
                                     <div class="viewImg"><img id="imgControll" onclick="fnImgPop(this.src)" src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }"></div>
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
+                                    <c:url var = "dSuccess" value= "dUpSuccess.do">
+										<c:param name="dNum" value="${ dboard.dNum }"/>
+										<c:param name="dSuccess" value="${ dboard.dSuccess }"/>
+									</c:url>
                                     <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    <!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
+                                    <a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
                                 </dt>
                                 <dd>
                                     <h3>동물정보</h3>

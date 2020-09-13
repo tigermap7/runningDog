@@ -144,4 +144,15 @@
 			   D_CHECK = 'n'
 		WHERE D_NUM = #{ dNum }
 	</update>
+	
+	<update id="updateDboardSuc" parameterType="com.kh.runningdog.dboard.model.vo.Dboard">
+		UPDATE DBOARD SET
+		<if test='dSuccess.equals("y")'>
+			   D_SUCCESS = 'n'
+		</if>
+		<if test='dSuccess.equals("n")'>
+			   D_SUCCESS = 'y'
+		</if>
+		WHERE D_NUM = #{ dNum }	
+	</update>
 </mapper>

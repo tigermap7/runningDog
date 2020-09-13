@@ -113,13 +113,15 @@
                             <ul class="grid">
                                 <li class="grid-sizer"></li>
                                 <!-- 게시물 리스트 출력 -->
+                                 
                                  <c:forEach items="${ requestScope.dboardList }" var="d">
-                                 <c:if test = "${d.dSuccess eq 'n'}">
                                  <c:url var="dboardView" value="dboardView.do">
                                  	<c:param name="pageNo" value="${ pageVO.pageNo }"/>
                                  	<c:param name="dNum" value="${ d.dNum }"/>
                                  	<c:param name="dLocal" value="${ dLocal }"/>
                                  </c:url>
+                                 <c:if test = "${d.dSuccess eq 'n'}">
+                                
                                  	
                                 <li class="grid-item chooseIcon" onclick="location='${dboardView}'">
                                     <div>
@@ -142,7 +144,7 @@
                                 </li>
                                 </c:if>
                                 <c:if test = "${d.dSuccess eq 'y'}">
-                                <li class="grid-item close" onclick="location='dboardView.do'">
+                                <li class="grid-item close" onclick="location='${dboardView}'">
                                     <div>
                                         <a href="#none" class="chooseIcon">인계완료</a>
                                         

@@ -266,4 +266,26 @@ public class DboardController {
 		}
 		return url;
 	}
+	
+	@RequestMapping("dUpSuccess.do")
+	public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
+								Dboard dboard,Model model) {
+		dboard.setdSuccess(dSuccess);
+		logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
+		int result = dboardService.updateDboardSuc(dboard);
+		
+		
+		String url="";
+		if (result > 0) {
+			model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
+			model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
+			url = "common/errorDboard";
+		} else {
+			model.addAttribute("dNum", dboard.getdNum());
+			model.addAttribute("msg", "분양 여부 업데이트 실패");
+			model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
+			url = "common/errorDboard";
+		}
+		return url;
+	}
 }
