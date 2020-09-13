@@ -130,12 +130,12 @@
 		const message = {
 			type: 'message',
 			data: {
-				chatId: '',
+				sender: '${sessionScope.loginMember.getNickname()}',
 				message: $("#message").val(),
-			},
-		};
+				roomno: ${param.roomNo}
+			}
+		}
 	  	sock.send(JSON.stringify(message));     
-        $('#message').val('');
 	}
 	            
 	//evt 파라미터는 websocket이 보내준 데이터다.
@@ -143,9 +143,9 @@
 		var time = new Date();
 		var chatTime = time.toLocaleString('ko-KR', { hour: 'numeric', minute: 'numeric', hour12: true });
 		var data = evt.data;
-		var sessionid = null;
+		var nickname = null;
 		var message = null;
-		var no = null;
+		var roomno = null;
 		
 		var receivedMessage = JSON.parse(data);
 		
@@ -155,12 +155,14 @@
 		
 		switch (receivedMessage.type) {
 		case 'message':
-			sessionid = receivedMessage.data.sessionId; //현재 메세지를 보낸 사람의 세션 등록//
+			nickname = receivedMessage.data.nickname; //현재 메세지를 보낸 사람의 세션 등록//
 			message = receivedMessage.data.message; //현재 메세지를 저장//
-			no = receivedMessage.data.no;
+			roomno = receivedMessage.data.roomno;
 			
 			//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
-				if(sessionid == currentuser_session){
+			if (roomno == ${param.roomNo}) {
+				
+				if(nickname == currentuser_session){
 					var printHTML = "<dl class='user_right myChatting'>";
 					printHTML += "<dt>" + message;
 					printHTML += "<dd>" + chatTime + "</dd>";
@@ -175,7 +177,7 @@
 					
 					$("#chatdata").append(printHTML);
 				}
-				
+			}
 				console.log('chatting data: ' + data);
 			break;
 		default:
