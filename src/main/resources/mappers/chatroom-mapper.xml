@@ -19,6 +19,10 @@
 		<result property="lastDate" column="lastDate"/>
 	</resultMap>
 	
+	<select id="selectMyChatList" parameterType="Chatroom" resultMap="resultList">
+		select * from chatroom where memberno = #{memberNo}
+	</select>
+	
 	<select id="selectMyChatMember" parameterType="Chatroom" resultMap="resultList">
 		select * from chatroom where memberno != #{memberNo}
 	</select>

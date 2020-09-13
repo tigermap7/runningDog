@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.runningdog.chatting.model.service.ChatroomService;
+import com.kh.runningdog.chatting.model.vo.Chatroom;
 import com.kh.runningdog.member.model.service.MemberService;
 import com.kh.runningdog.member.model.vo.Member;
 
@@ -31,6 +33,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private ChatroomService chatroomService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptoPasswordEncoder;
@@ -62,13 +66,19 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="loginAction.do", method=RequestMethod.POST)
-	public String loginActionMethod(Member member, Model model, HttpSession session, HttpServletRequest request
+	public String loginActionMethod(Member member, Chatroom room, Model model, HttpSession session, HttpServletRequest request
             , HttpServletResponse response, SessionStatus status) throws IOException {
 
 		Member loginMember = memberService.selectLogin(member);
+		ArrayList<Chatroom> myChatList = null;
 		String url = null;
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
 			if (bcryptoPasswordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd())) {
+				// 나의 채팅방 정보 세션 저장
+				room.setMemberNo(loginMember.getUniqueNum());
+				myChatList = chatroomService.selectMyChatList(room);
+				session.setAttribute("myChatList", myChatList);
+				
 				session.setAttribute("loginMember", loginMember);
 				status.setComplete();
 				url = "main/main";

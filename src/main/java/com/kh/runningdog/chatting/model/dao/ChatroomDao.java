@@ -21,4 +21,8 @@ public class ChatroomDao {
 	public int selectMyChatCount(Chatroom room) {
 		return session.selectOne("chatroomMapper.selectMyChatCount", room);
 	}
+	public ArrayList<Chatroom> selectMyChatList(Chatroom room) {
+		List<Chatroom> list = session.selectList("chatroomMapper.selectMyChatList", room);
+		return (ArrayList<Chatroom>)list;
+	}
 }
