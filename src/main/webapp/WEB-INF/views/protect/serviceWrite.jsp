@@ -85,7 +85,7 @@
                                     </tr>
                                     <tr>
                                         <td>봉사기간</td>
-                                        <td><input type="date" name="volterm" title="" class="form-control w30p" required/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="volterm" title="" class="form-control w30p" required/></td>
+                                        <td><input type="date" name="volterm1" title="" class="form-control w30p" required/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="volterm2" title="" class="form-control w30p" required/></td>
                                     </tr>
                                     <!-- <tr>
                                         <td>홈페이지 링크</td>
