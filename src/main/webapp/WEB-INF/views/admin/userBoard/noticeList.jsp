@@ -77,7 +77,7 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th>선택</th>
+							<th><input type="checkbox" name="allCheck" id="allCheck" value=""></th>
 							<th>번호</th>
 							<th>공지여부</th>
 							<th>제목</th>
@@ -104,7 +104,7 @@
 							</c:url>
 							<tr onclick="location='${ndurl}'">
 								<td onclick="event.cancelBubble=true">
-								<input type="checkbox" name="" id="" value=""></td>
+								<input type="checkbox" name="checkDel" id="" value="${ n.noticeNo }"></td>
 								<td class="number">${ n.noticeNo }</td>
 								<td class="kinds">
 								<c:if test="${ !empty n.noticeState }">
@@ -148,10 +148,7 @@
 
 				<!-- 버튼 -->
 				<div class="list-btn">
-					<c:url var="ndelurl" value="ndelete.ad">
-					</c:url>
-					<button type="button" id="" class="btn-left chkBtn"
-						onclick="location='${ndelurl}'">
+					<button type="button" id="selectDel" class="btn-left chkBtn" onclick="selectDel()">
 						<i class="xi-cut"></i> 선택삭제
 					</button>
 					<button type="button" id="" class="btn-right writeBtn"
@@ -215,5 +212,68 @@
 		</div>
 		<c:import url="/WEB-INF/views/admin/include/admin_footer.jsp" />
 	</div>
+	
+	<script type="text/javascript">
+	/* 전체삭제(th)에 있는 체크 박스 클릭시 아래 체크들 전체 체크 */
+	$("#allCheck").on("click", function(){
+		var chk = $("#allCheck").prop("checked");
+		if(chk) {
+			$("input[name=checkDel]").prop("checked", true);
+		} else {
+			$("input[name=checkDel]").prop("checked", false);
+		}
+	});	
+	
+	/* 개별 선택 체크시 전체삭제 체크가 풀어지는거 */
+	$("input[name=checkDel]").on("click", function(){
+		$("#allCheck").prop("checked", false);
+		
+		/* 개별 선택 체크가 모두 체크됬을 경우 전체 삭제 체크 되게 하기 */
+		if($("input[name=checkDel]:checked").length == $("input[name=checkDel]").length){
+			$("#allCheck").prop("checked", true);
+		}
+	});
+	
+	/* 선택삭제 버튼을 클릭했을 때 */
+	function selectDel(){
+		var confirm_val;
+		if($("input[name=checkDel]:checked").length == 0) {
+			alert("삭제할 대상을 선택하세요.")
+		} else {
+			confirm_val = confirm('삭제된 게시물은 되돌릴 수 없습니다.\n정말 삭제하시겠습니까?');
+		}
+		
+		if(confirm_val){
+			console.log("삭제가 선택되었습니다.");
+			var checkArr = new Array();
+			
+			$("input[name=checkDel]:checked").each(function(){
+				checkArr.push($(this).val());
+			});
+			console.log(checkArr);
+			
+			$.ajax({
+				url : "ndelete.ad",
+				type : "post",
+				data : { checkDel : checkArr },
+				success : function(result){
+					if(result == 1) {
+						alert("삭제되었습니다.")
+						location.href = "nlist.ad";
+					} else {
+						alert("삭제 실패");
+					}
+				},
+				error : function(request, status, errorData){
+					console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+				}
+			}); //ajax
+		}
+	}
+	
+	</script>
+	
+	
+	
 </body>
 </html>
