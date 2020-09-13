@@ -34,18 +34,18 @@ public class DboardController {
 	@Autowired
 	private DboardService dboardService;
 	
-	@RequestMapping("dlistPage.do")
-	public String moveDlistPage() {
-		return "animal/chooseList";
-	}
-	
+//	@RequestMapping("dlistPage.do")
+//	public String moveDlistPage() {
+//		return "animal/chooseList";
+//	}
+
 	@RequestMapping("dinsertPage.do")
 	public String moveDinsertPage() {
 		return "animal/chooseWrite";
 	}
 	
 	@RequestMapping(value="dinsert.do", method=RequestMethod.POST)
-	public String insertDboard(Dboard dboard, HttpServletRequest request,HttpServletResponse response,
+	public String insertDboard(Dboard dboard, HttpServletRequest request,
 			@RequestParam(name="upfile", required=false) MultipartFile file, Model model)  {
 		logger.info("dinsert.do run..." + dboard + "Image file : " + file.getOriginalFilename());
 	
@@ -98,8 +98,7 @@ public class DboardController {
 		}
 
 	@RequestMapping(value = "dboardList.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard,
-			HttpServletResponse response) {
+	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard) {
 
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
@@ -142,8 +141,7 @@ public class DboardController {
 		return url;
 	}
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum, @RequestParam("pageNo") int pageNo, Model model,
-							HttpServletResponse response) {
+	public String selectOne(@RequestParam("dNum") int dNum, @RequestParam("pageNo") int pageNo, Model model) {
 		Dboard dboard = dboardService.selectOne(dNum);
 		logger.info("dboard View게시글 번호" + dNum);
 		logger.info("dboard View페이지 번호" + pageNo);
@@ -159,6 +157,22 @@ public class DboardController {
 		}
 		return url;
 	}
-	
+	@RequestMapping("dupView.do")
+	public String dboardUpdateView(@RequestParam("dNum") int dNum, Model model) {
+		Dboard dboard = dboardService.selectOne(dNum);
+		
+		logger.info("업데이트 view board 값 "+dboard);
+		logger.info("업데이트 view dNum" + dNum);
+		String url = "";
+		if(dboard != null) {
+			model.addAttribute("dboard",dboard);
+			url ="animal/chooseUpdate";
+		}else {
+			model.addAttribute("msg", "수정 게시글 이동 실패");
+	    	model.addAttribute("url","dboarView.do");
+	    	url = "common/errorDboard";
+		}
+		return url;
+	}
 	
 }

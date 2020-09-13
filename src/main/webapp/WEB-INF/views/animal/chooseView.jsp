@@ -41,7 +41,7 @@
                             <dl>
                                 <dt>
                                 	클릭하시면 원본 이미지 크기를 팝업합니다.
-                                    <div class="viewImg"><img id="imgControll" onclick="fnImgPop(this.src)" src="/runningdog/resources/dboard/dboardImage/${dboard.viewImage }"></div>
+                                    <div class="viewImg"><img id="imgControll" onclick="fnImgPop(this.src)" src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }"></div>
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
                                     <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
@@ -107,15 +107,15 @@
                                             </tr>
                                             <tr>
                                                 <th>연락처</th>
-                                                <td>${dboard.dPhone }</td>
+                                                <td>${ dboard.dPhone }</td>
                                                 <th>이메일</th>
-                                                <td>${dboard.userId }</td>
+                                                <td>${ dboard.userId }</td>
                                             </tr>
                                             <tr>
                                                 <th>지역</th>
                                                 <td colspan="3">
                                                 <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
-                                         		var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
+                                         		var="item" begin="${ d.dLocal }" end="${ d.dLocal }"> ${ item }
 												</c:forEach>
                                                 </td>
                                             </tr>
@@ -179,12 +179,15 @@
                         <!-- 상세 끝 -->
                     
                         <!-- 버튼 -->
+                        <c:url var = "dupPageMove" value= "dupView.do">
+							<c:param name="dNum" value="${ dboard.dNum }"/>
+						</c:url>
                         <div class="viewBtn-wrap">
-                            <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                            <button class="listBtn"><i class="xi-rotate-left"></i> 목록</button>
-                            <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
-                            <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
-                            <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
+                            <button class="nextBtn" onclick="location=''"><i class="xi-angle-left-min"></i> 이전</button>
+                            <button class="listBtn" onclick="location=''"><i class="xi-rotate-left"></i> 목록</button>
+                            <button class="deleteBtn" onclick="location=''"><i class="xi-cut"></i> 삭제</button>
+                            <button class="modifiedBtn" onclick="location='${ dupPageMove }'"><i class="xi-pen-o"></i> 수정</button>
+                            <button class="prevBtn" onclick="location=''">다음 <i class="xi-angle-right-min"></i></button>
                         </div>
                         <!-- 버튼 끝 -->
 

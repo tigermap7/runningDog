@@ -71,13 +71,13 @@
 
                     <div class="subContent">
                         <!--상세-->
-                        <form name="formname" method="post" onsubmit="return check()"enctype="multipart/form-data" action="dinsert.do" class="form-inline">
+                        <form name="formname" method="post" onsubmit="return check()"enctype="multipart/form-data" action="dupdate.do" class="form-inline">
                         <div class="write-area">
                         <input type="hidden" name="userId" value="${ sessionScope.loginMember.userId }">
                         <input type="hidden" name="uniqueNum" value="${ sessionScope.loginMember.uniqueNum }">
                         <input type="hidden" name="dWriter" value="${ sessionScope.loginMember.nickname }">
                         
-                            <h2>유기동물 주인찾기 작성</h2>
+                            <h2>유기동물 주인찾기 수정</h2>
                             <p>가족을 잃은 동물들에게 가족을 찾아주세요.</p>
                             
                             <table>
@@ -88,7 +88,8 @@
                                 <tbody>
                                     <tr>
                                         <td>제목 *</td>
-                                        <td><input type="text" name="dTitle" title="" class="form-control w100p" minlength="8"   maxlength="30" placeholder="제목 입력" required/></td>
+                                        <td><input type="text" name="dTitle" title="" class="form-control w100p" minlength="8"maxlength="30" placeholder="제목 입력"
+                                        	value="${ dboard.dTitle }" required/></td>
                                     </tr>
                                     <tr>
                                         <td>썸네일 *</td>
@@ -98,56 +99,59 @@
                                     <tr>
                                         <td>발견날짜 *</td>
                                         <td>
-                                        <input type="date" name="dFindDate" id="datePickerId" title="" class="form-control w50p" placeholder="발견날짜 입력" required/>
+                                        <input type="date" name="dFindDate" id="datePickerId" title="" class="form-control w50p" placeholder="발견날짜 입력"
+                                        		value="${dboard.dFindDate }" required/>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>보호중 반려동물 *</td>
-                                        <td><label><input type="radio" name="dCategory" value="d" checked/>강아지</label>
-                                        	<label><input type="radio" name="dCategory" value="c" />고양이</label>
-                                        	<label><input type="radio" name="dCategory" value="e" />기타</label>
+                                        <td><label><input type="radio" name="dCategory" value="d" ${dboard.dCategory eq"d" ? "checked":"" }/>강아지</label>
+                                        	<label><input type="radio" name="dCategory" value="c" ${dboard.dCategory eq"c" ? "checked":"" }/>고양이</label>
+                                        	<label><input type="radio" name="dCategory" value="e" ${dboard.dCategory eq"e" ? "checked":"" }/>기타</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>성별 *</td>
-                                        <td><label><input type="radio" name="dGender" value="m" checked/>수컷</label>
-                                        	<label><input type="radio" name="dGender" value="f"/>암컷</label>
+                                        <td><label><input type="radio" name="dGender" value="m" ${dboard.dGender eq "m"?"checked":"" }/>수컷</label>
+                                        	<label><input type="radio" name="dGender" value="f" ${dboard.dGender eq "f"?"checked":"" }/>암컷</label>
                                         </td>
                                     </tr>
                                      <tr>
                                         <td>연락처 *</td>
-                                        <td><input type="text" name="dPhone" id ="dPhone" onKeyup="inputTelNumber(this);" maxlength="13" class="form-control w50p" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" placeholder="특수문자없이 숫자만 입력해 주세요" required/></td>
+                                        <td><input type="text" name="dPhone" id ="dPhone" onKeyup="inputTelNumber(this);" maxlength="13" class="form-control w50p" \
+                                         value="${ dboard.dPhone }" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" placeholder="특수문자없이 숫자만 입력해 주세요" required/></td>
                                     </tr>
                              
                               
                                     
                                     <tr>
                                         <td>보호자 대략 위치 *</td>
-                                        <td><select name="dLocal" required="required">
-												<option value="0" >서울시</option>
-												<option value="1" >인천시</option>
-												<option value="2" >대전시</option>
-												<option value="3" >광주시</option>
-												<option value="4" >대구시</option>
-												<option value="5" >울산시</option>
-												<option value="6" >부산시</option>
-												<option value="7" >경기도</option>
-												<option value="8" >강원도</option>
-												<option value="9" >세종시</option>
-												<option value="10" >충청남도</option>
-												<option value="11" >충청북도</option>
-												<option value="12" >전라남도</option>
-												<option value="13" >전라북도</option>
-												<option value="14" >경상남도</option>
-												<option value="15" >경상북도</option>
-												<option value="16" >제주도</option>
+                                        <td>
+                                        <select name="dLocal" required="required">
+											<option value="0" ${ dboard.dLocal eq"0"?"selected" :"" }>서울시</option>
+                                    		<option value="1" ${ dboard.dLocal eq"1"?"selected" :"" }>인천시</option>
+                                    		<option value="2" ${ dboard.dLocal eq"2"?"selected" :"" }>대전시</option>
+                                    		<option value="3" ${ dboard.dLocal eq"3"?"selected" :"" }>광주시</option>
+											<option value="4" ${ dboard.dLocal eq"4"?"selected" :"" }>대구시</option>
+											<option value="5" ${ dboard.dLocal eq"5"?"selected" :"" }>울산시</option>
+											<option value="6" ${ dboard.dLocal eq"6"?"selected" :"" }>부산시</option>
+											<option value="7" ${ dboard.dLocal eq"7"?"selected" :"" }>경기도</option>
+											<option value="8" ${ dboard.dLocal eq"8"?"selected" :"" }>강원도</option>
+											<option value="9" ${ dboard.dLocal eq"9"?"selected" :"" }>세종시</option>
+											<option value="10" ${ dboard.dLocal eq"10"?"selected" :"" }>충청남도</option>
+											<option value="11" ${ dboard.dLocal eq"11"?"selected" :"" }>충청북도</option>
+											<option value="12" ${ dboard.dLocal eq"12"?"selected" :"" }>전라남도</option>
+											<option value="13" ${ dboard.dLocal eq"13"?"selected" :"" }>전라북도</option>
+											<option value="14" ${ dboard.dLocal eq"14"?"selected" :"" }>경상남도</option>
+											<option value="15" ${ dboard.dLocal eq"15"?"selected" :"" }>경상북도</option>
+											<option value="16" ${ dboard.dLocal eq"16"?"selected" :"" }>제주도</option>
 										</select> 
 										<!-- <input type="text" name="dFindLocal" title="" class="form-control w50p" placeholder="발견장소 입력 구/동" required/> -->
 										</td>
                                     </tr>
                                     <tr>
                                         <td>특이사항 *</td>
-                                        <td><input type="text" name="dPoint" title="" class="form-control w100p" minlength="10" maxlength="60" placeholder="특징/성향/색상 입력" required/></td>
+                                        <td><input type="text" name="dPoint" value ="${ dboard.dPoint }" title="" class="form-control w100p" minlength="10" maxlength="60" placeholder="특징/성향/색상 입력" required/></td>
                                     </tr>
                                     <tr>
                                         <td>발견 장소를 클릭해 주세요</td>
@@ -166,8 +170,8 @@
 											<script>
 											var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 											    mapOption = { 
-											        center: new kakao.maps.LatLng(36.627718, 127.967794), // 지도의 중심좌표
-											        level: 15 // 지도의 확대 레벨
+											        center: new kakao.maps.LatLng('${ dboard.mapY }', '${ dboard.mapX }'), // 지도의 중심좌표
+											        level: 13 // 지도의 확대 레벨
 											    };
 
 
@@ -177,9 +181,32 @@
 											// 주소-좌표 변환 객체를 생성합니다
 											var geocoder = new kakao.maps.services.Geocoder();
 											
+											// 마커가 표시될 위치 입니다.
+											// 이전 등록 된 좌표값 지정
+											var markerPosition  = new kakao.maps.LatLng('${ dboard.mapY }', '${ dboard.mapX }'); 
+											// 마커를 생성합니다
+											// 마커를 좌표값 받아서 출력
+											var markerUpView = new kakao.maps.Marker({
+											    position: markerPosition
+											});
+											
+											markerUpView.setMap(map);
+											
+											var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">${dboard.dFindLocal}</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+										    iwPosition = new kakao.maps.LatLng('${dboard.mapY}', '${dboard.mapX}'), //인포윈도우 표시 위치입니다
+										    iwRemoveable = true;
+											// 인포윈도우를 생성합니다
+											var infowindow = new kakao.maps.InfoWindow({
+										    position : iwPosition, 
+										    content : iwContent,
+										    removable : iwRemoveable
+											});
+											
+											infowindow.open(map, markerUpView); 
+											
 											
 											var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-											    infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+											infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
 											// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
 											searchAddrFromCoords(map.getCenter(), displayCenterInfo);
@@ -190,9 +217,13 @@
 											        if (status === kakao.maps.services.Status.OK) {
 											            var detailAddr = result[0].address.address_name;
 											            
+											           	//클릭시 보여주었던 마크 값을 지우고 새로운 마커 입력
+											           	
+											            markerUpView.setMap(null);
+											            infowindow.close(map, markerUpView);
 											            var content = '<div class="bAddr">' + 
 											                            detailAddr ;
-															
+														
 											            // 마커를 클릭한 위치에 표시합니다 
 											            marker.setPosition(mouseEvent.latLng);
 											            marker.setMap(map);
@@ -246,14 +277,16 @@
 											    } 
 											}
 											</script> 
-											<input type="hidden" name="mapX" id="mapX" required> 
-											<input type="hidden" name="mapY" id="mapY" required>
-											<input type="hidden" name="dFindLocal" id="dFindLocal" required>
+											<input type="hidden" name="mapX" id="mapX" value="${ dboard.mapX }"required> 
+											<input type="hidden" name="mapY" id="mapY" value="${ dboard.mapY }"required>
+											<input type="hidden" name="dFindLocal" id="dFindLocal" value="${ dboard.dFindLocal }" required>
 										</td>
 									</tr>
                                     <tr>
                                         <td>세부내용 *</td>
-                                        <td><textarea name="dContent"  minlength="15" maxlength="1000" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" required placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea></td>
+                                        <td><textarea name="dContent"  minlength="15" maxlength="1000" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" 
+                                        required placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다.">${ dboard.dContent }</textarea>
+                                        </td>
                                     </tr>
                                     
                                 </tbody>
@@ -263,7 +296,7 @@
                         <div class="write-btn">
                             <input type="button" class="btn btn-list" value="목록으로" onClick="history.go(-1)">
                             <input type="reset" class="btn btn-cancel" value="취소하기">
-                            <input type="submit" class="btn btn-success" value="작성하기">
+                            <input type="submit" class="btn btn-success" value="수정하기">
                         </div>
                         </form>
                         <!-- 글쓰기 끝 -->
