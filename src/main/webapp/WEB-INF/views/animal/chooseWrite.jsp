@@ -42,6 +42,7 @@
 	white-space: nowrap;
 }
 </style>
+
 </head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -70,7 +71,7 @@
 
                     <div class="subContent">
                         <!--상세-->
-                        <form name="formname" method="post" enctype="multipart/form-data" action="dinsert.do" class="form-inline">
+                        <form name="formname" method="post" onsubmit="return check()"enctype="multipart/form-data" action="dinsert.do" class="form-inline">
                         <div class="write-area">
                         <input type="hidden" name="userId" value="${ sessionScope.loginMember.userId }">
                         <input type="hidden" name="uniqueNum" value="${ sessionScope.loginMember.uniqueNum }">
@@ -86,38 +87,42 @@
                                 </colgroup>
                                 <tbody>
                                     <tr>
-                                        <td>제목</td>
-                                        <td><input type="text" name="dTitle" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
+                                        <td>제목 *</td>
+                                        <td><input type="text" name="dTitle" title="" class="form-control w100p" minlength="8"   maxlength="20" placeholder="제목 입력" required/></td>
                                     </tr>
                                     <tr>
-                                        <td>썸네일</td>
+                                        <td>썸네일 *</td>
                                         <td><input type="file" name="upfile" title="" accept="image/jpeg,image/png,image/jpeg,image/bmp" 
                                         onchange='chk_file_type(this)' required/></td>
                                     </tr>
                                     <tr>
-                                        <td>발견날짜</td>
-                                        <td><input type="date" name="dFindDate" title="" class="form-control w50p" placeholder="발견날짜 입력" required/></td>
+                                        <td>발견날짜 *</td>
+                                        <td>
+                                        <input type="date" name="dFindDate" id="datePickerId" title="" class="form-control w50p" placeholder="발견날짜 입력" required/>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>보호중 반려동물</td>
+                                        <td>보호중 반려동물 *</td>
                                         <td><label><input type="radio" name="dCategory" value="d" checked/>강아지</label>
                                         	<label><input type="radio" name="dCategory" value="c" />고양이</label>
                                         	<label><input type="radio" name="dCategory" value="e" />기타</label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>성별</td>
+                                        <td>성별 *</td>
                                         <td><label><input type="radio" name="dGender" value="m" checked/>수컷</label>
                                         	<label><input type="radio" name="dGender" value="f"/>암컷</label>
                                         </td>
                                     </tr>
                                      <tr>
-                                        <td>연락처</td>
-                                        <td><input type="text" name="dPhone" onKeyup="inputTelNumber(this);"
-                                        	maxlength="13" class="form-control w50p" placeholder="특수문자없이 숫자만 입력해 주세요" required/></td>
+                                        <td>연락처 *</td>
+                                        <td><input type="text" name="dPhone" id ="dPhone" onKeyup="inputTelNumber(this);" maxlength="13" class="form-control w50p" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" placeholder="특수문자없이 숫자만 입력해 주세요" required/></td>
                                     </tr>
+                             
+                              
+                                    
                                     <tr>
-                                        <td>보호자 대략 위치</td>
+                                        <td>보호자 대략 위치 *</td>
                                         <td><select name="dLocal" required="required">
 												<option value="0" >서울시</option>
 												<option value="1" >인천시</option>
@@ -141,8 +146,8 @@
 										</td>
                                     </tr>
                                     <tr>
-                                        <td>특이사항</td>
-                                        <td><input type="text" name="dPoint" title="" class="form-control w100p" placeholder="특징/성향/색상 입력" /></td>
+                                        <td>특이사항 *</td>
+                                        <td><input type="text" name="dPoint" title="" class="form-control w100p" placeholder="특징/성향/색상 입력" required/></td>
                                     </tr>
                                     <tr>
                                         <td>발견 장소를 클릭해 주세요</td>
@@ -241,14 +246,14 @@
 											    } 
 											}
 											</script> 
-											<input type="hidden" name="mapX" id="mapX"> 
-											<input type="hidden" name="mapY" id="mapY">
-											<input type="hidden" name="dFindLocal" id="dFindLocal">
+											<input type="hidden" name="mapX" id="mapX" required> 
+											<input type="hidden" name="mapY" id="mapY" required>
+											<input type="hidden" name="dFindLocal" id="dFindLocal" required>
 										</td>
 									</tr>
                                     <tr>
-                                        <td>내용</td>
-                                        <td><textarea name="dContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea></td>
+                                        <td>세부내용 *</td>
+                                        <td><textarea name="dContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" required placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea></td>
                                     </tr>
                                     
                                 </tbody>

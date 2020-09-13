@@ -1,5 +1,19 @@
 
 
+function check() {
+  if(formname.mapX.value == "") {
+    alert("발견장소를 클릭해 주세요.");
+    formname.mapX.focus();
+    return false;
+  }
+  else if(formname.mapY.value == "") {
+    alert("발견장소를 클릭해 주세요.");
+    formname.mapY.focus();
+    return false;
+  }
+  else return true;
+
+}
 //이미지 클릭시 원본 사이즈 팝업
  function fnImgPop(url){
   var img=new Image();
