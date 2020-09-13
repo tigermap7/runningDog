@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.volunteer.model.service.VolunteerService;
 import com.kh.runningdog.volunteer.model.vo.Volunteer;
+import com.kh.runningdog.volunteer.model.vo.Vreply;
 import com.sun.imageio.plugins.common.ImageUtil;
 
 @Controller
@@ -52,8 +53,14 @@ public class VolunteerController {
 		int limit = 6;
 		//전체 목록 갯수 조회
 		int listCount = volunteerService.getListCount();
+		
+		//검색기능
+		String type = request.getParameter("type");
+		String keyword = request.getParameter("keyword");
+		
 		//현재페이지에 출력할 게시글 목록 조회
-		ArrayList<Volunteer> list = volunteerService.selectList(currentPage, limit);
+		ArrayList<Volunteer> list = volunteerService.selectList(currentPage, limit, keyword, type);
+		
 		
 		// 뷰에 출력될 총 페이지 수 계산 : 게시글이 1개이면 1페이지임
 		int maxPage = (int) ((double) listCount / limit + 0.9);
@@ -90,12 +97,19 @@ public class VolunteerController {
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
+		//댓글 갯수 조회
+		int listCountVreply = volunteerService.getListCountVreply(volno);
+		
+		//댓글리스트
+		ArrayList<Vreply> listVreply = volunteerService.selectVreplyList(volno);
 		
 		Volunteer volunteer = volunteerService.selectVolunteer(volno);
 		
 		if(volunteer != null) {
 			request.setAttribute("volunteer", volunteer);
 			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("listCountVreply", listCountVreply);
+			request.setAttribute("listVreply", listVreply);
 			return "protect/serviceView";
 		}else {
 			model.addAttribute("message", volno + "번 글 상세보기 실패!");
@@ -141,7 +155,7 @@ public class VolunteerController {
 		      if(volunteerService.insertVolunteer(volunteer) > 0) {
 		         returnView = "redirect:/vlist.do";
 		      } else {
-		         request.setAttribute("message", "새 공지사항 등록 처리 실패");
+		         request.setAttribute("message", "새 글 등록 처리 실패");
 		         returnView = "common/error";
 		      }
 		      
@@ -166,15 +180,54 @@ public class VolunteerController {
 		
 	}
 	//글수정하기
-	//@RequestMapping(value = "vupdate.do", method = RequestMethod.POST) 
-	//public String updateVolunteer(HttpServletRequest request, Volunteer volunteer, 
-	//		@RequestParam(name="ofile", required=false) MultipartFile file) {
-		
-	//}
+	@RequestMapping(value = "vupdate.do", method = RequestMethod.POST) 
+	public String updateVolunteer(Volunteer volunteer, HttpServletRequest request, 
+			@RequestParam Map<String, MultipartFile> fileMap) {
+	      logger.info("vupdate.do run...");
+	      String returnView = null;
+	      int i = 1;
+	      
+	      String savePath = request.getSession().getServletContext().getRealPath("resources/vfiles"); //파일 저장할 폴더 위치
+	      
+	      for(String key : fileMap.keySet()) {
+	         if(fileMap.get(key).getOriginalFilename() != "") {
+	         String originalFilename = fileMap.get(key).getOriginalFilename();
+	         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	         String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
+	         renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
+	         
+	         try {
+	            fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	            switch (i) {
+	            case 1 : volunteer.setVolor1(originalFilename);
+	                     volunteer.setVolre1(renamefilename); break;
+	            case 2 : volunteer.setVolor2(originalFilename);
+              		 volunteer.setVolre2(renamefilename); break;
+	            case 3 : volunteer.setVolor3(originalFilename);
+              		 volunteer.setVolre3(renamefilename); break;
+	            case 4 : volunteer.setVolor4(originalFilename);
+	            		 volunteer.setVolre4(renamefilename); break;
+	         }
+	            i++;
+	         }
+	      }
+	      
+	      if(volunteerService.updateVolunteer(volunteer) > 0) {
+	         returnView = "redirect:/vlist.do";
+	      } else {
+	         request.setAttribute("message", "새 글 수정 처리 실패");
+	         returnView = "common/error";
+	      }
+	      
+	      return returnView;
+	   }
 	  
 	//글삭제하기
 	@RequestMapping(value="vdelete.do") 
-	public String updateVolunteer(HttpServletRequest request, Volunteer volunteer, Model model) {
+	public String deleteVolunteer(HttpServletRequest request, Volunteer volunteer, Model model) {
 		int volno = Integer.parseInt(request.getParameter("volno"));
 		
 		volunteer.setVolno(volno);

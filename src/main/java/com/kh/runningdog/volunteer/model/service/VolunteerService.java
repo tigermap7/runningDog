@@ -7,7 +7,7 @@ import com.kh.runningdog.volunteer.model.vo.Vreply;
 
 public interface VolunteerService {
 	int getListCount();
-	ArrayList<Volunteer> selectList(int currentPage, int limit);
+	ArrayList<Volunteer> selectList(int currentPage, int limit,  String keyword, String type);
 	Volunteer selectVolunteer(int volno);
 	int insertVolunteer(Volunteer volunteer);
 	int updateVolunteer(Volunteer volunteer);
@@ -16,4 +16,5 @@ public interface VolunteerService {
 	int insertVreply(Vreply vreply);
 	int updateVreply(Vreply vreply);
 	int deleteVreply(Vreply vreply);
+	int getListCountVreply(int volno);
 }

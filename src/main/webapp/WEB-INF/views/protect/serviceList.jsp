@@ -40,15 +40,15 @@
                     <div class="subContent">
                         <!--서브 검색-->                
                         <div class="search_wrap">
-                            <form action="" name="">
-                            <select>
-                                <option value="" class="fontColor-dark">전체</option>
-                                <option value="" class="fontColor-dark">지역</option>
-                                <option value="" class="fontColor-dark">센터명</option>
-                                <option value="" class="fontColor-dark">봉사기간</option>
+                            <form action="vlist.do" name="">
+                            <select name="type">
+                                <option value="none" class="fontColor-dark" selected disabled >전체</option>
+                                <option value="address" class="fontColor-dark">지역</option>
+                                <option value="name" class="fontColor-dark">센터명</option>
+                                <option value="term" class="fontColor-dark">기간(월)</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" placeholder="원하시는 키워드를 검색해주세요.">
+                                <input type="text" name="keyword" placeholder="원하시는 키워드를 검색해주세요.">
                                 <button onclick="#none" class="xi-search"></button>
                             </div>
                             </form>
@@ -82,10 +82,10 @@
                                   		</c:url>
                                     <tr class="serviceOn" onclick="location.href='${vd}'">
                                         <td class="img">
-                                           <c:if test="${ volunteer.volche eq Y }">  
+                                           <c:if test="${ v.volche eq 'Y' }">  
                                               <span>모집중</span>
                                            </c:if>
-                                           <c:if test="${ volunteer.volche ne Y }">
+                                           <c:if test="${ v.volche eq 'N' }">
                                           	  <span>마감</span>
                                            </c:if>
                                             <img src="/runningdog/resources/images/test/animalNews04.jpg">
@@ -95,8 +95,16 @@
                                             <ul>
                                                 <li class="location"><span>지역 : </span>${v.voladdress}</li>
                                                 <li><span>센터명 : </span>${v.volname}</li>
-                                                <li><span>모집기간 : </span>${v.volche }</li>
-                                                <li><span>봉사기간 : </span>${v.volterm}</li>
+                                                 <li><span>모집기간 :</span> 상시모집 /
+                                                	<c:if test="${ v.volche eq'Y'}">
+                                                			상시모집</li>
+                                               		</c:if>
+                                               		<c:if test="${ v.volche eq'N'}">
+                                               				모집완료</li>
+                                               		</c:if>
+                                               		<c:if test="${!empty v.volterm1 }">
+                                                <li><span>봉사기간 : </span>${v.volterm1}~${v.volterm2}</li>
+                                                    </c:if>
                                             </ul>
                                         </td>
                                         <td><a href="${vd}">자세히 보기 <i class="xi-eye-o"></i></a></td>
