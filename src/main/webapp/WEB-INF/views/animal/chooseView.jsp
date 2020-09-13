@@ -127,8 +127,50 @@
                             <div class="viewContent">
                             ${ dboard.dContent }
                             </div>
-                            
-                            <div class="textCon">
+                            <tr>
+ 						 <td>발견 장소</td>
+ 						 <td>
+											<div class="map_wrap">
+												<div class="hAddr">
+													<div id="map"
+														style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
+													</div>
+												</div>
+											</div>
+											<script type="text/javascript"
+												src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
+								<script>
+									var mapContainer = document
+											.getElementById('map'), // 지도를 표시할 div 
+									mapOption = {
+										center : new kakao.maps.LatLng(
+												'${dboard.mapY}', '${dboard.mapX}'), // 지도의 중심좌표
+										level : 8
+									// 지도의 확대 레벨
+									};
+
+									var map = new kakao.maps.Map(mapContainer,
+											mapOption); // 지도를 생성합니다
+
+									// 마커가 표시될 위치입니다 
+									var markerPosition = new kakao.maps.LatLng(
+											'${dboard.mapY}', '${dboard.mapX}');
+
+									// 마커를 생성합니다
+									var marker = new kakao.maps.Marker({
+										position : markerPosition
+									});
+
+									// 마커가 지도 위에 표시되도록 설정합니다
+									marker.setMap(map);
+
+									// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+									// marker.setMap(null);
+								</script>
+							</td>
+						</tr>
+
+						<div class="textCon">
                                 상기 동물을 분실하신 소유주께서는 보호센터로 문의하시어 동물을 찾아가시기 바라며, 동물보호 법 제17조의 규정에 따른 공고가 있는 날부터 10일이 경과하여도 소유자 등을 알 수 없는 경우에는 유실물법 제12조 및 민법 제253조의 규정에 불구하고 해당 시,군,구 자치구가 그 동물의 소유권을 취득하게 됩니다.<br/>
                                 ${ dboard.dDate }
                             </div>
