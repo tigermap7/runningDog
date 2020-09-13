@@ -76,7 +76,9 @@
                         <input type="hidden" name="userId" value="${ sessionScope.loginMember.userId }">
                         <input type="hidden" name="uniqueNum" value="${ sessionScope.loginMember.uniqueNum }">
                         <input type="hidden" name="dWriter" value="${ sessionScope.loginMember.nickname }">
-                        
+                        <input type="hidden" name="viewImage" value="${ dboard.viewImage }">
+                        <input type="hidden" name="listImage" value="${ dboard.listImage }">
+                        <input type="hidden" name="dNum" value="${ dboard.dNum }">
                             <h2>유기동물 주인찾기 수정</h2>
                             <p>가족을 잃은 동물들에게 가족을 찾아주세요.</p>
                             
@@ -94,7 +96,7 @@
                                     <tr>
                                         <td>썸네일 *</td>
                                         <td><input type="file" name="upfile" title="" accept="image/jpeg,image/png,image/jpeg,image/bmp" 
-                                        onchange='chk_file_type(this)' required/></td>
+                                        onchange='chk_file_type(this)' /></td>
                                     </tr>
                                     <tr>
                                         <td>발견날짜 *</td>
@@ -192,9 +194,10 @@
 											
 											markerUpView.setMap(map);
 											
-											var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">${dboard.dFindLocal}</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+											//이전 db에 받은 주소값 받아서 출력
+											var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">${dboard.dFindLocal}</div>',
 										    iwPosition = new kakao.maps.LatLng('${dboard.mapY}', '${dboard.mapX}'), //인포윈도우 표시 위치입니다
-										    iwRemoveable = true;
+										    iwRemoveable = true; //인포윈도우 창닫기
 											// 인포윈도우를 생성합니다
 											var infowindow = new kakao.maps.InfoWindow({
 										    position : iwPosition, 

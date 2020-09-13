@@ -43,4 +43,9 @@ public class DboardDao {
 	public Dboard selectOne(int dNum) {
 		return session.selectOne("dboardMapper.selectOne", dNum);
 	}
+
+
+	public int updateDboard(Dboard dboard) {
+		return session.update("dboardMapper.updateDboard", dboard);
+	}
 }

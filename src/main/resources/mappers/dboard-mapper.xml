@@ -119,4 +119,23 @@
 			   #{ viewImage, jdbcType=VARCHAR},
 			   #{ listImage, jdbcType=VARCHAR})
 	</insert>
+	
+	<update id="updateDboard" parameterType="Dboard">
+		UPDATE DBOARD SET
+			   D_TITLE = #{ dTitle },
+			   D_CONTENT = #{ dContent },
+			   D_FIND_DATE = #{ dFindDate },
+			   D_FIND_LOCAL = #{ dFindLocal },
+			   D_GENDER = #{ dGender },
+			   D_CATEGORY = #{ dCategory },
+			   D_LOCAL = #{ dLocal },
+			   D_PHONE = #{ dPhone },
+			   D_POINT = #{ dPoint },
+			   D_MDATE = SYSDATE,
+			   MAP_X = #{ mapX },
+			   MAP_Y = #{ mapY },
+			   VIEW_IMAGE = #{ viewImage },
+			   LIST_IMAGE = #{ listImage }
+		WHERE D_NUM = #{ dNum }
+	</update>
 </mapper>

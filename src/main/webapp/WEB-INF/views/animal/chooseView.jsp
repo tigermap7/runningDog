@@ -163,9 +163,17 @@
 
 									// 마커가 지도 위에 표시되도록 설정합니다
 									marker.setMap(map);
-
-									// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-									// marker.setMap(null);
+									
+									var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">${dboard.dFindLocal}</div>',
+								    iwPosition = new kakao.maps.LatLng('${dboard.mapY}', '${dboard.mapX}'); //인포윈도우 표시 위치입니다
+								    
+									// 인포윈도우를 생성합니다
+									var infowindow = new kakao.maps.InfoWindow({
+								    position : iwPosition, 
+								    content : iwContent
+									});
+								    
+									infowindow.open(map, marker); 
 								</script>
 							</td>
 						</tr>
@@ -182,9 +190,12 @@
                         <c:url var = "dupPageMove" value= "dupView.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
 						</c:url>
+						<c:url var = "dlistMove" value= "dboardList.do">
+							<c:param name="pageNo" value="${ dboard.pageNo }"/>
+						</c:url>
                         <div class="viewBtn-wrap">
                             <button class="nextBtn" onclick="location=''"><i class="xi-angle-left-min"></i> 이전</button>
-                            <button class="listBtn" onclick="location=''"><i class="xi-rotate-left"></i> 목록</button>
+                            <button class="listBtn" onclick="location='${ dlistMove }'"><i class="xi-rotate-left"></i> 목록</button>
                             <button class="deleteBtn" onclick="location=''"><i class="xi-cut"></i> 삭제</button>
                             <button class="modifiedBtn" onclick="location='${ dupPageMove }'"><i class="xi-pen-o"></i> 수정</button>
                             <button class="prevBtn" onclick="location=''">다음 <i class="xi-angle-right-min"></i></button>

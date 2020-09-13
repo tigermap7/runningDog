@@ -37,4 +37,9 @@ public class DboardServiceImpl implements DboardService{
 	public Dboard selectOne(int dNum) {
 		return dboardDao.selectOne(dNum);
 	}
+
+	@Override
+	public int updateDboard(Dboard dboard) {
+		return dboardDao.updateDboard(dboard);
+	}
 }

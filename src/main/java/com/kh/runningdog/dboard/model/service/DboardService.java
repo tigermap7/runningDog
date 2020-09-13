@@ -14,5 +14,7 @@ public interface DboardService {
 	ArrayList<Dboard> selectList(Dboard dboard);
 
 	Dboard selectOne(int dNum);
+
+	int updateDboard(Dboard dboard);
 	
 }
