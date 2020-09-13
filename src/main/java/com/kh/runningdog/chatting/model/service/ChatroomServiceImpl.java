@@ -24,7 +24,7 @@ public class ChatroomServiceImpl implements ChatroomService{
 	}
 
 	@Override
-	public ArrayList<Chatroom> selectMyChatList(Chatroom room) {
+	public ArrayList<Integer> selectMyChatList(Chatroom room) {
 		return chatroomDao.selectMyChatList(room);
 	}
 

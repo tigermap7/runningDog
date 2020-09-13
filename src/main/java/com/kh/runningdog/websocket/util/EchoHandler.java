@@ -65,11 +65,8 @@ public class EchoHandler extends TextWebSocketHandler {
 	        while (sessionIds.hasNext()) {
 	            sessionId = sessionIds.next();
 	            // TODO: 채팅방에 있는 클라이언트에게만 전송
-	            boolean userIsInChat = true;
-	            for (Chatroom room : getHttpSessionList(session)) {
-	            	if (room.getRoomNo() == roomno) {
-	            		sessions.get(sessionId).sendMessage(new TextMessage(sendMessage));
-	            	}
+            	if (getHttpSessionList(session).contains(roomno)) {
+            		sessions.get(sessionId).sendMessage(new TextMessage(sendMessage));
 				}
 	        }
 			break;
@@ -92,10 +89,10 @@ public class EchoHandler extends TextWebSocketHandler {
 		return member;
 	}
 	
-	public ArrayList<Chatroom> getHttpSessionList(WebSocketSession session) {
+	public ArrayList<Integer> getHttpSessionList(WebSocketSession session) {
 		Map<String, Object> map = session.getAttributes();
 		@SuppressWarnings("unchecked")
-		ArrayList<Chatroom> list = (ArrayList<Chatroom>) map.get("myChatList");
+		ArrayList<Integer> list = (ArrayList<Integer>) map.get("myChatList");
 		return list;
 	}
 }

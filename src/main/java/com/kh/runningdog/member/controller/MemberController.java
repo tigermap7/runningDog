@@ -70,7 +70,7 @@ public class MemberController {
             , HttpServletResponse response, SessionStatus status) throws IOException {
 
 		Member loginMember = memberService.selectLogin(member);
-		ArrayList<Chatroom> myChatList = null;
+		ArrayList<Integer> myChatList = null;
 		String url = null;
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
 			if (bcryptoPasswordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd())) {

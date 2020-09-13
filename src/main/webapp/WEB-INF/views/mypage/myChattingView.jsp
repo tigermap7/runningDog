@@ -135,7 +135,8 @@
 				roomno: ${param.roomNo}
 			}
 		}
-	  	sock.send(JSON.stringify(message));     
+	  	sock.send(JSON.stringify(message));
+		$("#message").val('');
 	}
 	            
 	//evt 파라미터는 websocket이 보내준 데이터다.
