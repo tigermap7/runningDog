@@ -20,8 +20,8 @@ public class VolunteerServiceImpl implements VolunteerService{
 	}
 
 	@Override
-	public ArrayList<Volunteer> selectList(int currentPage, int limit) {
-		return volunteerDao.selectList(currentPage, limit);
+	public ArrayList<Volunteer> selectList(int currentPage, int limit, String keyword, String type) {
+		return volunteerDao.selectList(currentPage, limit, keyword, type);
 	}
 
 	@Override
@@ -43,30 +43,33 @@ public class VolunteerServiceImpl implements VolunteerService{
 	public int deleteVolunteer(Volunteer volunteer) {
 		return volunteerDao.deleteVolunteer(volunteer);
 	}
+	
+	@Override
+	public int getListCountVreply(int volno) {
+		return volunteerDao.getListCountVreply(volno);
+	}
 
 	@Override
 	public ArrayList<Vreply> selectVreplyList(int volno) {
-		// TODO Auto-generated method stub
-		return null;
+		return volunteerDao.selectVreplyList(volno);
 	}
 
 	@Override
 	public int insertVreply(Vreply vreply) {
-		// TODO Auto-generated method stub
-		return 0;
+		return volunteerDao.insertVreply(vreply);
 	}
 
 	@Override
 	public int updateVreply(Vreply vreply) {
-		// TODO Auto-generated method stub
-		return 0;
+		return volunteerDao.updateVreply(vreply);
 	}
 
 	@Override
 	public int deleteVreply(Vreply vreply) {
-		// TODO Auto-generated method stub
-		return 0;
+		return volunteerDao.deleteVreply(vreply);
 	}
+
+	
 	
 	
 

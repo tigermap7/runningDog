@@ -11,7 +11,8 @@ public class Volunteer implements java.io.Serializable{
 	private String volcontent;
 	private java.sql.Date voldate;
 	private String voltel;
-	private String volterm;
+	private String volterm1;
+	private String volterm2;
 	private String volname;
 	private String volor1;
 	private String volre1;
@@ -27,8 +28,9 @@ public class Volunteer implements java.io.Serializable{
 	public Volunteer() {}
 
 	public Volunteer(int volno, String voltitle, String volwriter, String volcontent, Date voldate, String voltel,
-			String volterm, String volname, String volor1, String volre1, String volor2, String volre2, String volor3,
-			String volre3, String volor4, String volre4, String voladdress, String volche) {
+			String volterm1, String volterm2, String volname, String volor1, String volre1, String volor2,
+			String volre2, String volor3, String volre3, String volor4, String volre4, String voladdress,
+			String volche) {
 		super();
 		this.volno = volno;
 		this.voltitle = voltitle;
@@ -36,7 +38,8 @@ public class Volunteer implements java.io.Serializable{
 		this.volcontent = volcontent;
 		this.voldate = voldate;
 		this.voltel = voltel;
-		this.volterm = volterm;
+		this.volterm1 = volterm1;
+		this.volterm2 = volterm2;
 		this.volname = volname;
 		this.volor1 = volor1;
 		this.volre1 = volre1;
@@ -98,12 +101,20 @@ public class Volunteer implements java.io.Serializable{
 		this.voltel = voltel;
 	}
 
-	public String getVolterm() {
-		return volterm;
+	public String getVolterm1() {
+		return volterm1;
 	}
 
-	public void setVolterm(String volterm) {
-		this.volterm = volterm;
+	public void setVolterm1(String volterm1) {
+		this.volterm1 = volterm1;
+	}
+
+	public String getVolterm2() {
+		return volterm2;
+	}
+
+	public void setVolterm2(String volterm2) {
+		this.volterm2 = volterm2;
 	}
 
 	public String getVolname() {
@@ -201,11 +212,12 @@ public class Volunteer implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Volunteer [volno=" + volno + ", voltitle=" + voltitle + ", volwriter=" + volwriter + ", volcontent="
-				+ volcontent + ", voldate=" + voldate + ", voltel=" + voltel + ", volterm=" + volterm + ", volname="
-				+ volname + ", volor1=" + volor1 + ", volre1=" + volre1 + ", volor2=" + volor2 + ", volre2=" + volre2
-				+ ", volor3=" + volor3 + ", volre3=" + volre3 + ", volor4=" + volor4 + ", volre4=" + volre4
-				+ ", voladdress=" + voladdress + ", volche=" + volche + "]";
+				+ volcontent + ", voldate=" + voldate + ", voltel=" + voltel + ", volterm1=" + volterm1 + ", volterm2="
+				+ volterm2 + ", volname=" + volname + ", volor1=" + volor1 + ", volre1=" + volre1 + ", volor2=" + volor2
+				+ ", volre2=" + volre2 + ", volor3=" + volor3 + ", volre3=" + volre3 + ", volor4=" + volor4
+				+ ", volre4=" + volre4 + ", voladdress=" + voladdress + ", volche=" + volche + "]";
 	}
 
+	
 
 }

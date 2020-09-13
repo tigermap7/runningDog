@@ -5,14 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <c:import url="../include/admin_head.jsp"/>
+    <c:import url="/WEB-INF/views/admin/include/admin_head.jsp"/>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
-        <c:import url="../include/admin_header.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_header.jsp"/>
 
         <div id="container">
-            <c:import url="../include/admin_util.jsp"/>
+            <c:import url="/WEB-INF/views/admin/include/admin_util.jsp"/>
 
             <!-- 상단 타이틀 -->
             <div class="pageTitle">
@@ -233,7 +233,7 @@
 
             </div>
         </div>
-        <c:import url="../include/admin_footer.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_footer.jsp"/>
     </div>
 </body>
 </html>

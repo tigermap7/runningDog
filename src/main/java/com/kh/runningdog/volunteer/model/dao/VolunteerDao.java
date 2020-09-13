@@ -21,11 +21,13 @@ public class VolunteerDao {
 		return session.selectOne("volunteerMapper.getListCount");
 	}
 	
-	public ArrayList<Volunteer> selectList (int currentPage, int limit){
+	public ArrayList<Volunteer> selectList (int currentPage, int limit, String keyword, String type){
 		int startRow = (currentPage -1)* limit +1;
 		int endRow = startRow + limit -1;
 		
-		VolunteerPage vpage = new VolunteerPage(startRow, endRow);
+		VolunteerPage vpage = new VolunteerPage(startRow, endRow, keyword, type);
+
+		
 		
 		List<Volunteer> list = session.selectList("volunteerMapper.selectList", vpage);
 		return (ArrayList<Volunteer>)list;
@@ -47,16 +49,19 @@ public class VolunteerDao {
 		return session.delete("volunteerMapper.deleteVolunteer", volunteer);
 	}
 	public ArrayList<Vreply> selectVreplyList(int volno){
-		return session.selectOne("vreplyMapper.selectVreply", volno );
+		return session.selectOne("volunteerMapper.selectVreply", volno );
 	}
 	public int insertVreply(Vreply vreply) {
-		return session.insert("vreplyMapper.insertVreply", vreply);
+		return session.insert("volunteerMapper.insertVreply", vreply);
 	}
 	public int updateVreply(Vreply vreply) {
-		return session.update("vreplyMapper.updateVreply", vreply);
+		return session.update("volunteerMapper.updateVreply", vreply);
 	}
 	public int deleteVreply(Vreply vreply) {
-		return session.delete("vreplyMapper.deleteVreply", vreply);
+		return session.delete("volunteerMapper.deleteVreply", vreply);
+	}
+	public int getListCountVreply(int volno) {
+		return session.selectOne("volunteerMapper.getListCountVreply", volno);
 	}
 
 }
