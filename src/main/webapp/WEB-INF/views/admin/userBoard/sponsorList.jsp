@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="page" value="${ page }"/>
+<c:set var="totalPage" value="${ totalPage }"/>
+<c:set var="startPage" value="${ startPage }"/>
+<c:set var="endPage" value="${ endPage }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +31,7 @@
             <div class="list_wrap">
                 <!-- 검색영역 -->
                 <div class="sort-area">  
-                    <h4>전체 게시물 100개</h4>
+                    <h4>전체 게시물 ${ list.size() }개</h4>
                     <form action="" method="get" id="">
                     <div class="searchBox">
                         <select name="search" class="ListSelect">
@@ -69,71 +73,37 @@
                     </thead>
                     <tbody>
                     
-                    	<%-- <c:if test=""> --%>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='asdetial.ad'">6</td>
-                            <td class="kinds" onclick="location='asdetial.ad'"><span class="protect">후원중</span></td>
-                            <td class="thumbnail" onclick="location='asdetial.ad'"><img src="resources/images/test/test01.jfif"></td>
-                            <td class="title" onclick="location='asdetial.ad'">이 작은 아이가 살아갈 수 있게 도와주세요.</td>
-                            <td class="name" onclick="location='asdetial.ad'">관리자</td>
-                            <td class="date" onclick="location='asdetial.ad'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='asdetial.ad'">6</td>
-                            <td class="kinds" onclick="location='asdetial.ad'"><span class="protect">후원중</span></td>
-                            <td class="thumbnail" onclick="location='asdetial.ad'"><img src="resources/images/test/test01.jfif"></td>
-                            <td class="title" onclick="location='asdetial.ad'">이 작은 아이가 살아갈 수 있게 도와주세요.</td>
-                            <td class="name" onclick="location='asdetial.ad'">관리자</td>
-                            <td class="date" onclick="location='asdetial.ad'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='asdetial.ad'">6</td>
-                            <td class="kinds" onclick="location='asdetial.ad'"><span class="protect">후원중</span></td>
-                            <td class="thumbnail" onclick="location='asdetial.ad'"><img src="resources/images/test/test01.jfif"></td>
-                            <td class="title" onclick="location='asdetial.ad'">이 작은 아이가 살아갈 수 있게 도와주세요.</td>
-                            <td class="name" onclick="location='asdetial.ad'">관리자</td>
-                            <td class="date" onclick="location='asdetial.ad'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='asdetial.ad'">6</td>
-                            <td class="kinds" onclick="location='asdetial.ad'"><span class="protect">후원중</span></td>
-                            <td class="thumbnail" onclick="location='asdetial.ad'"><img src="resources/images/test/test01.jfif"></td>
-                            <td class="title" onclick="location='asdetial.ad'">이 작은 아이가 살아갈 수 있게 도와주세요.</td>
-                            <td class="name" onclick="location='asdetial.ad'">관리자</td>
-                            <td class="date" onclick="location='asdetial.ad'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='asdetial.ad'">6</td>
-                            <td class="kinds" onclick="location='asdetial.ad'"><span class="complete">후원마감</span></td>
-                            <td class="thumbnail" onclick="location='asdetial.ad'"><img src="resources/images/test/test01.jfif"></td>
-                            <td class="title" onclick="location='asdetial.ad'">이 작은 아이가 살아갈 수 있게 도와주세요.</td>
-                            <td class="name" onclick="location='asdetial.ad'">관리자</td>
-                            <td class="date" onclick="location='asdetial.ad'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='asdetial.ad'">6</td>
-                            <td class="kinds" onclick="location='asdetial.ad'"><span class="complete">후원마감</span></td>
-                            <td class="thumbnail" onclick="location='asdetial.ad'"><img src="resources/images/test/test01.jfif"></td>
-                            <td class="title" onclick="location='asdetial.ad'">이 작은 아이가 살아갈 수 있게 도와주세요.</td>
-                            <td class="name" onclick="location='asdetial.ad'">관리자</td>
-                            <td class="date" onclick="location='asdetial.ad'">2020.09.01</td>
-                        </tr>
-                        <%-- </c:if>
+                    	<c:if test="${ list.size() ne 0 }">
+	                    	<c:forEach var="s" items="${ list }">
+		                        <tr>
+		                        	<c:url var="sdt" value="asdetial.ad">
+                                    	<c:param name="sNum" value="${ s.sNum }"/>
+                                    	<c:param name="page" value="${ page }" />
+                                    </c:url>
+		                        	<td><input type="checkbox" name="" id="" value=""></td>
+			                        <td class="number" onclick="location='${ sdt }'">${ s.sNum }</td>
+			                        <c:if test="${ s.sAmount > s.sCurrent }">
+			                        	<td class="kinds" onclick="location='${ sdt }'"><span class="protect">후원중</span></td>
+			                        </c:if>
+			                        <c:if test="${ s.sAmount <= s.sCurrent }">
+			                            <td class="kinds" onclick="location='${ sdt }'"><span class="complete">후원마감</span></td>
+			                        </c:if>
+			                        <td class="thumbnail" onclick="location='${ sdt }'"><img src="resources\\sponsor\\thumbnail/${ s.sRename }"></td>
+			                        <td class="title" onclick="location='${ sdt }'">${ s.sTitle }</td>
+			                        <td class="name" onclick="location='${ sdt }'">${ s.sId }</td>
+			                        <td class="date" onclick="location='${ sdt }'"><fmt:formatDate value="${ s.sDate }" pattern="yyyy.MM.dd"/></td>
+		                        </tr>
+	                        </c:forEach>
+                        </c:if>
                         
-                        <c:if test=""> --%>
+                        <c:if test="${ list.size() eq 0 }">
 						<tr class="list-no">
 							<td colspan="7">
 								<p><img src="resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
 								<h1>목록이 없습니다.</h1>
 							</td>
 						</tr>
-						<%-- </c:if> --%>
+						</c:if>
                     </tbody>
                 </table>
                 <p class="warning_text"> *삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p>
@@ -147,17 +117,38 @@
                 <!-- //버튼 -->
 
                 <!-- 페이징 -->
-                <dl class="list-paging">
-                    <dd>
-                   		<a href="#none"><i class="xi-angle-left"></i></a>
-                        <a href="#none" class="active">1</a>
-                        <a href="#none">2</a>
-                        <a href="#none">3</a>
-                        <a href="#none">4</a>
-                        <a href="#none">5</a>
-                        <a href="#none"><i class="xi-angle-right"></i></a>
-                    </dd>
-                </dl>
+                <c:if test="${ totalPage eq 1 }"><br><br></c:if>
+                <c:if test="${ totalPage ne 1 }">
+                 <dl class="list-paging">
+                            <dd>
+                            	<c:if test="${ page > 1 }">
+                            		<c:url var="sl1" value="slist.do">
+                            			<c:param name="page" value="1"/>
+                            		</c:url>
+                                	<a href="${ sl1 }"><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                
+                                <c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+                                	<c:if test="${ page eq p }">
+                                		<a class="active">p</a>
+                                	</c:if>
+                                	<c:if test="${ page ne p }">
+                                		<c:url var="sl2" value="slist.do">
+                                			<c:param value="${ p }" name="page"/>
+                                		</c:url>
+                                		<a href="${ sl2 }">p</a>
+                                	</c:if>
+								</c:forEach>
+								
+								<c:if test="${ page < totalPage }">
+									<c:url var="sl3" value="slist.do">
+										<c:param name="page" value="${ totalPage }"/>
+									</c:url>
+                                	<a href="${ sl3 }"><i class="xi-angle-right"></i></a>
+                                </c:if>
+                            </dd>
+                        </dl>
+                </c:if>
                 <!-- //페이징 -->
 
             </div>

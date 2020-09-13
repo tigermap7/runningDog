@@ -109,6 +109,11 @@ $(document).ready(function() {
 		minHeight : 300,
 		maxHeight : null,
 		focus : true,
-		lang : 'ko-KR'
+		lang : 'ko-KR',
+		callbacks: {
+			onImageUpload : function(files) {
+				sendFile(files[0], this);
+			}
+		}
 	});
 });

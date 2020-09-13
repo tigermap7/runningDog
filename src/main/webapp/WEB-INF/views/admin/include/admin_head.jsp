@@ -19,6 +19,7 @@
 <script src="resources/common/js/bootstrap.js"></script>
 <script src="resources/common/js/swiper.min.js"></script>
 <script src="resources/common/js/common.js"></script>
+<script src="resources/common/js/sponsor.js"></script>
 
 <link href="${pageContext.request.contextPath}/resources/summernote/summernote.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/summernote/summernote.js"></script>

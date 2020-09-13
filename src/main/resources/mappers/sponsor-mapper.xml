@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="memberMapper">
+<mapper namespace="sponsorMapper">
 
 	<resultMap id="resultSponsor" type="Sponsor">
 		<id property="sNum" column="s_num" />
@@ -13,11 +13,11 @@
 		<result property="sDate" column="s_date" />
 		<result property="sAmount" column="s_amount" />
 		<result property="sCurrent" column="s_current" />
-		<result property="sOriginal" column="s_original" />
-		<result property="sRename" column="s_rename" />
+		<result property="sOriginal" column="s_Original" />
+		<result property="sRename" column="s_Rename" />
 	</resultMap>
 	
-	<select id="selectAll" resultType="Sponsor">
+	<select id="selectList" resultType="Sponsor">
 		select * from sponsor
 	</select>
 	
@@ -25,18 +25,27 @@
 		select * from sponsor where s_num = #{ snum }
 	</select>
 	
+	<select id="selectListCount" resultType="_int">
+		select count(*) from sponsor
+	</select>
+	
+	<select id="selectSNum" resultType="_int">
+		select max(s_num) from sponsor
+	</select>
 	
 	<insert id="insertSponsor" parameterType="Sponsor">
-		
+		insert into sponsor
+		values (sponsor_num.nextval, #{ sId }, #{ sTitle }, #{ sSummary },
+				#{ sContent }, sysdate, #{ sAmount }, 0, #{ sOriginal }, #{ sRename })
 	</insert>
 	
-	<update id="updateSponsor" parameterType="Sponsor">
+	<!-- <update id="updateSponsor" parameterType="Sponsor">
 		
 	</update>
 	
 	<delete id="deletSponsor" parameterType="int">
 		delete from member where s_num = #{ snum }
-	</delete>
+	</delete> -->
 	
 	
 </mapper>

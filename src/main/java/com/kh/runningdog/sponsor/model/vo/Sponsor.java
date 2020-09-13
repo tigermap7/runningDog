@@ -74,11 +74,11 @@ public class Sponsor implements Serializable {
 		this.sContent = sContent;
 	}
 
-	public java.sql.Date getsDate() {
+	public Date getsDate() {
 		return sDate;
 	}
 
-	public void setsDate(java.sql.Date sDate) {
+	public void setsDate(Date sDate) {
 		this.sDate = sDate;
 	}
 
@@ -120,6 +120,5 @@ public class Sponsor implements Serializable {
 				+ ", sContent=" + sContent + ", sDate=" + sDate + ", sAmount=" + sAmount + ", sCurrent=" + sCurrent
 				+ ", sOriginal=" + sOriginal + ", sRename=" + sRename + "]";
 	}
-	
 	
 }

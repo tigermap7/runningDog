@@ -20,8 +20,9 @@
 <script src="resources/common/js/vegas.js"></script>
 <script src="resources/common/js/masonry-docs.min.js"></script>
 <script src="resources/common/js/swiper.min.js"></script>
-<script src="resources/common/js/summernote-ko-KR.js"></script>
+<!-- <script src="resources/common/js/summernote-ko-KR.js"></script> -->
 <script src="resources/common/js/member.js"></script>
+<script src="resources/common/js/sponsor.js"></script>
 
 <!--티스토리 불펌금지-->
 

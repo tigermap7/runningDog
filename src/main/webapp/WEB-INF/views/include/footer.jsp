@@ -17,7 +17,7 @@
     </ul>
     <a href="/WEB-INF/"><i class="xi-home-o"></i><br/>홈으로</a>
     <a href="#none" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"><i class="xi-align-justify"></i><br/>카테고리</a>
-    <a href="/WEB-INF/views/sponsor/sponsorList.jsp"><i class="xi-piggy-bank"></i><br/>후원하기</a>
+    <a href="slist.do"><i class="xi-piggy-bank"></i><br/>후원하기</a>
     <a href="/WEB-INF/views/mypage/myChatting.jsp"><i class="xi-message-o"></i><br/>나의채팅 <span>+1</span></a>
     <a href="#none" class="mypageBtn"><i class="xi-user-plus"></i><br/>마이페이지</a>
 </div>
