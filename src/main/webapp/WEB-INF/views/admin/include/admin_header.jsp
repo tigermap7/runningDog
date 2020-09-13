@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div id="header">
-    <h1 onclick="location='/runningdog/'" title="지금 달려갈 개"><img src="/WEB-INF/resources/admin/images/common/logo.png" alt="지금 달려갈 개"></h1>
+    <h1 onclick="location='/runningdog/'" title="지금 달려갈 개"><img src="resources/admin/images/common/logo.png" alt="지금 달려갈 개"></h1>
     <!-- gnb -->
     <ul class="gnb">
         <li>

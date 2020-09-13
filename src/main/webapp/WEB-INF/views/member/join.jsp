@@ -51,7 +51,7 @@
                             <div>
                                 <span><i class="xi-profile-o"></i></span>
                                 <span>
-	                                <input type="file" name="profilImage" title="프로필 사진" id="profil" class="w100p"/>
+	                                <input type="file" name="profilImage" title="프로필 사진" class="w100p"/>
                                 </span>
                             </div>
                             <div>

@@ -10,12 +10,15 @@ public interface MemberService {
 	Member selectLogin(Member member);
 	int insertMember(Member member);
 	int updateMember(Member member);
-	int deleteMember(String userId);
 	Member selectUserIdCheck(Member member);
 	Member selectNicknameCheck(Member member);
 	Member selectPhoneCheck(Member member);
 	Member selectUserIdPhoneCheck(Member member);
+	Member selectUserPwdCheck(Member member);
 	int updateMemberPwd(Member member);
+	int updatemyinfo(Member member);
+	int insertLeaveMember(Member member);
+	int deleteMember(String userId);
 
 
 }

@@ -57,7 +57,7 @@ $(document).ready(function() {
 		// animation: 'kenburns',
 		animation : 'random',
 		delay : 7000,
-		overlay : '/runningdog/images/btnIcn/overlay_01.png'
+		overlay : '/runningdog/resources/images/btnIcn/overlay_01.png'
 	});
 
 });

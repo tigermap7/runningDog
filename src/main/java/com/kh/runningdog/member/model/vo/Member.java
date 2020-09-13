@@ -6,33 +6,43 @@ import org.springframework.stereotype.Service;
 @Service
 public class Member implements java.io.Serializable {
 	private static final long serialVersionUID = 1111L;
-	
+
 	private int uniqueNum;
 	private String userId;
 	private String userPwd;
 	private String nickname;
 	private String phone;
-	private String profileImg;
+	private String originProfile;
+	private String renameProfile;
 	private java.sql.Date joinDate;
 	private java.sql.Date lastAccessDate;
 	private String loginType;
 	private String loginLimit;
+
+	private int userListNum;
+	private String newUserPwd;
+	private String newUserPwd2;
 	
 	public Member() {}
 
-	public Member(int uniqueNum, String userId, String userPwd, String nickname, String phone, String profileImg,
-			Date joinDate, Date lastAccessDate, String loginType, String loginLimit) {
+	public Member(int uniqueNum, String userId, String userPwd, String nickname, String phone, String originProfile,
+			String renameProfile, Date joinDate, Date lastAccessDate, String loginType, String loginLimit,
+			int userListNum, String newUserPwd, String newUserPwd2) {
 		super();
 		this.uniqueNum = uniqueNum;
 		this.userId = userId;
 		this.userPwd = userPwd;
 		this.nickname = nickname;
 		this.phone = phone;
-		this.profileImg = profileImg;
+		this.originProfile = originProfile;
+		this.renameProfile = renameProfile;
 		this.joinDate = joinDate;
 		this.lastAccessDate = lastAccessDate;
 		this.loginType = loginType;
 		this.loginLimit = loginLimit;
+		this.userListNum = userListNum;
+		this.newUserPwd = newUserPwd;
+		this.newUserPwd2 = newUserPwd2;
 	}
 
 	public int getUniqueNum() {
@@ -75,12 +85,20 @@ public class Member implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	public String getProfileImg() {
-		return profileImg;
+	public String getOriginProfile() {
+		return originProfile;
 	}
 
-	public void setProfileImg(String profileImg) {
-		this.profileImg = profileImg;
+	public void setOriginProfile(String originProfile) {
+		this.originProfile = originProfile;
+	}
+
+	public String getRenameProfile() {
+		return renameProfile;
+	}
+
+	public void setRenameProfile(String renameProfile) {
+		this.renameProfile = renameProfile;
 	}
 
 	public java.sql.Date getJoinDate() {
@@ -115,6 +133,30 @@ public class Member implements java.io.Serializable {
 		this.loginLimit = loginLimit;
 	}
 
+	public int getUserListNum() {
+		return userListNum;
+	}
+
+	public void setUserListNum(int userListNum) {
+		this.userListNum = userListNum;
+	}
+
+	public String getNewUserPwd() {
+		return newUserPwd;
+	}
+
+	public void setNewUserPwd(String newUserPwd) {
+		this.newUserPwd = newUserPwd;
+	}
+
+	public String getNewUserPwd2() {
+		return newUserPwd2;
+	}
+
+	public void setNewUserPwd2(String newUserPwd2) {
+		this.newUserPwd2 = newUserPwd2;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -122,9 +164,11 @@ public class Member implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Member [uniqueNum=" + uniqueNum + ", userId=" + userId + ", userPwd=" + userPwd + ", nickname="
-				+ nickname + ", phone=" + phone + ", profileImg=" + profileImg + ", joinDate=" + joinDate
-				+ ", lastAccessDate=" + lastAccessDate + ", loginType=" + loginType + ", loginLimit=" + loginLimit
-				+ "]";
+				+ nickname + ", phone=" + phone + ", originProfile=" + originProfile + ", renameProfile="
+				+ renameProfile + ", joinDate=" + joinDate + ", lastAccessDate=" + lastAccessDate + ", loginType="
+				+ loginType + ", loginLimit=" + loginLimit + ", userListNum=" + userListNum + ", newUserPwd="
+				+ newUserPwd + ", newUserPwd2=" + newUserPwd2 + "]";
 	}
+
 	
 }

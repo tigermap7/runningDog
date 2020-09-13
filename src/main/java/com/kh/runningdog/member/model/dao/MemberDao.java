@@ -51,14 +51,11 @@ public class MemberDao {
 		return session.update("memberMapper.updateMember", member);
 	}
 	
-	public int deleteMember(String userId) {
-		return session.delete("memberMapper.deleteMember", userId);
-	}
-
 
 	public Member selectUserIdCheck(String userId) {
 		return session.selectOne("memberMapper.selectUserIdCheck", userId);
 	}
+	
 	public Member selectNicknameCheck(String nickname) {
 		return session.selectOne("memberMapper.selectNicknameCheck", nickname);
 	}
@@ -73,8 +70,28 @@ public class MemberDao {
 	}
 
 
+	public Member selectUserPwdCheck(Member member) {
+		return session.selectOne("memberMapper.selectUserPwdCheck", member);
+	}
+
+
 	public int updateMemberPwd(Member member) {
 		return session.update("memberMapper.updateMemberPwd", member);
 	}
+
+
+	public int updatemyinfo(Member member) {
+		return session.update("memberMapper.updatemyinfo", member);
+	}
+
+
+	public int insertLeaveMember(Member member) {
+		return session.insert("memberMapper.insertLeaveMember", member);
+	}
+
+	public int deleteMember(String userId) {
+		return session.delete("memberMapper.deleteMember", userId);
+	}
+
 
 }

@@ -9,7 +9,8 @@
 		<result property="userPwd" column="user_pwd"/>
 		<result property="nickname" column="nickname"/>
 		<result property="phone" column="phone"/>
-		<result property="profileImg" column="profile_img"/>
+		<result property="originProfile" column="origin_profile"/>
+		<result property="renameProfile" column="rename_profile"/>
 		<result property="joinDate" column="join_date"/>
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
@@ -22,12 +23,14 @@
 		<result property="userPwd" column="user_pwd"/>
 		<result property="nickname" column="nickname"/>
 		<result property="phone" column="phone"/>
-		<result property="profileImg" column="profile_img"/>
+		<result property="originProfile" column="origin_profile"/>
+		<result property="renameProfile" column="rename_profile"/>
 		<result property="joinDate" column="join_date"/>
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
 		<result property="loginLimit" column="login_limit"/>
 	</resultMap>
+	
 	
 	<select id="selectLogin" parameterType="Member" resultMap="resultMember">
 		select * from member where user_id = #{userId}
@@ -49,21 +52,31 @@
 		select * from member where user_id = #{userId} and phone = #{phone}
 	</select>
 	
+	<select id="selectUserPwdCheck" parameterType="Member" resultMap="resultMember">
+		select * from member where user_id = #{userId}
+	</select>
+	
 	<insert id="insertMember" parameterType="Member">
-		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{profileImg}, DEFAULT, DEFAULT, null, DEFAULT)
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, null, DEFAULT)
 	</insert>
-	
-	
 	
 	<update id="updateMemberPwd" parameterType="Member">
 		update member set user_pwd = #{userPwd} where user_id = #{userId} and phone = #{phone}
 	</update>
 	
-	<update id="updateMember" parameterType="Member">
-
+	<update id="updatemyinfo" parameterType="Member">
+		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile} where user_id = #{userId}
 	</update>
 	
-	<delete id="deleteMember" parameterType="string">
-
+	
+	<insert id="insertLeaveMember" parameterType="Member">
+		INSERT INTO LEAVE_MEMBER (L_UNIQUE_NUM, L_USER_ID, L_USER_PWD, L_NICKNAME, L_PHONE, L_JOIN_DATE, L_LOGIN_TYPE)
+		SELECT UNIQUE_NUM, USER_ID, USER_PWD, NICKNAME, PHONE, JOIN_DATE, LOGIN_TYPE
+		FROM MEMBER
+		WHERE user_id = #{userId}
+	</insert>
+	
+	<delete id="deleteMember" parameterType="Member">
+		delete member where user_id = #{userId}
 	</delete>
 </mapper>

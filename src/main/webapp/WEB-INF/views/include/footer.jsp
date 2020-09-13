@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <button id="topRollBtn"><i class="xi-caret-up"></i><br/>top</button>
 <div class="collapse" id="navbarToggleExternalContent">
     <ul>
-        <li><a href="/WEB-INF/"><i class="xi-home-o"></i> 홈으로</a></li>
+        <li><a href="/runningdog/"><i class="xi-home-o"></i> 홈으로</a></li>
         <li><a href="/WEB-INF/views/animal/animalList.jsp">유기동물정보</a></li>
         <li><a href="/WEB-INF/views/animal/chooseList.jsp">유기동물분양</a></li>
         <li><a href="/WEB-INF/views/protect/protectList.jsp">보호센터정보</a></li>
@@ -10,16 +13,22 @@
 </div>
 <div id="fmobileMenu">
     <ul class="fmypage_menu">
-        <li><a href="mypage.do">나의 프로필</a></li>
+        <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
         <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
         <li><a href="/WEB-INF/views/mypage/myChatting.jsp">나의 채팅</a></li>
         <li><a href="/WEB-INF/views/mypage/myComment.jsp">나의 댓글</a></li>
+        <li><a href="logout.do">로그아웃</a></li>
     </ul>
-    <a href="/WEB-INF/"><i class="xi-home-o"></i><br/>홈으로</a>
+    <a href="/runningdog/"><i class="xi-home-o"></i><br/>홈으로</a>
     <a href="#none" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"><i class="xi-align-justify"></i><br/>카테고리</a>
     <a href="/WEB-INF/views/sponsor/sponsorList.jsp"><i class="xi-piggy-bank"></i><br/>후원하기</a>
     <a href="/WEB-INF/views/mypage/myChatting.jsp"><i class="xi-message-o"></i><br/>나의채팅 <span>+1</span></a>
-    <a href="#none" class="mypageBtn"><i class="xi-user-plus"></i><br/>마이페이지</a>
+    <c:if test="${ !empty sessionScope.loginMember }">
+    <a href="#none" class="mypageBtn"><i class="xi-user-plus-o"></i><br/>마이페이지</a>
+    </c:if>
+    <c:if test="${ empty sessionScope.loginMember }">
+    <a href="login.do?userId=${loginMember.userId}"><i class="xi-user-o"></i><br/>로그인</a>
+    </c:if>
 </div>
 <div id="footer">
     <dl>

@@ -4,12 +4,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="leftMenu_wrap">
     <div class="leftProfile">
-        <div><img src="/runningdog/resources/images/test/animalImg03.jpg"><spring:url value='/runningdog/resources/images/memberImg/${loginMember.profileImg}'/></div>
+        <div>
+	        <c:if test="${ sessionScope.loginMember.originProfile eq null }">
+	        <img src="/runningdog/resources/images/common/userBg.png">
+	        </c:if>        
+	        <c:if test="${ sessionScope.loginMember.originProfile ne null }">
+	        <img src="/runningdog/resources/images/memberImg/${sessionScope.loginMember.originProfile}"/>
+	        </c:if>
+        </div>
         <h3>${sessionScope.loginMember.nickname} 님 </h3>
         <p>회원번호 #${sessionScope.loginMember.uniqueNum}</p>
         <ul>
             <li><b>게시글 12</b></li>
-            <li><button type="button">로그아웃</button></li>
+            <li><button type="button" onclick="location.href='logout.do'">로그아웃</button></li>
         </ul>
     </div>
     <ul class="leftGnb">
