@@ -42,4 +42,9 @@ public class DboardServiceImpl implements DboardService{
 	public int updateDboard(Dboard dboard) {
 		return dboardDao.updateDboard(dboard);
 	}
+
+	@Override
+	public int updateDboardHide(Dboard dboard) {
+		return dboardDao.updateDboardHide(dboard);
+	}
 }

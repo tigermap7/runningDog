@@ -233,7 +233,7 @@ public class DboardController {
 				dboard.setlistImage(listRename);
 			}
 		}
-		logger.info("지금 보자보자하니까"+dboard);
+		
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url = "";
 		if (dboardService.updateDboard(dboard) > 0) {
@@ -242,6 +242,26 @@ public class DboardController {
 		} else {
 			model.addAttribute("msg", "게시글 수정 실패 다시 확인해 주세요");
 			model.addAttribute("url", "dboardView.do");
+			url = "common/errorDboard";
+		}
+		return url;
+	}
+	
+	@RequestMapping("dHide.do")
+	public String updateDboardHide(@RequestParam("dNum") int dNum, Dboard dboard,Model model) {
+		//게시물을 삭제 하지 않고 표시 여부에 업데이트 하여
+		//3개월 후 프로시저 등록 후 스케줄러 이용하여 게시물 삭제
+		int result = dboardService.updateDboardHide(dboard);
+		
+		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		String url ="";
+		if (result > 0) {
+			model.addAttribute("msg", "게시물을 삭제 했습니다.");
+			model.addAttribute("url", "dboardList.do");
+			url = "common/errorDboard";
+		} else {
+			model.addAttribute("msg", "게시물 삭제에 실패 했습니다.");
+			model.addAttribute("url", "dboardList.do");
 			url = "common/errorDboard";
 		}
 		return url;

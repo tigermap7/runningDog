@@ -16,5 +16,7 @@ public interface DboardService {
 	Dboard selectOne(int dNum);
 
 	int updateDboard(Dboard dboard);
+
+	int updateDboardHide(Dboard dboard);
 	
 }

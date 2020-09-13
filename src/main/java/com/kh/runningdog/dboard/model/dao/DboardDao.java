@@ -48,4 +48,9 @@ public class DboardDao {
 	public int updateDboard(Dboard dboard) {
 		return session.update("dboardMapper.updateDboard", dboard);
 	}
+
+
+	public int updateDboardHide(Dboard dboard) {
+		return session.update("dboardMapper.updateDboardHide", dboard);
+	}
 }

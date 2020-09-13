@@ -138,4 +138,10 @@
 			   LIST_IMAGE = #{ listImage }
 		WHERE D_NUM = #{ dNum }
 	</update>
+	
+	<update id="updateDboardHide" parameterType="Dboard">
+		UPDATE DBOARD SET
+			   D_CHECK = 'n'
+		WHERE D_NUM = #{ dNum }
+	</update>
 </mapper>
