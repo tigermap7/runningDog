@@ -3,6 +3,7 @@ package com.kh.runningdog.admin.notice.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -306,14 +308,40 @@ public class AdminNoticeController {
 	
 	//관리자용 공지사항 삭제 (관리자페이지에서 전체삭제, 선택삭제 했을 경우)
 	@RequestMapping(value="ndelete.ad")
-	public String deleteAdminNotice(HttpServletRequest request) {
+	@ResponseBody
+	public int deleteAdminNotice(@RequestParam(value = "checkDel[]") List<String> chArr, HttpServletRequest request) {
 		logger.info("ndelete.ad run...");
-		String returnView = null;
+		int result = 0;
+		Notice notice = new Notice();
 		
-		returnView = "redirect:/nlist.ad";
+		//String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles"); //저장된 파일 위치
 		
-		return returnView;
+		for(String i : chArr) {
+			int noticeNo = Integer.parseInt(i);
+			notice = noticeService.selectNoticeOne(noticeNo);
+			
+			result = noticeService.deleteNotice(noticeNo);
+			
+			if(result > 0) {
+				//첨부파일 삭제하기
+				String deleteFilename1 = (notice.getNoticeOriginalFilename1() == null) ? null : notice.getNoticeRenameFilename1();
+				String deleteFilename2 = (notice.getNoticeOriginalFilename2() == null) ? null : notice.getNoticeRenameFilename2();
+				String deleteFilename3 = (notice.getNoticeOriginalFilename3() == null) ? null : notice.getNoticeRenameFilename3();
+				String savePath = request.getSession().getServletContext().getRealPath("resources/nupfiles"); //저장된 파일 위치
+				if(deleteFilename1 != null) {
+					new File(savePath + "\\" + deleteFilename1).delete();
+					if(deleteFilename2 != null) {
+						new File(savePath + "\\" + deleteFilename2).delete();
+						if(deleteFilename3 != null) { 
+							new File(savePath + "\\" + deleteFilename3).delete();	
+						}
+					}
+				}
+			} 
+			
+		} //for문
+		
+		return result;
 	}	
-	
 	
 }
