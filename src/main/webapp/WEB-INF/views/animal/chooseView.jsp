@@ -107,7 +107,7 @@
                                                 <th>임시보호자</th>
                                                 <td>${ dboard.dWriter } / # ${ dboard.uniqueNum }</td>
                                                 <th>${ dboard.dDate ne dboard.dMdate ?"수정일": "작성일"}</th>
-                                                <td>${ dboard.dDate eq dboard.dMdate ?dboard.dDate : "dboard.dMdate"}
+                                                <td>${ dboard.dDate eq dboard.dMdate ?dboard.dDate : dboard.dMdate}
                                                 
                                                 </td>
                                             </tr>
