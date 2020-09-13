@@ -10,19 +10,18 @@
 		<result property="sNum" column="s_num" />
 	</resultMap>
 	
-	<!-- <select id="selectAll" resultType="Sponsor">
-		select * from sponsor
+	<select id="selectImageList" resultType="SponsorImage">
+		select si_name from sponsorImage;
 	</select>
 	
-	<select id="selectOne" parameterType="int" resultType="Sponsor">
+	<!-- <select id="selectOne" parameterType="int" resultType="Sponsor">
 		select * from sponsor where s_num = #{ snum }
 	</select> -->
 	
 	
-	<insert id="insertSponsor" parameterType="Sponsor">
-		insert into sponsor
-		values (sponsor_num.nextval, #{ sId }, #{ sTitle }, #{ sSummary },
-				#{ sContent }, sysdate, #{ sAmount }, 0, #{ sThumbnail })
+	<insert id="insertSCImage" parameterType="com.kh.runningdog.sponsor.model.vo.ContentImage">
+		insert into sponsorImage
+		values (sponsor_thumbnail_num.nextval, #{ fileName }, #{ sNum })
 	</insert>
 	
 	<!-- <update id="updateSponsor" parameterType="Sponsor">

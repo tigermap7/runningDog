@@ -87,7 +87,33 @@ $(function(){
 	});
 });
 
+//(전체/선택) 삭제
+function checkAll(){
+	if($("input[name=checkAll]").is(":checked")){
+		$("input[name=checkDel]").prop("checked", true);
+	}else{
+		$("input[name=checkDel]").prop("checked", false);
+	}
+}
 
+function deleteAction(page){
+	var page = page;
+	var checkRow = "";
+	$("input[name='checkDel']:checked").each(function(){
+		checkRow = checkRow + $(this).val()+",";
+	});
+	checkRow = checkRow.substring(0, checkRow.lastIndexOf(","));
+	
+	if(checkRow == ""){
+		alert("삭제할 대상을 선택하세요.");
+		return false;
+	}
+	
+	console.log("### checkRow => {"+checkRow+"}");
+	
+	if(confirm("삭제 하시겠습니까?"))
+		location.href = "sdelete.ad?checkRow=" + checkRow + "&page=" + page;
+}
 
 
 

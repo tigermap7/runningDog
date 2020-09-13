@@ -17,8 +17,14 @@
 		<result property="sRename" column="s_Rename" />
 	</resultMap>
 	
-	<select id="selectList" resultType="Sponsor">
-		select * from sponsor
+	<select id="selectList" resultType="Sponsor" parameterType="com.kh.runningdog.sponsor.model.vo.SponsorPage">
+		<![CDATA[
+		select *
+		from (select rank() over (order by s_num desc) rnum, s_num, s_id, s_title, s_summary,
+					 s_content, s_date, s_amount, s_current, s_original, s_rename
+		      from sponsor)
+		where rnum >= ${ startRow } and rnum <= ${ endRow }
+		]]>
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultType="Sponsor">

@@ -3,20 +3,35 @@ package com.kh.runningdog.admin.sponsor.controller;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,6 +61,10 @@ public class AdminSponsorController {
 		
 		int totalList = sponsorService.selectListCount();
 		int totalPage = (int)(((double)totalList / countList) + 0.9);
+		
+		if(totalPage < currentPage)
+			currentPage = totalPage;
+		
 		int startPage = ((int)(((double)currentPage / countPage) + 0.9) - 1) * countPage + 1;
 		int endPage = startPage + countPage - 1;
 		if(endPage > totalPage)
@@ -183,12 +202,18 @@ public class AdminSponsorController {
 		int result = sponsorService.insertSponsor(sponsor);
 		int sNum = sponsorService.selectSNum();
 		
-		ArrayList<String> clist = new ArrayList<>();
-//		sponsor.getsContent().;
-		
 		String view = "";
 		if(result > 0) {
-			view = "redirect:asdetial.ad?sNum=" + sNum + "&page=1"; ////////////////////////////////////////////////////////////
+			//스케쥴러를 이용하기 위해 컨텐츠 이미지 테이블에 저장
+			ArrayList<String> clist = new ArrayList<>();
+			Pattern pattern = Pattern.compile("t/(.*?)\\r");
+			Matcher matcher = pattern.matcher(sponsor.getsContent());
+			while(matcher.find()) {
+				clist.add(matcher.group(1));
+			}
+			sponsorService.insertSContentImage(clist, sNum);
+			
+			view = "redirect:asdetial.ad?sNum=" + sNum + "&page=1";
 		}
 		return view;
 	}
@@ -222,9 +247,57 @@ public class AdminSponsorController {
 			e.printStackTrace();
 		}
 	}
+
+	//스케쥴러
+	@Scheduled(cron="0 30 14 * 5 ?") //매주 금요일 오후 2시 30분
+	public void checkContentFile() {
+		String cFolder = "C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\sponsor\\summernoteContent";
+		
+		ArrayList<String> list = sponsorService.selectImageList();
+		ArrayList<String> del = new ArrayList<String>();
+		
+		//하위의 모든 파일
+		for(File info : FileUtils.listFiles(new File(cFolder), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+			String inFolder = info.getName(); //서버폴더에 저장된 파일명
+			for(int i=0; i<list.size(); i++) {
+				String realFile = list.get(i); //테이블에 저장된 파일명
+				if(realFile.equals(inFolder))
+					break;
+				else if(!realFile.equals(inFolder) && i == list.size()-1)
+					del.add(inFolder);
+			}
+		}
+		
+		for(String d : del) {
+			if(new File(cFolder + "\\" + d).delete())
+				logger.info(d + "파일 삭제 완료");
+			else logger.info(d + "파일 삭제 실패");
+		}
+	}
 	
-//	@RequestMapping("")
-//	public ModelAndView 
+	@RequestMapping("sdelete.ad")
+	public String deleteSponsor(@RequestParam() int page, HttpServletRequest request) {
+		
+		String[] checkRow = request.getParameter("checkRow").split(",");
+		
+		ArrayList<String> delTh = sponsorService.selectThumb(checkRow);
+		ArrayList<String> delIm = sponsorService.selectImageList(checkRow);
+		
+		String savePathTh = savePath(request) + "\\thumbnail";
+		String savePathIm = savePath(request) + "\\summernoteContent";
+
+		int result = sponsorService.deleteSponsor(checkRow);
+		
+		String re = null;
+		if(result > 0) {
+			for(String file : delTh)
+				new File(savePathTh + "\\" + file).delete();
+			for(String file : delIm)
+				new File(savePathIm + "\\" + file).delete();
+			re = "redirect:aslist.ad?page=" + page;
+		}
+			return re;
+	}
 	
 	
 

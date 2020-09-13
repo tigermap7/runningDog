@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.runningdog.sponsor.model.vo.ContentImage;
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
 import com.kh.runningdog.sponsor.model.vo.SponsorPage;
 
@@ -42,6 +43,20 @@ public class SponsorDao {
 
 	public int selectSNum() {
 		return session.selectOne("sponsorMapper.selectSNum");
+	}
+
+	public void insertSContentImage(ArrayList<String> clist, int sNum) {
+		ContentImage ct = new ContentImage();
+		ct.setsNum(sNum);
+		for(String s : clist) {
+			ct.setFileName(s);
+			session.insert("sponsorImageMapper.insertSCImage", ct);
+		}
+	}
+
+	public ArrayList<String> selectImageList() {
+		List<String> list = session.selectList("sponsorImageMapper.selectImageList");
+		return (ArrayList<String>)list;
 	}
 	
 	

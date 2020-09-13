@@ -57,7 +57,7 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th><input type="checkbox" name="" id="" value=""></th>
+                            <th><input type="checkbox" name="checkAll" onclick="checkAll();"></th>
                             <th>번호</th>
                             <th>분류</th>
                             <th>썸네일</th>
@@ -80,7 +80,7 @@
                                     	<c:param name="sNum" value="${ s.sNum }"/>
                                     	<c:param name="page" value="${ page }" />
                                     </c:url>
-		                        	<td><input type="checkbox" name="" id="" value=""></td>
+		                        	<td><input type="checkbox" name="checkDel" value="${ s.sNum }"></td>
 			                        <td class="number" onclick="location='${ sdt }'">${ s.sNum }</td>
 			                        <c:if test="${ s.sAmount > s.sCurrent }">
 			                        	<td class="kinds" onclick="location='${ sdt }'"><span class="protect">후원중</span></td>
@@ -111,7 +111,7 @@
 
                 <!-- 버튼 -->
                 <div class="list-btn">
-                    <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택삭제</button>
+                    <button type="button" id="" class="btn-left chkBtn" onclick="deleteAction(${ page });"><i class="xi-cut"></i> 선택삭제</button>
                     <button type="button" id="" class="btn-right writeBtn" onclick="location='aswrite.ad'"><i class="xi-pen-o"></i> 글작성</button>
                 </div>
                 <!-- //버튼 -->
@@ -122,29 +122,35 @@
                  <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
-                            		<c:url var="sl1" value="slist.do">
+                            		<c:url var="sl1" value="aslist.ad">
                             			<c:param name="page" value="1"/>
                             		</c:url>
                                 	<a href="${ sl1 }"><i class="xi-angle-left"></i></a>
                                 </c:if>
+                                <c:if test="${ page eq 1 }">
+                                	<a><i class="xi-angle-left"></i></a>
+                                </c:if>
                                 
                                 <c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
                                 	<c:if test="${ page eq p }">
-                                		<a class="active">p</a>
+                                		<a class="active">${ p }</a>
                                 	</c:if>
                                 	<c:if test="${ page ne p }">
-                                		<c:url var="sl2" value="slist.do">
+                                		<c:url var="sl2" value="aslist.ad">
                                 			<c:param value="${ p }" name="page"/>
                                 		</c:url>
-                                		<a href="${ sl2 }">p</a>
+                                		<a href="${ sl2 }">${ p }</a>
                                 	</c:if>
 								</c:forEach>
 								
 								<c:if test="${ page < totalPage }">
-									<c:url var="sl3" value="slist.do">
+									<c:url var="sl3" value="aslist.ad">
 										<c:param name="page" value="${ totalPage }"/>
 									</c:url>
                                 	<a href="${ sl3 }"><i class="xi-angle-right"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq totalPage }">
+                                	<a><i class="xi-angle-right"></i></a>
                                 </c:if>
                             </dd>
                         </dl>

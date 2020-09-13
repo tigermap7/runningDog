@@ -38,6 +38,35 @@ public class SponsorServiceImpl implements SponsorService{
 	public int selectSNum() {
 		return sponsorDao.selectSNum();
 	}
+
+	@Override
+	public void insertSContentImage(ArrayList<String> clist, int sNum) {
+		sponsorDao.insertSContentImage(clist, sNum);
+		
+	}
+
+	@Override
+	public ArrayList<String> selectImageList() {
+		return sponsorDao.selectImageList();
+	}
+
+	@Override
+	public ArrayList<String> selectThumb(String[] checkRow) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> selectImageList(String[] checkRow) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int deleteSponsor(String[] checkRow) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 }
