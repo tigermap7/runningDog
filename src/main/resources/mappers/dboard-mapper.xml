@@ -55,7 +55,7 @@
 		]]>
 	</select>
 	
-	<select id="selectListCount" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="int">
+	<select id="selectListCount" parameterType="Dboard" resultType="int">
 		SELECT COUNT(*)
 		FROM DBOARD
 		WHERE 1=1
@@ -70,7 +70,7 @@
 		</if>
 	</select>
 	
-	<select id="selectList" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="com.kh.runningdog.dboard.model.vo.Dboard">
+	<select id="selectList" parameterType="Dboard" resultType="com.kh.runningdog.dboard.model.vo.Dboard">
 		SELECT *
 		FROM (SELECT ROWNUM RNUM, D_NUM, USER_ID, UNIQUE_NUM, D_WRITER, D_TITLE, D_CONTENT, D_FIND_DATE,
 			  D_FIND_LOCAL, D_GENDER, D_CATEGORY, D_LOCAL, D_PHONE, D_POINT, D_DATE, D_MDATE, D_COUNT,
@@ -94,7 +94,7 @@
 		SELECT * FROM DBOARD WHERE D_NUM = #{ dNum }
 	</select>
 	
-	<select id="selectNext" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="int">
+	<select id="selectNext" parameterType="Dboard" resultType="int">
 		SELECT MIN(D_NUM)
 		FROM DBOARD
 		WHERE D_CHECK = 'y' AND D_NUM > ${ dNum }
@@ -151,7 +151,7 @@
 		WHERE D_NUM = #{ dNum }
 	</update>
 	
-	<update id="updateDboardSuc" parameterType="com.kh.runningdog.dboard.model.vo.Dboard">
+	<update id="updateDboardSuc" parameterType="Dboard">
 		UPDATE DBOARD SET
 		<if test='dSuccess.equals("y")'>
 			   D_SUCCESS = 'n'
