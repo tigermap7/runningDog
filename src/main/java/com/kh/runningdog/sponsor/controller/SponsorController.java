@@ -1,6 +1,7 @@
 package com.kh.runningdog.sponsor.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,6 +41,7 @@ public class SponsorController {
 		if(list.size() > -1) {
 			mv.addObject("list", list);
 			mv.addObject("page", currentPage);
+			mv.addObject("totalList", totalList);
 			mv.addObject("totalPage", totalPage);
 			mv.addObject("startPage", startPage);
 			mv.addObject("endPage", endPage);
@@ -65,7 +67,25 @@ public class SponsorController {
 		return "sponsor/sponsoredPayment";
 	}
     
-    
+    @RequestMapping("ssearch.do")
+	public ModelAndView moveSponsorSearch(ModelAndView mv, HttpServletRequest request) {
+		HashMap<String, String> key = new HashMap<>();
+		key.put("selected", request.getParameter("selected"));
+		key.put("keyword", request.getParameter("keyword"));
+		
+		ArrayList<Sponsor> list = sponsorService.selectSearch(key);
+    	
+		if(list.size() > -1) {
+			mv.addObject("list", list);
+			mv.addObject("page", 1);
+			mv.addObject("totalList", list.size());
+			mv.addObject("totalPage", 1);
+			mv.addObject("startPage", 1);
+			mv.addObject("endPage", 1);
+			mv.setViewName("sponsor/sponsorList");
+		}
+		return mv;
+	}
     
     
 }

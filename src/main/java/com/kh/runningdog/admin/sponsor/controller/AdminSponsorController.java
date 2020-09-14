@@ -63,8 +63,8 @@ public class AdminSponsorController {
 		int totalList = sponsorService.selectListCount();
 		int totalPage = (int)(((double)totalList / countList) + 0.9);
 		
-//		if(totalPage < currentPage)
-//			currentPage = totalPage;
+		if(totalPage < currentPage && totalPage != 0)
+			currentPage = totalPage;
 		
 		int startPage = ((int)(((double)currentPage / countPage) + 0.9) - 1) * countPage + 1;
 		int endPage = startPage + countPage - 1;
@@ -76,6 +76,7 @@ public class AdminSponsorController {
 		if(list.size() > -1) {
 			mv.addObject("list", list);
 			mv.addObject("page", currentPage);
+			mv.addObject("totalList", totalList);
 			mv.addObject("totalPage", totalPage);
 			mv.addObject("startPage", startPage);
 			mv.addObject("endPage", endPage);

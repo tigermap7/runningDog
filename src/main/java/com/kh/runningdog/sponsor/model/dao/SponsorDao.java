@@ -1,6 +1,7 @@
 package com.kh.runningdog.sponsor.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -72,6 +73,11 @@ public class SponsorDao {
 
 	public int deleteSponsor(String[] checkRow) {
 		return session.delete("sponsorMapper.deleteSponsor", checkRow);
+	}
+
+	public ArrayList<Sponsor> selectSearch(HashMap<String, String> key) {
+		List<Sponsor> list = session.selectList("sponsorMapper.selectSearch", key);
+		return (ArrayList<Sponsor>) list;
 	}
 	
 	

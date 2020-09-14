@@ -1,6 +1,7 @@
 package com.kh.runningdog.sponsor.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
 import com.kh.runningdog.sponsor.model.vo.SponsorImage;
@@ -16,4 +17,5 @@ public interface SponsorService {
 	public abstract ArrayList<Sponsor> selectThumb(String[] checkRow);
 	public abstract ArrayList<SponsorImage> selectImageList(String[] checkRow);
 	public abstract int deleteSponsor(String[] checkRow);
+	public abstract ArrayList<Sponsor> selectSearch(HashMap<String, String> key);
 }

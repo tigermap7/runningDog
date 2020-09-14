@@ -29,7 +29,7 @@
 		from (select rank() over (order by s_num desc) rnum, s_num, s_id, s_title, s_summary,
 					 s_content, s_count, s_date, s_amount, s_current, s_original, s_rename
 		      from sponsor)
-		where rnum >= ${ startRow } and rnum <= ${ endRow }
+		where rnum >= #{ startRow } and rnum <= #{ endRow }
 		]]>
 	</select>
 	
@@ -50,8 +50,18 @@
 		from sponsor
 		where s_num in
 		<foreach collection="array" item="arr" open="(" close=")" separator=",">
-			${ arr }
+			#{ arr }
 		</foreach>
+	</select>
+
+	<select id="selectSearch" resultType="Sponsor" parameterType="hashmap">
+		select * from sponsor where
+		<if test='selected.equals("title")'>
+			s_title like '%' || #{ keyword } || '%'
+		</if>
+		<if test='selected.equals("content")'>
+			s_content like '%' || #{ keyword } || '%'
+		</if>
 	</select>
 	
 	<insert id="insertSponsor" parameterType="Sponsor">
@@ -67,7 +77,7 @@
 	<delete id="deleteSponsor">
 		delete from sponsor where s_num in
 		<foreach item="arr" collection="array" open="(" close=")" separator=",">
-			${ arr }
+			#{ arr }
 		</foreach>
 	</delete>
 	

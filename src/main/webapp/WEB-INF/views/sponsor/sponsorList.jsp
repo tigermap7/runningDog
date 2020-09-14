@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="page" value="${ page }"/>
+<c:set var="totalList" value="${ totalList }"/>
 <c:set var="totalPage" value="${ totalPage }"/>
 <c:set var="startPage" value="${ startPage }"/>
 <c:set var="endPage" value="${ endPage }"/>
@@ -39,20 +40,22 @@
                     <div class="subContent">
                         <!--서브 검색-->                
                         <div class="search_wrap">
-                            <form action="">
-                            <select>
-                                <option value="" class="fontColor-dark">제목</option>
+                            <form action="ssearch.do">
+                            <select name="selected">
+								<option value="" selected disabled>분류 선택</option>
+                            	<option value="title" class="fontColor-dark">제목</option>
+                            	<option value="content" class="fontColor-dark">내용</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" name="title" placeholder="제목을 검색해주세요." required>
-                                <button onclick="#none" type="submit" class="xi-search"></button>
+                                <input type="text" name="keyword" placeholder="검색어를 검색해주세요." required>
+                                <button name="seld" onclick="#none" type="submit" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
                         <!--서브 검색 끝-->
                         
                         <div class="sort-area">  
-                            <h4>전체 ${ list.size() }개의 '따뜻한 손길'</h4>
+                            <h4>전체 ${ totalList }개의 '따뜻한 손길'</h4>
                             <div>
                                 <!-- <a href="sponsorWrite.jsp" class="writeBtn">글쓰기</a> -->
                                 <div>
@@ -69,7 +72,7 @@
 					<!--리스트-->
                         <div class="sponsorList">
                             <ul>
-                            <c:forEach var="s" items="${ list }">
+                            <c:forEach var="s" items="${ list }" varStatus="status">
                                 <li>
                                     <div>
                                     	<c:url var="sdt" value="sdetail.do">
@@ -79,7 +82,7 @@
                                     	<c:if test="${ s.sAmount > s.sCurrent }">
                                         <a href="${ sdt }" class="chooseIcon">후원중</a>
                                         </c:if>
-                                        <a id="fixeda" data-toggle="popover" class="urlIcon xi-share-alt-o"></a>
+                                        <a id="${ s.sNum }" data-toggle="popover" class="urlIcon xi-share-alt-o"></a>
 									<a href="${ sdt }"><img src="resources/sponsor/thumbnail/${ s.sRename }"></a>
                                     </div>
                                     <h3 onclick="location='${ sdt }'">${ s.sTitle }</h3>
@@ -92,6 +95,13 @@
                                 </li>
                             </c:forEach>
                             </ul>
+                            
+                            <c:if test="${ list.size() eq 0 }">
+                            	<br><br><br><br><br><br><br><br>
+								<p align="center"><img src="resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
+								<h1 align="center">목록이 없습니다.</h1>
+								<br><br><br><br><br><br><br><br>
+							</c:if>
                         </div>
                         <!-- 리스트 끝 -->
                     

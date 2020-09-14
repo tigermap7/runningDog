@@ -1,17 +1,19 @@
 //sns공유하기
 $(function(){
 	$('[data-toggle="popover"]').popover({
-		container: "#fixeda",
-		placement: 'auto bottom',
+		container: $(this).attr('id'),
+		placement: 'bottom',
 		title: "공유하기",
 		html: true,
 		content: function() {
+			var thid = $(this).attr('id');
+			alert(thid);
 			var value = "";
-				value += "<a href='javascript:snsGo(1);'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;";
-				value += "<a href='javascript:snsGo(2);'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;";
-				value += "<a href='javascript:snsGo(3);'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;";
-				value += "<a href='javascript:snsGo(4);'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
-				value += "<a href='javascript:CopyUrlToClipboard(2);' class='urlcopy'>URL 복사</a>";
+			value += "<a href='javascript:snsGo(1, "+thid+");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(2);'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(3);'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(4);'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
+			value += "<a href='javascript:CopyUrlToClipboard(2);' class='urlcopy'>URL 복사</a>";
 			return value;
 		}
 	});
@@ -37,14 +39,15 @@ function CopyUrlToClipboard(num) {
 	alert("URL이 클립보드에 복사되었습니다\n" + obShareUrl);
 }
 
-function snsGo(e) {
+function snsGo(e, thid) {
+	var thid = thid;
 	
 	//작업중!!!!!!!!!!!!!!!!!
 	switch(e) {
-	case 1 : break;
-	case 2 : break;
-	case 3 : break;
-	case 4 : break;
+	case 1 : alert(thid); break; //네이버
+	case 2 : break; //카카오톡
+	case 3 : //window.open break; //페이스북
+	case 4 : break; //트위터
 	}
 }
 
@@ -115,8 +118,14 @@ function deleteAction(page){
 		location.href = "sdelete.ad?checkRow=" + checkRow + "&page=" + page;
 }
 
-
-
+$(function(){
+	$("[name='seld']").on("click", function(){
+		if($("select[name='selected'] option:selected").val().length == 0) {
+			alert("분류를 선택해주세요");
+			return false;
+		}
+	});
+});	
 
 
 

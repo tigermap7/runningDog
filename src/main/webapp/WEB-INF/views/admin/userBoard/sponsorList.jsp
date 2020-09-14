@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="page" value="${ page }"/>
+<c:set var="totalList" value="${ totalList }"/>
 <c:set var="totalPage" value="${ totalPage }"/>
 <c:set var="startPage" value="${ startPage }"/>
 <c:set var="endPage" value="${ endPage }"/>
@@ -31,7 +32,7 @@
             <div class="list_wrap">
                 <!-- 검색영역 -->
                 <div class="sort-area">  
-                    <h4>전체 게시물 ${ list.size() }개</h4>
+                    <h4>전체 게시물 ${ totalList }개</h4>
                     <form action="" method="get" id="">
                     <div class="searchBox">
                         <select name="search" class="ListSelect">
