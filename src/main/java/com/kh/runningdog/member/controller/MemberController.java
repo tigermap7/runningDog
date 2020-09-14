@@ -514,6 +514,7 @@ public class MemberController {
 	public String adminMemberPage() {
 		return "admin/member/allMember";
 	}
+	
 	@RequestMapping("allMember.ad")
 	public String allMemberPage() {
 		return "admin/member/allMember";
