@@ -134,12 +134,11 @@
                                     <p>
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
-                                        발견지역 :
-                                        <c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
+                                        발견지역 :  ${ d.dFindLocal } 부근<br/>
+                                        보호자 지역 :  <c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
 										 <c:forEach var ="lo" items="${local }" varStatus="l">
-                                         <c:if test="${l.count== (d.dLocal+1) }"> ${lo }</c:if>
+                                         <c:if test="${l.count== (d.dLocal+1) }"> ${ lo }</c:if>
 										</c:forEach>
-                                         ${ d.dFindLocal }<br/>
                                         <span>
                                         ${ d.dDate eq d.dMdate ?"등록일": "수정일"} : ${ d.dDate eq d.dMdate ?d.dDate : d.dMdate}
                                         </span>
@@ -158,12 +157,11 @@
                                     <p>
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
-                                        발견지역 : 
-                                         <c:set var="local" value="${ fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
-										 <c:forEach var ="lo" items="${ local }" varStatus="l">
-                                         <c:if test="${l.count== (d.dLocal+1) }"> ${ lo }</c:if>
+                                        발견지역 : ${ d.dFindLocal } 부근<br/>
+                                        보호자 지역 :<c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
+										 <c:forEach var ="lo" items="${local }" varStatus="l">
+                                         <c:if test="${l.count== (d.dLocal+1) }"> ${lo }</c:if>
 										</c:forEach>
-										 ${ d.dFindLocal }<br/>
                                         <span>
                                         ${ d.dDate eq d.dMdate ?"등록일": "수정일"} : ${ d.dDate eq d.dMdate ?d.dDate : d.dMdate}
                                         
