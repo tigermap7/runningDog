@@ -38,8 +38,8 @@
                 함께하는 여러분의 따뜻한 손길이 모여 큰 힘이 됩니다.<br>
             </p>
         </li>
-        <li onclick="location='/WEB-INF/views/notice/noticeList.jsp'">
-            <h2><i class="xi-bell-o"></i> 공지사항 확인</h2>
+        <li onclick="location='nlist.do'">
+            <h2><i class="xi-bell-o"></i> 공지사항 확인</i></h2>
             <p>'지금 달려갈 개'의 공지사항을 꼭 확인해주세요.<br>&nbsp;</p>
         </li>
     </ul>
