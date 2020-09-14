@@ -32,8 +32,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">후원하기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="slist.do">후원하기</a></li>
                             </ul>
                         </div>
                         <h2><span>후원하기</span></h2>
@@ -44,7 +44,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="../include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
                     <div class="subContent">
                         <!--상세-->
@@ -145,8 +145,8 @@
                                 </tr>
                                 <tr class="privacyCke_con">
                                     <td colspan="2">
-                                        <c:import url="/views/include/termsCon.jsp"/>
-                                        <c:import url="/views/include/privacyCon.jsp"/>
+                                        <c:import url="../include/termsCon.jsp"/>
+                                        <c:import url="../include/privacyCon.jsp"/>
                                     </td>
                                 </tr>
                             </tbody>

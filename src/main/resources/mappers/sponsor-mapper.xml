@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sponsorMapper">
+
+	<resultMap id="resultSponsor" type="Sponsor">
+		<id property="sNum" column="s_num" />
+		<result property="sId" column="s_id" />
+		<result property="sTitle" column="s_title" />
+		<result property="sSummary" column="s_summary" />
+		<result property="sContent" column="s_content" />
+		<result property="sCount" column="s_count" />
+		<result property="sDate" column="s_date" />
+		<result property="sAmount" column="s_amount" />
+		<result property="sCurrent" column="s_current" />
+		<result property="sOriginal" column="s_Original" />
+		<result property="sRename" column="s_Rename" />
+	</resultMap>
+	
+	<resultMap id="resultThumb" type="Sponsor">
+		<result property="sOriginal" column="s_Original" />
+		<result property="sRename" column="s_Rename" />
+	</resultMap>
+	
+	<select id="selectList" resultType="Sponsor" parameterType="com.kh.runningdog.sponsor.model.vo.SponsorPage">
+		<![CDATA[
+		select *
+		from (select rank() over (order by s_num desc) rnum, s_num, s_id, s_title, s_summary,
+					 s_content, s_count, s_date, s_amount, s_current, s_original, s_rename
+		      from sponsor)
+		where rnum >= ${ startRow } and rnum <= ${ endRow }
+		]]>
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Sponsor">
+		select * from sponsor where s_num = #{ snum }
+	</select>
+	
+	<select id="selectListCount" resultType="_int">
+		select count(*) from sponsor
+	</select>
+	
+	<select id="selectSNum" resultType="_int">
+		select max(s_num) from sponsor
+	</select>
+	
+	<select id="selectThumb" resultMap="resultThumb">
+		select s_Original, s_Rename
+		from sponsor
+		where s_num in
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+			${ arr }
+		</foreach>
+	</select>
+	
+	<insert id="insertSponsor" parameterType="Sponsor">
+		insert into sponsor
+		values (sponsor_num.nextval, #{ sId }, #{ sTitle }, #{ sSummary },
+				#{ sContent }, 0, sysdate, #{ sAmount }, 0, #{ sOriginal }, #{ sRename })
+	</insert>
+	
+	<!-- <update id="updateSponsor" parameterType="Sponsor">
+		
+	</update> -->
+	
+	<delete id="deleteSponsor">
+		delete from sponsor where s_num in
+		<foreach item="arr" collection="array" open="(" close=")" separator=",">
+			${ arr }
+		</foreach>
+	</delete>
+	
+	
+</mapper>

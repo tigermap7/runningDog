@@ -32,7 +32,7 @@
     </ul>
 
     <ul class="leftBanner">
-        <li onclick="location='/WEB-INF/views/sponsor/sponsorList.jsp'">
+        <li onclick="location='slist.do'">
             <h2><i class="xi-piggy-bank"></i> 후원 참여하기</h2>
             <p>
                 함께하는 여러분의 따뜻한 손길이 모여 큰 힘이 됩니다.<br>

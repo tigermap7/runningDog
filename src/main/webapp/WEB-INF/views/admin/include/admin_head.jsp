@@ -20,6 +20,13 @@
 <script src="resources/common/js/swiper.min.js"></script>
 <script src="resources/common/js/summernote-ko-KR.js"></script>
 <script src="resources/common/js/common.js"></script>
+<script src="resources/common/js/sponsor.js"></script>
+
+<link href="${pageContext.request.contextPath}/resources/summernote/summernote.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/summernote/summernote.js"></script>
+<!-- include summernote-ko-KR -->
+<script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
+
 
 <!--티스토리 불펌금지-->
 <!-- <script type="text/javascript">

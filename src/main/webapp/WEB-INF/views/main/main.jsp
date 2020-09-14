@@ -142,7 +142,7 @@
                             <p>필요한 편의시설의 정보를 한눈에!</p>
                         </li>
                         <li>
-                            <a href="#none" class="xi-plus-circle-o"></a>
+                            <a href="slist.do" class="xi-plus-circle-o"></a>
                             <h2>후원하기 <i class="xi-piggy-bank"></i></h2>
                             <p>작은 천사에게 필요한 용품을 후원할 수 있어요!</p>
                         </li>
