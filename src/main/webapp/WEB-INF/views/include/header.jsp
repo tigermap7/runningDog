@@ -75,13 +75,8 @@
                     <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
                     <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
                     <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
-<<<<<<< HEAD
                     <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
-                    <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
-=======
-                    <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
                     <li><a href="nlist.do">공지사항</a></li>
->>>>>>> origin/NOTICE
                 </ul>
             </li>
             <li>
