@@ -268,6 +268,14 @@
 		    <version>3.7.0</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/com.mortennobel/java-image-scaling -->
+		<!-- 이미지 리사이즈 업로드용 라이브러리 java-image-scaling -->
+		<dependency>
+    		<groupId>com.mortennobel</groupId>
+    		<artifactId>java-image-scaling</artifactId>
+    		<version>0.8.6</version>
+		</dependency>
+		
 	
 		<!-- Test -->
 		<dependency>
