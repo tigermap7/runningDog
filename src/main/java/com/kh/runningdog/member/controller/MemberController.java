@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -422,25 +423,20 @@ public class MemberController {
 			}
 
 			logger.info("확인10");
+			logger.info("memberService.updatemyinfo(member) : " + memberService.updatemyinfo(member));
+			logger.info("확인10");
 			if(memberService.updatemyinfo(member) > 0) {
+				logger.info("확인11");
 
-//				logger.info("확인11");
-//				JSONObject sendJson = new JSONObject();
-//				
-//				JSONArray jarr = new JSONArray();
-//
-//				JSONObject job = new JSONObject();
-//				job.put("originProfile", URLEncoder.encode(member.getOriginProfile(), "utf-8"));
-//				job.put("nickname", URLEncoder.encode(member.getNickname(), "utf-8"));
-//				job.put("phone", URLEncoder.encode(member.getPhone(), "utf-8"));
-//				
-//				jarr.add(job);
-//				
-//				sendJson.put("loginMember", jarr);
-//
-//				return sendJson.toString();
+				response.setContentType("application/json; charset = utf-8");
+				JSONObject data = new JSONObject();
+				data.put("originProfile", URLEncoder.encode(member.getOriginProfile(), "utf-8"));
+				data.put("nickname", URLEncoder.encode(member.getNickname(), "utf-8"));
+				data.put("phone", URLEncoder.encode(member.getPhone(), "utf-8"));
+
+				return data.toString();
 				
-				return "redirect:myinfoOk";
+				//return "redirect:myinfoOk";
 			}
 				
 		} else if(bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd()) == false) {
@@ -518,58 +514,6 @@ public class MemberController {
 
 	
 	
-	
 
-/**************** admin controller start ******************/
-
-	@RequestMapping("admin.ad")
-	public String adminMemberPage() {
-		return "admin/member/allMember";
-	}
-	
-	@RequestMapping("allMember.ad")
-	public String allMemberPage() {
-		return "admin/member/allMember";
-	}
-	
-	@RequestMapping("leaveMember.ad")
-	public String adminLeaveMemberPage() {
-		return "admin/member/leaveMember";
-	}
-	
-	@RequestMapping("memberInsert.ad")
-	public String adminMemberInsertPage() {
-		return "admin/member/memberInsert";
-	}
-	
-	@RequestMapping("memberView.ad")
-	public String adminMemberViewPage() {
-		return "admin/member/memberView";
-	}
-	
-	@RequestMapping("adminInfo.ad")
-	public String adminInfoPage() {
-		return "admin/etc/adminInfo";
-	}
-	
-	@RequestMapping("etcView.ad")
-	public String etcViewPage() {
-		return "admin/etc/etcView";
-	}
-	
-	// 나의 채팅에서 유저검색
-	@RequestMapping("searchChatUser.do")
-	public String searchChatUser(Member member, Model model) {
-		ArrayList<Member> list = memberService.selectNicknameCheckList(member);
-		int userCount = memberService.selectNicknameCount(member);
-		
-		if (list != null) {
-			model.addAttribute("list", list);
-		}
-		model.addAttribute("usercount", userCount);
-		return "mypage/findUser";
-	}
-	
-/**************** admin controller end ******************/
 	
 }
