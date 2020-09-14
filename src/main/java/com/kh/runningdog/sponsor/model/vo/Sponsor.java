@@ -11,6 +11,7 @@ public class Sponsor implements Serializable {
 	private String sTitle;
 	private String sSummary;
 	private String sContent;
+	private int sCount;
 	private Date sDate;
 	private int sAmount;
 	private int sCurrent;
@@ -19,7 +20,7 @@ public class Sponsor implements Serializable {
 	
 	public Sponsor() {}
 
-	public Sponsor(int sNum, String sId, String sTitle, String sSummary, String sContent, Date sDate, int sAmount,
+	public Sponsor(int sNum, String sId, String sTitle, String sSummary, String sContent, int sCount, Date sDate, int sAmount,
 			int sCurrent, String sOriginal, String sRename) {
 		super();
 		this.sNum = sNum;
@@ -27,11 +28,20 @@ public class Sponsor implements Serializable {
 		this.sTitle = sTitle;
 		this.sSummary = sSummary;
 		this.sContent = sContent;
+		this.sCount = sCount;
 		this.sDate = sDate;
 		this.sAmount = sAmount;
 		this.sCurrent = sCurrent;
 		this.sOriginal = sOriginal;
 		this.sRename = sRename;
+	}
+	
+	public int getsCount() {
+		return sCount;
+	}
+
+	public void setsCount(int sCount) {
+		this.sCount = sCount;
 	}
 
 	public int getsNum() {
@@ -117,8 +127,9 @@ public class Sponsor implements Serializable {
 	@Override
 	public String toString() {
 		return "Sponsor [sNum=" + sNum + ", sId=" + sId + ", sTitle=" + sTitle + ", sSummary=" + sSummary
-				+ ", sContent=" + sContent + ", sDate=" + sDate + ", sAmount=" + sAmount + ", sCurrent=" + sCurrent
-				+ ", sOriginal=" + sOriginal + ", sRename=" + sRename + "]";
+				+ ", sContent=" + sContent + ", sCount=" + sCount + ", sDate=" + sDate + ", sAmount=" + sAmount
+				+ ", sCurrent=" + sCurrent + ", sOriginal=" + sOriginal + ", sRename=" + sRename + "]";
 	}
+	
 	
 }

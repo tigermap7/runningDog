@@ -119,42 +119,43 @@
                 <!-- 페이징 -->
                 <c:if test="${ totalPage eq 1 }"><br><br></c:if>
                 <c:if test="${ totalPage ne 1 }">
-                 <dl class="list-paging">
-                            <dd>
-                            	<c:if test="${ page > 1 }">
-                            		<c:url var="sl1" value="aslist.ad">
-                            			<c:param name="page" value="1"/>
-                            		</c:url>
-                                	<a href="${ sl1 }"><i class="xi-angle-left"></i></a>
-                                </c:if>
-                                <c:if test="${ page eq 1 }">
-                                	<a><i class="xi-angle-left"></i></a>
-                                </c:if>
-                                
-                                <c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
-                                	<c:if test="${ page eq p }">
-                                		<a class="active">${ p }</a>
-                                	</c:if>
-                                	<c:if test="${ page ne p }">
-                                		<c:url var="sl2" value="aslist.ad">
-                                			<c:param value="${ p }" name="page"/>
-                                		</c:url>
-                                		<a href="${ sl2 }">${ p }</a>
-                                	</c:if>
-								</c:forEach>
-								
-								<c:if test="${ page < totalPage }">
-									<c:url var="sl3" value="aslist.ad">
-										<c:param name="page" value="${ totalPage }"/>
+					<dl class="list-paging">
+						<dd>
+							<c:if test="${ page > 1 }">
+								<c:url var="sl1" value="aslist.ad">
+									<c:param name="page" value="1" />
+								</c:url>
+								<a href="${ sl1 }"><i class="xi-angle-left"></i></a>
+							</c:if>
+							<c:if test="${ page eq 1 }">
+								<a><i class="xi-angle-left"></i></a>
+							</c:if>
+
+							<c:forEach var="p" begin="${ startPage }" end="${ endPage }"
+								step="1">
+								<c:if test="${ page eq p }">
+									<a class="active">${ p }</a>
+								</c:if>
+								<c:if test="${ page ne p }">
+									<c:url var="sl2" value="aslist.ad">
+										<c:param value="${ p }" name="page" />
 									</c:url>
-                                	<a href="${ sl3 }"><i class="xi-angle-right"></i></a>
-                                </c:if>
-                                <c:if test="${ page eq totalPage }">
-                                	<a><i class="xi-angle-right"></i></a>
-                                </c:if>
-                            </dd>
-                        </dl>
-                </c:if>
+									<a href="${ sl2 }">${ p }</a>
+								</c:if>
+							</c:forEach>
+
+							<c:if test="${ page < totalPage }">
+								<c:url var="sl3" value="aslist.ad">
+									<c:param name="page" value="${ totalPage }" />
+								</c:url>
+								<a href="${ sl3 }"><i class="xi-angle-right"></i></a>
+							</c:if>
+							<c:if test="${ page eq totalPage }">
+								<a><i class="xi-angle-right"></i></a>
+							</c:if>
+						</dd>
+					</dl>
+				</c:if>
                 <!-- //페이징 -->
 
             </div>

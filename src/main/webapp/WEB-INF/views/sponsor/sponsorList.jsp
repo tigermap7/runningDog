@@ -39,13 +39,13 @@
                     <div class="subContent">
                         <!--서브 검색-->                
                         <div class="search_wrap">
-                            <form action="" name="">
+                            <form action="">
                             <select>
                                 <option value="" class="fontColor-dark">제목</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" placeholder="제목을 검색해주세요.">
-                                <button onclick="#none" class="xi-search"></button>
+                                <input type="text" name="title" placeholder="제목을 검색해주세요." required>
+                                <button onclick="#none" type="submit" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
@@ -96,7 +96,7 @@
                         <!-- 리스트 끝 -->
                     
                         <!-- 페이징 -->
-                        <c:if test="${ totalPage eq 1 }"></c:if>
+                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
                         <c:if test="${ totalPage ne 1 }">
                         <dl class="list-paging">
                             <dd>

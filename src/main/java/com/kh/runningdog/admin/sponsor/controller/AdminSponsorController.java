@@ -63,8 +63,8 @@ public class AdminSponsorController {
 		int totalList = sponsorService.selectListCount();
 		int totalPage = (int)(((double)totalList / countList) + 0.9);
 		
-		if(totalPage < currentPage)
-			currentPage = totalPage;
+//		if(totalPage < currentPage)
+//			currentPage = totalPage;
 		
 		int startPage = ((int)(((double)currentPage / countPage) + 0.9) - 1) * countPage + 1;
 		int endPage = startPage + countPage - 1;
@@ -304,6 +304,12 @@ public class AdminSponsorController {
 		}
 		return re;
 	}
+	
+//	@RequestMapping("")
+//	public 
+	
+	
+	
 	
 	
 

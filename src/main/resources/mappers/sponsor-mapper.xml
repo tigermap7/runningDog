@@ -10,6 +10,7 @@
 		<result property="sTitle" column="s_title" />
 		<result property="sSummary" column="s_summary" />
 		<result property="sContent" column="s_content" />
+		<result property="sCount" column="s_count" />
 		<result property="sDate" column="s_date" />
 		<result property="sAmount" column="s_amount" />
 		<result property="sCurrent" column="s_current" />
@@ -26,7 +27,7 @@
 		<![CDATA[
 		select *
 		from (select rank() over (order by s_num desc) rnum, s_num, s_id, s_title, s_summary,
-					 s_content, s_date, s_amount, s_current, s_original, s_rename
+					 s_content, s_count, s_date, s_amount, s_current, s_original, s_rename
 		      from sponsor)
 		where rnum >= ${ startRow } and rnum <= ${ endRow }
 		]]>
@@ -56,7 +57,7 @@
 	<insert id="insertSponsor" parameterType="Sponsor">
 		insert into sponsor
 		values (sponsor_num.nextval, #{ sId }, #{ sTitle }, #{ sSummary },
-				#{ sContent }, sysdate, #{ sAmount }, 0, #{ sOriginal }, #{ sRename })
+				#{ sContent }, 0, sysdate, #{ sAmount }, 0, #{ sOriginal }, #{ sRename })
 	</insert>
 	
 	<!-- <update id="updateSponsor" parameterType="Sponsor">
