@@ -16,8 +16,8 @@
         </dl>
     </div>
     <ul>
-        <li onclick="location='/WEB-INF/'"><i class="xi-home-o"></i> 사용자화면</li>
-        <li><i class="xi-profile-o"></i> 로그아웃</li>
+        <li onclick="location='/runningdog/'"><i class="xi-home-o"></i> 사용자화면</li>
+        <li onclick="location='logout.do'"><i class="xi-profile-o"></i> 로그아웃</li>
     </ul>
 </ul>
 <!-- //util -->

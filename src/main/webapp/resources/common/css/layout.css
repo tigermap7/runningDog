@@ -588,12 +588,13 @@
 #fmobileMenu .fmypage_menu:after {
     content: '';
     position: absolute;
-    bottom: -0.5625rem;
-    right: 35%;
-    width: 0.9375rem;
-    height: 0.9375rem;
-    background-color: #fb3860;
-    transform: rotate(45deg);
+    bottom: -10px;
+    right: 15%;
+    width: 0;
+    height: 0;
+    border-top: 10px solid #fb3860;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
     z-index: -1;
 }
 #fmobileMenu .fmypage_menu li {

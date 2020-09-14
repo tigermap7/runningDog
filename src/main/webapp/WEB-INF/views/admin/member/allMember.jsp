@@ -213,7 +213,7 @@
                 <!-- 버튼 -->
                 <div class="list-btn">
                     <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택탈퇴</button>
-                    <button type="button" id="" class="btn-right writeBtn" onclick="location='memberInsert.jsp'"><i class="xi-pen-o"></i> 회원추가</button>
+                    <button type="button" id="" class="btn-right writeBtn" onclick="location='memberInsert.ad'"><i class="xi-pen-o"></i> 회원추가</button>
                 </div>
                 <!-- //버튼 -->
 

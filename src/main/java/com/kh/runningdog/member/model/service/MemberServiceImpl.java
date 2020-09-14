@@ -44,6 +44,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Member selectUserIdPhoneCheck(Member member) {
+		return memberDao.selectUserIdPhoneCheck(member);
+	}
+
+	@Override
+	public Member selectUserPwdCheck(Member member) {
+		return memberDao.selectUserPwdCheck(member);
+	}
+
+	@Override
 	public int insertMember(Member member) {
 		return memberDao.insertMember(member);
 	}
@@ -51,6 +61,22 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMember(Member member) {
 		return memberDao.updateMember(member);
+	}
+
+	@Override
+	public int updateMemberPwd(Member member) {
+		return memberDao.updateMemberPwd(member);
+	}
+
+	@Override
+	public int updatemyinfo(Member member) {
+		return memberDao.updatemyinfo(member);
+	}
+	
+
+	@Override
+	public int insertLeaveMember(Member member) {
+		return memberDao.insertLeaveMember(member);
 	}
 	
 	@Override

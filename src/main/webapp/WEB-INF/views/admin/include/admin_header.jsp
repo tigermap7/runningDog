@@ -3,14 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div id="header">
-    <h1 onclick="location='/runningdog/'" title="지금 달려갈 개"><img src="/WEB-INF/resources/admin/images/common/logo.png" alt="지금 달려갈 개"></h1>
+    <h1 onclick="location='/runningdog/'" title="지금 달려갈 개"><img src="resources/admin/images/common/logo.png" alt="지금 달려갈 개"></h1>
     <!-- gnb -->
     <ul class="gnb">
         <li>
             <h2><a href="#collapse1" class="collapsed" data-toggle="collapse"><i class="xi-users-o"></i> 사용자관리 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse1" class="collapse show" data-parent="#accordion">
-                <a href="../member/allMember.jsp">전체회원 리스트</a>
-                <a href="../member/leadeMember.jsp">탈퇴회원 리스트</a>
+                <a href="allMember.ad">전체회원 리스트</a>
+                <a href="leaveMember.ad">탈퇴회원 리스트</a>
             </div>
         </li>
         <li>
@@ -33,8 +33,8 @@
             <h2><a href="#collapse4" class="collapsed" data-toggle="collapse"><i class="xi-cog"></i> 관리자 관리 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse4" class="collapse show" data-parent="#accordion">
                 <a href="../etc/aboutView.jsp">사이트소개 관리</a>
-                <a href="../etc/etcView.jsp">사용자약관 관리</a>
-                <a href="../etc/adminInfo.jsp">관리자 정보수정</a>
+                <a href="etcView.ad">사용자약관 관리</a>
+                <a href="adminInfo.ad">관리자 정보수정</a>
             </div>
         </li>
     </ul>

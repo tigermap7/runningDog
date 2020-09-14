@@ -18,10 +18,10 @@
                        <div>
                             <ul class="navi">
                                 <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">프로필 편집</a></li>
+                                <li class="xi-angle-right"><a href="#none">나의 프로필</a></li>
                             </ul>
                         </div>
-                        <h2><span>프로필 편집</span></h2>
+                        <h2><span>나의 프로필</span></h2>
                         <h3>나의 프로필 정보를 변경할 수 있습니다.</h3>
                     </div>
                 </div>
@@ -34,6 +34,8 @@
                     <div class="subContent">
                         <div class="mypage_area">
                             <h2 class="mypage_title">나의 프로필 수정</h2>
+                            <form method="post" id="myinfoForm" name="myinfoAction.do" enctype="multipart/form-data">
+                    		<legend>나의 프로필</legend>
                             <table class="InfoModify_table">
                                 <colgroup>
                                     <col width="25%">
@@ -42,38 +44,70 @@
                                 <tbody>
                                     <tr>
                                         <td>아이디(이메일)</td>
-                                        <td><input type="text" name="" title="아이디(이메일)" class="form-control w80p" placeholder="taeung103@naver.com" readonly/></td>
+                                        <td><input type="text" name="userId" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" readonly/></td>
                                     </tr>
                                     <tr>
                                         <td>프로필 사진</td>
-                                        <td><input type="file" name="" title="프로필 사진"/></td>
+                                        <td class="profilImage">
+                                       	 	<c:if test="${ !empty loginMember.originProfile }">
+											${ loginMember.originProfile } &nbsp;
+											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+											</c:if>
+											<c:if test="${ empty loginMember.originProfile }">
+											<input type="file" name="profilImage" title="프로필 사진"/>
+											</c:if>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>닉네임</td>
-                                        <td><input type="text" name="" title="이름" class="form-control w80p" placeholder="공지철" readonly/></td>
+                                        <td>
+                                        <input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임" value="${sessionScope.loginMember.nickname}"/>
+				                        <p id="nicknameWarning">
+				                       		<span></span>
+				                        </p>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>휴대폰번호</td>
-                                        <td class="telArea"><input type="tel" name="" title="휴대폰번호" class="form-control w80p" placeholder="'-' 포함 입력"/></td>
+                                        <td class="telArea">
+                                        <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력"  value="${sessionScope.loginMember.phone}"/>
+			                            <p id="phoneWarning">
+			                                <span></span>
+			                            </p>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>비밀번호</td>
-                                        <td><input type="password" name="" title="비밀번호" class="form-control w80p" placeholder="기존 비밀번호"/></td>
+                                        <td>
+                                        	<input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="form-control w80p" placeholder="기존 비밀번호"/>
+				                            <p id="pwdWarning">
+				                                <span></span>
+				                            </p>
+                                       	</td>
                                     </tr>
                                     <tr>
-                                        <td>신규 비밀번호</td>
+                                        <td>새 비밀번호</td>
                                         <td class="newPwd">
-                                            <input type="password" name="" title="신규 비밀번호" class="form-control w80p mb5" placeholder="신규 비밀번호 입력"/><br/>
-                                            <input type="password" name="" title="신규 비밀번호 재확인" class="form-control w80p mb10" placeholder="신규 비밀번호 재입력"/><br/>
-                                            <button>변경하기</button>
+                                            <input type="password" name="newUserPwd" title="새 비밀번호" id="newUserPwdChk" class="form-control w80p mb5" placeholder="새 비밀번호 입력"/><br/>
+                                            <input type="password" name="newUserPwd2" title="새 비밀번호 재확인" id="newUserPwdChk2" class="form-control w80p mb10" placeholder="새 비밀번호 재입력"/><br/>
+                                            <button type="button" class="myPwdChangeBtn">변경하기</button>
+                                            <p id="newUserPwdWarning">
+				                                <span></span>
+				                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button type="button" class="leaveBtn">탈퇴하기</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-            
+            				</form>
                             <div class="write-btn">
                                 <input type="reset" class="btn btn-list" value="취소하기">
-                                <input type="submit" class="btn btn-success" value="수정하기">
+                                <input type="button" class="btn btn-success myinfoBtn" value="수정하기">
                             </div>
             
                         </div>

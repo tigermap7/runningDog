@@ -20,14 +20,14 @@
                         <div class="loginInfo">
                             <div>
                                 <span><i class="xi-mail-o"></i></span>
-                                <span><input type="email" name="userId" title="아이디" id="loginUserId" class="w100p" placeholder="아이디(이메일)" required/></span>
+                                <span><input type="email" name="userId" title="아이디" id="userIdChk" class="w100p" placeholder="아이디(이메일)" required/></span>
                             </div>
                             <p id="idWarning">
                                 <span></span>
                             </p>
                             <div>
                                 <span><i class="xi-lock-o"></i></span>
-                                <span><input type="password" name="userPwd" title="비밀번호" id="loginUserPwd" class="w100p" placeholder="비밀번호" required/></span>
+                                <span><input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="w100p" placeholder="비밀번호" required/></span>
                             </div>
                             <p id="pwdWarning">
                                 <span></span>
