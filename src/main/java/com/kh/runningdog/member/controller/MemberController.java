@@ -109,7 +109,7 @@ public class MemberController {
 		logger.info("loginAction run...");
 		Member loginMember = memberService.selectLogin(member);
 		
-		// 참여한 채팅방 리스트 선언
+		/*참여한 채팅방 리스트 선언*/
 		ArrayList<Integer> myChatList = null;
 		
 		String url = null;
@@ -119,7 +119,7 @@ public class MemberController {
 				// 나의 채팅방 정보 세션 저장
 				room.setMemberNo(loginMember.getUniqueNum());
 				
-				// 참여한 채팅방 리스트 불러온 후 세션에 저장
+				/*참여한 채팅방 리스트 불러온 후 세션에 저장*/
 				myChatList = chatroomService.selectMyChatList(room);
 				session.setAttribute("myChatList", myChatList);
 				
@@ -507,20 +507,22 @@ public class MemberController {
 		return url;
 		
 	}
-	
-	// 나의 채팅에서 유저검색
-		@RequestMapping("searchChatUser.do")
-		public String searchChatUser(Member member, Model model) {
-			ArrayList<Member> list = memberService.selectNicknameCheckList(member);
-			int userCount = memberService.selectNicknameCount(member);
-			
-			if (list != null) {
-				model.addAttribute("list", list);
-			}
-			model.addAttribute("usercount", userCount);
-			return "mypage/findUser";
+	/*채팅방 관련 코드*/
+	/*나의 채팅에서 유저검색*/
+	@RequestMapping("searchChatUser.do")
+	public String searchChatUser(Member member, Model model) {
+		ArrayList<Member> list = memberService.selectNicknameCheckList(member);
+		int userCount = memberService.selectNicknameCount(member);
+		
+		if (list != null) {
+			model.addAttribute("list", list);
 		}
-	
+		model.addAttribute("usercount", userCount);
+		return "mypage/findUser";
+	}
+	/*나의 채팅에서 유저검색 끝*/
+	/*채팅방 관련 코드 끝*/
+
 	
 	
 

@@ -13,8 +13,6 @@ public interface MemberService {
 	Member selectUserIdCheck(Member member);
 	Member selectNicknameCheck(Member member);
 	Member selectPhoneCheck(Member member);
-	ArrayList<Member> selectNicknameCheckList(Member member);
-	int selectNicknameCount(Member member);
 	Member selectUserIdPhoneCheck(Member member);
 	Member selectUserPwdCheck(Member member);
 	int updateMemberPwd(Member member);
@@ -22,5 +20,8 @@ public interface MemberService {
 	int insertLeaveMember(Member member);
 	int deleteMember(String userId);
 
-
+	/*채팅방 관련 코드*/
+	ArrayList<Member> selectNicknameCheckList(Member member);
+	int selectNicknameCount(Member member);
+	/*채팅방 관련 코드 끝*/
 }

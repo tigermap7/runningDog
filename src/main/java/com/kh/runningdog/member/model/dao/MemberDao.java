@@ -94,14 +94,15 @@ public class MemberDao {
 	}
 
 
+	/*채팅방 관련 코드*/
 	public ArrayList<Member> selectNicknameCheckList(Member member) {
 		List<Member> list = session.selectList("memberMapper.selectNicknameCheckList", member);
 		return (ArrayList<Member>)list;
 	}
-
-
+	
 	public int selectNicknameCount(Member member) {
 		return session.selectOne("memberMapper.selectNicknameCount", member);
 	}
+	/*채팅방 관련 코드 끝*/
 
 }
