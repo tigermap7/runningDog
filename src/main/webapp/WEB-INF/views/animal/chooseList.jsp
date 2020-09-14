@@ -48,7 +48,7 @@
                             <!-- 삼항연산자로 selected 여부 구분 -->
                                 <option value="d_title" class="fontColor-dark" ${pageVO.searchFiled eq"d_title"?"selected":""}>제목</option>
                                 <option value="d_writer" class="fontColor-dark" ${pageVO.searchFiled eq"d_writer"?"selected":""}>임시보호자</option>
-                                <option value="d_local" class="fontColor-dark" ${pageVO.searchFiled eq"d_local"?"selected":""}>발견지역</option>
+                                <option value="d_find_local" class="fontColor-dark" ${pageVO.searchFiled eq"d_find_local"?"selected":""}>발견지역</option>
                             </select>
                             <div class="search-box">
                                 <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ pageVO.searchValue }">
@@ -85,11 +85,11 @@
                             </select>
 								</form>
                             <div>
+                            <c:if test="${ !empty sessionScope.loginMember}">
                                 <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
+                            </c:if>
                                 <div>
                                 <c:url var = "dCate" value= "dboardList.do">
-									<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
-									<c:param name="searchValue" value="${pageVO.searchValue }"/>
 									<c:param name="dLocal" value="${ dLocal }"/>
 								</c:url>
 								
@@ -134,12 +134,15 @@
                                     <p>
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
-                                        발견지역 :  
-                                        <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
-                                         var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
+                                        발견지역 :
+                                        <c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
+										 <c:forEach var ="lo" items="${local }" varStatus="l">
+                                         <c:if test="${l.count== (d.dLocal+1) }"> ${lo }</c:if>
 										</c:forEach>
                                          ${ d.dFindLocal }<br/>
-                                        <span>등록일 : ${ d.dDate }</span>
+                                        <span>
+                                        ${ d.dDate eq d.dMdate ?"등록일": "수정일"} : ${ d.dDate eq d.dMdate ?d.dDate : d.dMdate}
+                                        </span>
                                     </p>
                                 </li>
                                 </c:if>
@@ -156,11 +159,15 @@
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
                                         발견지역 : 
-										 <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
-                                         var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
+                                         <c:set var="local" value="${ fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
+										 <c:forEach var ="lo" items="${ local }" varStatus="l">
+                                         <c:if test="${l.count== (d.dLocal+1) }"> ${ lo }</c:if>
 										</c:forEach>
 										 ${ d.dFindLocal }<br/>
-                                        <span>등록일 : ${ d.dDate }</span>
+                                        <span>
+                                        ${ d.dDate eq d.dMdate ?"등록일": "수정일"} : ${ d.dDate eq d.dMdate ?d.dDate : d.dMdate}
+                                        
+                                        </span>
                                     </p>
                                 </li>
                                 </c:if>

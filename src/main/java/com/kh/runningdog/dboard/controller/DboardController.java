@@ -52,7 +52,8 @@ public class DboardController {
 		String viewImage = file.getOriginalFilename();
 		dboard.setviewImage(viewImage);
 		dboard.setdContent(dboard.getdContent().replace("\r\n", "<br>"));
-		Image img = null;
+		Image viewImg = null;
+		Image listImg = null;
 		// viewImage 가 null아니거나 viewImage크기가 0 이 아니라면
 		// viewImage가 공백이 들어온다면 byte 크기가 0이기때문에 byte로 비교
 		if (!(viewImage == null || viewImage.getBytes().length == 0)) {
@@ -76,10 +77,14 @@ public class DboardController {
 				while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
 					fout.write(buffer, 0, buffer.length);
 				}
-				img = ImageLoader.fromFile(listPath);
+				viewImg = ImageLoader.fromFile(viewPath);
+				listImg = ImageLoader.fromFile(listPath);
 
 				// 너비 300으로 리사이징 처리 화질은 최대한 보정
-				img.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
+				// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
+				viewImg.getResizedToWidth(800).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
+				listImg.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
+
 
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
@@ -127,6 +132,7 @@ public class DboardController {
 		logger.info("totalCount // 게시 글 전체 수 : " + totalCount);
 
 		ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
+		
 
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
@@ -191,8 +197,9 @@ public class DboardController {
 		if (file != null && file.getBytes().length > 0) {
 			String viewImage = file.getOriginalFilename();
 			dboard.setviewImage(viewImage);
-
-			Image img = null;
+			
+			Image viewImg = null;
+			Image listImg = null;
 			// viewImage 가 null아니거나 viewImage크기가 0 이 아니라면
 			// viewImage가 공백이 들어온다면 byte 크기가 0이기때문에 byte로 비교
 			if (!(viewImage == null || viewImage.getBytes().length == 0)) {
@@ -220,10 +227,13 @@ public class DboardController {
 					while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
 						fout.write(buffer, 0, buffer.length);
 					}
-					img = ImageLoader.fromFile(listPath);
+					viewImg = ImageLoader.fromFile(viewPath);
+					listImg = ImageLoader.fromFile(listPath);
 
 					// 너비 300으로 리사이징 처리 화질은 최대한 보정
-					img.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
+					// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
+					viewImg.getResizedToWidth(800).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
+					listImg.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
 
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();

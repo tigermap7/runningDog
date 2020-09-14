@@ -93,7 +93,7 @@
                                     <tr>
                                         <td>썸네일 *</td>
                                         <td><input type="file" name="upfile" title="" accept="image/jpeg,image/png,image/jpeg,image/bmp" 
-                                        onchange='chk_file_type(this)' required/></td>
+                                        onchange='chk_file_type(this);checkSize(this);' required/></td>
                                     </tr>
                                     <tr>
                                         <td>발견날짜 *</td>

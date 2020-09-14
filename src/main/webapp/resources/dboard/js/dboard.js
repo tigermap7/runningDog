@@ -1,5 +1,15 @@
 
 
+
+/*파일용량체크*/
+function checkSize(input) {
+    if (input.files && input.files[0].size > (10 * 1024 * 1024)) {
+        alert("이미지 크기가 10mb 를 넘습니다.");
+        input.value = null;
+    }
+}
+
+//좌표값 미지정시 alert창
 function check() {
   if(formname.mapX.value == "") {
     alert("발견장소를 클릭해 주세요.");
