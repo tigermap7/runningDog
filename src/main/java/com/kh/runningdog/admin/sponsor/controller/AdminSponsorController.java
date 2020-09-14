@@ -42,6 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.sponsor.model.service.SponsorService;
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
+import com.kh.runningdog.sponsor.model.vo.SponsorImage;
 
 @Controller
 public class AdminSponsorController {
@@ -276,27 +277,32 @@ public class AdminSponsorController {
 	}
 	
 	@RequestMapping("sdelete.ad")
-	public String deleteSponsor(@RequestParam() int page, HttpServletRequest request) {
+	public String deleteSponsor(@RequestParam() int page, HttpServletRequest request, ArrayList<String> list, @RequestParam(value="ck", required=false) String ck) {
 		
-		String[] checkRow = request.getParameter("checkRow").split(",");
+		String[] checkRow = null;
+		if(ck == null)
+			checkRow = request.getParameter("checkRow").split(",");
+		else checkRow = request.getParameterValues("ck");
 		
-		ArrayList<String> delTh = sponsorService.selectThumb(checkRow);
-		ArrayList<String> delIm = sponsorService.selectImageList(checkRow);
+		ArrayList<Sponsor> delTh = sponsorService.selectThumb(checkRow);
+		ArrayList<SponsorImage> delIm = sponsorService.selectImageList(checkRow);
 		
 		String savePathTh = savePath(request) + "\\thumbnail";
 		String savePathIm = savePath(request) + "\\summernoteContent";
-
+		
 		int result = sponsorService.deleteSponsor(checkRow);
 		
 		String re = null;
 		if(result > 0) {
-			for(String file : delTh)
-				new File(savePathTh + "\\" + file).delete();
-			for(String file : delIm)
-				new File(savePathIm + "\\" + file).delete();
+			for(Sponsor image : delTh) {
+				new File(savePathTh + "\\" + image.getsOriginal()).delete();
+				new File(savePathTh + "\\" + image.getsRename()).delete();
+			}
+			for(SponsorImage image : delIm)
+				new File(savePathIm + "\\" + image.getSiName()).delete();
 			re = "redirect:aslist.ad?page=" + page;
 		}
-			return re;
+		return re;
 	}
 	
 	

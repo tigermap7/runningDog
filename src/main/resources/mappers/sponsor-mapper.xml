@@ -17,6 +17,11 @@
 		<result property="sRename" column="s_Rename" />
 	</resultMap>
 	
+	<resultMap id="resultThumb" type="Sponsor">
+		<result property="sOriginal" column="s_Original" />
+		<result property="sRename" column="s_Rename" />
+	</resultMap>
+	
 	<select id="selectList" resultType="Sponsor" parameterType="com.kh.runningdog.sponsor.model.vo.SponsorPage">
 		<![CDATA[
 		select *
@@ -39,6 +44,15 @@
 		select max(s_num) from sponsor
 	</select>
 	
+	<select id="selectThumb" resultMap="resultThumb">
+		select s_Original, s_Rename
+		from sponsor
+		where s_num in
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+			${ arr }
+		</foreach>
+	</select>
+	
 	<insert id="insertSponsor" parameterType="Sponsor">
 		insert into sponsor
 		values (sponsor_num.nextval, #{ sId }, #{ sTitle }, #{ sSummary },
@@ -47,11 +61,14 @@
 	
 	<!-- <update id="updateSponsor" parameterType="Sponsor">
 		
-	</update>
+	</update> -->
 	
-	<delete id="deletSponsor" parameterType="int">
-		delete from member where s_num = #{ snum }
-	</delete> -->
+	<delete id="deleteSponsor">
+		delete from sponsor where s_num in
+		<foreach item="arr" collection="array" open="(" close=")" separator=",">
+			${ arr }
+		</foreach>
+	</delete>
 	
 	
 </mapper>

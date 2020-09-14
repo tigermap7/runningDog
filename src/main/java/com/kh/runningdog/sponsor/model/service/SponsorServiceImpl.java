@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.runningdog.sponsor.model.dao.SponsorDao;
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
+import com.kh.runningdog.sponsor.model.vo.SponsorImage;
 
 @Service("sponsorService")
 public class SponsorServiceImpl implements SponsorService{
@@ -51,21 +52,18 @@ public class SponsorServiceImpl implements SponsorService{
 	}
 
 	@Override
-	public ArrayList<String> selectThumb(String[] checkRow) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Sponsor> selectThumb(String[] checkRow) {
+		return sponsorDao.selectThumb(checkRow);
 	}
 
 	@Override
-	public ArrayList<String> selectImageList(String[] checkRow) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<SponsorImage> selectImageList(String[] checkRow) {
+		return sponsorDao.selectImageList(checkRow);
 	}
 
 	@Override
 	public int deleteSponsor(String[] checkRow) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sponsorDao.deleteSponsor(checkRow);
 	}
 	
 	

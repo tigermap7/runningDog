@@ -11,7 +11,16 @@
 	</resultMap>
 	
 	<select id="selectImageList" resultType="SponsorImage">
-		select si_name from sponsorImage;
+		select si_name from sponsorImage
+	</select>
+	
+	<select id="selectImageListNum" resultType="SponsorImage">
+		select si_name
+		from sponsorImage
+		where s_num in
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+			${ arr }
+		</foreach>
 	</select>
 	
 	<!-- <select id="selectOne" parameterType="int" resultType="Sponsor">

@@ -48,7 +48,11 @@
 	                    	<c:param name="page" value="${ page }"/>
 	                    </c:url>
                     <button class="listBtn" onclick="javascript:location.href='${ sl }'"><i class="xi-rotate-left"></i> 목록</button>
-                    <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
+                    	<c:url var="del" value="sdelete.ad">
+	                    	<c:param name="page" value="${ page }"/>
+	                    	<c:param name="ck" value="${ sponsor.sNum }"/>
+	                    </c:url>
+                    <button class="deleteBtn" onclick="javascript:location.href='${ del }'"><i class="xi-cut"></i> 삭제</button>
                     <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
                     <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
                 </div>

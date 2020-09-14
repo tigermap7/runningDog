@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.runningdog.sponsor.model.vo.ContentImage;
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
+import com.kh.runningdog.sponsor.model.vo.SponsorImage;
 import com.kh.runningdog.sponsor.model.vo.SponsorPage;
 
 @Repository("sponsorDao")
@@ -57,6 +58,20 @@ public class SponsorDao {
 	public ArrayList<String> selectImageList() {
 		List<String> list = session.selectList("sponsorImageMapper.selectImageList");
 		return (ArrayList<String>)list;
+	}
+
+	public ArrayList<Sponsor> selectThumb(String[] checkRow) {
+		List<Sponsor> list = session.selectList("sponsorMapper.selectThumb", checkRow);
+		return (ArrayList<Sponsor>)list;
+	}
+
+	public ArrayList<SponsorImage> selectImageList(String[] checkRow) {
+		List<SponsorImage> list = session.selectList("sponsorImageMapper.selectImageListNum", checkRow);
+		return (ArrayList<SponsorImage>)list;
+	}
+
+	public int deleteSponsor(String[] checkRow) {
+		return session.delete("sponsorMapper.deleteSponsor", checkRow);
 	}
 	
 	
