@@ -5,11 +5,11 @@
 <div class="leftMenu_wrap">
     <div class="leftProfile">
         <div>
-	        <c:if test="${ sessionScope.loginMember.originProfile eq null }">
+	        <c:if test="${ sessionScope.loginMember.renameProfile eq null }">
 	        <img src="/runningdog/resources/images/common/userBg.png">
 	        </c:if>        
-	        <c:if test="${ sessionScope.loginMember.originProfile ne null }">
-	        <img src="/runningdog/resources/images/memberImg/${sessionScope.loginMember.originProfile}"/>
+	        <c:if test="${ sessionScope.loginMember.renameProfile ne null }">
+	        <img src="/runningdog/resources/images/memberImg/${savePath}${sessionScope.loginMember.renameProfile}"/>
 	        </c:if>
         </div>
         <h3>${sessionScope.loginMember.nickname} 님 </h3>

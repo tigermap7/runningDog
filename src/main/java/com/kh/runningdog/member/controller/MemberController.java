@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,6 @@ import com.kh.runningdog.member.model.service.FindUtil;
 import com.kh.runningdog.member.model.service.MailUtil;
 import com.kh.runningdog.member.model.service.MemberService;
 import com.kh.runningdog.member.model.vo.Member;
-import com.sun.prism.Image;
 
 @Controller
 public class MemberController {
@@ -322,16 +324,16 @@ public class MemberController {
 	//나의프로필 컨트롤러
 		@RequestMapping(value="myinfoAction.do", method=RequestMethod.POST)
 		@ResponseBody
-		public String myinfoActionMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
+		public String myinfoActionMethod(Member member, Model model, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
 		logger.info("myinfoAction run...");
-
 		Member loginMember = memberService.selectLogin(member);
 		
 		//닉네임, 핸드폰 번호, 비밀번호 유효성검사
 		Member nicknameChk = memberService.selectNicknameCheck(member);
 		Member phoneChk = memberService.selectPhoneCheck(member);
 		Member userPwdChk = memberService.selectUserPwdCheck(member);
-
+		
+		
 		String url = null;
 		int pChk = 0, nChk = 0, pwdChk = 0;
 		boolean myNickname2 = false, myPhone2 = false;
@@ -356,7 +358,7 @@ public class MemberController {
 			dateString = String.format("%04d%02d%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
 
 			//이미지 저장 경로 / 오늘날짜 폴더
-			String savePath = request.getSession().getServletContext().getRealPath("resources/images/memberImg/"+ dateString);
+			String savePath = request.getSession().getServletContext().getRealPath("resources/images/memberImg/" + dateString);
 			File folder = new File(savePath);
 			//오늘 날짜의 디렉토리가 없으면 생성
 			if (!folder.exists()) { // 디렉토리 없으면 생성.
@@ -373,40 +375,67 @@ public class MemberController {
 				newRenameProfile = sdf.format(new java.sql.Date(System.currentTimeMillis()));
 				newRenameProfile += "." + newOriginProfile.substring(newOriginProfile.lastIndexOf(".") + 1);
 				try {
-
+					logger.info("확인1");
 					profilImg.transferTo(new File(savePath + "\\" + newRenameProfile));
-					
+
+					logger.info("확인2");
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
+				logger.info("확인3");
 				if (renameProfile != null) {
 
+					logger.info("확인4");
 					new File(savePath + "\\" + renameProfile).delete();
 				}
-				member.setOriginProfile(newOriginProfile);
-				member.setRenameProfile(newRenameProfile);
-				
+				logger.info("확인5");
+				member.setOriginProfile(dateString+ "/" + newOriginProfile);
+				member.setRenameProfile(dateString+ "/" + newRenameProfile);
+
+				logger.info("확인6");
 			} else if (!(originProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
 
+				logger.info("확인7");
 				member.setOriginProfile(null);
 				member.setRenameProfile(null);
 				new File(savePath + "\\" + renameProfile).delete();
+				logger.info("확인8");
 			} else if (!originProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
 					new File(savePath+ "\\" + renameProfile).length() == new File(savePath + "\\" + newRenameProfile).length())) {
-				
+
+				logger.info("member.getOriginProfile() : " + member.getOriginProfile());
+				logger.info("확인9");
 				member.setOriginProfile(originProfile);
 				member.setRenameProfile(renameProfile);
 			}
-			
+
+			logger.info("확인10");
 			if(memberService.updatemyinfo(member) > 0) {
-				url = "myinfoOk";
+
+//				logger.info("확인11");
+//				JSONObject sendJson = new JSONObject();
+//				
+//				JSONArray jarr = new JSONArray();
+//
+//				JSONObject job = new JSONObject();
+//				job.put("originProfile", URLEncoder.encode(member.getOriginProfile(), "utf-8"));
+//				job.put("nickname", URLEncoder.encode(member.getNickname(), "utf-8"));
+//				job.put("phone", URLEncoder.encode(member.getPhone(), "utf-8"));
+//				
+//				jarr.add(job);
+//				
+//				sendJson.put("loginMember", jarr);
+//
+//				return sendJson.toString();
+				
+				return "redirect:myinfoOk";
 			}
 				
 		} else if(bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd()) == false) {
 			url = "notUserPwd";
 		} else {
 			model.addAttribute("message", "나의 프로필 변경 실패.");
-			return "common/error";
+			url = "common/error";
 		}
 		return url;
 	}
@@ -480,20 +509,39 @@ public class MemberController {
 	
 
 /**************** admin controller start ******************/
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
 	@RequestMapping("admin.ad")
 	public String adminMemberPage() {
 		return "admin/member/allMember";
+	}
+	@RequestMapping("allMember.ad")
+	public String allMemberPage() {
+		return "admin/member/allMember";
+	}
+	
+	@RequestMapping("leaveMember.ad")
+	public String adminLeaveMemberPage() {
+		return "admin/member/leaveMember";
+	}
+	
+	@RequestMapping("memberInsert.ad")
+	public String adminMemberInsertPage() {
+		return "admin/member/memberInsert";
+	}
+	
+	@RequestMapping("memberView.ad")
+	public String adminMemberViewPage() {
+		return "admin/member/memberView";
+	}
+	
+	@RequestMapping("adminInfo.ad")
+	public String adminInfoPage() {
+		return "admin/etc/adminInfo";
+	}
+	
+	@RequestMapping("etcView.ad")
+	public String etcViewPage() {
+		return "admin/etc/etcView";
 	}
 	
 	

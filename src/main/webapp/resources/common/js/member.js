@@ -260,11 +260,20 @@ $(function () {
 	            enctype: 'multipart/form-data',
 	            url:'myinfoAction.do',
 	            data: formData, // 필수
+				dataType : "json",
 	            processData: false, // 필수
 	            contentType: false, // 필수
 	            cache: false,
 				success : function(data) {
 	            	if(data == "myinfoOk") {
+//	    				// object ==> string으로 변환
+//	    				var jsonStr = JSON.stringify(data);
+//	    				// string ==> json 객채로 바꿈
+//	    				var json = JSON.parse(jsonStr);
+	            		
+	            		
+//	            		console.log("myinfoOk : " + data);
+//	            		console.log("myinfoOk : " + "myinfoOk");
 	        			alert('나의 프로필 변경이 완료되었습니다.');
 	        			window.location.href='mypage.do';
 	                } else if(data == "notNickname") {
@@ -322,6 +331,7 @@ $(function () {
 				success : function(data) {
 	            	if(data == "myinfoOk") {
 	        			alert('새 비밀번호가 변경되었습니다.');
+	        			$('#userPwdChk').append(data);
 	        			window.location.href='mypage.do';
 	                } else if(data == "notUserPwd") {
 	                	alert('입력하신 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
@@ -365,8 +375,9 @@ $(function () {
 		            cache: false,
 					success : function(data) {
 						if(data == "myinfoOk") {
+		        			window.location.href='logout.do';
 		        			alert('회원탈퇴가 처리되었습니다.\n이용해주셔서 감사합니다.');
-		        			window.location.href='mypage.do';
+		        			window.location.href='logout.do';
 		                } else if(data == "notUserPwd") {
 		                	alert('입력하신 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
 		        			$('#pwdWarning span').html('입력하신 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
