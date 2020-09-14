@@ -27,8 +27,6 @@ public class VolunteerDao {
 		
 		VolunteerPage vpage = new VolunteerPage(startRow, endRow, keyword, type);
 
-		
-		
 		List<Volunteer> list = session.selectList("volunteerMapper.selectList", vpage);
 		return (ArrayList<Volunteer>)list;
 	}
@@ -49,7 +47,8 @@ public class VolunteerDao {
 		return session.delete("volunteerMapper.deleteVolunteer", volunteer);
 	}
 	public ArrayList<Vreply> selectVreplyList(int volno){
-		return session.selectOne("volunteerMapper.selectVreply", volno );
+		List<Vreply> list = session.selectList("volunteerMapper.selectVreplylist", volno);
+		return (ArrayList<Vreply>)list;
 	}
 	public int insertVreply(Vreply vreply) {
 		return session.insert("volunteerMapper.insertVreply", vreply);
@@ -57,8 +56,8 @@ public class VolunteerDao {
 	public int updateVreply(Vreply vreply) {
 		return session.update("volunteerMapper.updateVreply", vreply);
 	}
-	public int deleteVreply(Vreply vreply) {
-		return session.delete("volunteerMapper.deleteVreply", vreply);
+	public int deleteVreply(int vreply_no) {
+		return session.delete("volunteerMapper.deleteVreply", vreply_no);
 	}
 	public int getListCountVreply(int volno) {
 		return session.selectOne("volunteerMapper.getListCountVreply", volno);

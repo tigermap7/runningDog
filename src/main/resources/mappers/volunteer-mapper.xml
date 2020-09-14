@@ -68,6 +68,10 @@
 	<select id="selectVolunteer"  parameterType="_int"  resultMap="resultVolunteer">
 			select * from volunteer where volno = #{ volno }
 	</select>
+	<!-- <select id="selectVolunteerPreNext" >
+			select * form volunteer
+	
+	</select> -->
 	<insert id="insertVolunteer" parameterType="Volunteer">
 			insert into volunteer 
 			values ((select max(volno) + 1 from volunteer), 
@@ -99,17 +103,24 @@
 			delete from volunteer
 				   where volno = #{ volno }
 	</delete>
+	
 	<select id="getListCountVreply" resultType="_int">
 			select count(*) from vreply where volno = #{ volno }
 	</select>
-	<select id="selectVreply"  parameterType="_int"  resultMap="resultVreply">
-			select * from vreply (select * from  vreply 
-								 		    order by vreply_no desc) where volno = #{ volno }
+	<select id="selectVreplylist"  parameterType="_int"  resultMap="resultVreply">
+			select vreply_no, volno, nickname, vreply_date, vreply_content
+			from vreply
+			where volno = #{ volno }
+			order by vreply_no desc
 	</select>
 	<insert id="insertVreply" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
 			insert into vreply(vreply_no, volno, nickname, vreply_date, vreply_content ) 
 			values (vreply_seq.nextval, #{volno}, #{nickname}, sysdate, #{vreply_content})			    
 	</insert>
+	<update id="updateVreply">
+		update vreply set vreply_content = #{vreply_content}
+					  where vreply_no = #{vreply_no}
+	</update>
 	<!-- <insert id="insertVreply1" parameterType="Board">
 			insert into board 
 			values ((select max(board_num) + 1 from board), 
@@ -126,7 +137,6 @@
 	</insert> --> 
 	<delete id="deleteVreply" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
 			delete from vreply
-				   where volno = #{ volno }
-				   and vreply_no = #{ vreply_no }
+				   where vreply_no = #{ vreply_no }
 	</delete>
 </mapper>

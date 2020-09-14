@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.DuplicateFormatFlagsException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,15 +103,23 @@ public class VolunteerController {
 		int listCountVreply = volunteerService.getListCountVreply(volno);
 		
 		//댓글리스트
-		ArrayList<Vreply> listVreply = volunteerService.selectVreplyList(volno);
+		ArrayList<Vreply> vrlist = volunteerService.selectVreplyList(volno);
 		
+		/*
+		 * Map<String, Object> map = new HashMap<>();//리스트의 값을 저장하기 위해 map객체를 생성 그안에
+		 * 리스트를 저장
+		 * 
+		 * map.put("vrlist", vrlist);//뷰에 전달할 데이터
+		 * 
+		 * mv.addObject("map", map);//뷰에 전달할 데이터저장
+		 */		
 		Volunteer volunteer = volunteerService.selectVolunteer(volno);
 		
 		if(volunteer != null) {
 			request.setAttribute("volunteer", volunteer);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("listCountVreply", listCountVreply);
-			request.setAttribute("listVreply", listVreply);
+			request.setAttribute("vrlist", vrlist);
 			return "protect/serviceView";
 		}else {
 			model.addAttribute("message", volno + "번 글 상세보기 실패!");
@@ -247,5 +257,48 @@ public class VolunteerController {
 		}
 		
 	}
-
+	
+	@RequestMapping(value = "vrinsert.do", method = RequestMethod.POST)
+	public String insertVreply(Vreply vreply, HttpSession session, 
+			@RequestParam(value = "vreply_content") String vreply_content, 
+			@RequestParam(value = "nickname") String nickname, 
+			@RequestParam(value = "volno") int volno) {
+		
+		if(session.getAttribute("nickname") != null) {
+			vreply.setNickname(nickname);
+		}
+		
+		vreply.setVreply_content(vreply_content);
+		vreply.setVolno(volno);
+		
+		volunteerService.insertVreply(vreply);
+		
+		return "forward:/vdetail.do";
+		
+	}
+	
+	@RequestMapping(value = "vrupdate.do")
+	public String updateVreply(@RequestParam(value = "vreply_no") int vreply_no, 
+							   @RequestParam(value = "vreply_content") String vreply_content, 
+							   @RequestParam(value = "nickname")String nickname,
+					           @RequestParam(value="volno")int volno, Vreply vreply) throws Exception{
+		vreply.setVreply_no(vreply_no);
+		vreply.setVreply_content(vreply_content);
+		vreply.setNickname(nickname);
+		
+		logger.info("vreply  :" + vreply);
+		
+		volunteerService.updateVreply(vreply);
+		
+		return "forward:/vdetail.do";
+	}
+	
+	@RequestMapping(value = "vrdelete.do")
+	public String deleteVreply (@RequestParam(value="vreply_no") int vreply_no, Vreply vreply, 
+								@RequestParam(value="volno") int volno) throws Exception{
+        
+	volunteerService.deleteVreply(vreply_no);
+	
+	return "forward:/vdetail.do";
+	}
 }

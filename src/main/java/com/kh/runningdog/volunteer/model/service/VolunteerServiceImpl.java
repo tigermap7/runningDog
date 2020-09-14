@@ -1,6 +1,7 @@
 package com.kh.runningdog.volunteer.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,8 +66,8 @@ public class VolunteerServiceImpl implements VolunteerService{
 	}
 
 	@Override
-	public int deleteVreply(Vreply vreply) {
-		return volunteerDao.deleteVreply(vreply);
+	public int deleteVreply(int vreply_no) {
+		return volunteerDao.deleteVreply(vreply_no);
 	}
 
 	

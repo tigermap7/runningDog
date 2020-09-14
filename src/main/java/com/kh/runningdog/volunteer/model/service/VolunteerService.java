@@ -1,6 +1,7 @@
 package com.kh.runningdog.volunteer.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.runningdog.volunteer.model.vo.Volunteer;
 import com.kh.runningdog.volunteer.model.vo.Vreply;
@@ -15,6 +16,6 @@ public interface VolunteerService {
 	ArrayList<Vreply> selectVreplyList(int volno);
 	int insertVreply(Vreply vreply);
 	int updateVreply(Vreply vreply);
-	int deleteVreply(Vreply vreply);
+	int deleteVreply(int vreply_no);
 	int getListCountVreply(int volno);
 }

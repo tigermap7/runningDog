@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="currentPage"  value="${ requestScope.currentPage }"/>
+<c:set var="listCountVreply"  value="${ requestScope.listCountVreply }"/>
+<c:set var="vr" value="${requestScope.vrlist}"/>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -44,6 +46,7 @@
                                 <dt>
                                     <div class="viewImg">                                        
                                         <div class="swiper-container gallery-top">
+                                       
                                             <ul class="swiper-wrapper">
                                                 <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre1 }"/></li>
                                                 <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre2 }"/></li>
@@ -121,23 +124,21 @@
                                                 <td>${volunteer.volwriter }</td>
                                                 <th>모집기간</th>
                                                <c:if test="${ !empty volunteer.volche }">
-                                               		<c:if test="${ volunteer.volche eq Y }">
-                                                 		 <td><span class="serviceOn">상시모집중</span></td>
+                                               		<c:if test="${ volunteer.volche eq 'Y' }">
+                                                 		 <td>상시모집 / <span class="serviceOn">모집중</span></td>
                                                		</c:if>
-                                               		<c:if test="${ volunteer.volche eq N }">
-                                                 		 <td><span class="serviceOn">모집완료</span></td>
+                                               		<c:if test="${ volunteer.volche eq 'N'}">
+                                                 		 <td>상시모집 / <span class="serviceOn">모집완료</span></td>
                                                		</c:if>
                                                </c:if>
                                             </tr>
                                             <tr>
-                                                <th>지역</th>
+                                                <th>지역/주소</th>
                                                 <td colspan="3">${volunteer.voladdress }</td>
                                             </tr>
                                             <tr>
                                                 <th>봉사기간</th>
-                                                <%-- <fmt:parseDate value="${volunteer.volterm}" var="dateFmt" pattern="yyyy-MM-dd,yyyy-MM-dd"/>
-                                                <fmt:formatDate value="${dateFmt}" type="text" pattern="yyyy-MM-dd ~ yyyy-MM-dd"/> --%>
-                                                <td colspan="3">${volunteer.volterm }</td>
+                                                <td colspan="3">${volunteer.volterm1 }~${volunteer.volterm2}</td>
                                             </tr>
                                             <!-- <tr>
                                                 <th>홈페이지</th>
@@ -158,7 +159,7 @@
                         <!-- 버튼 -->
                         <div class="viewBtn-wrap">
                             <button class="nextBtn"><i class="xi-angle-left-min"></i>이전</button>
-                            <button class="listBtn"><i class="xi-rotate-left" onclick="location.href='vlist.do'"></i>목록</button>
+                            <button class="listBtn" onclick="location.href='vlist.do'"><i class="xi-rotate-left"></i>목록</button>
                             <c:url var="vdel" value="vdelete.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
                             </c:url>
@@ -171,38 +172,106 @@
                             <button class="prevBtn">다음<i class="xi-angle-right-min"></i></button>
                         </div>
                         <!-- 버튼 끝 -->
-
-                        <div class="cmt_wrap">
-                            <form action="" method="">
+<!-- <script type="text/javascript" src="/runningdog/resources/common/js/jquery.min.js"></script> 
+<script type="text/javascript">
+$(function() {
+	//댓글 수정버튼
+	$("#btn_reply_Update").click(function(){
+		if(confirm("수정하시겠습니까?")){
+			//수정하는데 필요한 정보들, 댓글 번호, 글 내용, 작성자 아이디, 게시글 번호를 변수에 저장한다.
+	        var vreply_no = $("#vreply_no").val();
+	        var vreply_content = $("textarea#vreply_content").text();
+	        var nickname = $("#nickname").val();
+	        var volno = $("#volno").val();
+	        
+	    //게시글 세부 페이지로 포워딩을 하기위해 페이지 관련 값들을 변수에 저장해서 컨트롤러로 보낸다.
+	        var currentPage = $("#currentPage").val();
+	        var type = $("#type").val();
+	        var keyword = $("#keyword").val();
+	        
+	        //페이지 관련 값들과 댓글 수정에 필요한 값들을 url로 전송한다.
+	        document.vreplyform.action="vrupdate.do?vreply_no="+vreply_no+"&vreply_content="+encodeURI(vreply_content)+"&nickname="+nickname+"&volno="+volno+"&currentPage="+currentPage+"&type="+type+"&keyword="+keyword;
+	        document.vreplyform.submit();
+			alert("댓글이 수정되었습니다.")
+		}
+	});
+	
+	//댓글 삭제 버튼
+    $("#btn_reply_Delete").click(function(){
+        
+        if(confirm("삭제 하시겠습니까?")){
+        
+        //댓글 삭제를 하기위해 댓글 번호, 글 번호, 댓글 내용, 그리고 게시글 세부 페이지로 포워딩 하기 위해 페이지 관련 값들을 변수에 저장한다.
+            var vreply_no = $("#vreply_no").val();
+            var volno = $("#volno").val();
+            var vreply_content = $("textarea#vreply_content").text();
+            var currentPage = $("#currentPage").val();
+            var type = $("#type").val();
+            var keyword = $("#keyword").val();
+            
+            
+            //url로 삭제에 필요한 변수들을 보낸다.
+            document.vreplyform.action="vrdelete.do?vreply_no="+vreply_no+"&volno="+volno+"&currentPage="+currentPage+"&type="+type+"&keyword="+keyword;
+            
+            document.vreplyform.submit();
+            
+            alert("댓글이 삭제되었습니다.")
+            
+        }
+    });
+});
+</script>  -->                   
+                        <div class="cmt_wrap" id="listReply">
+                        <!-- 댓글 -->
+                            <form action="vrinsert.do" method="post" name="vreplyform">
                                 <fieldset>
                                     <div class="cmt_form">
-                                        <h4 class="cmt_head">댓글 77</h4>
+                                        <h4 class="cmt_head">전체 ${listCountVreply}개</h4>
                                         <div class="cmt_body">
-        <textarea name="" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                            <div class="cmt_ok"><input type="submit" value="등록"></div>
+        <textarea name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+                                            <div class="cmt_ok">
+                                            <input type="hidden" name="volno" value="${ volunteer.volno}">
+                                            <c:if test="${!empty sessionScope.loginMember}">
+                                            <input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">
+                                            </c:if>
+                                            <input type="submit" value="등록"></div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </form>
+                         <c:forEach var="vr" items="${vrlist}">
                             <ul class="cmt_con">
                                 <li>
                                     <dl>
                                         <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd><h4>멍무이 / #1971345</h4></dd>
-                                        <dt class="cmt_date">2020.08.16. 12:12:00</dt>
+                                        <dd><h4>${ vr.nickname }</h4></dd>
+                                        <dt class="cmt_date">${ vr.vreply_date }</dt>
                                     </dl>
-                                    <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
+                                    <p>${ vr.vreply_content }</p>
                                     <div class="cmt_conBtn">
                                         <button>댓글</button>
-                                        <button>삭제</button>
-                                        <button>수정</button>
+                                      <c:if test="${sessionScope.loginMember.nickname eq vr.nickname }">
+                                     	  <c:url var="vrdel" value="vrdelete.do">
+                           				 		<c:param name="volno" value="${vr.volno}"/>
+                           				 		<c:param name="vreply_no" value="${vr.vreply_no}"/>
+                          				  </c:url>
+                                        <button onclick="javascript:location.href='${vrdel}'">삭제</button>
+                                    	    <c:url var="vrup" value="vrupdate.do">
+                            					<c:param name="volno" value="${vr.volno}"/>
+                            					<c:param name="vreply_content" value="${vr.vreply_content}"/>
+                            					<c:param name="vreply_no" value="${vr.vreply_no}"/>
+                            					<c:param name="nickname" value="${vr.nickname}"/>
+                           					</c:url>
+                                        <button  onclick="javascript:location.href='${vrup}'">수정</button>
+                                      </c:if>
                                     </div>
+                                  
                                     <div class="Subcmt_form">
-                                        <form action="" method="">
+                                        <form action="vrupdate.do" method="post">
                                             <fieldset>
                                                 <div class="cmt_form">
                                                     <div class="cmt_body">
-        <textarea name="" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+        <textarea name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
                                                     <div class="cmt_ok"><input type="submit" value="등록"></div>
                                                     </div>
                                                 </div>
@@ -210,7 +279,7 @@
                                         </form>
                                     </div>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <dl>
                                         <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
                                         <dd><h4>멍무이 / #1971345</h4></dd>
@@ -222,23 +291,13 @@
                                         <button>삭제</button>
                                         <button>수정</button>
                                     </div>
-                                    <div class="Subcmt_form">
-                                        <dl>
-                                            <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                            <dd><h4>담당자 : 박보검</h4></dd>
-                                            <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                                        </dl>
-                                        <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                                        <div class="cmt_conBtn">
-                                            <button>삭제</button>
-                                            <button>수정</button>
-                                        </div>
-                                    </div>
-                                </li>
+                                   
+                                </li> -->
                             </ul>
                         </div>
-                    </div>
+                      </div>
                 </div>
+                </c:forEach>
             </div>
             <!-- 컨텐츠 끝 -->
 

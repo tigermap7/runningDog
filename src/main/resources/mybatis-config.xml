@@ -22,7 +22,6 @@
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/volunteer-mapper.xml" />
-		<mapper resource="mappers/vreply-mapper.xml" />
 		<!-- <mapper resource="mappers/notice-mapper.xml" /> 
 		<mapper resource="mappers/test-mapper.xml"/> -->
 	</mappers>

@@ -54,16 +54,16 @@
                                         <td>첨부파일</td>
                                         <td>
                                         <c:if test="${!empty volunteer.volor1 }">
-                                            <input type="file" name="volor1" value="${volunteer.volor1}" class="mb5"/>
-                                            <input type="file" name="volor2" value="${volunteer.volor2}" class="mb5"/>
-                                            <input type="file" name="volor3" value="${volunteer.volor3}" class="mb5"/>
-                                            <input type="file" name="volor4" value="${volunteer.volor4}" class="mb5"/>
+                                            <input type="file" name="ofile1" value="${volunteer.volor1}" class="mb5"/>
+                                            <input type="file" name="ofile2" value="${volunteer.volor2}" class="mb5"/>
+                                            <input type="file" name="ofile3" value="${volunteer.volor3}" class="mb5"/>
+                                            <input type="file" name="ofile4" value="${volunteer.volor4}" class="mb5"/>
                                         </c:if>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>담당자</td>
-                                        <td><input type="text" name="volwriter" value="${volunteer.volwriter}" class="form-control w50p" required/></td>
+                                        <td><input type="text" name="volwriter" value="${volunteer.volwriter}" class="form-control w50p" required readonly/></td>
                                     </tr>
                                     <tr>
                                         <td>연락처</td>
@@ -71,11 +71,11 @@
                                     </tr>
                                     <tr>
                                         <td>센터명</td>
-                                        <td><input type="text" name="volname" value="${volunteer.volname}" class="form-control w50p" placeholder="센터명 입력" required/></td>
+                                        <td><input type="text" name="volname" value="${volunteer.volname}" class="form-control w50p" placeholder="센터명 입력" required readonly/></td>
                                     </tr>
                                     <tr>
                                         <td>지역</td>
-                                        <td><input type="text" name="voladdress" value="${volunteer.voladdress}" class="form-control w100p" placeholder="지역 입력" required/></td>
+                                        <td><input type="text" name="voladdress" value="${volunteer.voladdress}" class="form-control w100p" placeholder="지역 입력" required readonly/></td>
                                     </tr>
                                     <tr>
                                         <td>모집기간</td>
@@ -83,33 +83,30 @@
                                             <select class="form-control w30p">
                                             <option>상시모집</option>
                                             <option>모집완료</option>
-                                               <c:if test="${volunteer.volche eq Y }">
-                                                <option>상시모집</option>
-                                               </c:if>
-                                               <c:if test="${volunteer.volche eq Y }">
-                                                <option>모집완료</option>
+                                               <c:if test="<option>모집완료</option>">
+                                                   <input name="volche" value="N">
                                                </c:if>
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>봉사기간</td>
-                                        <td><input type="date" name="volterm" value="${volunteer.volterm}" class="form-control w30p" required/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="" title="" class="form-control w30p" required/></td>
+                                        <td><input type="date" name="volterm1" value="${volunteer.volterm1}" class="form-control w30p" required/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="volterm2" value="${volunteer.volterm2}" class="form-control w30p" required/></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>홈페이지 링크</td>
                                         <td><input type="text" name="" title="" class="form-control w100p" placeholder="홈페이지 링크" required/></td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td>내용</td>
-                                        <td><textarea name="volcontent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;">${volunteer.volterm}</textarea></td>
+                                        <td><textarea name="volcontent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;">${volunteer.volcontent}</textarea></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="write-btn">
-                            <input type="button" class="btn btn-list" value="목록으로">
+                            <input type="button" class="btn btn-list" onclick="location.href='vlist.do'" value="목록으로">
                             <input type="reset" class="btn btn-cancel" value="취소하기">
                             <input type="submit" class="btn btn-success" value="수정하기">
                         </div>
