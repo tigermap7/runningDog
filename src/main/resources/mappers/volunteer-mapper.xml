@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="volunteerMapper">
+
+	<resultMap type="Volunteer" id="resultVolunteer">
+		<result column="volno" property="volno" />
+		<result column="voltitle" property="voltitle" />
+		<result column="volwriter" property="volwriter" />
+		<result column="volcontent" property="volcontent" />
+		<result column="voldate" property="voldate" />
+		<result column="voltel" property="voltel"/>
+		<result column="volterm1" property="volterm1" />
+		<result column="volterm2" property="volterm2" />
+		<result column="volname" property="volname" />
+		<result column="volor1" property="volor1" />
+		<result column="volre1" property="volre1" />
+		<result column="volor2" property="volor2" />
+		<result column="volre2" property="volre2" />
+		<result column="volor3" property="volor3" />
+		<result column="volre3" property="volre3" />
+		<result column="volor4" property="volor4" />
+		<result column="volre4" property="volre4" />
+		<result column="voladdress" property="voladdress" />
+		<result column="volche" property="volche" />
+		
+	</resultMap>
+	
+	<resultMap type="Vreply" id="resultVreply">
+	 	<result column="vreply_no" property="vreply_no" />
+	 	<result column="volno" property="volno" />
+	 	<result column="nickname" property="nickname" />
+	 	<result column="vreply_date" property="vreply_date" />
+	 	<result column="vreply_content" property="vreply_content" />
+	 	<result column="parant_reply" property="parant_reply" />
+	 	<result column="vreply_level" property="vreply_level" />
+	</resultMap> 
+	
+	<!-- 비교연산자를 쿼리문에 그냥 사용하면 태그 엘리먼트 '< , >, &' 과 혼동하는 문제가 발생할 수 있다. -->
+	<!-- 이 문제를 미연에 방지하기 위해 xml 코드 중 xml parser에 의해 해석하지 말고, 문장 그대로 해석하라는 뜻으로  
+	       <![CDATA[ 쿼리문장 ]]> 사용함-->
+	
+ 	<select id="getListCount" resultType="_int">
+			select count(*) from volunteer
+	</select>
+	<select id="selectList" parameterType="com.kh.runningdog.volunteer.model.vo.VolunteerPage" resultMap="resultVolunteer">
+			 
+			select * from (select rownum rnum, volno, voltitle, volwriter, volcontent, voldate, 
+											voltel, volterm1, volterm2, volname, volor1, volre1, volor2, volre2 volor3, volre3, voladdress,volche  
+								 from(select *  from  volunteer 
+								 <if test="type == 'address'">
+								 	where voladdress like '%' || #{keyword} || '%'
+								 </if>
+								 <if test="type == 'name' ">
+								 	where volname like '%' || #{keyword} || '%'
+								 </if>
+								 <if test="type == 'term' ">
+								 	where volterm1 like '%' || #{keyword} || '%'
+								 	or volterm2 like '%' || #{keyword} || '%'
+								 </if>
+								 
+								 		 order by volno desc)) 
+			 <![CDATA[ 					 		 
+			 where rnum >= #{startRow} and rnum <= #{endRow} 
+			 ]]>
+	</select>
+	<select id="selectVolunteer"  parameterType="_int"  resultMap="resultVolunteer">
+			select * from volunteer where volno = #{ volno }
+	</select>
+	<!-- <select id="selectVolunteerPreNext" >
+			select * form volunteer
+	
+	</select> -->
+	<insert id="insertVolunteer" parameterType="Volunteer">
+			insert into volunteer 
+			values ((select max(volno) + 1 from volunteer), 
+								  #{voltitle}, #{volwriter}, #{volcontent}, sysdate,
+								  #{voltel}, #{volterm1},  #{volterm2}, #{volname}, #{volor1}, #{volre1},
+								  #{volor2}, #{volre2}, #{volor3}, #{volre3}, #{volor4}, #{volre4}, #{voladdress}, default)			    
+	</insert>
+	<update id="updateVolunteer" parameterType="Volunteer">
+			update volunteer 
+			set voltitle = #{voltitle}, 
+			    volwriter = #{volwriter}, 
+				volcontent = #{volcontent}, 
+				voltel = #{voltel},
+				volterm1 = #{volterm1}, 
+				volterm2 = #{volterm2},
+				volor1 = #{volor1}, 
+				volre1 = #{volre1},
+				volor2 = #{volor2}, 
+				volre2 = #{volre2},
+				volor3 = #{volor3}, 
+				volre3 = #{volre3},
+				volor4 = #{volor4}, 
+				volre4 = #{volre4},
+				voladdress = #{voladdress},
+				volche = #{volche} 
+			where volno = #{volno}
+	</update>
+	<delete id="deleteVolunteer" parameterType="Volunteer">
+			delete from volunteer
+				   where volno = #{ volno }
+	</delete>
+	
+	<select id="getListCountVreply" resultType="_int">
+			select count(*) from vreply where volno = #{ volno }
+	</select>
+	<select id="selectVreplylist"  parameterType="_int"  resultMap="resultVreply">
+			select vreply_no, volno, nickname, vreply_date, vreply_content
+			from vreply
+			where volno = #{ volno }
+			order by vreply_no desc
+	</select>
+	<insert id="insertVreply" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
+			insert into vreply(vreply_no, volno, nickname, vreply_date, vreply_content ) 
+			values (vreply_seq.nextval, #{volno}, #{nickname}, sysdate, #{vreply_content})			    
+	</insert>
+	<update id="updateVreply">
+		update vreply set vreply_content = #{vreply_content}
+					  where vreply_no = #{vreply_no}
+	</update>
+	<!-- <insert id="insertVreply1" parameterType="Board">
+			insert into board 
+			values ((select max(board_num) + 1 from board), 
+					 #{board_title}, #{board_writer}, #{board_content}, 
+					 null, null, sysdate, 2, #{board_ref}, 
+					 #{board_reply_ref}, #{board_reply_seq}, default)
+	</insert> --> 
+	<!-- <insert id="insertVreply1" parameterType="Board">
+			insert into board 
+			values ((select max(board_num) + 1 from board), 
+					 #{board_title}, #{board_writer}, #{board_content}, 
+					 null, null, sysdate, 2, #{board_ref}, 
+					 #{board_reply_ref}, #{board_reply_seq}, default)
+	</insert> --> 
+	<delete id="deleteVreply" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
+			delete from vreply
+				   where vreply_no = #{ vreply_no }
+	</delete>
+</mapper>
