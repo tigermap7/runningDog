@@ -298,4 +298,22 @@ public class DboardController {
 		}
 		return url;
 	}
+	
+	@RequestMapping("dboardnext.do")
+	public String dboardNext(Model model,@ModelAttribute("Dboard") Dboard dboard) {
+		int dboardNextNum = dboardService.selectNext(dboard);
+		
+		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
+		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		String url = "";
+		if (dboard != null) {
+			model.addAttribute("dboard", dboardNext);
+			url = "animal/chooseView";
+		} else {
+			model.addAttribute("msg", "게시글 보기 실패");
+			model.addAttribute("url", "dboardList.do");
+			url = "common/errorDboard";
+		}
+		return url;
+	}
 }

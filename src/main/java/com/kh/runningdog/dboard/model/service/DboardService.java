@@ -20,5 +20,7 @@ public interface DboardService {
 	int updateDboardHide(Dboard dboard);
 
 	int updateDboardSuc(Dboard dboard);
+
+	int selectNext(Dboard dboard);
 	
 }

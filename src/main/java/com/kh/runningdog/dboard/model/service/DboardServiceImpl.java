@@ -52,4 +52,9 @@ public class DboardServiceImpl implements DboardService{
 	public int updateDboardSuc(Dboard dboard) {
 		return dboardDao.updateDboardSuc(dboard);
 	}
+
+	@Override
+	public int selectNext(Dboard dboard) {
+		return dboardDao.selectNext(dboard);
+	}
 }

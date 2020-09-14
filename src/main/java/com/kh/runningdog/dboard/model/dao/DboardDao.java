@@ -58,4 +58,9 @@ public class DboardDao {
 	public int updateDboardSuc(Dboard dboard) {
 		return session.update("dboardMapper.updateDboardSuc", dboard);
 	}
+
+
+	public int selectNext(Dboard dboard) {
+		return session.selectOne("dboardMapper.selectNext",dboard);
+	}
 }

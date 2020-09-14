@@ -94,6 +94,12 @@
 		SELECT * FROM DBOARD WHERE D_NUM = #{ dNum }
 	</select>
 	
+	<select id="selectNext" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="int">
+		SELECT MIN(D_NUM)
+		FROM DBOARD
+		WHERE D_CHECK = 'y' AND D_NUM > ${ dNum }
+	</select>
+	
 	<insert id="insertDboard" parameterType="Dboard">
 		INSERT INTO DBOARD
 		VALUES (DBOARD_NUM_SEQ.NEXTVAL,
