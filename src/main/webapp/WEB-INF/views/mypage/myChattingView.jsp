@@ -132,7 +132,7 @@
 			data: {
 				sender: '${sessionScope.loginMember.getNickname()}',
 				message: $("#message").val(),
-				roomno: ${param.roomNo}
+				roomno: ${roomNo}
 			}
 		}
 	  	sock.send(JSON.stringify(message));
@@ -161,7 +161,7 @@
 			roomno = receivedMessage.data.roomno;
 			
 			//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
-			if (roomno == ${param.roomNo}) {
+			if (roomno == ${roomNo}) {
 				
 				if(nickname == currentuser_session){
 					var printHTML = "<dl class='user_right myChatting'>";
