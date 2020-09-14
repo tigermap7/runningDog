@@ -1,6 +1,8 @@
 package com.kh.runningdog.notice.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -170,7 +172,7 @@ public class NoticeController {
 	//메인페이지에 필수, new 공지사항 출력하기
 	@RequestMapping(value="nstate.do")
 	@ResponseBody
-	public ModelAndView selectNoticeState(ModelAndView mv) {
+	public String selectNoticeState() {
 		logger.info("nstate.do run...");
 		ArrayList<Notice> list = noticeService.selectNoticeStateList();
 //		System.out.println(list);
@@ -187,16 +189,17 @@ public class NoticeController {
 			String noticeState = (notice.getNoticeState() != null) ? "공지" : "new"; 
 			
 			job.put("no", notice.getNoticeNo());
-			job.put("title", notice.getNoticeTitle());
-			job.put("state", noticeState);
+			try {
+				job.put("title", URLEncoder.encode(notice.getNoticeTitle(), "utf-8"));
+				job.put("state", URLEncoder.encode(noticeState, "utf-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 			
 			jarr.add(job);
 		}
 		sendJson.put("list", jarr);
-//		System.out.println(jarr.size() + "," + sendJson);
-		
-//		mv.setViewName("redirect:/nlist.do");
-		return mv;
+		return sendJson.toJSONString();
 	}
 	
 	
