@@ -1,5 +1,7 @@
 package com.kh.runningdog.chatting.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -48,19 +50,29 @@ public class ChattingController {
 		return "mypage/myChattingView";
 	}
 	
-	@RequestMapping("startChat.do")
-	public String startChat(HttpSession session, Model model, @RequestParam("receiver") String name, @RequestParam("receiverNo") int uniqueNum){
+	@RequestMapping(value = "startChat.do", produces = "application/text; charset=utf-8")
+
+	public String startChat(HttpSession session, Model model, @RequestParam("receiver") String name, @RequestParam("receiverNo") int uniqueNum) throws UnsupportedEncodingException{
 		logger.info("startChat.do run...");
 		Member member = (Member) session.getAttribute("loginMember");
+		Chatroom room = new Chatroom();
 		StartChat startChat = new StartChat();
-		
+		ArrayList<Integer> myChatList = null;
 		startChat.setInviterName(name);
 		startChat.setInviterNo(uniqueNum);
 		startChat.setInviteeName(member.getNickname());
 		startChat.setInviteeNo(member.getUniqueNum());
+		
 		int result = chatroomService.insertStartChat(startChat);
 		
-		return "mypage/myChatting";
+		room.setMemberNo(member.getUniqueNum());
+		/*참여한 채팅방 리스트 불러온 후 세션에 저장*/
+		myChatList = chatroomService.selectMyChatList(room);
+		session.setAttribute("myChatList", myChatList);
+		int roomNo = myChatList.get(myChatList.size() - 1);
+		String receiver = URLEncoder.encode(name, "UTF-8");
+		// TODO: 이미 채팅방이 있다면 추가안하고 존재하는 채팅방으로 이동
+		return "redirect:moveChattingView.do?roomNo=" + roomNo + "&receiver=" + receiver;
 	}
 	
 	@RequestMapping("deleteChat.do")
