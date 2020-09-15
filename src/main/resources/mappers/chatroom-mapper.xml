@@ -40,4 +40,8 @@
 		select * from dual
 	</insert>
 
+	<delete id="deleteChat" parameterType="_int">
+		delete from chatroom where roomno = #{roomNo}
+	</delete>
+
 </mapper>

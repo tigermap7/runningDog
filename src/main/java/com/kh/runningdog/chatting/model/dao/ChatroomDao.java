@@ -29,4 +29,7 @@ public class ChatroomDao {
 	public int insertStartChat(StartChat startChat) {
 		return session.insert("chatroomMapper.insertStartChat", startChat);
 	}
+	public int deleteChat(int roomNo) {
+		return session.delete("chatroomMapper.deleteChat", roomNo);
+	}
 }

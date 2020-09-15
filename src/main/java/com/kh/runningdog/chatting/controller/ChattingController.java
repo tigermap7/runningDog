@@ -62,4 +62,10 @@ public class ChattingController {
 		
 		return "mypage/myChatting";
 	}
+	
+	@RequestMapping("deleteChat.do")
+	public String deleteChat(@RequestParam("roomNo") int roomNo) {
+		chatroomService.deleteChat(roomNo);
+		return "forward:moveChatting.do";
+	}
 }

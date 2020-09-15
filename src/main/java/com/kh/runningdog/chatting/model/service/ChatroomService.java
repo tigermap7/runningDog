@@ -11,4 +11,5 @@ public interface ChatroomService {
 	int selectMyChatCount(Chatroom room);
 	ArrayList<Integer> selectMyChatList(Chatroom room);
 	int insertStartChat(StartChat startChat);
+	int deleteChat(int roomNo);
 }

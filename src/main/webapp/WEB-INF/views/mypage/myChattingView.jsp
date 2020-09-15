@@ -58,7 +58,7 @@
                                 <dt class="chattingController">
                                     <button type="button"><i class="xi-ellipsis-v"></i></button>
                                     <div>
-                                        <button type="button" class="OutBtn">채팅방 삭제하기</button>
+                                        <button type="button" class="OutBtn" onclick="location.href='deleteChat.do?roomNo=${roomNo}'">채팅방 삭제하기</button>
                                         <button type="button" class="cancelBtn">취소하기</button>
                                     </div>
                                 </dt>
