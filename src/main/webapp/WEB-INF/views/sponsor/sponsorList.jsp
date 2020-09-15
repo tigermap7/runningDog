@@ -82,7 +82,8 @@
                                     	<c:if test="${ s.sAmount > s.sCurrent }">
                                         <a href="${ sdt }" class="chooseIcon">후원중</a>
                                         </c:if>
-                                        <a id="${ s.sNum }" data-toggle="popover" class="urlIcon xi-share-alt-o"></a>
+                                        <a data-id="${ s.sNum }" data-title="${ s.sTitle }" data-summary="${ s.sSummary }" 
+                                        	data-toggle="popover" class="urlIcon xi-share-alt-o"></a>
 									<a href="${ sdt }"><img src="resources/sponsor/thumbnail/${ s.sRename }"></a>
                                     </div>
                                     <h3 onclick="location='${ sdt }'">${ s.sTitle }</h3>

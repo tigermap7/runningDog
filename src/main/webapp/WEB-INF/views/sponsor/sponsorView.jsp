@@ -37,8 +37,8 @@
                         <div class="sponsorView">
                             <div class="sPaymentTitle">
                                 <p>
-                                    조회수 : ${ s.sCount } · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
-                                    <a id="fixeda" class="linkBtn" data-toggle="popover"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    조회수 : ${ sponsor.sCount } · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
+                                    <a data-id="${ sponsor.sNum }" data-title="${ sponsor.sTitle }" data-summary="${ sponsor.sSummary }" class="linkBtn" data-toggle="popover"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </p>
                                 
                                 <div>

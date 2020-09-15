@@ -6,13 +6,16 @@ $(function(){
 		title: "공유하기",
 		html: true,
 		content: function() {
-			var thid = $(this).attr('id');
+			var id = $(this).attr('data-id');
+			var title = $(this).attr('data-title');
+			var summary = $(this).attr('data-summary');
+			
 			var value = "";
-			value += "<a href='javascript:snsGo(1, "+thid+");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(2, "+thid+");'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(3, "+thid+");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(4, "+thid+");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
-			value += "<a href='javascript:CopyUrlToClipboard("+thid+");' class='urlcopy'>URL 복사</a>";
+			value += "<a href='javascript:snsGo(1, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(2, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(3, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(4, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
+			value += "<a href='javascript:CopyUrlToClipboard("+id+");' class='urlcopy'>URL 복사</a>";
 			return value;
 		}
 	});
@@ -32,7 +35,7 @@ $(document).on('click', function (e) {
 
 //url 복사
 function CopyUrlToClipboard(num) {
-	//window.document.location.href 현재 url정보 얻는 방법
+	//window.document.location.href -> 현재 url정보 얻는 방법
 	var obShareUrl = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + num + "&page=1";
 
 	var t = document.createElement("textarea");
@@ -42,19 +45,40 @@ function CopyUrlToClipboard(num) {
 	document.execCommand('copy');
 	document.body.removeChild(t);
 
-	alert("URL이 클립보드에 복사되었습니다\n" + t.value);
+	alert("URL이 클립보드에 복사되었습니다");
 }
 
-function snsGo(e, thid) {
-	var thid = thid;
+function snsGo(e, id, title, summary) {
+	var url = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
+	var title = title;
+	var summary = summary;
 	
-	//작업중!!!!!!!!!!!!!!!!!
+//	$("meta[property='og\\:title']").attr("content", title );
+//    $("meta[property='og\\:url']").attr("content", url );                    
+//    $("meta[property='og\\:description']").attr("content", summary );
+//    console.log(url + "\n" + title + "\n" + summary);
+//	$('head').append( StringTool.format('<meta property="og:url" content="{0}" />', url) );
+//	$('head').append(StringTool.format('<meta property="og:type" content="{0}" />', 'article'));
+//	$('head').append(StringTool.format('<meta property="og:title" content="{0}" />', title));
+//	$('head').append(StringTool.format('<meta property="og:summary" content="{0}" />', summary));
+	
+//	window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title));
+	
+	var loc = "";
+//	var href = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + thid + "&page=1";
+//
+	url = encodeURIComponent(url);
+//	tit = encodeURIComponent(tit);
+//	
+//	console.log(tit + "\n" + href);
+	
 	switch(e) {
-	case 1 : alert(thid); break; //네이버
+	case 1 : break; //네이버
 	case 2 : break; //카카오톡
-	case 3 : //window.open break; //페이스북
+	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + url + '&t=' + title; break; //페이스북
 	case 4 : break; //트위터
 	}
+	window.open(loc, '', 'width=400,height=400,left=600');
 }
 
 //sns공유하기 끝
