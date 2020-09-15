@@ -1,6 +1,6 @@
 package com.kh.runningdog.dreply.model.vo;
 
-import java.sql.Date;
+
 
 public class Dreply implements java.io.Serializable{
 	private static final long serialVersionUID = 6161L;
@@ -9,16 +9,20 @@ public class Dreply implements java.io.Serializable{
 	private int dNum;
 	private String dreWriter;
 	private String dreContent;
-	private java.sql.Date dreDate;
-	private java.sql.Date dreMdate;
+	private String dreDate;
+	private String dreMdate;
 	private int dreParents;
+	private int dreParentsSeq;
 	private int dreLevel;
 	private int uniqueNum;
+	private String dreDelete;
+	
 	
 	public Dreply (){}
 
-	public Dreply(int dreNum, int dNum, String dreWriter, String dreContent, Date dreDate, Date dreMdate,
-			int dreParents, int dreLevel, int uniqueNum) {
+
+	public Dreply(int dreNum, int dNum, String dreWriter, String dreContent, String dreDate, String dreMdate,
+			int dreParents, int dreParentsSeq, int dreLevel, int uniqueNum, String dreDelete) {
 		super();
 		this.dreNum = dreNum;
 		this.dNum = dNum;
@@ -27,92 +31,137 @@ public class Dreply implements java.io.Serializable{
 		this.dreDate = dreDate;
 		this.dreMdate = dreMdate;
 		this.dreParents = dreParents;
+		this.dreParentsSeq = dreParentsSeq;
 		this.dreLevel = dreLevel;
 		this.uniqueNum = uniqueNum;
+		this.dreDelete = dreDelete;
 	}
+
 
 	public int getDreNum() {
 		return dreNum;
 	}
 
+
 	public void setDreNum(int dreNum) {
 		this.dreNum = dreNum;
 	}
+
 
 	public int getdNum() {
 		return dNum;
 	}
 
+
 	public void setdNum(int dNum) {
 		this.dNum = dNum;
 	}
+
 
 	public String getDreWriter() {
 		return dreWriter;
 	}
 
+
 	public void setDreWriter(String dreWriter) {
 		this.dreWriter = dreWriter;
 	}
+
 
 	public String getDreContent() {
 		return dreContent;
 	}
 
+
 	public void setDreContent(String dreContent) {
 		this.dreContent = dreContent;
 	}
 
-	public java.sql.Date getDreDate() {
+
+	public String getDreDate() {
 		return dreDate;
 	}
 
-	public void setDreDate(java.sql.Date dreDate) {
+
+	public void setDreDate(String dreDate) {
 		this.dreDate = dreDate;
 	}
 
-	public java.sql.Date getDreMdate() {
+
+	public String getDreMdate() {
 		return dreMdate;
 	}
 
-	public void setDreMdate(java.sql.Date dreMdate) {
+
+	public void setDreMdate(String dreMdate) {
 		this.dreMdate = dreMdate;
 	}
+
 
 	public int getDreParents() {
 		return dreParents;
 	}
 
+
 	public void setDreParents(int dreParents) {
 		this.dreParents = dreParents;
 	}
+
+
+	public int getDreParentsSeq() {
+		return dreParentsSeq;
+	}
+
+
+	public void setDreParentsSeq(int dreParentsSeq) {
+		this.dreParentsSeq = dreParentsSeq;
+	}
+
 
 	public int getDreLevel() {
 		return dreLevel;
 	}
 
+
 	public void setDreLevel(int dreLevel) {
 		this.dreLevel = dreLevel;
 	}
+
 
 	public int getUniqueNum() {
 		return uniqueNum;
 	}
 
+
 	public void setUniqueNum(int uniqueNum) {
 		this.uniqueNum = uniqueNum;
 	}
+
+
+	public String getDreDelete() {
+		return dreDelete;
+	}
+
+
+	public void setDreDelete(String dreDelete) {
+		this.dreDelete = dreDelete;
+	}
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Dreply [dreNum=" + dreNum + ", dNum=" + dNum + ", dreWriter=" + dreWriter + ", dreContent=" + dreContent
-				+ ", dreDate=" + dreDate + ", dreMdate=" + dreMdate + ", dreParents=" + dreParents + ", dreLevel="
-				+ dreLevel + ", uniqueNum=" + uniqueNum + "]";
+				+ ", dreDate=" + dreDate + ", dreMdate=" + dreMdate + ", dreParents=" + dreParents + ", dreParentsSeq="
+				+ dreParentsSeq + ", dreLevel=" + dreLevel + ", uniqueNum=" + uniqueNum + ", dreDelete=" + dreDelete
+				+ "]";
 	}
+
+	
 	
 	
 }

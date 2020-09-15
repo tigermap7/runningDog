@@ -6,7 +6,20 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+<script type="text/javascript">
+$(function() {
+	$(".Subcmt_btn").click(function() {
+		$(this).siblings(".Subcmt").toggle(200);
+	});
+	$(".Subcmt_update_btn").click(function() {
+		$(this).siblings(".Subcmt_update").toggle(200);
+	});
+	$(".Cmt_update_btn").click(function() {
+		$(this).siblings(".Cmt_update").toggle(200);
+	});
+});
 
+</script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -234,58 +247,56 @@
                                     </div>
                                 </fieldset>
                             </form>
+                            
                             <ul class="cmt_con">
                                 <li>
                                     <dl>
                                         <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd><h4>멍무이 / #1971345</h4></dd>
+                                        <dd><h4>멍무이 / #1</h4></dd>
                                         <dt class="cmt_date">2020.08.16. 12:12:00</dt>
                                     </dl>
                                     <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
                                     <div class="cmt_conBtn">
-                                        <button>댓글</button>
-                                        <button>삭제</button>
-                                        <button>수정</button>
-                                    </div>
-                                    <div class="Subcmt_form">
-                                        <form action="dboardList.do" method="post">
-                                            <fieldset>
-                                                <div class="cmt_form">
-                                                    <div class="cmt_body">
-        <textarea name="" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                                    <div class="cmt_ok"><input type="submit" value="등록"></div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                </li>
-                                <li>
-                                    <dl>
-                                        <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd><h4>멍무이 / #1971345</h4></dd>
-                                        <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                                    </dl>
-                                    <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                                    <div class="cmt_conBtn">
-                                        <button>댓글</button>
-                                        <button>삭제</button>
-                                        <button>수정</button>
-                                    </div>
-                                    <div class="Subcmt_form">
-                                        <dl>
-                                            <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                            <dd><h4>담당자 : 박보검</h4></dd>
-                                            <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                                        </dl>
-                                        <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                                        <div class="cmt_conBtn">
-                                            <button>삭제</button>
-                                            <button>수정</button>
+                                    <button class="Subcmt_btn">대댓글</button>
+                           
+                            <button onclick="location.href=''" style="float: right;">삭제</button>
+                            <button class="Cmt_update_btn" >수정</button><br>
+                            <div class="Cmt_update" style="display: none;">
+										<form action="/anavada/jbcupdate.ss" method="post">
+										<input type="hidden" name="commentno" value="">
+										<input type="hidden" name="jboardno" value="">
+										<fieldset>
+											<div class="cmt_form">
+												<div class="cmt_body">
+													<textarea name="content" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" >글내용</textarea>
+													<div class="cmt_ok">
+													<input type="submit" value="수정">
+													</div>
+												</div>
+											</div>
+										</fieldset>
+										</form>
+									</div>
+                           
+                            <div style="display:none" class="Subcmt" id="commentReply">
+                                <form action="/anavada/jbcrinsert.ss" method="post">
+                              
+                               <input type= "hidden" name="commentno" value = "">
+                                <input type= "hidden" name="jboardno" value = "">
+                                <input type= "hidden" name="writer" value= "">
+                      
+                                    <fieldset>
+                                        <div class="cmt_form">
+                                            <div class="cmt_body">
+<textarea name="commentcontent" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+                                            <div class="cmt_ok"><input type="submit" value="등록" ></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
                         </div>
                         <!-- 댓글 끝 -->
                     </div>

@@ -1,7 +1,21 @@
 
 
+//댓글 누르면 폼 창 나오게 하기
+$(function() {
+	$(".Subcmt_btn").click(function() {
+		$(this).siblings(".Subcmt").toggle(200);
+	});
+	$(".Subcmt_update_btn").click(function() {
+		$(this).siblings(".Subcmt_update").toggle(200);
+	});
+	$(".Cmt_update_btn").click(function() {
+		$(this).siblings(".Cmt_update").toggle(200);
+	});
+});
 
-/*파일용량체크*/
+
+
+/* 파일용량체크 */
 function checkSize(input) {
     if (input.files && input.files[0].size > (10 * 1024 * 1024)) {
         alert("이미지 크기가 10mb 를 넘습니다.");

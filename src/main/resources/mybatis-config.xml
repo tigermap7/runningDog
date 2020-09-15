@@ -30,6 +30,7 @@
 		<typeAlias type="com.kh.runningdog.volunteer.model.vo.Vreply" alias="Vreply" />
 		<typeAlias type="com.kh.runningdog.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.kh.runningdog.dboard.model.vo.Dboard" alias="Dboard" />
+		<typeAlias type="com.kh.runningdog.dreply.model.vo.Dreply" alias="Dreply" />
 <!-- 		<typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.kh.second.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.kh.second.test.model.vo.CryptoUser" alias="CryptoUser" /> -->
@@ -47,6 +48,7 @@
 		<mapper resource="mappers/sponsorImage-mapper.xml" />
 		<mapper resource="mappers/volunteer-mapper.xml" />
 		<mapper resource="mappers/dboard-mapper.xml" />
+		<mapper resource="mappers/dreply-mapper.xml" />
 		<!-- <mapper resource="mappers/notice-mapper.xml" /> 
 		<mapper resource="mappers/test-mapper.xml"/> -->
 <!-- 	<mapper resource="mappers/member-mapper.xml" />

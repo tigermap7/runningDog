@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dreplyMapper">
+
+	<resultMap type="Dreply" id="resultDreply">
+		<id column="dre_num" property="dreNum" />
+		<result column="d_num" property="dNum" />
+		<result column="dre_writer" property="dreWriter" />
+		<result column="dre_content" property="dreContent" />
+		<result column="dre_date" property="dreDate" />
+		<result column="dre_mdate" property="dreMdate" />
+		<result column="dre_parents" property="dreParents" />
+		<result column="dre_parents_seq" property="dreParentsSeq" />
+		<result column="dre_level" property="dreLevel" />
+		<result column="unique_num" property="uniqueNum" />
+	</resultMap>
+	
+	
+	<select id="selectListCount" parameterType="Dreply" resultType="int">
+		SELECT COUNT(*)
+		FROM DREPLY
+		WHERE d_num = ${ dNum }
+		
+	</select>
+	
+	<select id="selectDreplyList" parameterType="Dreply" resultType="Dreply">
+		SELECT *
+		FROM DREPLY
+		WHERE D_NUM = ${ dNum }
+	</select>
+	
+	<insert id="insertDreply" parameterType="Dreply">
+		INSERT INTO DREPLY
+		VALUES (DRE_NUM_SEQ.NEXTVAL,
+			   #{ dNum },
+			   #{ dreWriter },
+			   #{ dreContent },
+			   (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
+			   (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
+			   DRE_NUM_SEQ.NEXTVAL,
+			   0,
+			   0,
+			   #{ uniqueNum }
+	</insert>
+	
+	<update id="updateDreply" parameterType="Dreply">
+		UPDATE DBOARD SET
+			   D_TITLE = #{ dTitle },
+			   D_CONTENT = #{ dContent },
+			   D_FIND_DATE = #{ dFindDate },
+			   D_FIND_LOCAL = #{ dFindLocal },
+			   D_GENDER = #{ dGender },
+			   D_CATEGORY = #{ dCategory },
+			   D_LOCAL = #{ dLocal },
+			   D_PHONE = #{ dPhone },
+			   D_POINT = #{ dPoint },
+			   D_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
+			   MAP_X = #{ mapX },
+			   MAP_Y = #{ mapY },
+			   VIEW_IMAGE = #{ viewImage },
+			   LIST_IMAGE = #{ listImage }
+		WHERE D_NUM = #{ dNum }
+	</update>
+	
+	<delete id = "deleteDreply" parameterType="Dreply">
+	
+	</delete>
+</mapper>

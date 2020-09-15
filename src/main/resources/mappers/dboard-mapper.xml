@@ -37,11 +37,6 @@
 		<result column="d_count" property="dCount" />
 	</resultMap>
 	
-	<!-- 비교연산자를 쿼리문에 그냥 사용하면 태그 엘리먼트 꺽쇠( < , > , &) 과 혼동하는 문제가 발생할 수 있음.
-	이 문제를 미연에 방지하기 위해 xml 코드 중 xml parser 에 의해 해석하지 말고
-	문장 그래도 해석하라는 뜻으로 
-	<![CDATA[ 쿼리문장]]> 사용함 -->
-	
 	
 	<select id="selectNew4" resultMap="resultNew4">
 		<![CDATA[ 
@@ -70,7 +65,7 @@
 		</if>
 	</select>
 	
-	<select id="selectList" parameterType="Dboard" resultType="com.kh.runningdog.dboard.model.vo.Dboard">
+	<select id="selectList" parameterType="Dboard" resultType="Dboard">
 		SELECT *
 		FROM (SELECT ROWNUM RNUM, D_NUM, USER_ID, UNIQUE_NUM, D_WRITER, D_TITLE, D_CONTENT, D_FIND_DATE,
 			  D_FIND_LOCAL, D_GENDER, D_CATEGORY, D_LOCAL, D_PHONE, D_POINT, D_DATE, D_MDATE, D_COUNT,
