@@ -59,7 +59,7 @@
                             <tbody>
                             	<c:if test="${ !empty list }">
 	                            	<c:forEach var="user" items="${ list }">
-		                                <tr onclick="location='moveChattingView.do'">
+		                                <tr onclick="location='startChat.do?receiver=${user.getNickname()}&receiverNo=${user.getUniqueNum()}'">
 		                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
 		                                    <td class="title">
 		                                        <h2>${ user.nickname }</h2>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.runningdog.chatting.model.vo.Chatroom;
+import com.kh.runningdog.chatting.model.vo.StartChat;
 
 @Repository("chatroomDao")
 public class ChatroomDao {
@@ -24,5 +25,8 @@ public class ChatroomDao {
 	public ArrayList<Integer> selectMyChatList(Chatroom room) {
 		List<Integer> list = session.selectList("chatroomMapper.selectMyChatList", room);
 		return (ArrayList<Integer>)list;
+	}
+	public int insertStartChat(StartChat startChat) {
+		return session.insert("chatroomMapper.insertStartChat", startChat);
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.runningdog.chatting.model.service.ChatroomService;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
+import com.kh.runningdog.chatting.model.vo.StartChat;
 import com.kh.runningdog.member.model.vo.Member;
 
 @Controller
@@ -48,8 +49,20 @@ public class ChattingController {
 	}
 	
 	@RequestMapping("startChat.do")
-	public String startChat(){
+	public String startChat(HttpSession session, Model model, @RequestParam("receiver") String name, @RequestParam("receiverNo") int uniqueNum){
 		logger.info("startChat.do run...");
+		Member member = (Member) session.getAttribute("loginMember");
+		logger.info("name : " + name + "no : " + uniqueNum);
+		logger.info("name : " + member.getNickname() + "no : " + member.getUniqueNum());
+		StartChat startChat = new StartChat();
+		startChat.setInviterName(name);
+		startChat.setInviterNo(uniqueNum);
+		startChat.setInviteeName(member.getNickname());
+		startChat.setInviteeNo(member.getUniqueNum());
+		int result = chatroomService.insertStartChat(startChat);
+		
+		logger.info("결과 : " + result);
+		
 		return "mypage/myChatting";
 	}
 }

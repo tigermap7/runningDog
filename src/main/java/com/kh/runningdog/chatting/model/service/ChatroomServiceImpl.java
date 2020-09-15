@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.runningdog.chatting.model.dao.ChatroomDao;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
+import com.kh.runningdog.chatting.model.vo.StartChat;
 
 @Service("chatroomService")
 public class ChatroomServiceImpl implements ChatroomService{
@@ -26,6 +27,11 @@ public class ChatroomServiceImpl implements ChatroomService{
 	@Override
 	public ArrayList<Integer> selectMyChatList(Chatroom room) {
 		return chatroomDao.selectMyChatList(room);
+	}
+
+	@Override
+	public int insertStartChat(StartChat startChat) {
+		return chatroomDao.insertStartChat(startChat);
 	}
 
 }

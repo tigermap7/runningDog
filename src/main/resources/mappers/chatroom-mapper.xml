@@ -30,5 +30,14 @@
 	<select id="selectMyChatCount" parameterType="Chatroom" resultType="_int">
 		select count(*) from chatroom where memberno != #{memberNo}
 	</select>
+	
+	<insert id="insertStartChat" parameterType="com.kh.runningdog.chatting.model.vo.StartChat">
+		insert all
+		into chatroom
+		values(ROOM_SEQ.nextval, #{inviterNo}, #{lastMessage}, #{inviterName} ,sysdate)
+		into chatroom
+		values(ROOM_SEQ.nextval, #{inviteeNo}, #{lastMessage}, #{inviteeName}, sysdate)
+		select * from dual
+	</insert>
 
 </mapper>
