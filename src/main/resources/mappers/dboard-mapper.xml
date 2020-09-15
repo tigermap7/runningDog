@@ -95,9 +95,20 @@
 	</select>
 	
 	<select id="selectNext" parameterType="Dboard" resultType="int">
-		SELECT MIN(D_NUM)
+		SELECT NVL(MIN(D_NUM),${dNum})
 		FROM DBOARD
+		<![CDATA[
 		WHERE D_CHECK = 'y' AND D_NUM > ${ dNum }
+		]]>
+	</select>
+	
+	<select id="selectPrev" parameterType="Dboard" resultType="int">
+		SELECT NVL(MAX(D_NUM),${dNum})
+		FROM DBOARD
+		<![CDATA[
+		WHERE D_CHECK = 'y' AND D_NUM < ${ dNum }
+		]]>
+	
 	</select>
 	
 	<insert id="insertDboard" parameterType="Dboard">

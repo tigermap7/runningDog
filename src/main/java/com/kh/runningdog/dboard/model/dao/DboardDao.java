@@ -63,4 +63,9 @@ public class DboardDao {
 	public int selectNext(Dboard dboard) {
 		return session.selectOne("dboardMapper.selectNext",dboard);
 	}
+
+
+	public int selectPrev(Dboard dboard) {
+		return session.selectOne("dboardMapper.selectPrev",dboard);
+	}
 }

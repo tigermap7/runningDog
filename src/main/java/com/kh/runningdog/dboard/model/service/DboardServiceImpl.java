@@ -57,4 +57,9 @@ public class DboardServiceImpl implements DboardService{
 	public int selectNext(Dboard dboard) {
 		return dboardDao.selectNext(dboard);
 	}
+
+	@Override
+	public int selectPrevNum(Dboard dboard) {
+		return dboardDao.selectPrev(dboard);
+	}
 }

@@ -22,5 +22,7 @@ public interface DboardService {
 	int updateDboardSuc(Dboard dboard);
 
 	int selectNext(Dboard dboard);
+
+	int selectPrevNum(Dboard dboard);
 	
 }

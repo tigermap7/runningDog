@@ -301,17 +301,40 @@ public class DboardController {
 	
 	@RequestMapping("dboardnext.do")
 	public String dboardNext(Model model,@ModelAttribute("Dboard") Dboard dboard) {
+		//다음글 번호조회
 		int dboardNextNum = dboardService.selectNext(dboard);
-		
+		//다음글번호를 받고 다음글로 조회
 		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		
 		String url = "";
-		if (dboard != null) {
+		if (dboard.getdNum() != dboardNextNum) {
 			model.addAttribute("dboard", dboardNext);
 			url = "animal/chooseView";
 		} else {
-			model.addAttribute("msg", "게시글 보기 실패");
-			model.addAttribute("url", "dboardList.do");
+			model.addAttribute("dboard",dboard);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "dboardView.do?dNum="+dboard.getdNum());
+			url = "common/errorDboard";
+		}
+		return url;
+	}
+	
+	@RequestMapping("dboardprev.do")
+	public String dboardPrev(Model model,@ModelAttribute("Dboard") Dboard dboard) {
+		//다음글 번호조회
+		int dboardPrevNum = dboardService.selectPrevNum(dboard);
+		//다음글번호를 받고 다음글로 조회
+		Dboard dboardPrev = dboardService.selectOne(dboardPrevNum);
+		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		String url = "";
+		if ( dboard.getdNum() != dboardPrevNum) {
+			model.addAttribute("dboard", dboardPrev);
+			url = "animal/chooseView";
+		} else {
+			model.addAttribute("dboard",dboard);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "dboardView.do?dNum="+dboard.getdNum());
 			url = "common/errorDboard";
 		}
 		return url;
