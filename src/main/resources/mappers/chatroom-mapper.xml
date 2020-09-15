@@ -31,6 +31,12 @@
 		select count(*) from chatroom where memberno != #{memberNo}
 	</select>
 	
+	<select id="selectExistsRoomNo" parameterType="com.kh.runningdog.chatting.model.vo.StartChat" resultType="_int">
+	select roomno from chatroom where memberno = #{inviterNo}
+	intersect
+	select roomno from chatroom where memberno = #{inviteeNo}
+	</select>
+	
 	<insert id="insertStartChat" parameterType="com.kh.runningdog.chatting.model.vo.StartChat">
 		insert all
 		into chatroom

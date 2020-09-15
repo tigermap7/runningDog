@@ -32,4 +32,11 @@ public class ChatroomDao {
 	public int deleteChat(int roomNo) {
 		return session.delete("chatroomMapper.deleteChat", roomNo);
 	}
+	public int selectExistsRoomNo(StartChat startChat) {
+		if (session.selectOne("chatroomMapper.selectExistsRoomNo", startChat) != null) {
+			return session.selectOne("chatroomMapper.selectExistsRoomNo", startChat);
+		} else {
+			return 0;
+		}
+	}
 }

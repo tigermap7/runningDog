@@ -39,4 +39,9 @@ public class ChatroomServiceImpl implements ChatroomService{
 		return chatroomDao.deleteChat(roomNo);
 	}
 
+	@Override
+	public int selectExistsRoomNo(StartChat startChat) {
+		return chatroomDao.selectExistsRoomNo(startChat);
+	}
+
 }

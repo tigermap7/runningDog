@@ -58,21 +58,34 @@ public class ChattingController {
 		Chatroom room = new Chatroom();
 		StartChat startChat = new StartChat();
 		ArrayList<Integer> myChatList = null;
+		String url = null;
+		
 		startChat.setInviterName(name);
 		startChat.setInviterNo(uniqueNum);
 		startChat.setInviteeName(member.getNickname());
 		startChat.setInviteeNo(member.getUniqueNum());
 		
-		int result = chatroomService.insertStartChat(startChat);
+		int exstRoomno = chatroomService.selectExistsRoomNo(startChat);
+		logger.info("방 번호 존재 : " + exstRoomno);
 		
-		room.setMemberNo(member.getUniqueNum());
-		/*참여한 채팅방 리스트 불러온 후 세션에 저장*/
-		myChatList = chatroomService.selectMyChatList(room);
-		session.setAttribute("myChatList", myChatList);
-		int roomNo = myChatList.get(myChatList.size() - 1);
+		
 		String receiver = URLEncoder.encode(name, "UTF-8");
+		if (exstRoomno != 0) {
+			url = "redirect:moveChattingView.do?roomNo=" + exstRoomno + "&receiver=" + receiver;
+		} else {
+			int result = chatroomService.insertStartChat(startChat);
+			if (result > 0) {
+				room.setMemberNo(member.getUniqueNum());
+				/*참여한 채팅방 리스트 불러온 후 세션에 저장*/
+				myChatList = chatroomService.selectMyChatList(room);
+				session.setAttribute("myChatList", myChatList);
+				int roomNo = myChatList.get(myChatList.size() - 1);
+				url = "redirect:moveChattingView.do?roomNo=" + roomNo + "&receiver=" + receiver;
+			}
+		}
+		
+		return url;
 		// TODO: 이미 채팅방이 있다면 추가안하고 존재하는 채팅방으로 이동
-		return "redirect:moveChattingView.do?roomNo=" + roomNo + "&receiver=" + receiver;
 	}
 	
 	@RequestMapping("deleteChat.do")
