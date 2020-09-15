@@ -52,16 +52,13 @@ public class ChattingController {
 	public String startChat(HttpSession session, Model model, @RequestParam("receiver") String name, @RequestParam("receiverNo") int uniqueNum){
 		logger.info("startChat.do run...");
 		Member member = (Member) session.getAttribute("loginMember");
-		logger.info("name : " + name + "no : " + uniqueNum);
-		logger.info("name : " + member.getNickname() + "no : " + member.getUniqueNum());
 		StartChat startChat = new StartChat();
+		
 		startChat.setInviterName(name);
 		startChat.setInviterNo(uniqueNum);
 		startChat.setInviteeName(member.getNickname());
 		startChat.setInviteeNo(member.getUniqueNum());
 		int result = chatroomService.insertStartChat(startChat);
-		
-		logger.info("결과 : " + result);
 		
 		return "mypage/myChatting";
 	}
