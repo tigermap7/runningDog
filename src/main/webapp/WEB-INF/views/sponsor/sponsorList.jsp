@@ -11,6 +11,11 @@
 <html lang="ko">
 	<head>
 		<c:import url="/WEB-INF/views/include/head.jsp"/>
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="웹 페이지 제목" />
+		<meta property="og:url" content="url" />
+		<meta property="og:description" content="웹 페이지 내용" />
+		<meta property="og:image" content="http://192.168.35.70:9392/runningdog/resources/images/test/animalNews01.jpg" />
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">

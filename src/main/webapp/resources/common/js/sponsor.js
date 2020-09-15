@@ -49,13 +49,11 @@ function CopyUrlToClipboard(num) {
 }
 
 function snsGo(e, id, title, summary) {
-	var url = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
-	var title = title;
-	var summary = summary;
+	var url = "http://192.168.35.70:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
 	
-//	$("meta[property='og\\:title']").attr("content", title );
-//    $("meta[property='og\\:url']").attr("content", url );                    
-//    $("meta[property='og\\:description']").attr("content", summary );
+	//$("meta[property='og\\:title']").attr("content", title );
+    //$("meta[property='og\\:url']").attr("content", url );                    
+    //$("meta[property='og\\:description']").attr("content", summary );
 //    console.log(url + "\n" + title + "\n" + summary);
 //	$('head').append( StringTool.format('<meta property="og:url" content="{0}" />', url) );
 //	$('head').append(StringTool.format('<meta property="og:type" content="{0}" />', 'article'));
@@ -65,18 +63,12 @@ function snsGo(e, id, title, summary) {
 //	window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title));
 	
 	var loc = "";
-//	var href = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + thid + "&page=1";
-//
-	url = encodeURIComponent(url);
-//	tit = encodeURIComponent(tit);
-//	
-//	console.log(tit + "\n" + href);
 	
 	switch(e) {
 	case 1 : break; //네이버
 	case 2 : break; //카카오톡
-	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + url + '&t=' + title; break; //페이스북
-	case 4 : break; //트위터
+	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url); break; //페이스북 + '&t=' + encodeURIComponent(title)
+	case 4 : loc = 'http://www.twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break; //트위터
 	}
 	window.open(loc, '', 'width=400,height=400,left=600');
 }
