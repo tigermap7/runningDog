@@ -47,7 +47,7 @@ public class SponsorDao {
 		return session.selectOne("sponsorMapper.selectSNum");
 	}
 
-	public void insertSContentImage(ArrayList<String> clist, int sNum) {
+	public void insertSContentImage(ArrayList<String> clist, int sNum) { //map으로 변경가능
 		ContentImage ct = new ContentImage();
 		ct.setsNum(sNum);
 		for(String s : clist) {

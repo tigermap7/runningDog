@@ -7,18 +7,18 @@ $(function(){
 		html: true,
 		content: function() {
 			var thid = $(this).attr('id');
-			alert(thid);
 			var value = "";
 			value += "<a href='javascript:snsGo(1, "+thid+");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(2);'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(3);'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(4);'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
-			value += "<a href='javascript:CopyUrlToClipboard(2);' class='urlcopy'>URL 복사</a>";
+			value += "<a href='javascript:snsGo(2, "+thid+");'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(3, "+thid+");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(4, "+thid+");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
+			value += "<a href='javascript:CopyUrlToClipboard("+thid+");' class='urlcopy'>URL 복사</a>";
 			return value;
 		}
 	});
 });
 
+//팝오버 범위 밖 클릭하면 닫기
 $(document).on('click', function (e) {
     $('[data-toggle="popover"],[data-original-title]').each(function () {
         //the 'is' for buttons that trigger popups
@@ -30,13 +30,19 @@ $(document).on('click', function (e) {
     });
 });
 
+//url 복사
 function CopyUrlToClipboard(num) {
 	//window.document.location.href 현재 url정보 얻는 방법
-	var obShareUrl = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + num;
-	/* obShareUrl.select();
-	document.execCommand("copy");
-	obShareUrl.blur(); */ //수정!!!!!!!!!!!!!!!!!!!1
-	alert("URL이 클립보드에 복사되었습니다\n" + obShareUrl);
+	var obShareUrl = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + num + "&page=1";
+
+	var t = document.createElement("textarea");
+	document.body.appendChild(t);
+	t.value = obShareUrl;
+	t.select();
+	document.execCommand('copy');
+	document.body.removeChild(t);
+
+	alert("URL이 클립보드에 복사되었습니다\n" + t.value);
 }
 
 function snsGo(e, thid) {

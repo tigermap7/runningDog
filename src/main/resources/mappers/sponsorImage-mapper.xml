@@ -19,7 +19,7 @@
 		from sponsorImage
 		where s_num in
 		<foreach collection="array" item="arr" open="(" close=")" separator=",">
-			${ arr }
+			#{ arr }
 		</foreach>
 	</select>
 	
