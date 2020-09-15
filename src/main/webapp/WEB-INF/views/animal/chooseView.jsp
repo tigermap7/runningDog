@@ -6,20 +6,7 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
-<script type="text/javascript">
-$(function() {
-	$(".Subcmt_btn").click(function() {
-		$(this).siblings(".Subcmt").toggle(200);
-	});
-	$(".Subcmt_update_btn").click(function() {
-		$(this).siblings(".Subcmt_update").toggle(200);
-	});
-	$(".Cmt_update_btn").click(function() {
-		$(this).siblings(".Cmt_update").toggle(200);
-	});
-});
 
-</script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
