@@ -12,6 +12,7 @@ public class Dreply implements java.io.Serializable{
 	private String dreDate;
 	private String dreMdate;
 	private int dreParents;
+	private int dreGroup;
 	private int uniqueNum;
 	private String dreDelete;
 	
@@ -20,7 +21,7 @@ public class Dreply implements java.io.Serializable{
 
 
 	public Dreply(int dreNum, int dNum, String dreWriter, String dreContent, String dreDate, String dreMdate,
-			int dreParents, int uniqueNum, String dreDelete) {
+			int dreParents, int dreGroup, int uniqueNum, String dreDelete) {
 		super();
 		this.dreNum = dreNum;
 		this.dNum = dNum;
@@ -29,6 +30,7 @@ public class Dreply implements java.io.Serializable{
 		this.dreDate = dreDate;
 		this.dreMdate = dreMdate;
 		this.dreParents = dreParents;
+		this.dreGroup = dreGroup;
 		this.uniqueNum = uniqueNum;
 		this.dreDelete = dreDelete;
 	}
@@ -104,6 +106,16 @@ public class Dreply implements java.io.Serializable{
 	}
 
 
+	public int getDreGroup() {
+		return dreGroup;
+	}
+
+
+	public void setDreGroup(int dreGroup) {
+		this.dreGroup = dreGroup;
+	}
+
+
 	public int getUniqueNum() {
 		return uniqueNum;
 	}
@@ -132,9 +144,12 @@ public class Dreply implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Dreply [dreNum=" + dreNum + ", dNum=" + dNum + ", dreWriter=" + dreWriter + ", dreContent=" + dreContent
-				+ ", dreDate=" + dreDate + ", dreMdate=" + dreMdate + ", dreParents=" + dreParents + ", uniqueNum="
-				+ uniqueNum + ", dreDelete=" + dreDelete + "]";
+				+ ", dreDate=" + dreDate + ", dreMdate=" + dreMdate + ", dreParents=" + dreParents + ", dreGroup="
+				+ dreGroup + ", uniqueNum=" + uniqueNum + ", dreDelete=" + dreDelete + "]";
 	}
+
+
+	
 	
 	
 }

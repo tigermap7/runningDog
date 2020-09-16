@@ -12,23 +12,26 @@
 		<result column="dre_date" property="dreDate" />
 		<result column="dre_mdate" property="dreMdate" />
 		<result column="dre_parents" property="dreParents" />
-		<result column="dre_parents_seq" property="dreParentsSeq" />
-		<result column="dre_level" property="dreLevel" />
+		<result column="dre_group" property="dreGroup" />
 		<result column="unique_num" property="uniqueNum" />
+		<result column="dre_delete" property="dreDelete" />
+		
 	</resultMap>
 	
 	
 	<select id="selectListCount" parameterType="Dreply" resultType="int">
 		SELECT COUNT(*)
 		FROM DREPLY
-		WHERE d_num = ${ dNum }
+		WHERE d_num = #{ dNum }
 		
 	</select>
 	
 	<select id="selectDreplyList" parameterType="Dreply" resultType="Dreply">
-		SELECT *
+		SELECT DRE_NUM, D_NUM, DRE_WRITER, DRE_CONTENT, DRE_DATE, DRE_MDATE,
+			   DRE_PARENTS, DRE_GROUP, UNIQUE_NUM, DRE_DELETE
 		FROM DREPLY
-		WHERE D_NUM = ${ dNum }
+		WHERE D_NUM = #{ dNum }
+		ORDER BY DRE_NUM ASC, DRE_NUM ASC 
 	</select>
 	
 	<insert id="insertDreply" parameterType="Dreply">
@@ -40,31 +43,36 @@
 			   (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
 			   (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
 			   DRE_NUM_SEQ.NEXTVAL,
-			   0,
-			   0,
-			   #{ uniqueNum }
+			   #{ dNum },
+			   #{ uniqueNum },
+			   DEFAULT)
+	</insert>
+	
+	<insert id="insertDreplyLevel" parameterType="Dreply">
+		INSERT INTO DREPLY
+		VALUES (DRE_NUM_SEQ.NEXTVAL,
+				#{ dNum },
+				#{ dreWriter },
+				#{ dreContent },
+				(SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
+				(SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
+				#{ dreNum },
+				#{ dNum },
+				#{ uniqueNum },
+				DEFAULT)
 	</insert>
 	
 	<update id="updateDreply" parameterType="Dreply">
-		UPDATE DBOARD SET
-			   D_TITLE = #{ dTitle },
-			   D_CONTENT = #{ dContent },
-			   D_FIND_DATE = #{ dFindDate },
-			   D_FIND_LOCAL = #{ dFindLocal },
-			   D_GENDER = #{ dGender },
-			   D_CATEGORY = #{ dCategory },
-			   D_LOCAL = #{ dLocal },
-			   D_PHONE = #{ dPhone },
-			   D_POINT = #{ dPoint },
-			   D_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
-			   MAP_X = #{ mapX },
-			   MAP_Y = #{ mapY },
-			   VIEW_IMAGE = #{ viewImage },
-			   LIST_IMAGE = #{ listImage }
-		WHERE D_NUM = #{ dNum }
+		UPDATE DREPLY SET
+			   DRE_CONTENT = #{ dreContent },
+			   DRE_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
+		WHERE DRE_NUM = ${ dreNum }
 	</update>
 	
-	<delete id = "deleteDreply" parameterType="Dreply">
-	
+	<delete id = "updateDreplyDel" parameterType="Dreply">
+		UPDATE DREPLY SET
+			   DRE_DELETE = 'y',
+			   DRE_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
+		WHERE DRE_NUM = #{ dreNum }
 	</delete>
 </mapper>

@@ -1,7 +1,6 @@
 package com.kh.runningdog.dreply.model.service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,31 +13,32 @@ public class DreplyServiceImpl implements DreplyService {
 
 	@Autowired
 	private DreplyDao dreplyDao;
-	
+
 	@Override
-	public int insertDreply(Map<String, Object> dreply) {
+	public ArrayList<Dreply> selectList(Dreply dreply) {
+		return dreplyDao.selectList(dreply);
+	}
+
+	@Override
+	public int insertDreply(Dreply dreply) {
 		return dreplyDao.insertDreply(dreply);
 	}
 
 	@Override
-	public int deleteDreply(Map<String, Object> dreply) {
-		return dreplyDao.deleteDreply(dreply);
+	public int updateDreply(Dreply dreply) {
+		return dreplyDao.updateDreply(dreply);
 	}
 
 	@Override
-	public int updateReply(Map<String, Object> dreply) {
-		return dreplyDao.updateReply(dreply);
-	}
-
-
-	@Override
-	public List<Dreply> selectDreplyList(Map<String, Object> dreply) {
-		return dreplyDao.selectDreplyList(dreply);
+	public int updateDreplyDel(Dreply dreply) {
+		return dreplyDao.updateDreplyDel(dreply);
 	}
 
 	@Override
-	public int selectDreCount(Map<String, Object> dreply) {
-		return dreplyDao.selectDreCount(dreply);
+	public int insertDreplyLevel(Dreply dreply) {
+		return dreplyDao.insertDreplyLevel(dreply);
 	}
+	
+	
 
 }

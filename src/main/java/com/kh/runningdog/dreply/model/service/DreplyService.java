@@ -1,20 +1,20 @@
 package com.kh.runningdog.dreply.model.service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import com.kh.runningdog.dreply.model.vo.Dreply;
 
 public interface DreplyService {
 
-	int insertDreply(Map<String, Object> dreply);
+	ArrayList<Dreply> selectList(Dreply dreply);
 
-	int deleteDreply(Map<String, Object> dreply);
+	int insertDreply(Dreply dreply);
 
-	int updateReply(Map<String, Object> dreply);
+	int updateDreply(Dreply dreply);
 
-	int selectDreCount(Map<String, Object> dreply);
+	int updateDreplyDel(Dreply dreply);
 
-	List<Dreply> selectDreplyList(Map<String, Object> dreply);
+	int insertDreplyLevel(Dreply dreply);
+
 
 }
