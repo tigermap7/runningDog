@@ -132,7 +132,8 @@
 			data: {
 				sender: '${sessionScope.loginMember.getNickname()}',
 				message: $("#message").val(),
-				roomno: ${roomNo}
+				roomno: ${roomNo},
+				time : new Date().toLocaleString('ko-KR', {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })
 			}
 		}
 	  	sock.send(JSON.stringify(message));

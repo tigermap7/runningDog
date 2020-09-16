@@ -62,6 +62,9 @@ public class EchoHandler extends TextWebSocketHandler {
 	        sendMessageObjData.put("roomno", ((JSONObject) receivedMessageObj.get("data")).get("roomno"));
 	        sendMessageObj.put("data", sendMessageObjData);
 	        String sendMessage = sendMessageObj.toJSONString();
+	        
+	        System.out.println(((JSONObject) receivedMessageObj.get("data")).get("time"));
+	        
 	        while (sessionIds.hasNext()) {
 	            sessionId = sessionIds.next();
 	            // TODO: 채팅방에 있는 클라이언트에게만 전송
