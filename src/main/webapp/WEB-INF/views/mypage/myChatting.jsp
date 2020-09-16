@@ -58,7 +58,7 @@
                             </colgroup>
                             <tbody>
                             	<c:forEach var="room" items="${list}">
-                                <tr onclick="javascript:location.href='moveChattingView.do?roomNo=${room.getRoomNo()}&receiver=${room.getNickname()}'">
+                                <tr onclick="javascript:location.href='moveChattingView.do?roomNo=${room.getRoomNo()}&receiver=${room.getNickname()}&receiverNo=${room.getMemberNo()}'">
                                     <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
                                     <td class="title">
                                         <h2>${room.getNickname()} <span><fmt:formatDate value="${room.getLastDate()}" pattern="YYYY.MM.dd"/>일 마지막 응답</span></h2>

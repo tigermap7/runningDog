@@ -47,12 +47,11 @@ public class ChattingController {
 	}
 	
 	@RequestMapping("moveChattingView.do")
-	public String moveChattingView(@RequestParam("roomNo") int roomNo, @RequestParam("receiver") String receiver, Model model){
+	public String moveChattingView(@RequestParam("roomNo") int roomNo, @RequestParam("receiver") String receiver, @RequestParam("receiverNo") int uniqueNum, Model model){
 		logger.info("moveChattingView.do run...");
-		logger.info(Integer.toString(roomNo));
-		logger.info(receiver);
 		model.addAttribute("roomNo", roomNo);
 		model.addAttribute("receiver", receiver);
+		model.addAttribute("receiverNo", uniqueNum);
 		return "mypage/myChattingView";
 	}
 	
@@ -86,7 +85,7 @@ public class ChattingController {
 				myChatList = chatroomService.selectMyChatList(room);
 				session.setAttribute("myChatList", myChatList);
 				int roomNo = myChatList.get(myChatList.size() - 1);
-				url = "redirect:moveChattingView.do?roomNo=" + roomNo + "&receiver=" + receiver;
+				url = "redirect:moveChattingView.do?roomNo=" + roomNo + "&receiver=" + receiver + "&receiverNo=" + uniqueNum;
 			}
 		}
 		
