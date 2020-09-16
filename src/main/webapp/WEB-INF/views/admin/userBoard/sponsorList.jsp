@@ -33,14 +33,16 @@
                 <!-- 검색영역 -->
                 <div class="sort-area">  
                     <h4>전체 게시물 ${ totalList }개</h4>
-                    <form action="" method="get" id="">
+                    <form action="ssearch.ad">
                     <div class="searchBox">
-                        <select name="search" class="ListSelect">
-                                <option value="">제목</option>
-                        </select>
+                        	<select name="selected">
+								<option value="" selected disabled>분류 선택</option>
+                            	<option value="title" class="fontColor-dark">제목</option>
+                            	<option value="content" class="fontColor-dark">내용</option>
+                            </select>
                         <div>
                             <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
-                            <button type="submit" class="top-search"><i class="xi-search"></i></button>
+                            <button name="seld" type="submit" class="top-search"><i class="xi-search"></i></button>
                         </div>
                     </div>
                     </form>

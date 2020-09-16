@@ -3,28 +3,20 @@ package com.kh.runningdog.admin.sponsor.controller;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.security.Principal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
@@ -103,8 +95,15 @@ public class AdminSponsorController {
 	}
 	
     @RequestMapping("asupview.ad") //modelAndView로 고치기
-    public String moveSponsorUpdateView() {
-    	return "admin/userBoard/sponsorUpdateView";
+    public ModelAndView moveSponsorUpdateView(ModelAndView mv, Sponsor sponsor) {
+    	sponsor = sponsorService.selectOne(sponsor.getsNum());
+    	DecimalFormat formatter = new DecimalFormat("###,###");
+    	String amount = formatter.format(sponsor.getsAmount());
+    	
+    	mv.addObject("amount", amount);
+    	mv.addObject("sponsor", sponsor);
+    	mv.setViewName("admin/userBoard/sponsorUpdateView");
+    	return mv;
     }
     
     //파일 경로
@@ -306,8 +305,25 @@ public class AdminSponsorController {
 		return re;
 	}
 	
-//	@RequestMapping("")
-//	public 
+	@RequestMapping("ssearch.ad")
+	public ModelAndView moveSponsorSearch(ModelAndView mv, HttpServletRequest request) {
+		HashMap<String, String> key = new HashMap<>();
+		key.put("selected", request.getParameter("selected"));
+		key.put("keyword", request.getParameter("keyword"));
+		
+		ArrayList<Sponsor> list = sponsorService.selectSearch(key);
+    	
+		if(list.size() > -1) {
+			mv.addObject("list", list);
+			mv.addObject("page", 1);
+			mv.addObject("totalList", list.size());
+			mv.addObject("totalPage", 1);
+			mv.addObject("startPage", 1);
+			mv.addObject("endPage", 1);
+			mv.setViewName("admin/userBoard/sponsorList");
+		}
+		return mv;
+	}
 	
 	
 	

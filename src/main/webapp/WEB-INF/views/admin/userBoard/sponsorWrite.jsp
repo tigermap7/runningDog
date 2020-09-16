@@ -6,9 +6,6 @@
 <html>
 <head>
     <c:import url="../include/admin_head.jsp"/>
-    <script type="text/javascript">
-    
-    </script>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">

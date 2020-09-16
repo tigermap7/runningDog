@@ -55,12 +55,15 @@
 	</select>
 
 	<select id="selectSearch" resultType="Sponsor" parameterType="hashmap">
-		select * from sponsor where
+		select *
+		from (select rank() over (order by s_num desc) rum, s_num, s_id, s_title, s_summary,
+					 s_content, s_count, s_date, s_amount, s_current, s_original, s_rename
+			  from sponsor where
 		<if test='selected.equals("title")'>
-			s_title like '%' || #{ keyword } || '%'
+			s_title like '%' || #{ keyword } || '%')
 		</if>
 		<if test='selected.equals("content")'>
-			s_content like '%' || #{ keyword } || '%'
+			s_content like '%' || #{ keyword } || '%')
 		</if>
 	</select>
 	

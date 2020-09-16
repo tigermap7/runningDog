@@ -27,7 +27,7 @@
             <div class="sponsorView">
                 <div class="sPaymentTitle">
                     <p>
-                        조회수 : 118 · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
+                        조회수 : ${ sponsor.sCount } · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
                     </p>
                     
                     <div>
@@ -53,7 +53,11 @@
 	                    	<c:param name="ck" value="${ sponsor.sNum }"/>
 	                    </c:url>
                     <button class="deleteBtn" onclick="javascript:location.href='${ del }'"><i class="xi-cut"></i> 삭제</button>
-                    <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
+                    	<c:url var="uform" value="asupview.ad">
+	                    	<c:param name="page" value="${ page }"/>
+	                    	<c:param name="sNum" value="${ sponsor.sNum }"/>
+	                    </c:url>
+                    <button class="modifiedBtn" onclick="javascript:location.href='${ uform }'"><i class="xi-pen-o"></i> 수정</button>
                     <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
                 </div>
                 <!-- 버튼 끝 -->
