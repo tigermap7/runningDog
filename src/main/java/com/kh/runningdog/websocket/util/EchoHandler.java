@@ -1,5 +1,6 @@
 package com.kh.runningdog.websocket.util;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,17 +12,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.kh.runningdog.chatting.model.service.MessageServiceImpl;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
+import com.kh.runningdog.chatting.model.vo.Message;
 import com.kh.runningdog.member.model.vo.Member;
 
 @RequestMapping("/echo")
 public class EchoHandler extends TextWebSocketHandler {
+	@Autowired
+	private MessageServiceImpl messageService;
+	
 	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
 //	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
@@ -49,8 +57,10 @@ public class EchoHandler extends TextWebSocketHandler {
         
         String receivedMessageType = (String) receivedMessageObj.get("type");
         int roomno = ((Long) ((JSONObject) receivedMessageObj.get("data")).get("roomno")).intValue();
+        int receiverNo = ((Long) ((JSONObject) receivedMessageObj.get("data")).get("receiverNo")).intValue();
         String receivedMessage = ((JSONObject) receivedMessageObj.get("data")).get("message").toString();
         Long time = (Long) ((JSONObject) receivedMessageObj.get("data")).get("time");
+        Date date = new Date(time);
         
         logger.info(Integer.toString(roomno));
         logger.info(receivedMessageType);
@@ -67,6 +77,8 @@ public class EchoHandler extends TextWebSocketHandler {
 	        sendMessageObj.put("data", sendMessageObjData);
 	        String sendMessage = sendMessageObj.toJSONString();
 	        
+	        
+	        
 	        while (sessionIds.hasNext()) {
 	            sessionId = sessionIds.next();
 	            // TODO: 채팅방에 있는 클라이언트에게만 전송
@@ -74,6 +86,15 @@ public class EchoHandler extends TextWebSocketHandler {
             		sessions.get(sessionId).sendMessage(new TextMessage(sendMessage));
 				}
 	        }
+	        
+	        Message saveMessage = new Message();
+	        saveMessage.setSender(getHttpSessionMember(session).getUniqueNum());
+	        saveMessage.setReceiver(receiverNo);
+	        saveMessage.setContent(receivedMessage);
+	        saveMessage.setSendTime(date);
+	        saveMessage.setRoomNo(roomno);
+	        System.out.println(saveMessage);
+	        int result = messageService.insertChatLog(saveMessage);
 			break;
 
 		default:

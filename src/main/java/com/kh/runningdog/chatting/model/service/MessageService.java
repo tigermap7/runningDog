@@ -1,8 +1,7 @@
 package com.kh.runningdog.chatting.model.service;
 
-import org.springframework.stereotype.Service;
+import com.kh.runningdog.chatting.model.vo.Message;
 
-@Service("messageService")
-public class MessageService {
-
+public interface MessageService {
+	int insertChatLog(Message saveMessage);
 }
