@@ -93,7 +93,6 @@ public class EchoHandler extends TextWebSocketHandler {
 	        saveMessage.setContent(receivedMessage);
 	        saveMessage.setSendTime(date);
 	        saveMessage.setRoomNo(roomno);
-	        System.out.println(saveMessage);
 	        int result = messageService.insertChatLog(saveMessage);
 			break;
 
