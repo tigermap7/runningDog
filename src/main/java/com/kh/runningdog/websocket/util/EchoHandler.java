@@ -49,6 +49,9 @@ public class EchoHandler extends TextWebSocketHandler {
         
         String receivedMessageType = (String) receivedMessageObj.get("type");
         int roomno = ((Long) ((JSONObject) receivedMessageObj.get("data")).get("roomno")).intValue();
+        String receivedMessage = ((JSONObject) receivedMessageObj.get("data")).get("message").toString();
+        Long time = (Long) ((JSONObject) receivedMessageObj.get("data")).get("time");
+        
         logger.info(Integer.toString(roomno));
         logger.info(receivedMessageType);
         switch (receivedMessageType) {
@@ -58,12 +61,11 @@ public class EchoHandler extends TextWebSocketHandler {
 	        JSONObject sendMessageObjData = new JSONObject();
 	        // TODO: sessionId, no 이름 변경, myChattingView.jsp에도 적용할 것
 	        sendMessageObjData.put("nickname", getHttpSessionMember(session).getNickname());
-	        sendMessageObjData.put("message", ((JSONObject) receivedMessageObj.get("data")).get("message"));
-	        sendMessageObjData.put("roomno", ((JSONObject) receivedMessageObj.get("data")).get("roomno"));
+	        sendMessageObjData.put("message", receivedMessage);
+	        sendMessageObjData.put("roomno", roomno);
+	        sendMessageObjData.put("time", time);
 	        sendMessageObj.put("data", sendMessageObjData);
 	        String sendMessage = sendMessageObj.toJSONString();
-	        
-	        System.out.println(((JSONObject) receivedMessageObj.get("data")).get("time"));
 	        
 	        while (sessionIds.hasNext()) {
 	            sessionId = sessionIds.next();

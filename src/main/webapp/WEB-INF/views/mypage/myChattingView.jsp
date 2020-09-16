@@ -133,7 +133,8 @@
 				sender: '${sessionScope.loginMember.getNickname()}',
 				message: $("#message").val(),
 				roomno: ${roomNo},
-				time : new Date().toLocaleString('ko-KR', {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })
+				receiverNo: ${receiverNo},
+				time: new Date().getTime()
 			}
 		}
 	  	sock.send(JSON.stringify(message));
@@ -142,9 +143,9 @@
 	            
 	//evt 파라미터는 websocket이 보내준 데이터다.
 	function onMessage(evt){  //변수 안에 function자체를 넣음.
-		var time = new Date();
-		var chatTime = time.toLocaleString('ko-KR', { hour: 'numeric', minute: 'numeric', hour12: true });
 		var data = evt.data;
+		var time = null;
+		var chatTime = null;
 		var nickname = null;
 		var message = null;
 		var roomno = null;
@@ -157,6 +158,8 @@
 		
 		switch (receivedMessage.type) {
 		case 'message':
+			time = receivedMessage.data.time;
+			chatTime = new Date(time).toLocaleString('ko-KR', { hour: 'numeric', minute: 'numeric', hour12: true });
 			nickname = receivedMessage.data.nickname; //현재 메세지를 보낸 사람의 세션 등록//
 			message = receivedMessage.data.message; //현재 메세지를 저장//
 			roomno = receivedMessage.data.roomno;
