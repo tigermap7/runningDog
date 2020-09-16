@@ -27,6 +27,7 @@ public class ChattingController {
 	public String moveMyChatting(Model model, HttpSession session, Chatroom room) {
 		logger.info("moveChatting.do run...");
 		Member member = (Member) session.getAttribute("loginMember");
+		ArrayList<Integer> myChatList = null;
 		if (member != null) {
 			logger.info(Integer.toString(member.getUniqueNum()));
 			logger.info(member.getNickname());
@@ -36,6 +37,11 @@ public class ChattingController {
 			int listcount = chatroomService.selectMyChatCount(room);
 			model.addAttribute("list", list);
 			model.addAttribute("listcount", listcount);
+			
+			room.setMemberNo(member.getUniqueNum());
+			/*참여한 채팅방 리스트 불러온 후 세션에 저장*/
+			myChatList = chatroomService.selectMyChatList(room);
+			session.setAttribute("myChatList", myChatList);
 		}
 		return "mypage/myChatting";
 	}
