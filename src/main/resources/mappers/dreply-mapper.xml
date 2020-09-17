@@ -26,7 +26,7 @@
 		
 	</select>
 	
-	<select id="selectDreplyList" parameterType="Dreply" resultType="Dreply">
+	<select id="selectDreplyList" parameterType="_int" resultType="Dreply">
 		SELECT DRE_NUM, D_NUM, DRE_WRITER, DRE_CONTENT, DRE_DATE, DRE_MDATE,
 			   DRE_PARENTS, DRE_GROUP, UNIQUE_NUM, DRE_DELETE
 		FROM DREPLY

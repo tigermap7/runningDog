@@ -61,29 +61,6 @@
                         <div class="sort-area"> 
                          	<!-- 게시물 조회한 숫자 출력 -->
                             <h4>전체 ${ requestScope.totalCount }마리 '작은 천사'</h4>
-                            <form action="dboardList.do" name="dLocal">
-                            <input type="hidden" name="dCategory" value="${ dCategory }">
-								<select name="dLocal" class="LocationSelect"   onchange=this.form.submit()>
-                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체보기</option>
-                                    <option value="0" ${ dLocal eq"0"?"selected" :"" }>서울시</option>
-                                    <option value="1" ${ dLocal eq"1"?"selected" :"" }>인천시</option>
-                                    <option value="2" ${ dLocal eq"2"?"selected" :"" }>대전시</option>
-                                    <option value="3" ${ dLocal eq"3"?"selected" :"" }>광주시</option>
-                                    <option value="4" ${ dLocal eq"4"?"selected" :"" }>대구시</option>
-                                    <option value="5" ${ dLocal eq"5"?"selected" :"" }>울산시</option>
-                                    <option value="6" ${ dLocal eq"6"?"selected" :"" }>부산시</option>
-                                    <option value="7" ${ dLocal eq"7"?"selected" :"" }>경기도</option>
-                                    <option value="8" ${ dLocal eq"8"?"selected" :"" }>강원도</option>
-                                    <option value="9" ${ dLocal eq"9"?"selected" :"" }>세종시</option>
-                                    <option value="10" ${ dLocal eq"10"?"selected" :"" }>충청남도</option>
-                                    <option value="11" ${ dLocal eq"11"?"selected" :"" }>충청북도</option>
-                                    <option value="12" ${ dLocal eq"12"?"selected" :"" }>전라남도</option>
-                                    <option value="13" ${ dLocal eq"13"?"selected" :"" }>전라북도</option>
-                                    <option value="14" ${ dLocal eq"14"?"selected" :"" }>경상남도</option>
-                                    <option value="15" ${ dLocal eq"15"?"selected" :"" }>경상북도</option>
-                                    <option value="16" ${ dLocal eq"16"?"selected" :"" }>제주도</option>
-                            </select>
-								</form>
                             <div>
                             <c:if test="${ !empty sessionScope.loginMember}">
                                 <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
@@ -101,6 +78,29 @@
                                     
                                  </form>
                                 </div>
+	                            <form action="dboardList.do" name="dLocal" class="location">
+	                            <input type="hidden" name="dCategory" value="${ dCategory }">
+									<select name="dLocal" class="LocationSelect"   onchange=this.form.submit()>
+	                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체보기</option>
+	                                    <option value="0" ${ dLocal eq"0"?"selected" :"" }>서울시</option>
+	                                    <option value="1" ${ dLocal eq"1"?"selected" :"" }>인천시</option>
+	                                    <option value="2" ${ dLocal eq"2"?"selected" :"" }>대전시</option>
+	                                    <option value="3" ${ dLocal eq"3"?"selected" :"" }>광주시</option>
+	                                    <option value="4" ${ dLocal eq"4"?"selected" :"" }>대구시</option>
+	                                    <option value="5" ${ dLocal eq"5"?"selected" :"" }>울산시</option>
+	                                    <option value="6" ${ dLocal eq"6"?"selected" :"" }>부산시</option>
+	                                    <option value="7" ${ dLocal eq"7"?"selected" :"" }>경기도</option>
+	                                    <option value="8" ${ dLocal eq"8"?"selected" :"" }>강원도</option>
+	                                    <option value="9" ${ dLocal eq"9"?"selected" :"" }>세종시</option>
+	                                    <option value="10" ${ dLocal eq"10"?"selected" :"" }>충청남도</option>
+	                                    <option value="11" ${ dLocal eq"11"?"selected" :"" }>충청북도</option>
+	                                    <option value="12" ${ dLocal eq"12"?"selected" :"" }>전라남도</option>
+	                                    <option value="13" ${ dLocal eq"13"?"selected" :"" }>전라북도</option>
+	                                    <option value="14" ${ dLocal eq"14"?"selected" :"" }>경상남도</option>
+	                                    <option value="15" ${ dLocal eq"15"?"selected" :"" }>경상북도</option>
+	                                    <option value="16" ${ dLocal eq"16"?"selected" :"" }>제주도</option>
+	                            </select>
+								</form>
                             </div>
                         </div>
                         <!-- 게시물이 0개라면 경고창을 띄우고 전 페이지로 이동 -->

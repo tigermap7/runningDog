@@ -8,15 +8,16 @@
         <c:import url="/WEB-INF/views/include/head.jsp"/>
 <script type="text/javascript">
 $(function() {
-	$(".Subcmt_btn").click(function() {
+	$(document).on('click',".Subcmt_btn",function() {
 		$(this).siblings(".Subcmt").toggle(200);
 	});
-	$(".Subcmt_update_btn").click(function() {
+	$(document).on('click',".Subcmt_update_btn",function() {
 		$(this).siblings(".Subcmt_update").toggle(200);
 	});
-	$(".Cmt_update_btn").click(function() {
+	$(document).on('click',".Cmt_update_btn",function() {
 		$(this).siblings(".Cmt_update").toggle(200);
 	});
+	$(document).on('click',".")
 });
 
 </script>
@@ -53,7 +54,7 @@ $(function() {
                             <p class="topText">*「동물보호법」 제17조, 시행령7조 및 동법 시행규칙 제20조에 따라 유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</p>
                             <dl>
                                 <dt>
-                                	클릭하시면 원본 이미지 크기를 팝업합니다.
+                                	
                                     <div class="viewImg"><img id="imgControll" onclick="fnImgPop(this.src)" src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }"></div>
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
                                     <c:url var = "dSuccess" value= "dUpSuccess.do">
@@ -233,72 +234,190 @@ $(function() {
                             <button class="prevBtn" onclick="location='${ dboardNext }'">다음 <i class="xi-angle-right-min"></i></button>
                         </div>
                         <!-- 버튼 끝 -->
-
-                        <!-- 댓글 -->
-                        <div class="cmt_wrap">
-                            <form action="" method="">
+                        
+                        <!-- 댓글 시작 -->
+                          <div class="cmt_wrap">
+                            <form name = "dreplySubmit"action="" method="post">
+                            <input type="hidden" id= "dNum" name="dNum" value="${dboard.dNum }">
+                            <input type="hidden" id="dreWriter" name="dreWriter" value="${loginMember.nickname }">
+                            <input type="hidden" id= "uniqueNum" name="uniqueNum" value="${loginMember.uniqueNum }">
                                 <fieldset>
                                     <div class="cmt_form">
                                         <h4 class="cmt_head">댓글 77</h4>
                                         <div class="cmt_body">
-        <textarea name="" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                            <div class="cmt_ok"><input type="submit" value="등록"></div>
+        <textarea name="dreContent" id = "dreContent" onfocus="this.value='';"></textarea>
+                                            <div class="cmt_ok"><input type="button" value="등록" onclick="DreplySubmit(${result.code})"></div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </form>
-                            
-                            <ul class="cmt_con">
-                                <li>
-                                    <dl>
-                                        <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd><h4>멍무이 / #1</h4></dd>
-                                        <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                                    </dl>
-                                    <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                                    <div class="cmt_conBtn">
-                                    <button class="Subcmt_btn">대댓글</button>
-                           
-                            <button onclick="location.href=''" style="float: right;">삭제</button>
-                            <button class="Cmt_update_btn" >수정</button><br>
-                            <div class="Cmt_update" style="display: none;">
-										<form action="/anavada/jbcupdate.ss" method="post">
-										<input type="hidden" name="commentno" value="">
-										<input type="hidden" name="jboardno" value="">
-										<fieldset>
-											<div class="cmt_form">
-												<div class="cmt_body">
-													<textarea name="content" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" >글내용</textarea>
-													<div class="cmt_ok">
-													<input type="submit" value="수정">
-													</div>
-												</div>
-											</div>
-										</fieldset>
-										</form>
-									</div>
-                           
-                            <div style="display:none" class="Subcmt" id="commentReply">
-                                <form action="/anavada/jbcrinsert.ss" method="post">
-                              
-                               <input type= "hidden" name="commentno" value = "">
-                                <input type= "hidden" name="jboardno" value = "">
-                                <input type= "hidden" name="writer" value= "">
-                      
-                                    <fieldset>
-                                        <div class="cmt_form">
-                                            <div class="cmt_body">
-<textarea name="commentcontent" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                            <div class="cmt_ok"><input type="submit" value="등록" ></div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
-                        </div>
-                        <!-- 댓글 끝 -->
+                            <ul class="cmt_con" id="dreply">
+                            </ul>
+ <script type="text/javascript">
+                      $(function(){
+                    	  getCommentList()
+                      });
+
+
+function getCommentList() {	
+	$.ajax({
+		url : "dreplyList.do",
+		type : "post",
+		data : {dNum : ${dboard.dNum}},
+		dataType : "json",
+		success : function(data) {
+			console.log(data);
+
+			var objStr = JSON.stringify(data);
+			var jsonObj = JSON.parse(objStr);
+			var totalcount = (jsonObj.list).length;	
+			
+			var output = "";
+			$("#totalcount").text('댓글 갯수 : ' + totalcount );
+
+			for(var i in jsonObj.list) {
+				output +='<li><dl>'+
+                        '<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
+                        '<dd><h4>'+decodeURIComponent(jsonObj.list[i].dreWriter).replace(/\+/gi, " ")+ '/'+ jsonObj.list[i].uniqueNum+'</h4></dd>'+
+                        '<dt class="cmt_date">'+jsonObj.list[i].dreMdate+'</dt></dl>'+
+                    	'<p>'+decodeURIComponent(jsonObj.list[i].dreContent).replace(/\+/gi, " ")+'</p>'+
+                    	'<div class="cmt_conBtn"> <button class="Subcmt_btn">대댓글</button>'+
+            			'<button onclick= \"location.href='+"''"+'" style="float: right;">삭제</button>'+
+            			'<button class="Cmt_update_btn" >수정</button><br><div class="Cmt_update" style="display: none;">'+
+						'<form name="updateDreply" action="" method="post">'+
+						'<input type="hidden" name="dNum" value="${dboard.dNum}">'+
+						'<input type="hidden" name="dreWriter" value="${loginMember.nickname}">'+
+						'<input type="hidden" name="uniqueNum" value="${loginMember.uniqueNum}">'+
+						'<fieldset><div class="cmt_form">'+
+						'<div class="cmt_body"><textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" >'+decodeURIComponent(jsonObj.list[i].dreContent).replace(/\+/gi, " ")+'</textarea>'+
+						'<div class="cmt_ok"><input type="button" class="updateDreply()" onclick="updateDreply(${result.code})" value="수정"></div></div></div></fieldset>'+
+						'</form></div><div style="display:none" class="Subcmt" id="commentReply">'+
+           			    '<form action="" method="post"><input type= "hidden" name="dreNum" value = "">'+
+                		'<input type= "hidden" name="dreContent" value = "">'+
+                		'<input type= "hidden" name="dreWriter" value= ""><fieldset><div class="cmt_form"><div class="cmt_body">'+
+						'<textarea name="commentcontent" style="resize: none; width:100%; min-height:100px; max-height:100px;"'+ 'onfocus="this.value='+"''"+';">비방글은 작성하실 수 없습니다.</textarea>'+
+                        '<div class="cmt_ok"><input type="button" onclick="DreplyLevelSubmit()" value="등록" ></div></div></div></fieldset></form></div></li>';
+			}
+	
+			
+			$("#dreply").empty();
+			$("#dreply").html(output);
+			
+		},
+		error : function(jqXHR, textstatus, errorthrown) {
+			console.log("error : " + jqXHR + ", " + textstatus
+					+ ", " + errorthrown);
+		}
+	}); // ajax
+}	
+
+// 댓글 추가
+function DreplySubmit(code) {
+	if (document.getElementById("dreContent").value == "") {
+		alert("내용을 입력해주세요");
+		return false;
+	}else
+		$.ajax({
+			url : "insertDreplyLevel.do",
+			type:'POST',
+			data : {dreContent : $('#dreContent').val(),dNum : $('#dNum').val(), dreWriter : $('#dreWriter').val(), uniqueNum : $('#uniqueNum').val()},
+			success : function(data){
+				console.log(data);
+				if(data == 1) {
+					alert("댓글이 등록되었습니다."); 
+				} else {
+					alert("댓글 등록을 실패했습니다."); 
+				}
+				$("#dreContent").val("");
+				getCommentList();
+			},
+			error:function(request,status,error){
+				alert("로그인후 이용해주세요.");
+				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+			}
+		});
+}
+
+//대댓글 추가
+function DreplyLevelSubmit(code) {
+	if (document.getElementById("dreContent").value == "") {
+		alert("내용을 입력해주세요");
+		return false;
+	}else
+		$.ajax({
+			url : "insertDreply.do",
+			type:'POST',
+			data : {dreContent : $('#dreContent').val(),dNum : $('#dNum').val(), dreWriter : $('#dreWriter').val(), uniqueNum : $('#uniqueNum').val()},
+			success : function(data){
+				console.log(data);
+				if(data == 1) {
+					alert("댓글이 등록되었습니다."); 
+				} else {
+					alert("댓글 등록을 실패했습니다."); 
+				}
+				$("#dreContent").val("");
+				getCommentList();
+			},
+			error:function(request,status,error){
+				alert("로그인후 이용해주세요.");
+				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+			}
+		});
+}
+//댓글 수정
+
+function updateDreply(code) {
+	if (document.getElementById("dreContent").value == "") {
+		alert("내용을 입력해주세요");
+		return false;
+	}else
+		$.ajax({
+			url : "updateDreply.do",
+			type:'POST',
+			data : {dreContent : $('#dreContent').val(),dNum : $('#dNum').val(), dreWriter : $('#dreWriter').val(), uniqueNum : $('#uniqueNum').val()},
+			success : function(data){
+				console.log(data);
+				if(data == 1) {
+					alert("댓글이 등록되었습니다."); 
+				} else {
+					alert("댓글 등록을 실패했습니다."); 
+				}
+				$("#dreContent").val("");
+				getCommentList();
+			},
+			error:function(request,status,error){
+				alert("로그인후 이용해주세요.");
+				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+			}
+		});
+}
+
+
+
+// 댓글 삭제
+function Dreplydelete(dreNum) {
+	console.log(dreNum + "댓글 삭제하기")
+	
+	$.ajax({
+		url : "updateDreplyDel.do",
+		type:'POST',
+		data : {dreNum : dreNum },
+		success : function(data){
+			if(data == 1) {
+				alert("댓글이 삭제되었습니다."); 
+			} else {
+				alert("댓글 삭제를 실패했습니다."); 
+			}
+			getCommentList();
+		},
+		error:function(request,status,error){
+			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+		}
+	});
+}
+
+</script>
+
                     </div>
                 </div>
             </div>

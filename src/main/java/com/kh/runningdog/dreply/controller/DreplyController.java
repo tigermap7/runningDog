@@ -37,7 +37,7 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		
 		logger.info("댓글 리스트 : "+dreply + "게시물번호 : " +dNum);
 		dreply.setdNum(dNum);
-		ArrayList<Dreply> list = dreplyService.selectList(dreply);
+		ArrayList<Dreply> list = dreplyService.selectList(dNum);
 		
 		JSONObject sendJSON = new JSONObject();
 		JSONArray jarr = new JSONArray();
@@ -57,7 +57,7 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 			
 			jarr.add(job);
 		}
-		
+		response.setContentType("text/html; charset=utf-8");
 		sendJSON.put("list", jarr);
 		
 		return sendJSON.toJSONString();
@@ -65,11 +65,12 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 	}
 	
 	@RequestMapping(value="insertDreply.do", method= RequestMethod.POST)
-	public void insertDreply (Dreply dreply, @RequestParam(value="dNum") int dNum, HttpServletResponse response) throws IOException {
+	public void insertDreply (Dreply dreply, @RequestParam(value="dNum") int dNum, HttpServletResponse response,HttpServletRequest request) throws IOException {
 		logger.info("리플 insert 값 : ", dreply + "게시글 번호 : " + dNum);
 		
 		response.setContentType("text/html; charset=utf-8");
 		
+		logger.info("댓글 insert dreply 값 :"+dreply);
 		dreply.setdNum(dNum);
 		dreply.setDreParents(dNum);
 		int result = dreplyService.insertDreply(dreply);

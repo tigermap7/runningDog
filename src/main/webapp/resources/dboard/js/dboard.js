@@ -2,91 +2,17 @@
 //댓글
 
 
-function getCommentList() {	
-	$.ajax({
-		url : "selectDreply.do",
-		type : "post",
-		dataType : "json",
-		success : function(data) {
-			console.log(obj);
-
-			var objStr = JSON.stringify(obj);
-			var jsonObj = JSON.parse(objStr);
-			var totalcount = (jsonObj.list).length;	
-			
-			var output = $("#dreply").html();
-			$("#totalcount").text('댓글 갯수 : ' + totalcount );
-
-			for(var i in jsonObj.list) {
-				output += '<li><div>' +
-				'<h4>user : ' + jsonObj.list[i].dreWriter + '</h4><span>' + jsonObj.list[i].dreply.dreDate + '</span>' +
-				'</div><pre>' + decodeURIComponent(jsonObj.list[i].dreContent).replace(/\+/gi, " ") + '</pre>' + 
-				'<div class="cmt_delete" style="float: right;"><input type="button" value="삭제" onclick="Replydelete(' + jsonObj.list[i].dreNum + ');">' + 
-				'</div><br></li>'
-			}	// for in
-
-			$("#dreply").empty();
-			$("#dreply").html(output);
-
-			/*
-			 * $("#reply").html($("#reply").html() +
-			 * values);
-			 */
-		},
-		error : function(jqXHR, textstatus, errorthrown) {
-			console.log("error : " + jqXHR + ", " + textstatus
-					+ ", " + errorthrown);
-		}
-	}); // ajax
-}	
-
-// 댓글 추가
-function ReplySubmit(code) {
-	if (document.getElementById("dreContent").value == "") {
-		alert("내용을 입력해주세요");
-		return false;
-	}else
-		$.ajax({
-			url : "insertDreply.do",
-			type:'POST',
-			data : {dreContent : $('#dreContent').val(), dreNum : $('#dreNum').val()},
-			success : function(data){
-				if(data == 1) {
-					alert("댓글이 등록되었습니다."); 
-				} else {
-					alert("댓글 등록을 실패했습니다."); 
-				}
-				$("#dreContent").val("");
-				getCommentList();
-			},
-			error:function(request,status,error){
-				alert("로그인후 이용해주세요.");
-				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-			}
-		});
-}
-
-// 댓글 삭제
-function Replydelete(dreNum) {
-	console.log(dreNum + "댓글 삭제하기")
-
-	$.ajax({
-		url : "updateDreplyDel.do",
-		type:'POST',
-		data : {dreNum : dreNum },
-		success : function(data){
-			if(data == 1) {
-				alert("댓글이 삭제되었습니다."); 
-			} else {
-				alert("댓글 삭제를 실패했습니다."); 
-			}
-			getCommentList();
-		},
-		error:function(request,status,error){
-			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-		}
-	});
-}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 
 
 

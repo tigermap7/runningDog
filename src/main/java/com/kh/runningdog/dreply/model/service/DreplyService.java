@@ -6,7 +6,7 @@ import com.kh.runningdog.dreply.model.vo.Dreply;
 
 public interface DreplyService {
 
-	ArrayList<Dreply> selectList(Dreply dreply);
+	ArrayList<Dreply> selectList(int dNum);
 
 	int insertDreply(Dreply dreply);
 

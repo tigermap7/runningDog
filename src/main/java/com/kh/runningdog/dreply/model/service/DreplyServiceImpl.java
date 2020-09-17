@@ -15,8 +15,8 @@ public class DreplyServiceImpl implements DreplyService {
 	private DreplyDao dreplyDao;
 
 	@Override
-	public ArrayList<Dreply> selectList(Dreply dreply) {
-		return dreplyDao.selectList(dreply);
+	public ArrayList<Dreply> selectList(int  dNum) {
+		return dreplyDao.selectList(dNum);
 	}
 
 	@Override

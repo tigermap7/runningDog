@@ -131,7 +131,7 @@ public class DboardController {
 
 		ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
 		
-
+		
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("totalCount", totalCount);

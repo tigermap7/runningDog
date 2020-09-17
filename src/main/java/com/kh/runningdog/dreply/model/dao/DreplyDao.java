@@ -17,8 +17,8 @@ public class DreplyDao {
 	private SqlSessionTemplate session;
 
 
-	public ArrayList<Dreply> selectList(Dreply dreply) {
-		List<Dreply> list = session.selectList("dreplyMapper.selectList");
+	public ArrayList<Dreply> selectList(int dNum) {
+		List<Dreply> list = session.selectList("dreplyMapper.selectDreplyList",dNum);
 		return (ArrayList<Dreply>)list;
 	}
 
