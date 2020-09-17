@@ -31,7 +31,7 @@
 			   DRE_PARENTS, DRE_GROUP, UNIQUE_NUM, DRE_DELETE
 		FROM DREPLY
 		WHERE D_NUM = #{ dNum }
-		ORDER BY DRE_NUM ASC, DRE_NUM ASC 
+		ORDER BY DRE_PARENTS ASC, DRE_NUM ASC 
 	</select>
 	
 	<insert id="insertDreply" parameterType="Dreply">

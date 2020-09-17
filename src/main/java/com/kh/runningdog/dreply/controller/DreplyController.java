@@ -104,7 +104,7 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 	
 	@RequestMapping(value="updateDreplyDel.do", method=RequestMethod.POST)
 	public void  updateDreplyDel (Dreply dreply, HttpServletRequest reqeust,HttpServletResponse response,
-							@RequestParam(value="dreNum") int dreNum) throws IOException {
+							@RequestParam(value="dreNum") int dreNum,@RequestParam(value="dNum") int dNum) throws IOException {
 		logger.info("삭제할 댓글 번호 : " + dreNum);
 		dreply.setDreNum(dreNum);
 		int result =dreplyService.updateDreplyDel(dreply);
