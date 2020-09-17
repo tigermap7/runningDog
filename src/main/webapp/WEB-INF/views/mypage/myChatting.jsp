@@ -92,7 +92,7 @@
 		</div>
 		
 		<script type="text/javascript">
-			$(function() {
+			function chatList() {
 				$.ajax({
 					url: "chatList.do",
 					type: "get",
@@ -109,21 +109,24 @@
 									+ "&receiverNo=" + json.list[i].receiverNo + "'\">"
 	                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
 	                            	+ "<td class=\"title\">"
-	                                + "<h2>" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") + "<span>" + json.list[i].lastDate + "일 마지막 응답</span></h2>"
+	                                + "<h2>" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") + "<span>" + json.list[i].lastdate + "일 마지막 응답</span></h2>"
 	                                + "<p>lastmessage</p></td>"
 	                                + "<td><span>"+ json.list[i].unread +"</span></td></tr>"
-	                                
-	                            <!-- <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td> -->
+	                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
 						} // for in
 
-						$("#chatList").append(values);
+						$("#chatList").html(values);
 					},
 					error : function(jqXHR, textstatus, errorthrown) {
 						console.log("error : " + jqXHR + ", " + textstatus + ", "
 								+ errorthrown);
-					}
+					},
+					complete: function() {
+					      setTimeout(chatList, 60000);
+				    }
 				});
-			});
+			};
+    		setTimeout(chatList, 500);
 		</script>
 	</body>
 </html>

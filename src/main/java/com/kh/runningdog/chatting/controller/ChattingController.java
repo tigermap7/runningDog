@@ -58,6 +58,11 @@ public class ChattingController {
 	@RequestMapping("moveChattingView.do")
 	public String moveChattingView(@RequestParam("roomNo") int roomNo, @RequestParam("receiver") String receiver, @RequestParam("receiverNo") int uniqueNum, Model model){
 		logger.info("moveChattingView.do run...");
+		Message message = new Message();
+		message.setRoomNo(roomNo);
+		message.setSender(uniqueNum);
+		messageService.updateReadcheck(message);
+		
 		ArrayList<Message> logList = messageService.selectChatLog(roomNo);
 		model.addAttribute("roomNo", roomNo);
 		model.addAttribute("receiver", receiver);
@@ -117,8 +122,12 @@ public class ChattingController {
 		Member member = (Member) session.getAttribute("loginMember");
 		int uniqueNum = member.getUniqueNum();
 		Chatroom chatRoom = new Chatroom();
-		int unread = 0;
+		chatRoom.setMemberNo(member.getUniqueNum());
 		ArrayList<Chatroom> roomList = chatroomService.selectMyChatMember(chatRoom);
+		
+		int unread = 0;
+		
+		Message message = new Message();
 		
 		JSONObject sendJson = new JSONObject();
 		
@@ -126,7 +135,9 @@ public class ChattingController {
 		
 		for (Chatroom room : roomList) {
 			JSONObject job = new JSONObject();
-			unread = messageService.selectUnread(room.getRoomNo());
+			message.setRoomNo(room.getRoomNo());
+			message.setReceiver(room.getMemberNo());
+			unread = messageService.selectUnread(message);
 			job.put("roomNo", room.getRoomNo());
 			job.put("receiver", URLEncoder.encode(room.getNickname(), "utf-8"));
 			job.put("receiverNo", room.getMemberNo());

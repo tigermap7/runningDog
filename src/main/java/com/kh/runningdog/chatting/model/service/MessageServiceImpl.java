@@ -24,8 +24,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public int selectUnread(int roomNo) {
-		return messageDao.selectUnread(roomNo);
+	public int selectUnread(Message message) {
+		return messageDao.selectUnread(message);
+	}
+
+	@Override
+	public int updateReadcheck(Message message) {
+		return messageDao.updateReadcheck(message);
 	}
 
 }

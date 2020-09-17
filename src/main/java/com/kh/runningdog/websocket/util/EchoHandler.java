@@ -41,7 +41,6 @@ public class EchoHandler extends TextWebSocketHandler {
 		sessions.put(Integer.toString(getHttpSessionMember(session).getUniqueNum()), session);
 //		sessionList.add(session);
 		logger.info("{} 연결됨", getHttpSessionMember(session).getNickname());
-
 	}
 
 	@Override

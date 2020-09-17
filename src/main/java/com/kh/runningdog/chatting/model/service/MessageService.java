@@ -7,5 +7,6 @@ import com.kh.runningdog.chatting.model.vo.Message;
 public interface MessageService {
 	int insertChatLog(Message saveMessage);
 	ArrayList<Message> selectChatLog(int roomNo);
-	int selectUnread(int roomNo);
+	int selectUnread(Message message);
+	int updateReadcheck(Message message);
 }

@@ -27,12 +27,16 @@
 		select * from message where roomno = #{roomNo} order by messageno
 	</select>
 	
-	<select id="selectUnread" parameterType="_int" resultType="_int">
-		select count(*) from message where roomno = #{roomNo} and readcheck = 'N' and memberno != #{memberNo}
+	<select id="selectUnread" parameterType="Message" resultType="_int">
+		select count(*) from message where roomno = #{roomNo} and readcheck = 'N' and receiver != #{receiver}
 	</select>
 	
 	<insert id="insertChatLog" parameterType="Message">
 		insert into message
 		values(MESSAGE_SEQ.nextval, #{roomNo}, #{sender}, #{receiver}, #{sendTime}, #{content}, #{readCheck})
 	</insert>
+	
+	<update id="updateReadcheck" parameterType="Message">
+		update message set readcheck = 'Y' where roomno = #{roomNo} and sender = #{sender} and readcheck = 'N'
+	</update>
 </mapper>
