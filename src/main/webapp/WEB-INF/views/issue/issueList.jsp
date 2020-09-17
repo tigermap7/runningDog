@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -52,7 +52,7 @@
                         <div class="issueList">
                             <ul class="grid">
                                 <li class="grid-sizer"></li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
+                                <li class="grid-item" onclick="location='cissuedetail.do'">
                                     <div>
                                         <a href="#none" class="xi-share-alt-o"></a>
                                         <img src="/runningdog/resources/images/test/animalNews01.jpg">

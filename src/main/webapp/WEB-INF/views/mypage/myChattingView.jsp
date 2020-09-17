@@ -127,8 +127,16 @@
 	        
 	function sendMessage(){      
 		//websocket으로 메시지를 보내겠다.
-	  	sock.send($("#message").val());     
-        $('#message').val('');
+		const message = {
+			type: 'message',
+			data: {
+				sender: '${sessionScope.loginMember.getNickname()}',
+				message: $("#message").val(),
+				roomno: ${roomNo}
+			}
+		}
+	  	sock.send(JSON.stringify(message));
+		$("#message").val('');
 	}
 	            
 	//evt 파라미터는 websocket이 보내준 데이터다.
@@ -136,52 +144,46 @@
 		var time = new Date();
 		var chatTime = time.toLocaleString('ko-KR', { hour: 'numeric', minute: 'numeric', hour12: true });
 		var data = evt.data;
-		var sessionid = null;
+		var nickname = null;
 		var message = null;
+		var roomno = null;
 		
-		//문자열을 splite//
-		var strArray = data.split('|');
-		
-		for(var i=0; i<strArray.length; i++){
-			console.log('str['+i+']: ' + strArray[i]);
-		}
+		var receivedMessage = JSON.parse(data);
 		
 		//current session id//
 		var currentuser_session = $('#sessionuserid').val();
 		console.log('current session id: ' + currentuser_session);
 		
-		sessionid = strArray[0]; //현재 메세지를 보낸 사람의 세션 등록//
-		message = strArray[1]; //현재 메세지를 저장//
-		
-		//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
-		if(sessionid == currentuser_session){
-			/* var printHTML = "<dl class='user_left'>";
-			printHTML += "<div class='alert alert-info'>";
-			printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
-			printHTML += "</div>";
-			printHTML += "</div>"; */
-			var printHTML = "<dl class='user_right myChatting'>";
-			printHTML += "<dt>" + message;
-			printHTML += "<dd>" + chatTime + "</dd>";
-			printHTML += "</dt></dl>";
-
-			$("#chatdata").append(printHTML);
-		} else{
-			/* var printHTML = "<div class='well'>";
-			printHTML += "<div class='alert alert-warning'>";
-			printHTML += "<strong>["+sessionid+"] -> "+message+"</strong>";
-			printHTML += "</div>";
-			printHTML += "</div>"; */
-			var printHTML = "<dl class='user_left'>";
-			printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
-			printHTML += "<dd><p>" + message +"</p><span>" + chatTime + "</span></dd>";
-			printHTML += "</dl>";
+		switch (receivedMessage.type) {
+		case 'message':
+			nickname = receivedMessage.data.nickname; //현재 메세지를 보낸 사람의 세션 등록//
+			message = receivedMessage.data.message; //현재 메세지를 저장//
+			roomno = receivedMessage.data.roomno;
 			
-			$("#chatdata").append(printHTML);
+			//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
+			if (roomno == ${roomNo}) {
+				
+				if(nickname == currentuser_session){
+					var printHTML = "<dl class='user_right myChatting'>";
+					printHTML += "<dt>" + message;
+					printHTML += "<dd>" + chatTime + "</dd>";
+					printHTML += "</dt></dl>";
+		
+					$("#chatdata").append(printHTML);
+				} else{
+					var printHTML = "<dl class='user_left'>";
+					printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
+					printHTML += "<dd><p>" + message +"</p><span>" + chatTime + "</span></dd>";
+					printHTML += "</dl>";
+					
+					$("#chatdata").append(printHTML);
+				}
+			}
+				console.log('chatting data: ' + data);
+			break;
+		default:
+			console.log('Unknown message type: ' + receivedMessage.type + '\n%o', receivedMessage);
 		}
-		
-		console.log('chatting data: ' + data);
-		
 	  	/* sock.close(); */
 	}
 	    

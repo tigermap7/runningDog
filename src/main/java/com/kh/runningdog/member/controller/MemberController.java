@@ -5,9 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,9 +31,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.runningdog.member.model.service.FindUtil;
-import com.kh.runningdog.member.model.service.MailUtil;
+import com.kh.runningdog.chatting.model.service.ChatroomService;
+import com.kh.runningdog.chatting.model.vo.Chatroom;
 import com.kh.runningdog.member.model.service.MemberService;
+import com.kh.runningdog.member.model.vo.FindUtil;
+import com.kh.runningdog.member.model.vo.MailUtil;
 import com.kh.runningdog.member.model.vo.Member;
 
 @Controller
@@ -40,6 +44,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private ChatroomService chatroomService;
+	
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptoPasswordEncoder;
@@ -78,33 +85,34 @@ public class MemberController {
 	}
 	
 	//세션 만료로 인한 자동로그아웃
-//	public void logoutActionMethod(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-//		
-//		session = request.getSession(false);
-//		String url = null;
-//		
-//		//세션 이용해서 로그아웃 처리
-//		if(session != null) {
-//			session.invalidate();
-//            response.setContentType("text/html; charset=UTF-8");
-//            PrintWriter out = response.getWriter();
-//            out.println("<script>alert('세션 만료로 인해 자동 로그아웃 되었습니다.\\n다시 로그인해주세요.'); history.go(-1);</script>");
-//            out.flush();
-//            url = "main/main";
-//		}
-//	}
+	public void logoutActionMethod(HttpSession session, HttpServletResponse response) throws IOException {
+		//세션 이용해서 로그아웃 처리
+		if(session == null) {
+			session.invalidate();
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('세션 만료로 인해 자동 로그아웃 되었습니다.\\n다시 로그인해주세요.'); history.go(-1);</script>");
+            out.flush();
+		}
+	}
 	
 	
 	//로그인컨트롤러
 	@RequestMapping(value="loginAction.do", method=RequestMethod.POST)
-	public String loginActionMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session, SessionStatus status) throws IOException {
+	public String loginActionMethod(Member member, Chatroom room, Model model, HttpSession session, HttpServletRequest request
+            , HttpServletResponse response, SessionStatus status) throws IOException {
 		logger.info("loginAction run...");
-		
 		Member loginMember = memberService.selectLogin(member);
+		ArrayList<Integer> myChatList = null;
 		String url = null;
 		
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
 			if (bcryptoPasswordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd())) {
+				// 나의 채팅방 정보 세션 저장
+				room.setMemberNo(loginMember.getUniqueNum());
+				myChatList = chatroomService.selectMyChatList(room);
+				session.setAttribute("myChatList", myChatList);
+				
 				session.setAttribute("loginMember", loginMember);
 				status.setComplete(); // 요청성공, 200 전송
 				url = "main/main";
@@ -130,12 +138,12 @@ public class MemberController {
 
 	//로그아웃컨트롤러	
 	@RequestMapping("logout.do")
-	public String logoutActionMethod(Model model, HttpSession session, HttpServletRequest request) {
+	public String logoutActionMethod(HttpSession session, HttpServletRequest request) {
 		logger.info("logout run...");
 		
 		session = request.getSession(false);
 		
-		//세션 이용해서 로그아웃 처리
+		//세션 로그아웃 처리
 		if(session != null) {
 			session.invalidate();
 			return "main/main";
@@ -182,13 +190,10 @@ public class MemberController {
 		} else if(iChk == 0 && nChk == 0 && pChk == 0) {
 			
 			if(profilImg.getOriginalFilename() != "") {
-				logger.info("확인4 : ");
+
 				//해당 유저의 프로필 파일이름
 				String originProfile = member.getOriginProfile();
 				String renameProfile = member.getRenameProfile();
-				
-				logger.info("originProfile : " + originProfile);
-				logger.info("renameProfile : " + renameProfile);
 				
 				String deleteFlag = request.getParameter("deleteFlag"); //삭제버튼
 
@@ -214,38 +219,42 @@ public class MemberController {
 				if (newOriginProfile != null) {
 					newRenameProfile = sdf.format(new java.sql.Date(System.currentTimeMillis()));
 					newRenameProfile += "." + newOriginProfile.substring(newOriginProfile.lastIndexOf(".") + 1);
+					
 					try {
-						logger.info("확인1");
 						profilImg.transferTo(new File(savePath + "\\" + newRenameProfile));
 					} catch (IllegalStateException | IOException e) {
 						e.printStackTrace();
 					}
+					
 					if (renameProfile != null) {
-						logger.info("확인2");
 						new File(savePath + "\\" + renameProfile).delete();
 					}
-					member.setOriginProfile(newOriginProfile);
-					member.setRenameProfile(newRenameProfile);
-					logger.info("확인3");
+					
+					member.setOriginProfile(dateString+ "/" + newOriginProfile);
+					member.setRenameProfile(dateString+ "/" + newRenameProfile);
 					
 				} else if (!(originProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
-					logger.info("확인4");
+					
 					member.setOriginProfile(null);
 					member.setRenameProfile(null);
 					new File(savePath + "\\" + renameProfile).delete();
+					
 				} else if (!originProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
 						new File(savePath+ "\\" + renameProfile).length() == new File(savePath + "\\" + newRenameProfile).length())) {
-					logger.info("확인5");
 					member.setOriginProfile(originProfile);
 					member.setRenameProfile(renameProfile);
 				}
+				
 				if(memberService.insertMember(member) > 0) {
 					url = "joinOk";
 				}
+				
 			} else {
+				
 				if(memberService.insertMember(member) > 0) {
 					url = "joinOk";
 				}
+				
 			}
 			
 		} else {
@@ -283,7 +292,7 @@ public class MemberController {
 	//비밀번호 찾기 컨트롤러
 	@RequestMapping(value="pwdFindAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String pwdFindActionMethod(Member member, Model model, HttpServletResponse response, HttpSession session) throws IOException {
+	public String pwdFindActionMethod(Member member, HttpServletResponse response, HttpSession session) throws IOException {
 		logger.info("pwdFindAction run...");
 		
 		Member userIdPhoneChk = memberService.selectUserIdPhoneCheck(member);
@@ -372,63 +381,47 @@ public class MemberController {
 			String newRenameProfile = null;
 			
 			if (newOriginProfile != null) {
+				
 				newRenameProfile = sdf.format(new java.sql.Date(System.currentTimeMillis()));
 				newRenameProfile += "." + newOriginProfile.substring(newOriginProfile.lastIndexOf(".") + 1);
+				
 				try {
-					logger.info("확인1");
 					profilImg.transferTo(new File(savePath + "\\" + newRenameProfile));
-
-					logger.info("확인2");
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
-				logger.info("확인3");
+				
 				if (renameProfile != null) {
-
-					logger.info("확인4");
 					new File(savePath + "\\" + renameProfile).delete();
 				}
-				logger.info("확인5");
+				
 				member.setOriginProfile(dateString+ "/" + newOriginProfile);
 				member.setRenameProfile(dateString+ "/" + newRenameProfile);
 
-				logger.info("확인6");
 			} else if (!(originProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
-
-				logger.info("확인7");
+				
 				member.setOriginProfile(null);
 				member.setRenameProfile(null);
 				new File(savePath + "\\" + renameProfile).delete();
-				logger.info("확인8");
+				
 			} else if (!originProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
 					new File(savePath+ "\\" + renameProfile).length() == new File(savePath + "\\" + newRenameProfile).length())) {
 
-				logger.info("member.getOriginProfile() : " + member.getOriginProfile());
-				logger.info("확인9");
 				member.setOriginProfile(originProfile);
 				member.setRenameProfile(renameProfile);
 			}
 
-			logger.info("확인10");
 			if(memberService.updatemyinfo(member) > 0) {
 
-//				logger.info("확인11");
-//				JSONObject sendJson = new JSONObject();
-//				
-//				JSONArray jarr = new JSONArray();
-//
-//				JSONObject job = new JSONObject();
-//				job.put("originProfile", URLEncoder.encode(member.getOriginProfile(), "utf-8"));
-//				job.put("nickname", URLEncoder.encode(member.getNickname(), "utf-8"));
-//				job.put("phone", URLEncoder.encode(member.getPhone(), "utf-8"));
-//				
-//				jarr.add(job);
-//				
-//				sendJson.put("loginMember", jarr);
-//
-//				return sendJson.toString();
+				response.setContentType("application/json; charset = utf-8");
+				JSONObject data = new JSONObject();
+				data.put("originProfile", URLEncoder.encode(member.getOriginProfile(), "utf-8"));
+				data.put("nickname", URLEncoder.encode(member.getNickname(), "utf-8"));
+				data.put("phone", URLEncoder.encode(member.getPhone(), "utf-8"));
+
+				return data.toString();
 				
-				return "redirect:myinfoOk";
+				//return "redirect:myinfoOk";
 			}
 				
 		} else if(bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd()) == false) {
@@ -445,7 +438,7 @@ public class MemberController {
 	//나의 프로필 비밀번호 변경 컨트롤러
 	@RequestMapping(value="pwdChangeAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String pwdChangeActionMethod(Member member, Model model, HttpServletResponse response, HttpSession session) throws IOException {
+	public String pwdChangeActionMethod(Member member, HttpServletResponse response, HttpSession session) throws IOException {
 
 		Member userPwdChk = memberService.selectUserPwdCheck(member);
 		String url = null;
@@ -471,12 +464,10 @@ public class MemberController {
 		String url = null;
 		logger.info("leaveMember run...");
 		Member userPwdChk = memberService.selectUserPwdCheck(member);
-		logger.info("userPwdChk : " + userPwdChk);
-		logger.info("userPwdChk2 : " + bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd()));
+		
 		if (bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd())) {
 			if (memberService.insertLeaveMember(member) > 0) {
 
-				logger.info("확인1");
 				if (memberService.deleteMember(userId.trim()) > 0) {
 					return "redirect:/logout.do";
 				} else {
@@ -488,11 +479,9 @@ public class MemberController {
 				return "common/error";
 			}
 		} else {
-			logger.info("확인2");
 			url = "notUserPwd";
 		}
 		return url;
-		
 	}
 	
 	
@@ -506,47 +495,6 @@ public class MemberController {
 
 	
 	
-	
 
-/**************** admin controller start ******************/
-
-	@RequestMapping("admin.ad")
-	public String adminMemberPage() {
-		return "admin/member/allMember";
-	}
-	
-	@RequestMapping("allMember.ad")
-	public String allMemberPage() {
-		return "admin/member/allMember";
-	}
-	
-	@RequestMapping("leaveMember.ad")
-	public String adminLeaveMemberPage() {
-		return "admin/member/leaveMember";
-	}
-	
-	@RequestMapping("memberInsert.ad")
-	public String adminMemberInsertPage() {
-		return "admin/member/memberInsert";
-	}
-	
-	@RequestMapping("memberView.ad")
-	public String adminMemberViewPage() {
-		return "admin/member/memberView";
-	}
-	
-	@RequestMapping("adminInfo.ad")
-	public String adminInfoPage() {
-		return "admin/etc/adminInfo";
-	}
-	
-	@RequestMapping("etcView.ad")
-	public String etcViewPage() {
-		return "admin/etc/etcView";
-	}
-	
-	
-	
-/**************** admin controller end ******************/
 	
 }

@@ -17,17 +17,17 @@ public class Member implements java.io.Serializable {
 	private java.sql.Date joinDate;
 	private java.sql.Date lastAccessDate;
 	private String loginType;
+	private String adminChk;
 	private String loginLimit;
 
-	private int userListNum;
 	private String newUserPwd;
 	private String newUserPwd2;
 	
 	public Member() {}
 
 	public Member(int uniqueNum, String userId, String userPwd, String nickname, String phone, String originProfile,
-			String renameProfile, Date joinDate, Date lastAccessDate, String loginType, String loginLimit,
-			int userListNum, String newUserPwd, String newUserPwd2) {
+			String renameProfile, Date joinDate, Date lastAccessDate, String loginType, String adminChk,
+			String loginLimit, String newUserPwd, String newUserPwd2) {
 		super();
 		this.uniqueNum = uniqueNum;
 		this.userId = userId;
@@ -39,8 +39,8 @@ public class Member implements java.io.Serializable {
 		this.joinDate = joinDate;
 		this.lastAccessDate = lastAccessDate;
 		this.loginType = loginType;
+		this.adminChk = adminChk;
 		this.loginLimit = loginLimit;
-		this.userListNum = userListNum;
 		this.newUserPwd = newUserPwd;
 		this.newUserPwd2 = newUserPwd2;
 	}
@@ -125,20 +125,20 @@ public class Member implements java.io.Serializable {
 		this.loginType = loginType;
 	}
 
+	public String getAdminChk() {
+		return adminChk;
+	}
+
+	public void setAdminChk(String adminChk) {
+		this.adminChk = adminChk;
+	}
+
 	public String getLoginLimit() {
 		return loginLimit;
 	}
 
 	public void setLoginLimit(String loginLimit) {
 		this.loginLimit = loginLimit;
-	}
-
-	public int getUserListNum() {
-		return userListNum;
-	}
-
-	public void setUserListNum(int userListNum) {
-		this.userListNum = userListNum;
 	}
 
 	public String getNewUserPwd() {
@@ -166,9 +166,8 @@ public class Member implements java.io.Serializable {
 		return "Member [uniqueNum=" + uniqueNum + ", userId=" + userId + ", userPwd=" + userPwd + ", nickname="
 				+ nickname + ", phone=" + phone + ", originProfile=" + originProfile + ", renameProfile="
 				+ renameProfile + ", joinDate=" + joinDate + ", lastAccessDate=" + lastAccessDate + ", loginType="
-				+ loginType + ", loginLimit=" + loginLimit + ", userListNum=" + userListNum + ", newUserPwd="
-				+ newUserPwd + ", newUserPwd2=" + newUserPwd2 + "]";
+				+ loginType + ", adminChk=" + adminChk + ", loginLimit=" + loginLimit + ", newUserPwd=" + newUserPwd
+				+ ", newUserPwd2=" + newUserPwd2 + "]";
 	}
 
-	
 }

@@ -1,0 +1,61 @@
+package com.kh.runningdog.dboard.model.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.kh.runningdog.dboard.model.vo.Dboard;
+
+@Repository("dboardDao")
+public class DboardDao {
+	public DboardDao (){}
+	
+	@Autowired
+	private SqlSessionTemplate session;
+	
+
+	public ArrayList<Dboard> selectNew4() {
+		List<Dboard> list = session.selectList("dboardMapper.selectNew4");
+		return (ArrayList<Dboard>)list;
+	}
+
+
+	public int insertDboard(Dboard dboard) {
+		return session.insert("dboardMapper.insertDboard", dboard);
+	}
+
+
+
+	public int selectListCount(Dboard dboard) {
+		return session.selectOne("dboardMapper.selectListCount", dboard);
+	}
+
+
+	public ArrayList<Dboard> selectList(Dboard dboard) {
+		List<Dboard> list = session.selectList("dboardMapper.selectList", dboard);
+		return (ArrayList<Dboard>)list;
+	}
+
+
+	public Dboard selectOne(int dNum) {
+		return session.selectOne("dboardMapper.selectOne", dNum);
+	}
+
+
+	public int updateDboard(Dboard dboard) {
+		return session.update("dboardMapper.updateDboard", dboard);
+	}
+
+
+	public int updateDboardHide(Dboard dboard) {
+		return session.update("dboardMapper.updateDboardHide", dboard);
+	}
+
+
+	public int updateDboardSuc(Dboard dboard) {
+		return session.update("dboardMapper.updateDboardSuc", dboard);
+	}
+}

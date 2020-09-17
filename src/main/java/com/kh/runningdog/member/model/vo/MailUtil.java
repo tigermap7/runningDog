@@ -1,4 +1,4 @@
-package com.kh.runningdog.member.model.service;
+package com.kh.runningdog.member.model.vo;
 
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;

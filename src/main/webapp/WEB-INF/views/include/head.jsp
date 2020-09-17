@@ -14,14 +14,16 @@
 <link href="resources/common/css/common.css" rel="stylesheet">
 <link rel="shortcut icon" href="resources/images/common/favicon.ico">
 
+<script src="resources/dboard/js/dboard.js"></script>
 <script src="resources/common/js/jquery-3.5.1.min.js"></script>
 <script src="resources/common/js/bootstrap.js"></script>
 <script src="resources/common/js/common.js"></script>
 <script src="resources/common/js/vegas.js"></script>
 <script src="resources/common/js/masonry-docs.min.js"></script>
 <script src="resources/common/js/swiper.min.js"></script>
-<script src="resources/common/js/summernote-ko-KR.js"></script>
+<!-- <script src="resources/common/js/summernote-ko-KR.js"></script> -->
 <script src="resources/common/js/member.js"></script>
+<script src="resources/common/js/sponsor.js"></script>
 
 <!--티스토리 불펌금지-->
 

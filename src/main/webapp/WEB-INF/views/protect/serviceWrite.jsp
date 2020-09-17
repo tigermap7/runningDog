@@ -29,12 +29,12 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
                         <!--상세-->
-                        <form name="formname" method="post" enctype="" action="" class="form-inline">
+                        <form name="formname" method="post" enctype="multipart/form-data" action="vinsert.do" class="form-inline">
                         <div class="write-area">
                         
                             <h2>자원봉사모집 작성</h2>
@@ -48,35 +48,35 @@
                                 <tbody>
                                     <tr>
                                         <td>제목</td>
-                                        <td><input type="text" name="" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
+                                        <td><input type="text" name="voltitle" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
                                     </tr>
                                     <tr>
-                                        <td>썸네일</td>
+                                        <td>첨부파일</td>
                                         <td>
-                                            <input type="file" name="" title="" class="mb5"/>
-                                            <input type="file" name="" title="" class="mb5"/>
-                                            <input type="file" name="" title="" class="mb5"/>
-                                            <input type="file" name="" title="" class="mb5"/>
+                                            <input type="file" name="ofile1" class="mb5"/>
+                                            <input type="file" name="ofile2" class="mb5"/>
+                                            <input type="file" name="ofile3" class="mb5"/>
+                                            <input type="file" name="ofile4" class="mb5"/> 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>담당자</td>
-                                        <td><input type="text" name="" title="" class="form-control w50p" placeholder="담당자 입력" required/></td>
+                                        <td><input type="text" name="volwriter" title="" class="form-control w50p" placeholder="담당자 입력" required/></td>
                                     </tr>
                                     <tr>
                                         <td>연락처</td>
-                                        <td><input type="tel" name="" title="" class="form-control w50p" placeholder="'-'포함 입력" required/></td>
+                                        <td><input type="tel" name="voltel" title="" class="form-control w50p" placeholder="'-'포함 입력" required/></td>
                                     </tr>
                                     <tr>
                                         <td>센터명</td>
-                                        <td><input type="text" name="" title="" class="form-control w50p" placeholder="센터명 입력" required/></td>
+                                        <td><input type="text" name="volname" title="" class="form-control w50p" placeholder="센터명 입력" required/></td>
                                     </tr>
                                     <tr>
                                         <td>지역</td>
-                                        <td><input type="text" name="" title="" class="form-control w100p" placeholder="지역 입력" required/></td>
+                                        <td><input type="text" name="voladdress" title="" class="form-control w100p" placeholder="지역 입력" required/></td>
                                     </tr>
                                     <tr>
-                                        <td>모집기간</td>
+                                        <td>모집</td>
                                         <td>
                                             <select class="form-control w30p">
                                                 <option>상시모집</option>
@@ -85,22 +85,22 @@
                                     </tr>
                                     <tr>
                                         <td>봉사기간</td>
-                                        <td><input type="date" name="" title="" class="form-control w30p" required/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="" title="" class="form-control w30p" required/></td>
+                                        <td><input type="date" name="volterm1" title="" class="form-control w30p" required/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="volterm2" title="" class="form-control w30p" required/></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>홈페이지 링크</td>
                                         <td><input type="text" name="" title="" class="form-control w100p" placeholder="홈페이지 링크" required/></td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td>내용</td>
-                                        <td><textarea name="" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                                        <td><textarea name="volcontent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="write-btn">
-                            <input type="button" class="btn btn-list" value="목록으로">
+                            <input type="button" class="btn btn-list" onclick="location.href='vlist.do'" value="목록으로">
                             <input type="reset" class="btn btn-cancel" value="취소하기">
                             <input type="submit" class="btn btn-success" value="작성하기">
                         </div>

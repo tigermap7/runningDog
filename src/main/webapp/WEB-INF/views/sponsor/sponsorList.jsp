@@ -2,10 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="page" value="${ page }"/>
+<c:set var="totalPage" value="${ totalPage }"/>
+<c:set var="startPage" value="${ startPage }"/>
+<c:set var="endPage" value="${ endPage }"/>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
-        <c:import url="/WEB-INF/views/include/head.jsp"/>
+		<c:import url="/WEB-INF/views/include/head.jsp"/>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -17,8 +21,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">후원하기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="slist.do">후원하기</a></li>
                             </ul>
                         </div>
                         <h2><span>후원하기</span></h2>
@@ -29,31 +33,31 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="../include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
                         <!--서브 검색-->                
                         <div class="search_wrap">
-                            <form action="" name="">
+                            <form action="">
                             <select>
                                 <option value="" class="fontColor-dark">제목</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" placeholder="제목을 검색해주세요.">
-                                <button onclick="#none" class="xi-search"></button>
+                                <input type="text" name="title" placeholder="제목을 검색해주세요." required>
+                                <button onclick="#none" type="submit" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
                         <!--서브 검색 끝-->
                         
                         <div class="sort-area">  
-                            <h4>전체 150개의 '따뜻한 손길'</h4>
+                            <h4>전체 ${ list.size() }개의 '따뜻한 손길'</h4>
                             <div>
-                                <a href="sponsorWrite.jsp" class="writeBtn">글쓰기</a>
+                                <!-- <a href="sponsorWrite.jsp" class="writeBtn">글쓰기</a> -->
                                 <div>
                                 <form action="" name="">
-                                    <a class="active" href="#none">전체</a>
+                                    <a class="active" href="slist.do">전체</a>
                                     <a href="#none">후원중</a>
                                     <a href="#none">후원완료</a>
                                 </form>
@@ -61,116 +65,75 @@
                             </div>
                         </div>
                         
-                        <!--리스트-->
+						
+					<!--리스트-->
                         <div class="sponsorList">
                             <ul>
-                                <li onclick="location='sponsorView.jsp'">
+                            <c:forEach var="s" items="${ list }">
+                                <li>
                                     <div>
-                                        <a href="#none" class="chooseIcon">후원중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
+                                    	<c:url var="sdt" value="sdetail.do">
+                                    		<c:param name="sNum" value="${ s.sNum }"/>
+                                    		<c:param name="page" value="${ page }" />
+                                    	</c:url>
+                                    	<c:if test="${ s.sAmount > s.sCurrent }">
+                                        <a href="${ sdt }" class="chooseIcon">후원중</a>
+                                        </c:if>
+                                        <a id="fixeda" data-toggle="popover" class="urlIcon xi-share-alt-o"></a>
+									<a href="${ sdt }"><img src="resources/sponsor/thumbnail/${ s.sRename }"></a>
                                     </div>
-                                    <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
-                                    <p>
-                                        이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
+                                    <h3 onclick="location='${ sdt }'">${ s.sTitle }</h3>
+                                    <p onclick="location='${ sdt }'">${ s.sSummary }<br/>
                                     </p>
                                     <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
+                                        <a href="${ sdt }">자세히보기</a>
+                                        <a href="spay.do">후원하기</a>
                                     </span>
                                 </li>
-                                <li onclick="location='sponsorView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">후원중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
-                                    </div>
-                                    <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
-                                    <p>
-                                        이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
-                                    </p>
-                                    <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
-                                    </span>
-                                </li>
-                                <li onclick="location='sponsorView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">후원중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
-                                    </div>
-                                    <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
-                                    <p>
-                                        이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
-                                    </p>
-                                    <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
-                                    </span>
-                                </li>
-                                <li onclick="location='sponsorView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">후원중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
-                                    </div>
-                                    <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
-                                    <p>
-                                        이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
-                                    </p>
-                                    <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
-                                    </span>
-                                </li>
-                                <li onclick="location='sponsorView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">후원중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
-                                    </div>
-                                    <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
-                                    <p>
-                                        이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
-                                    </p>
-                                    <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
-                                    </span>
-                                </li>
-                                <li onclick="location='sponsorView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">후원중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/test01.jfif">
-                                    </div>
-                                    <h3>이 작은 아이가 살아갈 수 있게 도와주세요.</h3>
-                                    <p>
-                                        이 작은 몸으로 유기되어 며칠을 굶었는지 모를만큼 건강이 악화된 아이가 있어요. 여러분의 따뜻한 손길이 필요합니다.<br/>
-                                    </p>
-                                    <span class="sponsorBtn">
-                                        <a href="sponsorView.jsp">자세히보기</a>
-                                        <a href="sponsoredPayment.jsp">후원하기</a>
-                                    </span>
-                                </li>
+                            </c:forEach>
                             </ul>
                         </div>
                         <!-- 리스트 끝 -->
                     
                         <!-- 페이징 -->
+                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
+                        <c:if test="${ totalPage ne 1 }">
                         <dl class="list-paging">
                             <dd>
-                                <a href="#none"><i class="xi-angle-left"></i></a>
-                                <a href="#none" class="active">1</a>
-                                <a href="#none">2</a>
-                                <a href="#none">3</a>
-                                <a href="#none">4</a>
-                                <a href="#none">5</a>
-                                <a href="#none"><i class="xi-angle-right"></i></a>
+                            	<c:if test="${ page > 1 }">
+                            		<c:url var="sl1" value="slist.do">
+                            			<c:param name="page" value="1"/>
+                            		</c:url>
+                                	<a href="${ sl1 }"><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq 1 }">
+                                	<a><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                
+                                <c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+                                	<c:if test="${ page eq p }">
+                                		<a class="active">${ p }</a>
+                                	</c:if>
+                                	<c:if test="${ page ne p }">
+                                		<c:url var="sl2" value="slist.do">
+                                			<c:param value="${ p }" name="page"/>
+                                		</c:url>
+                                		<a href="${ sl2 }">${ p }</a>
+                                	</c:if>
+								</c:forEach>
+								
+								<c:if test="${ page < totalPage }">
+									<c:url var="sl3" value="slist.do">
+										<c:param name="page" value="${ totalPage }"/>
+									</c:url>
+                                	<a href="${ sl3 }"><i class="xi-angle-right"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq totalPage }">
+                                	<a><i class="xi-angle-right"></i></a>
+                                </c:if>
                             </dd>
                         </dl>
-                        <!-- //페이징 -->
+                        </c:if>
                     </div>
                 </div>
             </div>

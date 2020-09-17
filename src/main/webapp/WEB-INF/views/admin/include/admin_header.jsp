@@ -16,23 +16,23 @@
         <li>
             <h2><a href="#collapse2" class="collapsed" data-toggle="collapse"><i class="xi-document"></i> 사용자게시판 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse2" class="collapse show" data-parent="#accordion">
-                <a href="../userBoard/chooseList.jsp">유기동물 주인찾기 관리</a>
-                <a href="../userBoard/serviceList.jsp">자원봉사모집 관리</a>
-                <a href="../userBoard/sponsorList.jsp">후원하기 관리</a>
-                <a href="../userBoard/noticeList.jsp">공지사항 관리</a>
+                <a href="/WEB-INF/views/admin/userBoard/chooseList.jsp">유기동물 주인찾기 관리</a>
+                <a href="/runningdog/vlist.ad">자원봉사모집 관리</a>
+                <a href="aslist.ad">후원하기 관리</a>
+                <a href="nlist.ad">공지사항 관리</a>
             </div>
         </li>
         <li>
             <h2><a href="#collapse3" class="collapsed" data-toggle="collapse"><i class="xi-library-bookmark"></i> 콘텐츠 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse3" class="collapse show" data-parent="#accordion">
-                <a href="../contents/knowledgeList.jsp">반려동물 상식 관리</a>
-                <a href="../contents/issueList.jsp">오늘의 이슈 관리</a>
+                <a href="/WEB-INF/views/admin/contents/knowledgeList.jsp">반려동물 상식 관리</a>
+                <a href="/WEB-INF/views/admin/contents/issueList.jsp">오늘의 이슈 관리</a>
             </div>
         </li>
         <li>
             <h2><a href="#collapse4" class="collapsed" data-toggle="collapse"><i class="xi-cog"></i> 관리자 관리 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse4" class="collapse show" data-parent="#accordion">
-                <a href="../etc/aboutView.jsp">사이트소개 관리</a>
+                <a href="/WEB-INF/views/admin/etc/aboutView.jsp">사이트소개 관리</a>
                 <a href="etcView.ad">사용자약관 관리</a>
                 <a href="adminInfo.ad">관리자 정보수정</a>
             </div>

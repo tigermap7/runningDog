@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.runningdog.member.model.vo.Member;
+import com.kh.runningdog.member.model.vo.MemberPage;
 
 @Repository("MemberDao")
 public class MemberDao {
@@ -18,11 +19,8 @@ public class MemberDao {
 	public MemberDao() {}
 
 
-	public ArrayList<Member> selectList() {
-		List<Member> list = session.selectList("memberMapper.selectList");
-		return (ArrayList<Member>)list;
-	}
-	
+
+	//사용자
 	public Member selectMember(String userId) {
 		return session.selectOne("memberMapper.selectMember", userId);
 	}
@@ -42,15 +40,6 @@ public class MemberDao {
 	public Member selectPhoneCheck(Member member) {
 		return session.selectOne("memberMapper.selectPhoneCheck", member);
 	}
-	
-	public int insertMember(Member member) {
-		return session.insert("memberMapper.insertMember", member);
-	}
-	
-	public int updateMember(Member member) {
-		return session.update("memberMapper.updateMember", member);
-	}
-	
 
 	public Member selectUserIdCheck(String userId) {
 		return session.selectOne("memberMapper.selectUserIdCheck", userId);
@@ -64,34 +53,75 @@ public class MemberDao {
 		return session.selectOne("memberMapper.selectPhoneCheck", phone);
 	}
 
-
 	public Member selectUserIdPhoneCheck(Member member) {
 		return session.selectOne("memberMapper.selectUserIdPhoneCheck", member);
 	}
-
 
 	public Member selectUserPwdCheck(Member member) {
 		return session.selectOne("memberMapper.selectUserPwdCheck", member);
 	}
 
-
 	public int updateMemberPwd(Member member) {
 		return session.update("memberMapper.updateMemberPwd", member);
 	}
-
 
 	public int updatemyinfo(Member member) {
 		return session.update("memberMapper.updatemyinfo", member);
 	}
 
 
+	
+	
+	//공용
+	public int insertMember(Member member) {
+		return session.insert("memberMapper.insertMember", member);
+	}
+	
+	public int updateMember(Member member) {
+		return session.update("memberMapper.updateMember", member);
+	}
+	
 	public int insertLeaveMember(Member member) {
 		return session.insert("memberMapper.insertLeaveMember", member);
 	}
-
+	
 	public int deleteMember(String userId) {
 		return session.delete("memberMapper.deleteMember", userId);
 	}
 
+	
+	
+	//관리자
+	public ArrayList<Member> selectMemberList(MemberPage memberPage) {
+		List<Member> list = session.selectList("memberMapper.selectMemberList", memberPage);
+		return (ArrayList<Member>)list;
+	}
+	
+	public int selectMemberCount(MemberPage memberSerch) {
+		return session.selectOne("memberMapper.selectMemberCount", memberSerch);
+	}
+	
+	public Member selectUserOne(int uniqueNum) {
+		return session.selectOne("memberMapper.selectUserOne", uniqueNum);
+	}
+	
+	public int adminInsertMember(Member member) {
+		return session.insert("memberMapper.adminInsertMember", member);
+	}
+	
+	public int adminUpdateMember(int uniqueNum) {
+		return session.insert("memberMapper.adminUpdateMember", uniqueNum);
+	}
 
+
+
+
+	public ArrayList<Member> selectNicknameCheckList(Member member) {
+		List<Member> list = session.selectList("memberMapper.selectNicknameCheckList", member);
+		return (ArrayList<Member>)list;
+	}
+	public int selectNicknameCount(Member member) {
+		return session.selectOne("memberMapper.selectNicknameCount", member);
+	}
+	
 }

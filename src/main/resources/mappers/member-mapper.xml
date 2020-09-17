@@ -14,7 +14,6 @@
 		<result property="joinDate" column="join_date"/>
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
-		<result property="loginLimit" column="login_limit"/>
 		<result property="adminChk" column="admin_chk"/>
 		<result property="loginLimit" column="login_limit"/>
 	</resultMap>
@@ -55,6 +54,10 @@
 		select count(nickname) from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
 	</select>
 	
+	<insert id="insertMember" parameterType="Member">
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, null, DEFAULT, DEFAULT)
+	</insert>
+	
 	<update id="updateMemberPwd" parameterType="Member">
 		update member set user_pwd = #{userPwd} where user_id = #{userId} and phone = #{phone}
 	</update>
@@ -77,10 +80,6 @@
 	<select id="selectUserPwdCheck" parameterType="Member" resultMap="resultMember">
 		select * from member where user_id = #{userId}
 	</select>
-	
-	<insert id="insertMember" parameterType="Member">
-		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, null, DEFAULT, DEFAULT)
-	</insert>
 	
 	<insert id="insertLeaveMember" parameterType="Member">
 		INSERT INTO LEAVE_MEMBER (L_UNIQUE_NUM, L_USER_ID, L_USER_PWD, L_NICKNAME, L_PHONE, L_JOIN_DATE, L_LOGIN_TYPE)
@@ -110,11 +109,11 @@
 	  		<if test="search == 'phone'">
 	  			WHERE PHONE LIKE '%' ||  #{keyword} || '%'
 			</if>
-            )ORDER BY JOIN_DATE DESC)
+            ))
             <![CDATA[
 	  		WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
 	  		]]>
-            ORDER BY RNUM DESC
+            ORDER BY JOIN_DATE DESC
 	</select>
 	
 	<select id="selectMemberCount" resultType="_int" parameterType="com.kh.runningdog.member.model.vo.MemberPage">
@@ -124,6 +123,16 @@
 	<select id="selectUserOne" parameterType="_int" resultType="Member">
 		select * from member where unique_num = #{uniqueNum}
 	</select>
+	
+	<insert id="adminInsertMember" parameterType="Member">
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, null, #{adminChk}, DEFAULT)
+	</insert>
+	
+	<insert id="adminUpdateMember" parameterType="Member">
+		
+		update member set nickname = #{nickname}, origin_profile = #{originProfile}, rename_profile = #{renameProfile}, admin_chk = #{adminChk}, login_limit = #{loginLimit} where unique_num = #{uniqueNum}
+	
+	</insert>
 	
 	
 	

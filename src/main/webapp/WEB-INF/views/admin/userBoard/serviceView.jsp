@@ -5,20 +5,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <c:import url="../include/admin_head.jsp"/>
+    <c:import url="/WEB-INF/views/admin/include/admin_head.jsp"/>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
-        <c:import url="../include/admin_header.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_header.jsp"/>
 
         <div id="container">
-            <c:import url="../include/admin_util.jsp"/>
+            <c:import url="/WEB-INF/views/admin/include/admin_util.jsp"/>
 
             <!-- 상단 타이틀 -->
             <div class="pageTitle">
                 <div class="adminPath">
                     <h3>자원봉사모집 관리</h3>
-                    <h2>| 상세</h2>
+                    <h2>상세보기</h2>
                 </div>
             </div>
             <!-- //상단 타이틀 -->
@@ -33,10 +33,30 @@
                         <div class="viewImg">                                        
                             <div class="swiper-container gallery-top">
                                 <ul class="swiper-wrapper">
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
+                                   <c:if test="${ empty volunteer.volre1 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                   </c:if>
+                                   <c:if test="${ !empty volunteer.volre1 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre1 }"/></li>
+                                   </c:if>
+                                   <c:if test="${ empty volunteer.volre2 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                   </c:if>
+                                   <c:if test="${ !empty volunteer.volre2 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre2 }"/></li>
+                                   </c:if>
+                                   <c:if test="${ empty volunteer.volre3 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                   </c:if>
+                                   <c:if test="${ !empty volunteer.volre3 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre3 }"/></li>
+                                   </c:if>
+                                   <c:if test="${ empty volunteer.volre4 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                   </c:if>
+                                   <c:if test="${ !empty volunteer.volre4 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre4 }"/></li>
+                                   </c:if>
                                 </ul>
                                 <!-- Add Arrows -->
                                 <div class="swiper-button-next swiper-button-white"></div>
@@ -44,10 +64,34 @@
                             </div>
                             <div class="swiper-container gallery-thumbs">
                                 <ol class="swiper-wrapper">
+                                    <c:if test="${ empty volunteer.volre1 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                   </c:if>
+                                   <c:if test="${ !empty volunteer.volre1 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre1 }"/></li>
+                                   </c:if>
+                                   <c:if test="${ empty volunteer.volre2 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                   </c:if>
+                                   <c:if test="${ !empty volunteer.volre2 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre2 }"/></li>
+                                   </c:if>
+                                   <c:if test="${ empty volunteer.volre3 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                   </c:if>
+                                   <c:if test="${ !empty volunteer.volre3 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre3 }"/></li>
+                                   </c:if>
+                                   <c:if test="${ empty volunteer.volre4 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                   </c:if>
+                                   <c:if test="${ !empty volunteer.volre4 }">
+                                    <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre4 }"/></li>
+                                   </c:if>
+                                    <!-- <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
                                     <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
                                     <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li> -->
                                 </ol>
                             </div>
                             <!-- Initialize Swiper -->
@@ -91,68 +135,63 @@
                             <tbody>
                                 <tr>
                                     <th>제목</th>
-                                    <td colspan="3">★ '따뜻한 집' 보호센터에서 자원봉사자 여러분을 모집합니다. ★</td>
+                                    <td colspan="3">${ volunteer.voltitle }</td>
                                 </tr>
                                 <tr>
                                     <th>보호센터</th>
-                                    <td>'따뜻한 집'</td>
+                                    <td>${volunteer.volname }</td>
                                     <th>연락처</th>
-                                    <td>02-980-7717</td>
+                                    <td>${volunteer.voltel }</td>
                                 </tr>
                                 <tr>
                                     <th>담당자</th>
-                                    <td>박보검 / #1971345</td>
+                                    <td>${volunteer.volwriter }</td>
                                     <th>모집기간</th>
-                                    <td>상시모집 / <span class="serviceOn">모집중</span></td>
+                                    <c:if test="${ !empty volunteer.volche }">
+                                            <c:if test="${ volunteer.volche eq 'Y' }">
+                                                 <td>상시모집 / <span class="serviceOn">상시모집중</span></td>
+                                            </c:if>
+                                            <c:if test="${ volunteer.volche eq 'N'}">
+                                                 <td>상시모집 / <span class="serviceOn">모집완료</span></td>
+                                           </c:if>
+                                     </c:if>
                                 </tr>
                                 <tr>
-                                    <th>주소</th>
-                                    <td colspan="3">서울시 종로구 종로5.6가동</td>
+                                    <th>지역/주소</th>
+                                    <td colspan="3">${volunteer.voladdress }</td>
                                 </tr>
                                 <tr>
                                     <th>봉사기간</th>
-                                    <td colspan="3">2020.08.26 ~ 2020.09.30</td>
+                                    <td colspan="3">${volunteer.volterm1 }~${volunteer.volterm2}</td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <th>홈페이지</th>
                                     <td colspan="3"><a href="https://www.naver.com" target="_blink">https://www.naver.com</a></td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </dd>
                 </dl>
 
                 <div class="viewContent">
-                    하얗게 흐려진 그림 속 추억의 책장 속 우리<br>
-                    그저 스쳐간 안녕<br>
-                    돌아와 끝내 말 못하고<br>
-                    시간 틈새로 흘러 점점 멀어진 기억<br><br>
-                    
-                    몇 번의 계절 지나 마주한 두 눈동자 아무 말도 못하고<br><br>
-                    
-                    가슴이 차가운 남자가 울어요<br>
-                    이별에 모질던 그녀도 우네요<br>
-                    바래진 추억 유리조각에<br>
-                    베인 상처 흔적만 남아 초라하네요<br><br>
-                    
-                    파랗게 질려버린 하늘 굳어버린 입술 울컥<br>
-                    그립다 널 외치고<br>
-                    미련에 엉킨 인연의 끈<br>
-                    차마 풀지 못하고 다시 묻어두네요<br><br>
-                    
-                    먹먹한 가슴이 참지 못하고 달려 멀어진 네 등 뒤로<br><br>
-                    
-                    가슴이 차가운 남자가 울어요<br>
-                    이별에 모질던 그녀도 우네요<br>
-                    바래진 추억 유리조각에<br>
-                    베인 상처 흔적만 남아 머물러있는걸<br>
-                    the stay stay again (oh stay~ stay again)<br>
-
+                ${volunteer.volcontent }
                 </div>
-
+                
             </div>
+            <!-- 상세 끝 -->
+             <!-- 버튼 -->
+                        <div class="viewBtn-wrap">
+                            <button class="nextBtn"><i class="xi-angle-left-min"></i>이전</button>
+                            <button class="listBtn" onclick="location.href='vlist.ad'"><i class="xi-rotate-left"></i>목록</button>
+                            <c:url var="vdel" value="vdelete.ad">
+                            	<c:param name="volno" value="${volunteer.volno}"/>
+                            </c:url>
+                            <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
+                            <button class="prevBtn">다음<i class="xi-angle-right-min"></i></button>
+                        </div>
+                        <!-- 버튼 끝 -->
         </div>
-        <c:import url="../include/admin_footer.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_footer.jsp"/>
     </div>
 </body>
 </html>

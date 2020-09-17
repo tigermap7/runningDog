@@ -2,23 +2,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="listCount"  value="${ requestScope.listCount }"/>
+<c:set var="startPage"  value="${ requestScope.startPage }"/>
+<c:set var="endPage"  value="${ requestScope.endPage }"/>
+<c:set var="maxPage"  value="${ requestScope.maxPage }"/>
+<c:set var="currentPage"  value="${ requestScope.currentPage }"/>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <c:import url="../include/admin_head.jsp"/>
+    <c:import url="/WEB-INF/views/admin/include/admin_head.jsp"/>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
-        <c:import url="../include/admin_header.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_header.jsp"/>
 
         <div id="container">
-            <c:import url="../include/admin_util.jsp"/>
+            <c:import url="/WEB-INF/views/admin/include/admin_util.jsp"/>
 
             <!-- 상단 타이틀 -->
             <div class="pageTitle">
                 <div class="adminPath">
                     <h3>자원봉사모집 관리</h3>
-                    <h2>| 리스트</h2>
+                    <h2>리스트</h2>
                 </div>
             </div>
             <!-- //상단 타이틀 -->
@@ -27,15 +32,13 @@
             <div class="list_wrap">
                 <!-- 검색영역 -->
                 <div class="sort-area">  
-                    <h4>전체 게시물 100개</h4>
-                    <form action="" method="get" id="">
+                    <h4>전체 ${listCount}개</h4>
+                    <form action="vlist.ad" method="get" id="">
                     <div class="searchBox">
-                        <select name="search" class="ListSelect">
-                                <option value="" elected="selected">전체</option>
-                                <option value="">제목</option>
-                                <option value="">임시보호자</option>
-                                <option value="">발견날짜</option>
-                                <option value="">발견지역</option>
+                        <select name="type" class="ListSelect">
+                                <option value="none" elected="selected">전체</option>
+                                 <option value="address">지역</option>
+                                <option value="term">봉사기간</option>
                         </select>
                         <div>
                             <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
@@ -59,8 +62,9 @@
                         <tr>
                             <th>선택</th>
                             <th>번호</th>
-                            <th>분류</th>
-                            <th>썸네일</th>
+                            <th>모집상태</th>
+                            <!-- <th>썸네일</th> -->
+                            <th>지역</th>
                             <th>제목</th>
                             <th>센터명</th>
                             <th>등록일</th>
@@ -72,66 +76,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                     <c:forEach var="v" items="${requestScope.list}">
+                     		<c:url var="vd" value="vdetail.ad">
+                                  	 		<c:param name="volno" value="${v.volno}"/>
+                                  	 		<c:param name="page" value="${currentPage}"/>
+                            </c:url>
+                        <tr onclick="location.href='${vd}'">
                             <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='serviceView.jsp'">6</td>
+                            <td class="number" onclick="location.href='${vd}'">${v.volno}</td>
+                            <c:if test="${ v.volche eq'Y'}">
+                            <td class="kinds" onclick="location.href='${vd}'"><span class="protect">상시모집</span></td>
+                            </c:if>
+                             <c:if test="${ v.volche eq'N'}">
+                            <td class="kinds" onclick="location.href='${vd}'"><span class="protect">모집완료</span></td>
+                            </c:if>
+                            <%-- <td class="thumbnail" onclick="location.href='${vd}'">
+                            <c:if test="${ empty v.volre1 and v.volre2 and v.volre3 and v.volre4 }">
+                            	<img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
+                            </c:if>
+                            <c:if test="${ !empty v.volre1 and v.volre2 and v.volre3 and v.volre4 }">
+                            	<img src="/runningdog/resources/vfiles/${volunteer.volre1 }"></td>
+                            </c:if> --%>
+                            <td class="location" onclick="location.href='${vd}'">${v.voladdress}</td>
+                            <td class="title" onclick="location.href='${vd}'">${ v.voltitle }</td>
+                            <td class="name" onclick="location.href='${vd}'">${v.volname}</td>
+                            <td class="date" onclick="location.href='${vd}'">${v.voldate}</td>
+                        </tr>
+                     </c:forEach>
+                        <!-- <tr>
+                            <td><input type="checkbox" name="" id="" value=""></td>
+                            <td class="number" onclick="location='serviceView.jsp'">9</td>
                             <td class="kinds" onclick="location='serviceView.jsp'"><span class="protect">모집중</span></td>
-                            <td class="thumbnail" onclick="location='serviceView.jsp'"><img src="/runningdog/../resources/images/test/animalNews04.jpg"></td>
+                            <td class="thumbnail" onclick="location='serviceView.jsp'"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
                             <td class="title" onclick="location='serviceView.jsp'">작은 생명을 위한 도움의 손길이 필요합니다.</td>
                             <td class="name" onclick="location='serviceView.jsp'">조남동 센터</td>
                             <td class="date" onclick="location='serviceView.jsp'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='serviceView.jsp'">5</td>
-                            <td class="kinds" onclick="location='serviceView.jsp'"><span class="protect">모집중</span></td>
-                            <td class="thumbnail" onclick="location='serviceView.jsp'"><img src="/runningdog/../resources/images/test/animalNews04.jpg"></td>
-                            <td class="title" onclick="location='serviceView.jsp'">작은 생명을 위한 도움의 손길이 필요합니다.</td>
-                            <td class="name" onclick="location='serviceView.jsp'">조남동 센터</td>
-                            <td class="date" onclick="location='serviceView.jsp'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='serviceView.jsp'">4</td>
-                            <td class="kinds" onclick="location='serviceView.jsp'"><span class="protect">모집중</span></td>
-                            <td class="thumbnail" onclick="location='serviceView.jsp'"><img src="/runningdog/../resources/images/test/animalNews04.jpg"></td>
-                            <td class="title" onclick="location='serviceView.jsp'">작은 생명을 위한 도움의 손길이 필요합니다.</td>
-                            <td class="name" onclick="location='serviceView.jsp'">조남동 센터</td>
-                            <td class="date" onclick="location='serviceView.jsp'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='serviceView.jsp'">3</td>
-                            <td class="kinds" onclick="location='serviceView.jsp'"><span class="protect">모집중</span></td>
-                            <td class="thumbnail" onclick="location='serviceView.jsp'"><img src="/runningdog/../resources/images/test/animalNews04.jpg"></td>
-                            <td class="title" onclick="location='serviceView.jsp'">작은 생명을 위한 도움의 손길이 필요합니다.</td>
-                            <td class="name" onclick="location='serviceView.jsp'">조남동 센터</td>
-                            <td class="date" onclick="location='serviceView.jsp'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='serviceView.jsp'">2</td>
-                            <td class="kinds" onclick="location='serviceView.jsp'"><span class="complete">모집완료</span></td>
-                            <td class="thumbnail" onclick="location='serviceView.jsp'"><img src="/runningdog/../resources/images/test/animalNews04.jpg"></td>
-                            <td class="title" onclick="location='serviceView.jsp'">작은 생명을 위한 도움의 손길이 필요합니다.</td>
-                            <td class="name" onclick="location='serviceView.jsp'">조남동 센터</td>
-                            <td class="date" onclick="location='serviceView.jsp'">2020.09.01</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='serviceView.jsp'">1</td>
-                            <td class="kinds" onclick="location='serviceView.jsp'"><span class="complete">모집완료</span></td>
-                            <td class="thumbnail" onclick="location='serviceView.jsp'"><img src="/runningdog/../resources/images/test/animalNews04.jpg"></td>
-                            <td class="title" onclick="location='serviceView.jsp'">작은 생명을 위한 도움의 손길이 필요합니다.</td>
-                            <td class="name" onclick="location='serviceView.jsp'">조남동 센터</td>
-                            <td class="date" onclick="location='serviceView.jsp'">2020.09.01</td>
-                        </tr>
-						<tr class="list-no">
-							<td colspan="7">
-								<p><img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
-								<h1>목록이 없습니다.</h1>
-							</td>
-						</tr>
+                        </tr> -->
                     </tbody>
                 </table>
                 <p class="warning_text"> *삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p>
@@ -140,27 +120,80 @@
                 <!-- 버튼 -->
                 <div class="list-btn">
                     <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택삭제</button>
-                    <button type="button" id="" class="btn-right writeBtn" onclick="location='serviceWrite.jsp'"><i class="xi-pen-o"></i> 글작성</button>
+                   <!--  <button type="button" id="" class="btn-right writeBtn" onclick="location='serviceWrite.jsp'"><i class="xi-pen-o"></i> 글작성</button> -->
                 </div>
                 <!-- //버튼 -->
 
                 <!-- 페이징 -->
-                <dl class="list-paging">
-                    <dd>
-                   		<a href="#none"><i class="xi-angle-left"></i></a>
-                        <a href="#none" class="active">1</a>
-                        <a href="#none">2</a>
-                        <a href="#none">3</a>
-                        <a href="#none">4</a>
-                        <a href="#none">5</a>
-                        <a href="#none"><i class="xi-angle-right"></i></a>
-                    </dd>
-                </dl>
+                <c:if test="${listCount > 0}">
+                        <dl class="list-paging">
+                            <dd>
+                            <c:if test="${currentPage <= 1 }">
+                                <a><i class="xi-angle-left"></i></a>
+                            </c:if>
+                            <c:if test="${currentPage > 1}">
+                            	<c:url var="sl" value="vlist.ad">
+                               		<c:param name="page" value="1"/>
+                                </c:url>
+                                 <a href="${sl}"><i class="xi-angle-left"></i></a>
+                            </c:if>
+                            	<!-- 이전그룹으로 이동처리 -->
+                            <c:if test="${currentPage > 10 }">
+                            	<c:if test="${(currentPage -10) < startPage && (currentPage -10) }">
+                                <c:url var="slbefore" value="vlist.ad">
+                                	<c:param name="page" value="${startPage - 10}"/>
+                                </c:url>
+                                  <a href="${slbefore}"><i class="xi-angle-left"></i></a>
+                                </c:if>
+                             </c:if>
+                             	<!-- 현재 페이지가 속한 페이지 그룹의 숫자 출력 처리 -->
+                           <c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
+                              <c:if test="${p eq currentPage }">
+                              		<a class="active">${ p }</a>
+                              </c:if>	
+                              <c:if test="${p ne currentPage }">
+                              		<c:url var="slp" value="vlist.ad">
+                              			<c:param name="page" value="${p}"/>
+                              		</c:url>
+                              		   <a href="${slp}">${p}</a>
+                              </c:if>
+                           </c:forEach>
+                             <!-- 다음그룹으로 이동처리 -->
+                            <c:if test="${currentPage > 10 }">
+                            	<c:if test="${(currentPage +10) > endPage &&(currentPage + 10) < maxPage }">
+                                <c:url var="slafter" value="vlist.ad">
+                                	<c:param name="page" value="${ endPage +10 }"/>
+                                </c:url>
+                                  <a href="${slafter}"><i class="xi-angle-right"></i></a>
+                                </c:if>
+                             </c:if>
+                             <!-- 맨끝 페이지로 이동처리 -->
+                             <c:if test="${currentPage >= maxPage }">
+                                <a><i class="xi-angle-right"></i></a>
+                            </c:if>
+                            <c:if test="${currentPage < maxPage}">
+                            	<c:url var="sl2" value="vlist.ad">
+                               		<c:param name="page" value="${maxPage }"/>
+                                </c:url>
+                                 <a href="${sl2}"><i class="xi-angle-right"></i></a>
+                            </c:if>
+                            </dd>
+                        </dl>
+                        </c:if>
+                     <c:if test="${listCount < 0 and listCount eq 0}">
+                        <tr class="list-no">
+							<td colspan="7">
+								<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
+								<h1>목록이 없습니다.</h1>
+							</td>
+						</tr>
+                    </c:if>
+                        
                 <!-- //페이징 -->
 
             </div>
         </div>
-        <c:import url="../include/admin_footer.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_footer.jsp"/>
     </div>
 </body>
 </html>

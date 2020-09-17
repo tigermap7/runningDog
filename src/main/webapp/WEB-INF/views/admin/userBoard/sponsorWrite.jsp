@@ -6,6 +6,9 @@
 <html>
 <head>
     <c:import url="../include/admin_head.jsp"/>
+    <script type="text/javascript">
+    
+    </script>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
@@ -24,7 +27,8 @@
             <!-- //상단 타이틀 -->
 
             <!-- 본문내용 -->
-            <form name="formname" method="post" enctype="" action="" class="form-inline">
+            <form id="editor" method="post" enctype="multipart/form-data" action="sinsert.ad" class="form-inline">
+            	<input type="hidden" value="${ loginMember.nickname }" name="sId">
             <div class="write-area">
             
                 <h2>후원하기 작성</h2>
@@ -38,15 +42,23 @@
                     <tbody>
                         <tr>
                             <td>제목</td>
-                            <td><input type="text" name="" title="" class="form-control w100p" placeholder="제목 입력" required=""></td>
+                            <td><input type="text" name="sTitle" class="form-control w100p" placeholder="제목 입력" required></td>
+                        </tr>
+                        <tr>
+                            <td>요약 설명</td>
+                            <td><input type="text" name="sSummary" class="form-control w100p" placeholder="요약 설명 입력" required></td>
+                        </tr>
+                        <tr>
+                            <td>목표 금액</td>
+                            <td><input onkeyup="addCommas(this.value)" id="amt" type="text" name="amount" class="form-control" placeholder="0" required style="width:150px; text-align:right;"></td>
                         </tr>
                         <tr>
                             <td>썸네일</td>
-                            <td><input type="file" name="" title=""></td>
+                            <td><input type="file" name="upfile"></td>
                         </tr>
                         <tr>
                             <td>내용</td>
-                            <td><textarea name="" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                            <td><textarea id="summernote" name="sContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
                         </tr>
                     </tbody>
                 </table>

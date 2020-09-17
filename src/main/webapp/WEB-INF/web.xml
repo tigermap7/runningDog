@@ -58,15 +58,6 @@
 		<url-pattern>*.ad</url-pattern>
 		<url-pattern>/</url-pattern>
 		</servlet-mapping>
- 	<servlet>
-    <description></description>
-    <display-name>MemverController</display-name>
-    <servlet-name>MemverController</servlet-name>
-    <servlet-class>com.kh.runningdog.member.controller.MemverController</servlet-class>
- 	</servlet>
-  	<servlet-mapping>
-		<servlet-name>MemverController</servlet-name>
-		<url-pattern>/MemverController</url-pattern>
-	</servlet-mapping>
+
 
 </web-app>

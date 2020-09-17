@@ -12,14 +12,14 @@
             <ul class="util">
             	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
                 <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
-                <li><a class="hover_line01" href="admin.ad?userId=${loginMember.userId}">관리자페이지</a></li>
+                <li><a class="hover_line01" href="allMember.ad">관리자페이지</a></li>
                 </c:if>
             	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
                 <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
                 <li><a class="hover_line01" href="mypage.do?userId=${loginMember.userId}">마이페이지</a></li>
             	</c:if>
             	<c:if test="${ empty sessionScope.loginMember }">
-                <li><a class="hover_line01" href="login.do?userId=${loginMember.userId}">로그인</a></li>
+                <li><a class="hover_line01" href="login.do">로그인</a></li>
                 <li><a class="hover_line01" href="join.do">회원가입</a></li>
             	</c:if>
             </ul>
@@ -34,7 +34,7 @@
                 <div class="dep2Wrap">
                     <ul class="dep2">
                         <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
-                        <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/dboardList.do">유기동물 주인찾기</a></li>
                     </ul>
                 </div>
             
@@ -43,24 +43,24 @@
                 <a href="/runningdog/views/protect/protectList.jsp">보호센터 정보</a>
                 <div class="dep2Wrap">
                     <ul class="dep2">
-                        <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
-                        <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
+                        <li><a href="${ pageContext.servletContext.contextPath }/moveProject.do">보호센터정보</a></li>
+                        <li><a href="/runningdog/vlist.do">자원봉사모집</a></li>
                     </ul>
                 </div>
             </li>
             <li>
-                <a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a>
+                <a href="slist.do">후원하기</a>
             </li>
             <li>
-                <a href="/runningdog/views/issue/knowledgeList.jsp">상식/이슈</a>
+                <a href="cknowlist.do">상식/이슈</a>
                 <div class="dep2Wrap">
                     <ul class="dep2">
-                        <li><a href="/runningdog/views/issue/knowledgeList.jsp">반려동물상식</a></li>
-                        <li><a href="/runningdog/views/issue/issueList.jsp">오늘의 이슈</a></li>
+                        <li><a href="cknowlist.do">반려동물상식</a></li>
+                        <li><a href="cissuelist.do">오늘의 이슈</a></li>
                     </ul>
                 </div>
             </li>
-            <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
+           <li><a href="nlist.do">공지사항</a></li>
         </ul>
     </div>
     <!-- //상단메뉴 -->
@@ -71,31 +71,33 @@
         	<li>
                 <div><a href="#none">전체카테고리</a></div>
                 <ul class="depth2">
-                    <li><a href="aboutView.jsp">사이트소개</a></li>
+                    <li><a href="aboutView.do">사이트소개</a></li>
                     <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
                     <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
                     <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
-                    <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
+                    <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
                     <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
+                    <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
+                    <li><a href="nlist.do">공지사항</a></li>
                 </ul>
             </li>
             <li>
-                <div><a href="#none">후원하기</a></div>
+                <div><a href="slist.do">후원하기</a></div>
                 <ul class="depth2">
-                    <a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a>
+                    <a href="slist.do">후원하기</a>
                 </ul>
             </li>
             <li>
                 <div><a href="#none">콘텐츠</a></div>
                 <ul class="depth2">
-                    <li><a href="/runningdog/views/issue/knowledgeList.jsp">반려동물상식</a></li>
-                    <li><a href="/runningdog/views/issue/issueList.jsp">오늘의 이슈</a></li>
+                    <li><a href="cknowlist.do">반려동물상식</a></li>
+                    <li><a href="cissuelist.do">오늘의 이슈</a></li>
                 </ul>
             </li>
             <li>
                 <div><a href="#none">멤버</a></div>
                 <ul class="depth2">
-                    <li><a href="login.do?userId=${loginMember.userId}">로그인</a></li>
+                    <li><a href="login.do">로그인</a></li>
                     <li><a href="join.do">회원가입</a></li>
                     <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
                     <li><a href="/runningdog/views/mypage/myservice.jsp">나의 자원봉사</a></li>
@@ -117,15 +119,22 @@
         </dt>
     </dl>
     <ul class="mHeader_menu collapse" id="navbarSupportedContent">
-        <li><a href="/runningdog/"><i class="xi-home-o"></i> 홈으로</a></li>
+        <li><a href="main.do"><i class="xi-home-o"></i> 홈으로</a></li>
         <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
         <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
         <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
-        <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
-        <li><a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a></li>
+        <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
+        <li><a href="slist.do">후원하기</a></li>
         <li><a href="/runningdog/views/issue/knowledgeList.jsp">반려동물상식</a></li>
         <li><a href="/runningdog/views/issue/issueList.jsp">오늘의 이슈</a></li>
         <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
         <li><a href="/runningdog/views/about/aboutView.jsp">사이트소개</a></li>
+        <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
+        <li><a href="/runningdog/views/sponsor/sponsorList.jsp">후원하기</a></li>
+        <li><a href="cknowlist.do">반려동물상식</a></li>
+        <li><a href="cissuelist.do">오늘의 이슈</a></li>
+        <li><a href="/runningdog/views/mypage/myChatting.jsp">나의 채팅</a></li>
+        <li><a href="nlist.do">공지사항</a></li>
+        <li><a href="aboutView.do">사이트소개</a></li>
     </ul>
 </div>

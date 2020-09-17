@@ -1,162 +1,279 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <c:import url="../include/admin_head.jsp"/>
+<c:import url="/WEB-INF/views/admin/include/admin_head.jsp" />
 </head>
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
-    <div id="wrap">
-        <c:import url="../include/admin_header.jsp"/>
+<body oncontextmenu="return false" onselectstart="return false"
+	ondragstart="return false">
+	<div id="wrap">
+		<c:import url="/WEB-INF/views/admin/include/admin_header.jsp" />
 
-        <div id="container">
-            <c:import url="../include/admin_util.jsp"/>
+		<div id="container">
+			<c:import url="/WEB-INF/views/admin/include/admin_util.jsp" />
 
-            <!-- 상단 타이틀 -->
-            <div class="pageTitle">
-                <div class="adminPath">
-                    <h3>공지사항 관리</h3>
-                    <h2>| 리스트</h2>
-                </div>
-            </div>
-            <!-- //상단 타이틀 -->
+			<!-- 상단 타이틀 -->
+			<div class="pageTitle">
+				<div class="adminPath">
+					<h3>공지사항 관리</h3>
+					<h2>| 리스트</h2>
+				</div>
+			</div>
+			<!-- //상단 타이틀 -->
 
-            <!-- 본문내용 -->
-            <div class="list_wrap">
-                <!-- 검색영역 -->
-                <div class="sort-area">  
-                    <h4>전체 게시물 100개</h4>
-                    <form action="" method="get" id="">
-                    <div class="searchBox">
-                        <select name="search" class="ListSelect">
-                                <option value="">제목</option>
-                        </select>
-                        <div>
-                            <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
-                            <button type="submit" class="top-search"><i class="xi-search"></i></button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <!-- 검색영역 끝 -->
-                <table class="list">
-                    <colgroup>
-                        <col width="5%">
-                        <col width="5%">
-                        <col width="8%">
-                        <col width="*">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>선택</th>
-                            <th>번호</th>
-                            <th>공지여부</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>등록일</th>
-                            <th>첨부파일</th>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr class="hr">
-                            <th colspan="7"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='noticeView.jsp'">6</td>
-                            <td class="kinds" onclick="location='noticeView.jsp'"><span class="protect">공지</span></td>
-                            <td class="title" onclick="location='noticeView.jsp'">유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</td>
-                            <td class="name" onclick="location='noticeView.jsp'">관리자</td>
-                            <td class="date" onclick="location='noticeView.jsp'">2020.09.01</td>
-                            <td class="file" onclick="location='noticeView.jsp'"><i class="xi-file-text"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='noticeView.jsp'">5</td>
-                            <td class="kinds" onclick="location='noticeView.jsp'"></td>
-                            <td class="title" onclick="location='noticeView.jsp'">유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</td>
-                            <td class="name" onclick="location='noticeView.jsp'">관리자</td>
-                            <td class="date" onclick="location='noticeView.jsp'">2020.09.01</td>
-                            <td class="file" onclick="location='noticeView.jsp'"><i class="xi-file-text"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='noticeView.jsp'">4</td>
-                            <td class="kinds" onclick="location='noticeView.jsp'"></td>
-                            <td class="title" onclick="location='noticeView.jsp'">유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</td>
-                            <td class="name" onclick="location='noticeView.jsp'">관리자</td>
-                            <td class="date" onclick="location='noticeView.jsp'">2020.09.01</td>
-                            <td class="file" onclick="location='noticeView.jsp'"><i class="xi-file-text"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='noticeView.jsp'">3</td>
-                            <td class="kinds" onclick="location='noticeView.jsp'"></td>
-                            <td class="title" onclick="location='noticeView.jsp'">유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</td>
-                            <td class="name" onclick="location='noticeView.jsp'">관리자</td>
-                            <td class="date" onclick="location='noticeView.jsp'">2020.09.01</td>
-                            <td class="file" onclick="location='noticeView.jsp'"><i class="xi-file-text"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='noticeView.jsp'">2</td>
-                            <td class="kinds" onclick="location='noticeView.jsp'"></td>
-                            <td class="title" onclick="location='noticeView.jsp'">유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</td>
-                            <td class="name" onclick="location='noticeView.jsp'">관리자</td>
-                            <td class="date" onclick="location='noticeView.jsp'">2020.09.01</td>
-                            <td class="file" onclick="location='noticeView.jsp'"><i class="xi-file-text"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='noticeView.jsp'">1</td>
-                            <td class="kinds" onclick="location='noticeView.jsp'"></td>
-                            <td class="title" onclick="location='noticeView.jsp'">유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</td>
-                            <td class="name" onclick="location='noticeView.jsp'">관리자</td>
-                            <td class="date" onclick="location='noticeView.jsp'">2020.09.01</td>
-                            <td class="file" onclick="location='noticeView.jsp'"><i class="xi-file-text"></i></td>
-                        </tr>
-						<tr class="list-no">
-							<td colspan="7">
-								<p><img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
-								<h1>목록이 없습니다.</h1>
-							</td>
+			<!-- 공지사항 new 알람을 위한 한달 전 날짜 -->
+			<jsp:useBean id="nowDate" class="java.util.Date" />
+			<jsp:setProperty name="nowDate" property="time" value="${nowDate.time - 86400000 * 32}" />
+			<fmt:formatDate value="${nowDate}" type="date" pattern="yyyy/MM/dd" var="monthAgo" />
+
+			<!-- 본문내용 -->
+			<div class="list_wrap">
+				<!-- 검색영역 -->
+				<div class="sort-area">
+					<h4>전체 게시물 ${ noticePage.listCount }개</h4>
+					<form action="nlist.ad" method="get" id="">
+						<div class="searchBox">
+							<select name="searchNotice" class="ListSelect">
+								<!-- 검색분류가 비었을 경우 -->
+								<c:if test="${ empty noticePage.search or noticePage.search eq null}">
+									<option value="title">제목</option>
+									<option value="content">내용</option>
+									<option value="both">제목 + 내용</option>
+								</c:if>
+								<!-- 검색분류가 있을 경우 해당값 선택되어있게 하기 -->
+								<c:if test="${ !empty noticePage.search }">
+									<option value="title"
+										${ noticePage.search eq 'title' ? 'selected' : '' }>제목</option>
+									<option value="content"
+										${ noticePage.search eq 'content' ? 'selected' : '' }>내용</option>
+									<option value="both"
+										${ noticePage.search eq 'both' ? 'selected' : '' }>제목 + 내용</option>
+								</c:if>
+
+							</select>
+							<div>
+								<input type="text" name="keyword" placeholder="검색어를 입력해주세요." value="${ noticePage.keyword }">
+								<button type="submit" class="top-search">
+									<i class="xi-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- 검색영역 끝 -->
+				<table class="list">
+					<colgroup>
+						<col width="5%">
+						<col width="5%">
+						<col width="8%">
+						<col width="*">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th><input type="checkbox" name="allCheck" id="allCheck" value=""></th>
+							<th>번호</th>
+							<th>공지여부</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>등록일</th>
+							<th>첨부파일</th>
 						</tr>
-                    </tbody>
-                </table>
-                <p class="warning_text"> *삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p>
-                <!-- //게시판 -->
+						<tr>
+						</tr>
+						<tr class="hr">
+							<th colspan="7"></th>
+						</tr>
+					</thead>
+					<tbody>
 
-                <!-- 버튼 -->
-                <div class="list-btn">
-                    <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택삭제</button>
-                    <button type="button" id="" class="btn-right writeBtn" onclick="location='noticeWrite.jsp'"><i class="xi-pen-o"></i> 글작성</button>
-                </div>
-                <!-- //버튼 -->
+						<!-- 공지사항 목록 출력 -->
+						<c:forEach items="${ requestScope.list }" var="n">
+							<c:url var="ndurl" value="ndetail.ad">
+								<c:param name="noticeNo" value="${ n.noticeNo }" />
+								<c:param name="currentPage" value="${ noticePage.currentPage}" />
+								<!-- 검색값 유지 -->
+								<c:param name="search" value="${ noticePage.search }" />
+								<c:param name="keyword" value="${ noticePage.keyword }" />
+							</c:url>
+							<tr onclick="location='${ndurl}'">
+								<td onclick="event.cancelBubble=true">
+								<input type="checkbox" name="checkDel" id="" value="${ n.noticeNo }"></td>
+								<td class="number">${ n.noticeNo }</td>
+								<td class="kinds">
+								<c:if test="${ !empty n.noticeState }">
+									<span class="protect">공지</span>
+								</c:if> 
+								<c:if test="${ empty n.noticeState }">
+									<fmt:formatDate value="${n.noticeDate}" type="date" pattern="yyyy/MM/dd" var="ndate" />
+									<c:if test="${monthAgo < ndate}">
+									<!-- 공지사항 작성일이 한달안에 작성된 공지사항은 new 알림-->
+										<span class="protect">new</span>
+									</c:if>
+								</c:if></td>
+								<td class="title">${ n.noticeTitle }</td>
+								<td class="name">${ n.noticeWriter }</td>
+								<td class="date">${ n.noticeDate }</td>
+								<td class="file">
+								<c:if test="${ !empty n.noticeOriginalFilename1 || !empty n.noticeOriginalFilename2 || !empty n.noticeOriginalFilename3 }">
+									<i class="xi-file-text"></i>
+								</c:if></td>
 
-                <!-- 페이징 -->
-                <dl class="list-paging">
-                    <dd>
-                   		<a href="#none"><i class="xi-angle-left"></i></a>
-                        <a href="#none" class="active">1</a>
-                        <a href="#none">2</a>
-                        <a href="#none">3</a>
-                        <a href="#none">4</a>
-                        <a href="#none">5</a>
-                        <a href="#none"><i class="xi-angle-right"></i></a>
-                    </dd>
-                </dl>
-                <!-- //페이징 -->
+							</tr>
 
-            </div>
-        </div>
-        <c:import url="../include/admin_footer.jsp"/>
-    </div>
+						</c:forEach>
+
+						<!-- 목록이 없을 때 -->
+						<c:if test="${ noticePage.listCount eq 0 }">
+							<tr class="list-no">
+								<td colspan="7">
+									<p>
+										<img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" />
+									</p>
+									<h1>목록이 없습니다.</h1>
+								</td>
+							</tr>
+						</c:if>
+
+					</tbody>
+				</table>
+				<p class="warning_text">*삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p>
+				<!-- //게시판 -->
+
+				<!-- 버튼 -->
+				<div class="list-btn">
+					<button type="button" id="selectDel" class="btn-left chkBtn" onclick="selectDel()">
+						<i class="xi-cut"></i> 선택삭제
+					</button>
+					<button type="button" id="" class="btn-right writeBtn"
+						onclick="location='ninview.ad'">
+						<i class="xi-pen-o"></i> 글작성
+					</button>
+				</div>
+				<!-- //버튼 -->
+
+				<!-- 페이징 -->
+				<dl class="list-paging">
+					<dd>
+						<!-- 이전 그룹 페이지 이동 -->
+						<c:if test="${ (noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) ge 1 }">
+							<c:url var="npurl1" value="nlist.ad">
+								<c:param name="page" value="${ noticePage.startPage - 5 }" />
+								<!-- 검색값 유지 -->
+								<c:param name="searchNotice" value="${ noticePage.search }" />
+								<c:param name="keyword" value="${ noticePage.keyword }" />
+							</c:url>
+							<a href="${ npurl1 }"><i class="xi-angle-left"></i></a>
+						</c:if>
+						<%-- <c:if test="${ !((noticePage.currentPage - 5) lt noticePage.startPage and (noticePage.currentPage - 5) >= 1) }">
+							 	<a href="#none"><i class="xi-angle-left"></i></a>
+							</c:if> --%>
+
+						<!-- 현재 페이지가 속한 페이지그룹의 숫자 출력 처리  -->
+						<c:forEach var="p" begin="${ noticePage.startPage }" end="${ noticePage.endPage }" step="1">
+							<c:if test="${ p eq noticePage.currentPage }">
+								<a href="#none" class="active">${ p }</a>
+							</c:if>
+							<c:if test="${ p ne noticePage.currentPage }">
+								<c:url var="npurl2" value="nlist.ad">
+									<c:param name="page" value="${ p }" />
+									<!-- 검색값 유지 -->
+									<c:param name="searchNotice" value="${ noticePage.search }" />
+									<c:param name="keyword" value="${ noticePage.keyword }" />
+								</c:url>
+								<a href="${ npurl2 }">${ p }</a>
+							</c:if>
+						</c:forEach>
+
+						<!-- 다음 그룹 페이지 이동 -->
+						<c:if test="${ (noticePage.currentPage + 5) gt noticePage.endPage and noticePage.endPage lt noticePage.maxPage }">
+							<c:url var="npurl3" value="nlist.ad">
+								<c:param name="page" value="${ noticePage.startPage + 5 }" />
+								<!-- 검색값 유지 -->
+								<c:param name="searchNotice" value="${ noticePage.search }" />
+								<c:param name="keyword" value="${ noticePage.keyword }" />
+							</c:url>
+							<a href="${ npurl3 }"><i class="xi-angle-right"></i></a>
+						</c:if>
+						<%-- <c:if test="${ !((noticePage.currentPage + 5) > noticePage.endPage and noticePage.endPage < noticePage.maxPage) }">
+								<a href="#none"><i class="xi-angle-right"></i></a>
+							</c:if> --%>
+					</dd>
+				</dl>
+				<!-- //페이징 -->
+
+			</div>
+		</div>
+		<c:import url="/WEB-INF/views/admin/include/admin_footer.jsp" />
+	</div>
+	
+	<script type="text/javascript">
+	/* 전체삭제(th)에 있는 체크 박스 클릭시 아래 체크들 전체 체크 */
+	$("#allCheck").on("click", function(){
+		var chk = $("#allCheck").prop("checked");
+		if(chk) {
+			$("input[name=checkDel]").prop("checked", true);
+		} else {
+			$("input[name=checkDel]").prop("checked", false);
+		}
+	});	
+	
+	/* 개별 선택 체크시 전체삭제 체크가 풀어지는거 */
+	$("input[name=checkDel]").on("click", function(){
+		$("#allCheck").prop("checked", false);
+		
+		/* 개별 선택 체크가 모두 체크됬을 경우 전체 삭제 체크 되게 하기 */
+		if($("input[name=checkDel]:checked").length == $("input[name=checkDel]").length){
+			$("#allCheck").prop("checked", true);
+		}
+	});
+	
+	/* 선택삭제 버튼을 클릭했을 때 */
+	function selectDel(){
+		var confirm_val;
+		if($("input[name=checkDel]:checked").length == 0) {
+			alert("삭제할 대상을 선택하세요.")
+		} else {
+			confirm_val = confirm('삭제된 게시물은 되돌릴 수 없습니다.\n정말 삭제하시겠습니까?');
+		}
+		
+		if(confirm_val){
+			console.log("삭제가 선택되었습니다.");
+			var checkArr = new Array();
+			
+			$("input[name=checkDel]:checked").each(function(){
+				checkArr.push($(this).val());
+			});
+			console.log(checkArr);
+			
+			$.ajax({
+				url : "ndelete.ad",
+				type : "post",
+				data : { checkDel : checkArr },
+				success : function(result){
+					if(result == 1) {
+						alert("삭제되었습니다.")
+						location.href = "nlist.ad";
+					} else {
+						alert("삭제 실패");
+					}
+				},
+				error : function(request, status, errorData){
+					console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+				}
+			}); //ajax
+		}
+	}
+	
+	</script>
+	
+	
+	
 </body>
 </html>

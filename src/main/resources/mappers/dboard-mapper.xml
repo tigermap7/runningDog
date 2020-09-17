@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dboardMapper">
+
+	<resultMap type="Dboard" id="resultDboard">
+		<id column="d_num" property="dNum" />
+		<result column="user_id" property="userId" />
+		<result column="unique_num" property="uniqueNum" />
+		<result column="d_writer" property="dWriter" />
+		<result column="d_title" property="dTitle" />
+		<result column="d_content" property="dContent" />
+		<result column="d_find_date" property="dFindDate" />
+		<result column="d_find_local" property="dFindLocal" />
+		<result column="d_gender" property="dGender" />
+		<result column="d_category" property="dCategory" />
+		<result column="d_local" property="dLocal" />
+		<result column="d_phone" property="dPhone" />
+		<result column="d_point" property="dPoint" />
+		<result column="d_date" property="dDate" />
+		<result column="d_mdate" property="dMdate" />
+		<result column="d_count" property="dCount" />
+		<result column="map_x" property="mapX" />
+		<result column="map_y" property="mapY" />
+		<result column="d_check" property="dCheck" />
+		<result column="d_success" property="dSuccess" />
+		<result column="view_image" property="viewImage" />
+		<result column="list_image" property="listImage" />
+		
+			
+	</resultMap>
+	
+	<resultMap type="Dboard" id="resultNew4">
+		<result column="d_num" property="dNum" />
+		<result column="d_title" property="dTitle" />
+		<result column="d_count" property="dCount" />
+	</resultMap>
+	
+	<!-- 비교연산자를 쿼리문에 그냥 사용하면 태그 엘리먼트 꺽쇠( < , > , &) 과 혼동하는 문제가 발생할 수 있음.
+	이 문제를 미연에 방지하기 위해 xml 코드 중 xml parser 에 의해 해석하지 말고
+	문장 그래도 해석하라는 뜻으로 
+	<![CDATA[ 쿼리문장]]> 사용함 -->
+	
+	
+	<select id="selectNew4" resultMap="resultNew4">
+		<![CDATA[ 
+		SELECT * 
+		FROM (SELECT ROWNUM RNUM, BOARD_NUM, BOARD_TITLE, BOARD_READCOUNT  
+			  FROM(SELECT * 
+					FROM BOARD 
+					WHERE BOARD_LEVEL = 0 
+					ORDER BY BOARD_READCOUNT DESC)) 
+		WHERE RNUM >=1 AND RNUM <=4
+		]]>
+	</select>
+	
+	<select id="selectListCount" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="int">
+		SELECT COUNT(*)
+		FROM DBOARD
+		WHERE 1=1
+		<if test="searchFiled != null and searchFiled !=''">
+			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+		</if>
+		<if test="dCategory != null and dCategory !=''">
+			AND d_category LIKE  '%' || #{dCategory} || '%'
+		</if>
+		<if test="dLocal != null and dLocal !=''">
+			AND D_LOCAL = #{dLocal}
+		</if>
+	</select>
+	
+	<select id="selectList" parameterType="com.kh.runningdog.dboard.model.vo.Dboard" resultType="com.kh.runningdog.dboard.model.vo.Dboard">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, D_NUM, USER_ID, UNIQUE_NUM, D_WRITER, D_TITLE, D_CONTENT, D_FIND_DATE,
+			  D_FIND_LOCAL, D_GENDER, D_CATEGORY, D_LOCAL, D_PHONE, D_POINT, D_DATE, D_MDATE, D_COUNT,
+			  MAP_X, MAP_Y, D_CHECK, D_SUCCESS, VIEW_IMAGE, LIST_IMAGE
+			  FROM (SELECT *
+			  		FROM DBOARD WHERE D_CHECK = 'y' 
+			  		<if test="searchFiled != null and searchFiled !=''">
+					AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+					</if>
+					<if test="dCategory != null and dCategory !=''">
+					AND D_CATEGORY LIKE  '%' || #{dCategory} || '%'
+					</if>
+					<if test="dLocal != null and dLocal !=''">
+					AND D_LOCAL = #{dLocal}
+					</if>
+					ORDER BY D_NUM DESC))
+		WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}
+	</select>
+	
+	<select id="selectOne" parameterType="_int" resultMap="resultDboard">
+		SELECT * FROM DBOARD WHERE D_NUM = #{ dNum }
+	</select>
+	
+	<insert id="insertDboard" parameterType="Dboard">
+		INSERT INTO DBOARD
+		VALUES (DBOARD_NUM_SEQ.NEXTVAL,
+			   #{ userId },
+			   #{ uniqueNum },
+			   #{ dWriter },
+			   #{ dTitle },
+			   #{ dContent },
+			   #{ dFindDate },
+			   #{ dFindLocal },
+			   #{ dGender },
+			   #{ dCategory },
+			   #{ dLocal },
+			   #{ dPhone },
+			   #{ dPoint },
+			   SYSDATE,
+			   SYSDATE,
+			   DEFAULT,
+			   #{ mapX },
+			   #{ mapY },
+			   DEFAULT,
+			   DEFAULT,
+			   #{ viewImage, jdbcType=VARCHAR},
+			   #{ listImage, jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateDboard" parameterType="Dboard">
+		UPDATE DBOARD SET
+			   D_TITLE = #{ dTitle },
+			   D_CONTENT = #{ dContent },
+			   D_FIND_DATE = #{ dFindDate },
+			   D_FIND_LOCAL = #{ dFindLocal },
+			   D_GENDER = #{ dGender },
+			   D_CATEGORY = #{ dCategory },
+			   D_LOCAL = #{ dLocal },
+			   D_PHONE = #{ dPhone },
+			   D_POINT = #{ dPoint },
+			   D_MDATE = SYSDATE,
+			   MAP_X = #{ mapX },
+			   MAP_Y = #{ mapY },
+			   VIEW_IMAGE = #{ viewImage },
+			   LIST_IMAGE = #{ listImage }
+		WHERE D_NUM = #{ dNum }
+	</update>
+	
+	<update id="updateDboardHide" parameterType="Dboard">
+		UPDATE DBOARD SET
+			   D_CHECK = 'n'
+		WHERE D_NUM = #{ dNum }
+	</update>
+	
+	<update id="updateDboardSuc" parameterType="com.kh.runningdog.dboard.model.vo.Dboard">
+		UPDATE DBOARD SET
+		<if test='dSuccess.equals("y")'>
+			   D_SUCCESS = 'n'
+		</if>
+		<if test='dSuccess.equals("n")'>
+			   D_SUCCESS = 'y'
+		</if>
+		WHERE D_NUM = #{ dNum }	
+	</update>
+</mapper>

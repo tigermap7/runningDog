@@ -105,7 +105,7 @@
 .profile dd {
     float: right;
     width:55%;
-    padding: 20px 20px;
+    padding: 10px 20px;
 }
 .profile dd div {
     line-height: 32px;
@@ -113,7 +113,26 @@
 }
 .profile dd div span {
 	color: #555;
+    font-size: 15px;
 }
+.profile dd div.loginType i {
+    font-size: 28px;
+    vertical-align: middle;
+}
+.profile dd div.loginType i.xi-kakaotalk {
+    color: #333;
+    background-color: #ffcd00;
+}
+.profile dd div.loginType i.xi-facebook-official {
+    color: #4867aa;
+}
+.profile dd div.loginType i.xi-naver-square {
+    color: #03cf5d;
+}
+
+
+
+
 
 
 /* 게시판 리스트 */
@@ -223,6 +242,8 @@
     font-size: 18px;
 }
 
+
+
 /*탈퇴회원*/
 .list_wrap .listTwo thead tr {
     background-color: #444;
@@ -236,7 +257,6 @@
 .list_wrap .listTwo tbody tr:nth-child(2n):hover {
     background-color: #f1f1f1;
 }
-/**/
 .list_wrap .list tbody tr td.kinds span {
     color: #fff;
     font-weight: 500;
@@ -910,12 +930,20 @@
     line-height: normal;
     border: 1px solid #999;
 }
-.adminInfo_wrap .adminInfo tbody tr td.gender label {
+.adminInfo_wrap .adminInfo tbody tr td select {
+    height: 36px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    color: #777;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.adminInfo_wrap .adminInfo tbody tr td label {
     margin-right: 1.25rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
     padding: 0.1875rem 0.625rem;
 }
-.adminInfo_wrap .adminInfo tbody tr td.gender label input[type="radio"] {
+.adminInfo_wrap .adminInfo tbody tr td label input[type="checkbox"] {
     width: 18px !important;
     height: 18px !important;
     margin: 0;
@@ -938,16 +966,19 @@
 .adminInfo_wrap .adminInfo tbody tr td i {
 	font-size: 40px;
 }
-.adminInfo_wrap .adminInfo tbody tr td i.xi-kakaotalk {
-    color: #333;
-    background-color: #ffcd00;
+.adminInfo_wrap .adminInfo tbody tr td p {
+	margin: 0;
 }
-.adminInfo_wrap .adminInfo tbody tr td .xi-facebook-official {
-    color: #4867aa;
+.adminInfo_wrap .adminInfo tbody tr td p span {
+    padding: 5px 5px 10px;
+    display: block;
+    font-size: 0.9375rem;
+    color: red;
+    text-align: left;
+    width: 80%;
+    word-break: break-all;
 }
-.adminInfo_wrap .adminInfo tbody tr td i.xi-naver-square {
-    color: #03cf5d;
-}
+
 
 
 
@@ -1107,10 +1138,29 @@
 }
 /* 페이징 끝 */
 
-/*맵API*/
-.mapAPI {
-    margin: 3rem 0;
+
+/*이용약관*/
+.privacyCke_con {
+    width: 100%;
 }
+.privacyCke_con textarea {
+    display: none;
+    position: relative;
+    margin-top: 0.9375rem;
+    padding: 0.9375rem 0.625rem;
+    width: 100%;
+    min-height: 12.5rem;
+    max-height: 12.5rem;
+    background-color: #f3f3f3;
+    border: 1px solid #aaa;
+    font-size: 0.875rem;
+    color: #555;
+}
+.privacyCke_con textarea.on {
+    display: block;
+}
+
+
 
 
 /*댓글*/
@@ -1245,6 +1295,7 @@
     margin-bottom: 0;
 }
 
+
 /*이미지swiper*/
 .viewImg .swiper-container {
     width: 100%;
@@ -1274,6 +1325,15 @@
     opacity: 1;
 }
 
+
+
+
+
+
+/*지도 api*/
+.mapAPI {
+    margin: 3rem 0;
+}
 .map_wrap {
 	position: relative;
 	width: 100%;

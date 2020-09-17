@@ -6,6 +6,18 @@
 <html>
 <head>
     <c:import url="../include/admin_head.jsp"/>
+    <script>
+    $(function(){
+        $(".privacyCke a.con1").click(function(){
+            $(".privacyCke_con textarea.con2").removeClass('on');
+            $(".privacyCke_con textarea.con1").toggleClass('on');
+        });
+        $(".privacyCke a.con2").click(function(){
+            $(".privacyCke_con textarea.con1").removeClass('on');
+            $(".privacyCke_con textarea.con2").toggleClass('on');
+        });
+    });
+	</script>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
@@ -76,6 +88,26 @@
                                 <span></span>
                             </p>
                             </td>
+                        </tr>
+                        <tr>
+                            <td>관리자 권한부여</td>
+                            <td>
+                                <select name="adminChk" class="adminChk" id="adminChk">     
+		                            <option value="N">일반 회원</option>                   
+		                            <option value="Y">관리자 권한부여</option>
+                       			</select>
+	                            <p id="adminChkWarning">
+	                            </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="privacyCke" style="text-align:center;">
+                            	<label><input type="checkbox" name="" id="chkY"/>서비스의 <a href="#none" class="con1">이용약관</a>과 <a href="#none" class="con2">개인정보처리방침</a>에 동의합니다.</label>
+		                        <div class="privacyCke_con">
+		                            <c:import url="/WEB-INF/views/include/termsCon.jsp"/>
+		                            <c:import url="/WEB-INF/views/include/privacyCon.jsp"/>
+		                        </div>
+							</td>
                         </tr>
                     </tbody>
                 </table>

@@ -58,11 +58,11 @@
                         <col width="5%">
                         <col width="*">
                         <col width="10%">
-                        <col width="8%">
                         <col width="15%">
                         <col width="10%">
                         <col width="10%">
                         <col width="8%">
+                        <col width="6%">
                         <col width="6%">
                     </colgroup>
                     <thead>
@@ -71,12 +71,12 @@
                             <th>번호</th>
                             <th>아이디(이메일)</th>
                             <th>닉네임</th>
-                            <th>회원번호</th>
                             <th>휴대폰번호</th>
                             <th>가입일</th>
                             <th>최근접속일</th>
                             <th>로그인유형</th>
                             <th>접근제한</th>
+                            <th>관리자</th>
                         </tr>
                         <tr>
                         </tr>
@@ -97,9 +97,8 @@
 	                           <td class="number" onclick="location='${ memberView }'">${ listNo }</td>
 	                           <td class="userId" onclick="location='${ memberView }'">${ member.userId }</td>
 	                           <td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${savePath}${member.renameProfile}"/>${ member.nickname }</td>
-	                           <td class="gender" onclick="location='${ memberView }'">#${ member.uniqueNum }</td>
 	                           <td class="phone" onclick="location='${ memberView }'">${ member.phone }</td>
-	                           <td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy-MM-dd" value="${ member.joinDate }"/></td>
+	                           <td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.joinDate }"/></td>
 	                           <td class="lastAccessDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.lastAccessDate }"/></td>
 	                           <c:if test="">
 	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
@@ -115,6 +114,7 @@
 	                           </c:if>
 	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
 	                           <td class="loginLimit" onclick="location='${ memberView }'">${ member.loginLimit }</td>
+	                           <td class="adminChk" onclick="location='${ memberView }'">${ member.adminChk }</td>
 	                       <c:set var="listNo" value="${listNo - 1}"/>
 	                       </tr>
 	                   	</c:forEach>
@@ -157,7 +157,7 @@
                    		<a href="#none"><i class="xi-angle-left"></i></a>
                     </c:if>
                     
-                   	<c:forEach var="p" begin="${ memberPage.startPage }" end="${ memberPage.maxPage }">
+                   	<c:forEach var="p" begin="${ memberPage.startPage }" end="${ memberPage.endPage }">
                    		<c:if test="${ p eq memberPage.currentPage }">
                         <a href="#none" class="active">${ p }</a>
                         </c:if>
@@ -173,7 +173,7 @@
                     </c:forEach>
                     
 					
-                   	<c:if test="${ memberPage.currentPage < memberPage.endPage }">
+                   	<c:if test="${ memberPage.currentPage <= memberPage.maxPage }">
                    	<c:url var="nextPaging" value="allMember.ad">
 						<c:param name="page" value="${ memberPage.currentPage + 1 }" />
 						<!-- 검색값 유지 -->
@@ -182,7 +182,7 @@
                   		</c:url>
                         <a href="${ nextPaging }"><i class="xi-angle-right"></i></a>
                     </c:if>
-                   	<c:if test="${ memberPage.currentPage >= memberPage.endPage }">
+                   	<c:if test="${ memberPage.currentPage > memberPage.maxPage }">
                    		<a href="#none"><i class="xi-angle-right"></i></a>
                     </c:if>
                         

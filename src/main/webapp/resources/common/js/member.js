@@ -265,15 +265,13 @@ $(function () {
 	            contentType: false, // 필수
 	            cache: false,
 				success : function(data) {
-	            	if(data == "myinfoOk") {
-//	    				// object ==> string으로 변환
-//	    				var jsonStr = JSON.stringify(data);
-//	    				// string ==> json 객채로 바꿈
-//	    				var json = JSON.parse(jsonStr);
+            		console.log("data : " + data);
+            		$('.profilImage').text(data.originalProfile);
+            		$('#nicknameChk').values(data.nickname);
+            		$('#phoneChk').values(data.phone);
+            		
+	            	if(data == "data") {
 	            		
-	            		
-//	            		console.log("myinfoOk : " + data);
-//	            		console.log("myinfoOk : " + "myinfoOk");
 	        			alert('나의 프로필 변경이 완료되었습니다.');
 	        			window.location.href='mypage.do';
 	                } else if(data == "notNickname") {

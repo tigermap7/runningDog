@@ -39,14 +39,31 @@
 						</div>
 					</dt>
 					<dd>
+						<div name="uniqueNum"><span>회원번호</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.uniqueNum}</div>
 						<div><span>아이디(이메일)</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.userId}</div>
 						<div><span>닉네임</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.nickname}</div>
 						<div><span>전화번호</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.phone}</div>
 						<div><span>가입일</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.joinDate}</div>
 						<div><span>최근접속일</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.lastAccessDate}</div>
+						<div class="loginType"><span>로그인유형</span>&nbsp;&nbsp;:&nbsp;&nbsp;
+							<i class="xi-kakaotalk"></i>
+							<c:if test="${ selectUser.loginType }">
+							<i class="xi-kakaotalk"></i>
+							</c:if>
+							<c:if test="${ selectUser.loginType }">
+							<i class="xi-facebook-official"></i>
+							</c:if>
+							<c:if test="${ selectUser.loginType }">
+							<i class="xi-naver-square"></i></td>
+							</c:if>
+							<c:if test="${ selectUser.loginType }">
+							일반
+							</c:if>
+						</div>
 					</dd>
 				</dl>
 				<!-- 프로필 끝 -->
+				<form method="post" action="memberModified.do" enctype="multipart/form-data">
                 <table class="adminInfo">
                     <colgroup>
                         <col width="25%">
@@ -58,15 +75,20 @@
                         <tr>
                             <td>아이디(이메일)</td>
                             <td colspan="3">
-	                            <input type="text" name="userId" title="아이디(이메일)" id="userIdChk" class="form-control w80p" placeholder="아이디(이메일)" value="${ selectUser.userId }"/>
-	                            <p id="idWarning">
-	                                <span></span>
-	                            </p>
+	                            <input type="text" name="userId" title="아이디(이메일)" id="userIdChk" class="form-control w80p" placeholder="아이디(이메일)" value="${ selectUser.userId }" readonly/>
                             </td>
                         </tr>
                         <tr>
                             <td>프로필 사진</td>
-                            <td colspan="3"><input type="file" name="profilImage" title="프로필 사진"/></td>
+                            <td colspan="3">
+                                <c:if test="${ !empty selectUser.originProfile }">
+								${ loginMember.originProfile } &nbsp;
+								<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+								</c:if>
+								<c:if test="${ empty selectUser.originProfile }">
+								<input type="file" name="profilImage" title="프로필 사진"/>
+								</c:if>
+                            </td>
                         </tr>
                         <tr>
                             <td>닉네임</td>
@@ -80,37 +102,35 @@
                         <tr>
                             <td>휴대폰번호</td>
                             <td colspan="3" class="tel">
-	                            <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력" value="${ selectUser.phone }"/>
-	                            <p id="phoneWarning">
-	                                <span></span>
-	                            </p>
+	                            <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력" value="${ selectUser.phone }" readonly/>
                             </td>
                         </tr>
                         <tr>
-                            <td>로그인유형</td>
-                            <td class="loginType">
-								<i class="xi-kakaotalk"></i>
-								<c:if test="${ selectUser.loginType }">
-								<i class="xi-kakaotalk"></i>
-								</c:if>
-								<c:if test="${ selectUser.loginType }">
-								<i class="xi-facebook-official"></i>
-								</c:if>
-								<c:if test="${ selectUser.loginType }">
-								<i class="xi-naver-square"></i></td>
-								</c:if>
-								<c:if test="${ selectUser.loginType }">
-								일반
-								</c:if>
-                            </td>
-                            <td>로그인 제한여부</td>
-                            <td class="loginLimit">
-                                <select name="loginLimit" class="loginLimit">                        
-		                            <option value="Y">Y</option>
-		                            <option value="N">N</option>
+                            <td>관리자 권한여부</td>
+                            <td class="adminChk">
+                                <select name="adminChk" class="adminChk">
+                                	<c:if test="${ selectUser.adminChk == 'Y' }">
+		                            <option value="Y" selected>관리자 권한부여</option>
+		                            <option value="N">일반 회원</option>         
+                                	</c:if>
+                                	<c:if test="${ selectUser.adminChk == 'N' }">
+		                            <option value="Y">관리자 권한부여</option>
+		                            <option value="N" selected>일반 회원</option>                   
+                                	</c:if>
                        			</select>
-	                            <p id="loginLimitWarning">
-	                            </p>
+                            </td>
+                            <td style="text-align:center;">로그인 제한여부</td>
+                            <td class="loginLimit">
+                                <select name="loginLimit" class="loginLimit">
+                                	<c:if test="${ selectUser.loginLimit == 'Y'}">
+		                            <option value="Y" selected>로그인 제한 ◎</option>
+		                            <option value="N">로그인 제한 x</option>                   
+                                	</c:if>
+                                	<c:if test="${ selectUser.loginLimit == 'N'}">
+		                            <option value="Y">로그인 제한 ◎</option>
+		                            <option value="N" selected>로그인 제한 x</option>                   
+                                	</c:if>
+                       			</select>
                             </td>
                         </tr>
                         <tr>
@@ -122,6 +142,7 @@
                     <input type="reset" class="btn btn-list" value="취소하기">
                     <input type="submit" class="btn btn-success" value="수정하기">
                 </div>
+                </form>
 
             </div>
         </div>

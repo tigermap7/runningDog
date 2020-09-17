@@ -1,4 +1,4 @@
-package com.kh.runningdog.member.model.service;
+package com.kh.runningdog.member.model.vo;
 
 import java.util.Random;
 
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FindUtil {
-	
 	
 	public FindUtil() {}
 	

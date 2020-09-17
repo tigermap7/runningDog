@@ -142,7 +142,7 @@
                             <p>필요한 편의시설의 정보를 한눈에!</p>
                         </li>
                         <li>
-                            <a href="#none" class="xi-plus-circle-o"></a>
+                            <a href="slist.do" class="xi-plus-circle-o"></a>
                             <h2>후원하기 <i class="xi-piggy-bank"></i></h2>
                             <p>작은 천사에게 필요한 용품을 후원할 수 있어요!</p>
                         </li>
@@ -295,12 +295,12 @@
                             </p>
                         </li>
                         <li>
-                            <a href="#none" class="xi-plus-circle-o"></a>
+                            <a href="cknowlist.do" class="xi-plus-circle-o"></a>
                             <h2>상식/이슈 <i class="xi-message-o"></i></h2>
                             <p>사랑스러운 반려동물의<br/>유용한 소식을 알려드립니다.</p>
                         </li>
                         <li>
-                            <a href="#none" class="xi-plus-circle-o"></a>
+                            <a href="nlist.do" class="xi-plus-circle-o"></a>
                             <h2>공지사항 <i class="xi-bell-o"></i></h2>
                             <p>'지금 달려갈 개'의<br/>공지사항을 꼭 확인해주세요.</p>
                         </li>

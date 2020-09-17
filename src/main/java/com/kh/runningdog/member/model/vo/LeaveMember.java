@@ -2,7 +2,8 @@ package com.kh.runningdog.member.model.vo;
 
 public class LeaveMember implements java.io.Serializable {
 	private static final long serialVersionUID = 1112L;
-	
+
+	private int listMemberNo;
 	private int lUniqueNum;
 	private String lUserId;
 	private String lUserPwd;
@@ -14,9 +15,10 @@ public class LeaveMember implements java.io.Serializable {
 
 	public LeaveMember() {}
 
-	public LeaveMember(int lUniqueNum, String lUserId, String lUserPwd, String lNickname, String lPhone,
-			String lJoinDate, String lLeaveDate, String lLoginType) {
+	public LeaveMember(int listMemberNo, int lUniqueNum, String lUserId, String lUserPwd, String lNickname,
+			String lPhone, String lJoinDate, String lLeaveDate, String lLoginType) {
 		super();
+		this.listMemberNo = listMemberNo;
 		this.lUniqueNum = lUniqueNum;
 		this.lUserId = lUserId;
 		this.lUserPwd = lUserPwd;
@@ -25,6 +27,14 @@ public class LeaveMember implements java.io.Serializable {
 		this.lJoinDate = lJoinDate;
 		this.lLeaveDate = lLeaveDate;
 		this.lLoginType = lLoginType;
+	}
+
+	public int getListMemberNo() {
+		return listMemberNo;
+	}
+
+	public void setListMemberNo(int listMemberNo) {
+		this.listMemberNo = listMemberNo;
 	}
 
 	public int getlUniqueNum() {
@@ -97,8 +107,9 @@ public class LeaveMember implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "LeaveMember [lUniqueNum=" + lUniqueNum + ", lUserId=" + lUserId + ", lUserPwd=" + lUserPwd
-				+ ", lNickname=" + lNickname + ", lPhone=" + lPhone + ", lJoinDate=" + lJoinDate + ", lLeaveDate="
-				+ lLeaveDate + ", lLoginType=" + lLoginType + "]";
+		return "LeaveMember [listMemberNo=" + listMemberNo + ", lUniqueNum=" + lUniqueNum + ", lUserId=" + lUserId
+				+ ", lUserPwd=" + lUserPwd + ", lNickname=" + lNickname + ", lPhone=" + lPhone + ", lJoinDate="
+				+ lJoinDate + ", lLeaveDate=" + lLeaveDate + ", lLoginType=" + lLoginType + "]";
 	}
+
 }
