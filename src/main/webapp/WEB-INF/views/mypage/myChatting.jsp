@@ -57,7 +57,7 @@
                                 <col width="10%">
                             </colgroup>
                             <tbody id="chatList">
-                            	<c:forEach var="room" items="${list}">
+                            	<%-- <c:forEach var="room" items="${list}">
                                 <tr onclick="javascript:location.href='moveChattingView.do?roomNo=${room.getRoomNo()}&receiver=${room.getNickname()}&receiverNo=${room.getMemberNo()}'">
                                     <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
                                     <td class="title">
@@ -67,7 +67,7 @@
                                     <!-- <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td> -->
                                     <td><span>5</span></td>
                                 </tr>
-                            	</c:forEach>
+                            	</c:forEach> --%>
                             </tbody>
                         </table>
                         <!-- 페이징 -->
@@ -93,6 +93,8 @@
 		
 		<script type="text/javascript">
 			function chatList() {
+				var myChatList = ${sessionScope.myChatList};
+				console.log(myChatList);
 				$.ajax({
 					url: "chatList.do",
 					type: "get",
@@ -104,15 +106,19 @@
 						
 						var values = ""; 
 						for ( var i in json.list) {
-							values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + json.list[i].roomNo 
-									+ "&receiver=" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") 
-									+ "&receiverNo=" + json.list[i].receiverNo + "'\">"
-	                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
-	                            	+ "<td class=\"title\">"
-	                                + "<h2>" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") + "<span>" + json.list[i].lastdate + "일 마지막 응답</span></h2>"
-	                                + "<p>lastmessage</p></td>"
-	                                + "<td><span>"+ json.list[i].unread +"</span></td></tr>"
-	                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
+							for ( var roomNo in myChatList) {
+								if (myChatList[roomNo] == json.list[i].roomNo) {
+									values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + json.list[i].roomNo 
+											+ "&receiver=" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") 
+											+ "&receiverNo=" + json.list[i].receiverNo + "'\">"
+			                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
+			                            	+ "<td class=\"title\">"
+			                                + "<h2>" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") + "<span>" + json.list[i].lastdate + "일 마지막 응답</span></h2>"
+			                                + "<p>lastmessage</p></td>"
+			                                + "<td><span>"+ json.list[i].unread +"</span></td></tr>"
+			                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
+								}
+							}
 						} // for in
 
 						$("#chatList").html(values);
@@ -126,7 +132,7 @@
 				    }
 				});
 			};
-    		setTimeout(chatList, 500);
+    		setTimeout(chatList, 10);
 		</script>
 	</body>
 </html>
