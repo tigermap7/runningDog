@@ -684,7 +684,6 @@
 }
 .chattingView_wrap .chattingView .user_left dd span {
     float: left;
-    max-width: 20%;
     margin-left: 0.9375rem;
     color: #999;
     min-height: 3.75rem;
