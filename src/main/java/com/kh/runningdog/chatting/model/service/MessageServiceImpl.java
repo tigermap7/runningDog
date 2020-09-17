@@ -1,5 +1,7 @@
 package com.kh.runningdog.chatting.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,11 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public int insertChatLog(Message saveMessage) {
 		return messageDao.insertChatLog(saveMessage);
+	}
+
+	@Override
+	public ArrayList<Message> selectChatLog(int roomNo) {
+		return messageDao.selectChatLog(roomNo);
 	}
 
 }

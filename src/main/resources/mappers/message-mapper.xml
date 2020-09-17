@@ -21,6 +21,10 @@
 		<result property="content" column="content"/>
 	</resultMap>
 	
+	<select id="selectChatLog" parameterType="_int" resultType="Message">
+		select * from message where roomno = #{roomNo} order by messageno
+	</select>
+	
 	<insert id="insertChatLog" parameterType="Message">
 		insert into message
 		values(MESSAGE_SEQ.nextval, #{roomNo}, #{sender}, #{receiver}, #{sendTime}, #{content})

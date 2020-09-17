@@ -69,6 +69,22 @@
                                     <h3><i class="xi-comment-o"></i> 채팅안내</h3>
                                     <p>욕설, 모욕, 상대방이 불쾌할 수 있는 언어의 사용을 금지합니다. 이웃끼리 매너있는 채팅문화를 만들어주세요."</p>
                                 </div>
+                                <c:if test="${logList != null}">
+                                	<c:forEach var="log" items="${logList}">
+                                		<c:if test="${sessionScope.loginMember.getUniqueNum() eq log.getSender() and roomNo eq log.getRoomNo()}">
+                                			<dl class="user_right myChatting">
+                                    		<dt>${log.getContent()}</dt>
+                                    		<dd><fmt:formatDate value="${log.getSendTime()}" pattern="a hh:mm" /></dd>
+                             				</dl>
+                           				</c:if>
+                                		<c:if test="${sessionScope.loginMember.getUniqueNum() eq log.getReceiver() and roomNo eq log.getRoomNo()}">
+                                			<dl class="user_left">
+                                    		<dt><img src="resources/images/common/userBg.png"></dt>
+                                    		<dd><p>${log.getContent()}</p><span><fmt:formatDate value="${log.getSendTime()}" pattern="a hh:mm" /></span></dd>
+                                			</dl>
+                           				</c:if>
+                                	</c:forEach>
+                                </c:if>
                                 <%-- 	
                                 <div>
 									<input type="text" id="message"/>

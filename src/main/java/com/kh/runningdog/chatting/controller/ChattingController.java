@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.runningdog.chatting.model.service.ChatroomService;
+import com.kh.runningdog.chatting.model.service.MessageService;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
+import com.kh.runningdog.chatting.model.vo.Message;
 import com.kh.runningdog.chatting.model.vo.StartChat;
 import com.kh.runningdog.member.model.vo.Member;
 
@@ -20,6 +22,8 @@ import com.kh.runningdog.member.model.vo.Member;
 public class ChattingController {
 	@Autowired
 	private ChatroomService chatroomService;
+	@Autowired
+	private MessageService messageService;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -49,9 +53,11 @@ public class ChattingController {
 	@RequestMapping("moveChattingView.do")
 	public String moveChattingView(@RequestParam("roomNo") int roomNo, @RequestParam("receiver") String receiver, @RequestParam("receiverNo") int uniqueNum, Model model){
 		logger.info("moveChattingView.do run...");
+		ArrayList<Message> logList = messageService.selectChatLog(roomNo);
 		model.addAttribute("roomNo", roomNo);
 		model.addAttribute("receiver", receiver);
 		model.addAttribute("receiverNo", uniqueNum);
+		model.addAttribute("logList", logList);
 		return "mypage/myChattingView";
 	}
 	
