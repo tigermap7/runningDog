@@ -10,6 +10,7 @@
 		<result property="receiver" column="receiver"/>
 		<result property="sendTime" column="sendTime"/>
 		<result property="content" column="content"/>
+		<result property="readCheck" column="readCheck"/>
 	</resultMap>
 	
 	<resultMap type="Message" id="resultList">
@@ -19,6 +20,7 @@
 		<result property="receiver" column="receiver"/>
 		<result property="sendTime" column="sendTime"/>
 		<result property="content" column="content"/>
+		<result property="readCheck" column="readCheck"/>
 	</resultMap>
 	
 	<select id="selectChatLog" parameterType="_int" resultType="Message">
@@ -27,6 +29,6 @@
 	
 	<insert id="insertChatLog" parameterType="Message">
 		insert into message
-		values(MESSAGE_SEQ.nextval, #{roomNo}, #{sender}, #{receiver}, #{sendTime}, #{content})
+		values(MESSAGE_SEQ.nextval, #{roomNo}, #{sender}, #{receiver}, #{sendTime}, #{content}, #{readCheck})
 	</insert>
 </mapper>

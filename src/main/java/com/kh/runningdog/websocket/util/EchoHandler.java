@@ -24,6 +24,7 @@ import com.kh.runningdog.chatting.model.service.MessageServiceImpl;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
 import com.kh.runningdog.chatting.model.vo.Message;
 import com.kh.runningdog.member.model.vo.Member;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 @RequestMapping("/echo")
 public class EchoHandler extends TextWebSocketHandler {
@@ -77,8 +78,6 @@ public class EchoHandler extends TextWebSocketHandler {
 	        sendMessageObj.put("data", sendMessageObjData);
 	        String sendMessage = sendMessageObj.toJSONString();
 	        
-	        
-	        
 	        while (sessionIds.hasNext()) {
 	            sessionId = sessionIds.next();
 	            // TODO: 채팅방에 있는 클라이언트에게만 전송
@@ -93,6 +92,11 @@ public class EchoHandler extends TextWebSocketHandler {
 	        saveMessage.setContent(receivedMessage);
 	        saveMessage.setSendTime(date);
 	        saveMessage.setRoomNo(roomno);
+	        if (sessions.keySet().contains(Integer.toString(receiverNo))) {
+	        	saveMessage.setReadCheck("Y");
+	        } else {
+	        	saveMessage.setReadCheck("N");
+			}
 	        int result = messageService.insertChatLog(saveMessage);
 			break;
 

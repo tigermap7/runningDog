@@ -85,31 +85,7 @@
                            				</c:if>
                                 	</c:forEach>
                                 </c:if>
-                                <%-- 	
-                                <div>
-									<input type="text" id="message"/>
-						    		<input type="button" id="sendBtn" value="전송"/>
-    							</div>
-    							<br>
-						    	<div class="well" id="chatdata">
-						    		<!-- User Session Info Hidden -->
-						    		<input type="hidden" value='${userid}' id="sessionuserid">
-						    	</div>
-                                <dl class="user_right myChatting">
-                                    <dt>안녕하세요. 유기동물에 대해 여쭤봐도 될까요?</dt>
-                                    <dd>10:40 오후</dd>
-                                </dl>
-                                <dl class="user_left">
-                                    <dt><img src="resources/images/common/userBg.png"></dt>
-                                    <dd><p>네 안녕하세요~ 유기동물보호센터입니다. 어떤게 궁금하신가요?</p><span>10:42 오후</span></dd>
-                                </dl>
-                                <dl class="user_right myChatting">
-                                    <dt>네, 제가 유기동물 공고를 보고 있는데 해당 아이가 아직 분양이 가능한가 해서 연락드렸어요.</dt>
-                                    <dd>10:45 오후</dd>
-                                </dl>
-                            
-                             --%>
-                             <input type="hidden" value="${ sessionScope.loginMember.getNickname() }" id="sessionuserid">
+                            <input type="hidden" value="${ sessionScope.loginMember.getNickname() }" id="sessionuserid">
                             </div>
                             <form action="testForm.do" method="post" onsubmit="return false;">
                             <div class="cmt_body">

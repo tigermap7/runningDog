@@ -12,10 +12,11 @@ public class Message implements Serializable{
 	private int receiver;
 	private Date sendTime;
 	private String content;
+	private String readCheck;
 	
 	public Message() {}
 	
-	public Message(int messageNo, int roomNo, int sender, int receiver, Date sendTime, String content) {
+	public Message(int messageNo, int roomNo, int sender, int receiver, Date sendTime, String content, String readCheck) {
 		super();
 		this.messageNo = messageNo;
 		this.roomNo = roomNo;
@@ -23,6 +24,7 @@ public class Message implements Serializable{
 		this.receiver = receiver;
 		this.sendTime = sendTime;
 		this.content = content;
+		this.readCheck = readCheck;
 	}
 
 	public int getMessageNo() {
@@ -72,13 +74,19 @@ public class Message implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public String getReadCheck() {
+		return readCheck;
+	}
+
+	public void setReadCheck(String readCheck) {
+		this.readCheck = readCheck;
+	}
 
 	@Override
 	public String toString() {
 		return "Message [messageNo=" + messageNo + ", roomNo=" + roomNo + ", sender=" + sender + ", receiver="
-				+ receiver + ", sendTime=" + sendTime + ", content=" + content + "]";
+				+ receiver + ", sendTime=" + sendTime + ", content=" + content + ", readCheck=" + readCheck + "]";
 	}
-	
-	
 	
 }
