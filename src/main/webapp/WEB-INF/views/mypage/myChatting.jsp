@@ -90,5 +90,40 @@
 
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
+		
+		<script type="text/javascript">
+			$(function() {
+				$.ajax({
+					url: "chatList.do",
+					type: "get",
+					dataType: "json",
+					success: function(data) {
+						console.log("success : " + data);
+						var jsonStr = JSON.stringify(data);
+						var json = JSON.parse(jsonStr);
+						
+						var values = ""; 
+						for ( var i in json.list) {
+							values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + json.list[i].roomNo 
+									+ "&receiver=" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") 
+									+ "&receiverNo=" + json.list[i].receiverNo + "'\">"
+	                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
+	                            	+ "<td class=\"title\">"
+	                                + "<h2>" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") + "<span>" + json.list[i].lastDate + "일 마지막 응답</span></h2>"
+	                                + "<p>lastmessage</p></td>"
+	                                + "<td><span>"+ json.list[i].unread +"</span></td></tr>"
+	                                
+	                            <!-- <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td> -->
+						} // for in
+
+						$("#chatList").append(values);
+					},
+					error : function(jqXHR, textstatus, errorthrown) {
+						console.log("error : " + jqXHR + ", " + textstatus + ", "
+								+ errorthrown);
+					}
+				});
+			});
+		</script>
 	</body>
 </html>

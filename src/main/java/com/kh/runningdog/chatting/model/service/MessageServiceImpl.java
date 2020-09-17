@@ -23,4 +23,9 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.selectChatLog(roomNo);
 	}
 
+	@Override
+	public int selectUnread(int roomNo) {
+		return messageDao.selectUnread(roomNo);
+	}
+
 }

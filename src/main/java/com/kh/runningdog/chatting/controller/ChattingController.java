@@ -4,6 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.kh.runningdog.chatting.model.service.ChatroomService;
 import com.kh.runningdog.chatting.model.service.MessageService;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
@@ -103,5 +108,33 @@ public class ChattingController {
 	public String deleteChat(@RequestParam("roomNo") int roomNo) {
 		chatroomService.deleteChat(roomNo);
 		return "forward:moveChatting.do";
+	}
+	
+	@RequestMapping("chatList.do")
+	@ResponseBody
+	public String chatList(HttpSession session) throws UnsupportedEncodingException {
+		logger.info("chatList.do run...");
+		Member member = (Member) session.getAttribute("loginMember");
+		int uniqueNum = member.getUniqueNum();
+		Chatroom chatRoom = new Chatroom();
+		int unread = 0;
+		ArrayList<Chatroom> roomList = chatroomService.selectMyChatMember(chatRoom);
+		
+		JSONObject sendJson = new JSONObject();
+		
+		JSONArray jarr = new JSONArray();
+		
+		for (Chatroom room : roomList) {
+			JSONObject job = new JSONObject();
+			unread = messageService.selectUnread(room.getRoomNo());
+			job.put("roomNo", room.getRoomNo());
+			job.put("receiver", URLEncoder.encode(room.getNickname(), "utf-8"));
+			job.put("receiverNo", room.getMemberNo());
+			job.put("lastdate", room.getLastDate().toString());
+			job.put("unread", unread);
+			jarr.add(job);
+		}
+		sendJson.put("list", jarr);
+		return sendJson.toJSONString();
 	}
 }

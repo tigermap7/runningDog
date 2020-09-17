@@ -25,4 +25,8 @@ public class MessageDao {
 		return (ArrayList<Message>)list;
 	}
 
+	public int selectUnread(int roomNo) {
+		return session.selectOne("messageMapper.selectUnread", roomNo);
+	}
+
 }
