@@ -26,6 +26,7 @@
             <!-- 본문내용 -->
             <div class="adminInfo_wrap">
                 <h2>회원 추가</h2>
+                <form method="post" id="memberInsertForm" name="memberInsert" enctype="multipart/form-data">
                 <table class="adminInfo">
                     <colgroup>
                         <col width="25%">
@@ -34,36 +35,56 @@
                     <tbody>
                         <tr>
                             <td>아이디(이메일)</td>
-                            <td><input type="text" name="" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value=""/></td>
+                            <td>
+	                            <input type="text" name="userId" title="아이디(이메일)" id="userIdChk" class="form-control w80p" placeholder="아이디(이메일)"/>
+	                            <p id="idWarning">
+	                                <span></span>
+	                            </p>
+                            </td>
                         </tr>
                         <tr>
                             <td>비밀번호</td>
-                            <td><input type="password" name="" title="비밀번호" class="form-control w80p" placeholder="비밀번호"/></td>
-                        </tr>
-                        <tr>
-                            <td>비밀번호 확인</td>
-                            <td><input type="password" name="" title="비밀번호 확인" class="form-control w80p" placeholder="비밀번호 확인"/></td>
+                            <td>
+	                            <input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="form-control w80p" placeholder="비밀번호"/>
+                        	    <p id="pwdWarning">
+	                                <span></span>
+	                            </p>
+	                            <input type="password" name="userPwd2" title="비밀번호 확인" id="userPwdChk2" class="form-control w80p" placeholder="비밀번호 확인"/>
+	                            <p id="pwdWarning2">
+	                                <span>사용하실 비밀번호는 특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.</span>
+	                            </p>
+                            </td>
                         </tr>
                         <tr>
                             <td>프로필 사진</td>
-                            <td><input type="file" name="" title="프로필 사진"/></td>
+                            <td><input type="file" name="profilImage" title="프로필 사진"/></td>
                         </tr>
                         <tr>
                             <td>닉네임</td>
-                            <td><input type="text" name="" title="닉네임" class="form-control w80p" placeholder="닉네임" value=""/></td>
+                            <td>
+                            	<input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임"/>
+	                            <p id="nicknameWarning">
+	                                <span></span>
+	                            </p>
+                            </td>
                         </tr>
                         <tr>
                             <td>휴대폰번호</td>
-                            <td class="telArea"><input type="tel" name="" title="휴대폰번호" class="form-control w80p" placeholder="'-' 포함 입력" value=""/></td>
+                            <td class="telArea">
+                            <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력"/>
+                            <p id="phoneWarning">
+                                <span></span>
+                            </p>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-
+	
                 <div class="write-btn">
                     <input type="reset" class="btn btn-list" value="취소하기">
-                    <input type="submit" class="btn btn-success" value="수정하기">
+                    <input id="memberInsertAction" type="button" class="btn btn-success memberInsert_btn" value="회원등록">
                 </div>
-
+				</form>
             </div>
         </div>
         <c:import url="../include/admin_footer.jsp"/>

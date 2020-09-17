@@ -15,6 +15,8 @@
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
 		<result property="loginLimit" column="login_limit"/>
+		<result property="adminChk" column="admin_chk"/>
+		<result property="loginLimit" column="login_limit"/>
 	</resultMap>
 
 	<resultMap type="Member" id="resultList">
@@ -28,10 +30,11 @@
 		<result property="joinDate" column="join_date"/>
 		<result property="lastAccessDate" column="last_access_date"/>
 		<result property="loginType" column="login_type"/>
+		<result property="adminChk" column="admin_chk"/>
 		<result property="loginLimit" column="login_limit"/>
 	</resultMap>
 	
-	
+	<!-- 사용자 -->
 	<select id="selectLogin" parameterType="Member" resultMap="resultMember">
 		select * from member where user_id = #{userId}
 	</select>
@@ -40,25 +43,17 @@
 		select * from member where user_id = #{userId}
 	</select>
 	
-	<select id="selectNicknameCheck" parameterType="Member" resultMap="resultMember">
-		select * from member where nickname = #{nickname}
-	</select>
-	
-	<select id="selectPhoneCheck" parameterType="Member" resultMap="resultMember">
-		select * from member where phone = #{phone}
-	</select>
-	
 	<select id="selectUserIdPhoneCheck" parameterType="Member" resultMap="resultMember">
 		select * from member where user_id = #{userId} and phone = #{phone}
 	</select>
 	
-	<select id="selectUserPwdCheck" parameterType="Member" resultMap="resultMember">
-		select * from member where user_id = #{userId}
+	<select id="selectNicknameCheckList" parameterType="Member" resultMap="resultList">
+		select * from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
 	</select>
 	
-	<insert id="insertMember" parameterType="Member">
-		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, null, DEFAULT)
-	</insert>
+	<select id="selectNicknameCount" parameterType="Member" resultType="_int">
+		select count(nickname) from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
+	</select>
 	
 	<update id="updateMemberPwd" parameterType="Member">
 		update member set user_pwd = #{userPwd} where user_id = #{userId} and phone = #{phone}
@@ -68,6 +63,24 @@
 		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile} where user_id = #{userId}
 	</update>
 	
+	
+	
+	<!-- 공용 -->
+	<select id="selectNicknameCheck" parameterType="Member" resultMap="resultMember">
+		select * from member where nickname = #{nickname}
+	</select>
+	
+	<select id="selectPhoneCheck" parameterType="Member" resultMap="resultMember">
+		select * from member where phone = #{phone}
+	</select>
+	
+	<select id="selectUserPwdCheck" parameterType="Member" resultMap="resultMember">
+		select * from member where user_id = #{userId}
+	</select>
+	
+	<insert id="insertMember" parameterType="Member">
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, #{userPwd}, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, null, DEFAULT, DEFAULT)
+	</insert>
 	
 	<insert id="insertLeaveMember" parameterType="Member">
 		INSERT INTO LEAVE_MEMBER (L_UNIQUE_NUM, L_USER_ID, L_USER_PWD, L_NICKNAME, L_PHONE, L_JOIN_DATE, L_LOGIN_TYPE)
@@ -79,4 +92,39 @@
 	<delete id="deleteMember" parameterType="Member">
 		delete member where user_id = #{userId}
 	</delete>
+	
+	
+	
+	<!-- 관리자 -->
+	<select id="selectMemberList" resultType="Member" parameterType="com.kh.runningdog.member.model.vo.MemberPage">
+		SELECT *
+			FROM (SELECT ROWNUM RNUM, UNIQUE_NUM, USER_ID, NICKNAME, PHONE, ORIGIN_PROFILE,
+            RENAME_PROFILE,JOIN_DATE, LAST_ACCESS_DATE, LOGIN_TYPE, LOGIN_LIMIT
+            FROM (SELECT * FROM MEMBER
+        	<if test="search == 'userId'">
+				WHERE USER_ID LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'nickname'">
+	  			WHERE NICKNAME LIKE '%' ||  #{keyword} || '%'
+			</if>
+	  		<if test="search == 'phone'">
+	  			WHERE PHONE LIKE '%' ||  #{keyword} || '%'
+			</if>
+            )ORDER BY JOIN_DATE DESC)
+            <![CDATA[
+	  		WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+	  		]]>
+            ORDER BY RNUM DESC
+	</select>
+	
+	<select id="selectMemberCount" resultType="_int" parameterType="com.kh.runningdog.member.model.vo.MemberPage">
+		select count(*) from member
+	</select>
+	
+	<select id="selectUserOne" parameterType="_int" resultType="Member">
+		select * from member where unique_num = #{uniqueNum}
+	</select>
+	
+	
+	
 </mapper>

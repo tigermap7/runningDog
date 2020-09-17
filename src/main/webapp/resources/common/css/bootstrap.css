@@ -3555,8 +3555,9 @@ tbody.collapse.in {
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     text-align: center;
-    position: fixed;
-    top: 100px;
+    position: absolute;
+    /* position: fixed; */
+    top: 37px;
     left: 0;
     z-index: 1000;
     display: none;
@@ -6136,11 +6137,12 @@ button.close {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1060;
+  z-index: 1;
   display: none;
+  width: 200px;
   max-width: 276px;
   padding: 1px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
   font-size: 14px;
   font-style: normal;
   font-weight: normal;
@@ -6174,6 +6176,7 @@ button.close {
 }
 .popover.bottom {
   margin-top: 10px;
+  margin-left: -65px; /* 위치조정위해 삽입 */
 }
 .popover.left {
   margin-left: -10px;
@@ -6235,13 +6238,13 @@ button.close {
   border-right-color: #fff;
   border-left-width: 0;
 }
-.popover.bottom > .arrow {
-  top: -11px;
-  left: 50%;
-  margin-left: -11px;
-  border-top-width: 0;
-  border-bottom-color: #999;
-  border-bottom-color: rgba(0, 0, 0, .25);
+.popover.bottom > .arrow  {
+	top: -11px;
+	left: 87% !important; /* 위치조정 */
+	transform : translateX(-50%);
+	border-top-width: 0;
+	border-bottom-color: #999;
+	border-bottom-color: rgba(0, 0, 0, .25);
 }
 .popover.bottom > .arrow:after {
   top: 1px;

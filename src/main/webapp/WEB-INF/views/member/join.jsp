@@ -32,7 +32,7 @@
                         <div class="loginInfo">
                             <div>
                                 <span><i class="xi-mail-o"></i></span>
-                                <span><input type="email" name="userId" title="아이디" id="userIdChk" class="w100p" placeholder="아이디(이메일)"/></span>
+                                <span><input type="email" name="userId" title="아이디(이메일)" id="userIdChk" class="w100p" placeholder="아이디(이메일)"/></span>
                             </div>
                             <p id="idWarning">
                                 <span></span>

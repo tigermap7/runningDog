@@ -2258,3 +2258,37 @@
         padding: 1.125rem;
     }
 }
+
+
+
+
+
+
+
+
+/*공유하기 ui*/
+.popover  {
+	text-align: center;
+	text-decoration: none;
+	width: 175px;
+	padding: 0px 0px 9px;
+}
+
+.urlcopy {
+	border: 1px solid #ff869c;
+	font-size: 15px;
+	position: relative;
+	top: 9px;
+	color: #ff869c;
+	padding: 3px 5px;
+	display: block;
+	z-index: 1;
+	text-decoration: none;
+}
+
+.urlcopy:hover {
+	color: #fff;
+	background-color: #fb3860;
+	border: 1px solid #fb3860;
+	text-decoration: none;
+}

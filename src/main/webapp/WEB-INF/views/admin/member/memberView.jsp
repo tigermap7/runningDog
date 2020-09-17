@@ -26,27 +26,94 @@
             <!-- 본문내용 -->
             <div class="adminInfo_wrap">
                 <h2>회원정보 수정</h2>
+                <!-- 프로필 -->
+				<dl class="profile">
+					<dt>
+						<div>
+					        <c:if test="${ selectUser.renameProfile eq null }">
+					        <img src="/runningdog/resources/images/common/userBg.png">
+					        </c:if>        
+					        <c:if test="${ selectUser.renameProfile ne null }">
+					        <img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}"/>
+					        </c:if>
+						</div>
+					</dt>
+					<dd>
+						<div><span>아이디(이메일)</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.userId}</div>
+						<div><span>닉네임</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.nickname}</div>
+						<div><span>전화번호</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.phone}</div>
+						<div><span>가입일</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.joinDate}</div>
+						<div><span>최근접속일</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.lastAccessDate}</div>
+					</dd>
+				</dl>
+				<!-- 프로필 끝 -->
                 <table class="adminInfo">
                     <colgroup>
                         <col width="25%">
-                        <col width="75%">
+                        <col width="25%">
+                        <col width="25%">
+                        <col width="25%">
                     </colgroup>
                     <tbody>
                         <tr>
                             <td>아이디(이메일)</td>
-                            <td><input type="text" name="" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="taeung103@naver.com" readonly/></td>
+                            <td colspan="3">
+	                            <input type="text" name="userId" title="아이디(이메일)" id="userIdChk" class="form-control w80p" placeholder="아이디(이메일)" value="${ selectUser.userId }"/>
+	                            <p id="idWarning">
+	                                <span></span>
+	                            </p>
+                            </td>
                         </tr>
                         <tr>
                             <td>프로필 사진</td>
-                            <td><input type="file" name="" title="프로필 사진"/></td>
+                            <td colspan="3"><input type="file" name="profilImage" title="프로필 사진"/></td>
                         </tr>
                         <tr>
                             <td>닉네임</td>
-                            <td><input type="text" name="" title="닉네임" class="form-control w80p" placeholder="닉네임" value="멍무이" readonly/></td>
+                            <td colspan="3">
+                            	<input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임" value="${ selectUser.nickname }"/>
+	                            <p id="nicknameWarning">
+	                                <span></span>
+	                            </p>
+                            </td>
                         </tr>
                         <tr>
                             <td>휴대폰번호</td>
-                            <td class="telArea"><input type="tel" name="" title="휴대폰번호" class="form-control w80p" placeholder="'-' 포함 입력" value=""/></td>
+                            <td colspan="3" class="tel">
+	                            <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력" value="${ selectUser.phone }"/>
+	                            <p id="phoneWarning">
+	                                <span></span>
+	                            </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>로그인유형</td>
+                            <td class="loginType">
+								<i class="xi-kakaotalk"></i>
+								<c:if test="${ selectUser.loginType }">
+								<i class="xi-kakaotalk"></i>
+								</c:if>
+								<c:if test="${ selectUser.loginType }">
+								<i class="xi-facebook-official"></i>
+								</c:if>
+								<c:if test="${ selectUser.loginType }">
+								<i class="xi-naver-square"></i></td>
+								</c:if>
+								<c:if test="${ selectUser.loginType }">
+								일반
+								</c:if>
+                            </td>
+                            <td>로그인 제한여부</td>
+                            <td class="loginLimit">
+                                <select name="loginLimit" class="loginLimit">                        
+		                            <option value="Y">Y</option>
+		                            <option value="N">N</option>
+                       			</select>
+	                            <p id="loginLimitWarning">
+	                            </p>
+                            </td>
+                        </tr>
+                        <tr>
                         </tr>
                     </tbody>
                 </table>

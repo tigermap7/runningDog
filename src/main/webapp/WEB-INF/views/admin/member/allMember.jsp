@@ -5,14 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <c:import url="../include/admin_head.jsp"/>
+    <c:import url="/WEB-INF/views/admin/include/admin_head.jsp"/>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
-        <c:import url="../include/admin_header.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_header.jsp"/>
 
         <div id="container">
-            <c:import url="../include/admin_util.jsp"/>
+            <c:import url="/WEB-INF/views/admin/include/admin_util.jsp"/>
 
             <!-- 상단 타이틀 -->
             <div class="pageTitle">
@@ -27,17 +27,25 @@
             <div class="list_wrap">
                 <!-- 검색영역 -->
                 <div class="sort-area">  
-                    <h4>전체회원 100명</h4>
-                    <form action="" method="get" id="">
+                    <h4>전체회원 ${ memberPage.listCount }명</h4>
+                    <form action="allMember.ad" id="">
                     <div class="searchBox">
-                        <select name="search" class="ListSelect">
-                            <option value="userId" elected="selected">아이디(이메일)</option>
-                            <option value="userName">닉네임</option>
-                            <option value="userEmail">회원번호</option>
-                            <option value="userPhone">휴대폰번호</option>
+                        <select name="memberSearch" class="ListSelect">                        
+								<!-- 검색분류가 비었을 경우 -->
+								<c:if test="${ empty memberPage.search or memberPage.search eq null}">
+		                            <option value="userId">아이디(이메일)</option>
+		                            <option value="nickname">닉네임</option>
+		                            <option value="phone">휴대폰번호</option>
+								</c:if>
+								<!-- 검색분류가 있을 경우 해당값 선택되어있게 하기 -->
+								<c:if test="${ !empty memberPage.search }">
+		                            <option value="userId" ${ memberPage.search eq 'userId' ? 'selected' : '' }>아이디(이메일)</option>
+		                            <option value="nickname" ${ memberPage.search eq 'nickname' ? 'selected' : '' }>닉네임</option>
+		                            <option value="phone" ${ memberPage.search eq 'phone' ? 'selected' : '' }>휴대폰번호</option>
+								</c:if>
                         </select>
                         <div>
-                            <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
+                            <input type="text" name="keyword" placeholder="검색어를 입력해주세요." value="${ memberPage.keyword }">
                             <button type="submit" class="top-search"><i class="xi-search"></i></button>
                         </div>
                     </div>
@@ -77,133 +85,48 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">10</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-kakaotalk"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">9</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-kakaotalk"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">8</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-facebook-official"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">7</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-facebook-official"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">6</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-naver-square"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">5</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-naver-square"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">4</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-naver-square"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">3</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-kakaotalk"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">2</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-facebook-official"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        <tr>
-                            <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
-                            <td class="number" onclick="location='memberView.jsp'">1</td>
-                            <td class="userId" onclick="location='memberView.jsp'">taeung103@naver.com</td>
-                            <td class="userName" onclick="location='memberView.jsp'">멍무이</td>
-                            <td class="gender" onclick="location='memberView.jsp'">#1971345</td>
-                            <td class="phone" onclick="location='memberView.jsp'">010-3387-7583</td>
-                            <td class="joinDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="lastAccessDate" onclick="location='memberView.jsp'">2020.09.01</td>
-                            <td class="loginType" onclick="location='memberView.jsp'"><i class="xi-kakaotalk"></i></td>
-                            <td class="loginLimit" onclick="location='memberView.jsp'">Y</td>
-                        </tr>
-                        
+                    	<c:if test="${ list.size() ne 0 }">
+					    <c:set var="listNo" value="${ memberPage.listCount - (memberPage.listLimit *( memberPage.currentPage - 1)) }"/>
+                   		<c:forEach var="member" items="${ requestScope.list }">
+	                       <tr>
+							<c:url var="memberView" value="memberView.ad">
+								<c:param name="uniqueNum" value="${ member.uniqueNum }" />
+								<c:param name="page" value="${ page }" />
+							</c:url>
+							   <td class="checkBox"><input type="checkbox" name="leaveChk" id="leaveChk" value=""></td>
+	                           <td class="number" onclick="location='${ memberView }'">${ listNo }</td>
+	                           <td class="userId" onclick="location='${ memberView }'">${ member.userId }</td>
+	                           <td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${savePath}${member.renameProfile}"/>${ member.nickname }</td>
+	                           <td class="gender" onclick="location='${ memberView }'">#${ member.uniqueNum }</td>
+	                           <td class="phone" onclick="location='${ memberView }'">${ member.phone }</td>
+	                           <td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy-MM-dd" value="${ member.joinDate }"/></td>
+	                           <td class="lastAccessDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.lastAccessDate }"/></td>
+	                           <c:if test="">
+	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
+	                           </c:if>
+	                           <c:if test="">
+	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-facebook-official"></i></td>
+	                           </c:if>
+	                           <c:if test="">
+	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-naver-square"></i></td>
+	                           </c:if>
+	                           <c:if test="">
+	                           <td class="loginType" onclick="location='${ memberView }'">일반</td>
+	                           </c:if>
+	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
+	                           <td class="loginLimit" onclick="location='${ memberView }'">${ member.loginLimit }</td>
+	                       <c:set var="listNo" value="${listNo - 1}"/>
+	                       </tr>
+	                   	</c:forEach>
+						</c:if>
+                    	<c:if test="${ list.size() eq 0 }">
 						<tr class="list-no">
 							<td colspan="10">
 								<p><img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
 								<h1>목록이 없습니다.</h1>
 							</td>
 						</tr>
+						</c:if>
 
                     </tbody>
                 </table>
@@ -220,20 +143,56 @@
                 <!-- 페이징 -->
                 <dl class="list-paging">
                     <dd>
+                   	<c:if test="${ 1 < memberPage.currentPage}">
+                   		<c:url var="prevPaging" value="allMember.ad">
+						<c:param name="page" value="${ memberPage.currentPage - 1 }" />
+						<!-- 검색값 유지 -->
+						<c:param name="memberSearch" value="${ memberPage.search }" />
+						<c:param name="keyword" value="${ memberPage.keyword }" />
+                   		<a href="${ prevPaging }"><i class="xi-angle-left"></i></a>
+                  		</c:url>
+                   		<a href="${ prevPaging }"><i class="xi-angle-left"></i></a>
+                    </c:if>
+                   	<c:if test="${ memberPage.currentPage == 1 }">
                    		<a href="#none"><i class="xi-angle-left"></i></a>
-                        <a href="#none" class="active">1</a>
-                        <a href="#none">2</a>
-                        <a href="#none">3</a>
-                        <a href="#none">4</a>
-                        <a href="#none">5</a>
-                        <a href="#none"><i class="xi-angle-right"></i></a>
+                    </c:if>
+                    
+                   	<c:forEach var="p" begin="${ memberPage.startPage }" end="${ memberPage.maxPage }">
+                   		<c:if test="${ p eq memberPage.currentPage }">
+                        <a href="#none" class="active">${ p }</a>
+                        </c:if>
+                   		<c:if test="${ p ne memberPage.currentPage }">
+							<c:url var="memberPaging" value="allMember.ad">
+								<c:param name="page" value="${ p }" />
+								<!-- 검색값 유지 -->
+								<c:param name="memberSearch" value="${ memberPage.search }" />
+								<c:param name="keyword" value="${ memberPage.keyword }" />
+							</c:url>
+							<a href="${ memberPaging }">${ p }</a>
+                    	</c:if>
+                    </c:forEach>
+                    
+					
+                   	<c:if test="${ memberPage.currentPage < memberPage.endPage }">
+                   	<c:url var="nextPaging" value="allMember.ad">
+						<c:param name="page" value="${ memberPage.currentPage + 1 }" />
+						<!-- 검색값 유지 -->
+						<c:param name="memberSearch" value="${ memberPage.search }" />
+						<c:param name="keyword" value="${ memberPage.keyword }" />
+                  		</c:url>
+                        <a href="${ nextPaging }"><i class="xi-angle-right"></i></a>
+                    </c:if>
+                   	<c:if test="${ memberPage.currentPage >= memberPage.endPage }">
+                   		<a href="#none"><i class="xi-angle-right"></i></a>
+                    </c:if>
+                        
                     </dd>
                 </dl>
                 <!-- //페이징 -->
 
             </div>
         </div>
-        <c:import url="../include/admin_footer.jsp"/>
+        <c:import url="/WEB-INF/views/admin/include/admin_footer.jsp"/>
     </div>
 </body>
 </html>
