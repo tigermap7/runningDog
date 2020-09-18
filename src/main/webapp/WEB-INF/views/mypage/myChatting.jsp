@@ -97,6 +97,7 @@
 				console.log(myChatList);
 				$.ajax({
 					url: "chatList.do",
+					cache: false,
 					type: "get",
 					dataType: "json",
 					success: function(data) {
