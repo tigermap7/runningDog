@@ -6,6 +6,20 @@
 <html>
 <head>
     <c:import url="../include/admin_head.jsp"/>
+<script type="text/javascript">    
+$(function() {
+	$(document).on('click',".Subcmt_btn",function() {
+		$(this).siblings(".Subcmt").toggle(200);
+	});
+	$(document).on('click',".Subcmt_update_btn",function() {
+		$(this).siblings(".Subcmt_update").toggle(200);
+	});
+	$(document).on('click',".Cmt_update_btn",function() {
+		$(this).siblings(".Cmt_update").toggle(200);
+	});
+});
+
+</script>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
@@ -28,10 +42,18 @@
                 <p class="topText">*「동물보호법」 제17조, 시행령7조 및 동법 시행규칙 제20조에 따라 유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</p>
                 <dl>
                     <dt>
-                        <div class="viewImg"><img src="/runningdog/../resources/images/test/animalImg01.jpg"></div>
-                        <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
+                        <div class="viewImg"><img src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }" id="imgControll" onclick="fnImgPop(this.src)" ></div>
+						<c:url var="dSuccess" value="dUpSuccess.do">
+							<c:param name="dNum" value="${ dboard.dNum }" />
+							<c:param name="dSuccess" value="${ dboard.dSuccess }" />
+						</c:url>
+						<a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
                         <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
-                    </dt>
+						<!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
+				
+							<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
+						
+					</dt>
                     <dd>
                         <h3>동물정보</h3>
                         <table class="animalInfo">
@@ -43,24 +65,34 @@
                            </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>견종</th>
-                                    <td>[강아지] 푸들</td>
+                                    <th>반려 동물 종류</th>
+                                    <td>
+                                    	${ dboard.dCategory eq "d"?"강아지": "" }
+										${ dboard.dCategory eq "c"?"고양이": "" } 
+										${ dboard.dCategory eq "e"?"기  타": "" }
+									</td>
                                     <th>발견날짜</th>
-                                    <td>2020.08.28</td>
+                                    <td>${ dboard.dFindDate }</td>
                                 </tr>
                                 <tr>
                                     <th>성별</th>
-                                    <td>남/男</td>
-                                    <th>색상</th>
-                                    <td>흰색+회색</td>
+                                    <td>
+                                    ${ dboard.dGender eq "m"?"남/男" : "" }
+                                    ${ dboard.dGender eq "f"?"여/女" : "" }
+									</td>
+                                    <th>분양 여부</th>
+                                    <td>
+                                     ${ dboard.dSuccess eq "y"? "새로운 가족을 찾았어요" : ""}
+                                     ${ dboard.dSuccess eq "n"? "가족을 기다리고 있어요" : ""}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>발견장소</th>
-                                    <td colspan="3">서울시 도봉구 창동 우이천로 부근</td>
+                                    <td colspan="3">${ dboard.dFindLocal } 부근</td>
                                 </tr>
                                 <tr>
                                     <th>특이사항</th>
-                                    <td colspan="3">목걸이 착용. 이름이 뭉이라고 되어 있어요.</td>
+                                    <td colspan="3">${ dboard.dPoint }</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -76,19 +108,25 @@
                             <tbody>
                                 <tr>
                                     <th>임시보호자</th>
-                                    <td>멍무이 / #1971345</td>
-                                    <th>작성일</th>
-                                    <td>2020.08.28</td>
+                                    <td>${ dboard.dWriter } / # ${ dboard.uniqueNum }</td>
+                                    <th>${ dboard.dDate ne dboard.dMdate ?"수정일": "작성일"}</th>
+                                    <td>${ dboard.dDate eq dboard.dMdate ?dboard.dDate : dboard.dMdate}
                                 </tr>
                                 <tr>
                                     <th>연락처</th>
-                                    <td>010-3387-****</td>
+                                    <td>${ dboard.dPhone }</td>
                                     <th>이메일</th>
-                                    <td>taeung103@naver.com</td>
+                                    <td>${ dboard.userId }</td>
                                 </tr>
                                 <tr>
                                     <th>지역</th>
-                                    <td colspan="3">서울시 도봉구 *****</td>
+                                    <td colspan="3">
+                                    <c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }" />
+									<c:forEach var="lo" items="${local }" varStatus="l">
+									<c:if test="${l.count== (dboard.dLocal+1) }"> 
+										${lo }
+									</c:if>
+									</c:forEach></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -96,47 +134,107 @@
                 </dl>
 
                 <div class="viewContent">
-                    하얗게 흐려진 그림 속 추억의 책장 속 우리<br>
-                    그저 스쳐간 안녕<br>
-                    돌아와 끝내 말 못하고<br>
-                    시간 틈새로 흘러 점점 멀어진 기억<br><br>
-                    
-                    몇 번의 계절 지나 마주한 두 눈동자 아무 말도 못하고<br><br>
-                    
-                    가슴이 차가운 남자가 울어요<br>
-                    이별에 모질던 그녀도 우네요<br>
-                    바래진 추억 유리조각에<br>
-                    베인 상처 흔적만 남아 초라하네요<br><br>
-                    
-                    파랗게 질려버린 하늘 굳어버린 입술 울컥<br>
-                    그립다 널 외치고<br>
-                    미련에 엉킨 인연의 끈<br>
-                    차마 풀지 못하고 다시 묻어두네요<br><br>
-                    
-                    먹먹한 가슴이 참지 못하고 달려 멀어진 네 등 뒤로<br><br>
-                    
-                    가슴이 차가운 남자가 울어요<br>
-                    이별에 모질던 그녀도 우네요<br>
-                    바래진 추억 유리조각에<br>
-                    베인 상처 흔적만 남아 머물러있는걸<br>
-                    the stay stay again (oh stay~ stay again)<br>
-
+                ${ dboard.dContent }
                 </div>
-                
-                <div class="textCon">
+				<tr>
+					<td>발견 장소</td>
+					<td>
+						<div class="map_wrap">
+							<div class="hAddr">
+								<div id="map"
+									style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
+								</div>
+							</div>
+						</div> <script type="text/javascript"
+							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
+						<script>
+							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+							mapOption = {
+								center : new kakao.maps.LatLng(
+										'${dboard.mapY}', '${dboard.mapX}'), // 지도의 중심좌표
+								level : 8
+							// 지도의 확대 레벨
+							};
+
+							var map = new kakao.maps.Map(mapContainer,
+									mapOption); // 지도를 생성합니다
+
+							// 마커가 표시될 위치입니다 
+							var markerPosition = new kakao.maps.LatLng(
+									'${dboard.mapY}', '${dboard.mapX}');
+
+							// 마커를 생성합니다
+							var marker = new kakao.maps.Marker({
+								position : markerPosition
+							});
+
+							// 마커가 지도 위에 표시되도록 설정합니다
+							marker.setMap(map);
+
+							var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">${dboard.dFindLocal}</div>', iwPosition = new kakao.maps.LatLng(
+									'${dboard.mapY}', '${dboard.mapX}'); //인포윈도우 표시 위치입니다
+
+							// 인포윈도우를 생성합니다
+							var infowindow = new kakao.maps.InfoWindow({
+								position : iwPosition,
+								content : iwContent
+							});
+
+							infowindow.open(map, marker);
+						</script>
+					</td>
+				</tr>
+
+				<div class="textCon">
                     상기 동물을 분실하신 소유주께서는 보호센터로 문의하시어 동물을 찾아가시기 바라며, 동물보호 법 제17조의 규정에 따른 공고가 있는 날부터 10일이 경과하여도 소유자 등을 알 수 없는 경우에는 유실물법 제12조 및 민법 제253조의 규정에 불구하고 해당 시,군,구 자치구가 그 동물의 소유권을 취득하게 됩니다.<br>
-                    2020년 08월 25일
+                    ${ dboard.dDate }
                 </div>
-
+				<!-- 상세 끝 -->
+                
                 <!-- 버튼 -->
-                <div class="viewBtn-wrap">
-                    <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                    <button class="listBtn"><i class="xi-rotate-left"></i> 목록</button>
-                    <button class="deleteBtn"><i class="xi-cut"></i> 삭제</button>
-                    <button class="modifiedBtn"><i class="xi-pen-o"></i> 수정</button>
-                    <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
-                </div>
-                <!-- 버튼 끝 -->
+				<c:url var="dupPageMove" value="dupView.ad">
+					<c:param name="dNum" value="${ dboard.dNum }" />
+				</c:url>
+				<c:url var="dlistMove" value="dboardList.ad">
+					<c:param name="pageNo" value="${ dboard.pageNo }" />
+				</c:url>
+				<c:url var="dboardHide" value="dHide.ad">
+					<c:param name="dNum" value="${ dboard.dNum }" />
+				</c:url>
+				<c:url var="dboardNext" value="dboardnext.ad">
+					<c:param name="dNum" value="${ dboard.dNum }" />
+					<c:param name="dLocal" value="${ dLocal }" />
+					<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+					<c:param name="searchValue" value="${pageVO.searchValue }" />
+					<c:param name="dCategory" value="${ d.dCategory }" />
+				</c:url>
+				<c:url var="dboardPrev" value="dboardprev.ad">
+					<c:param name="dNum" value="${ dboard.dNum }" />
+					<c:param name="dLocal" value="${ dLocal }" />
+					<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+					<c:param name="searchValue" value="${pageVO.searchValue }" />
+					<c:param name="dCategory" value="${ d.dCategory }" />
+				</c:url>
+				<div class="viewBtn-wrap">
+					<button class="nextBtn" onclick="location='${ dboardPrev }'">
+						<i class="xi-angle-left-min"></i> 이전
+					</button>
+					<button class="listBtn" onclick="location='${ dlistMove }'">
+						<i class="xi-rotate-left"></i> 목록
+					</button>
+					
+						<button class="deleteBtn" onclick="location='${ dboardHide }'">
+							<i class="xi-cut"></i> 삭제
+						</button>
+						<button class="modifiedBtn" onclick="location='${ dupPageMove }'">
+							<i class="xi-pen-o"></i> 수정
+						</button>
+					
+					<button class="prevBtn" onclick="location='${ dboardNext }'">
+						다음 <i class="xi-angle-right-min"></i>
+					</button>
+				</div>
+				<!-- 버튼 끝 -->
 
                 <div class="cmt_wrap">
                     <form action="" method="">

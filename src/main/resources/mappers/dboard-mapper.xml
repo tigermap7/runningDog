@@ -129,16 +129,36 @@
 	<select id="selectNext" parameterType="Dboard" resultType="int">
 		SELECT NVL(MIN(D_NUM),${dNum})
 		FROM DBOARD
+		WHERE 1=1
+		<if test="searchFiled != null and searchFiled !=''">
+			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="dCategory != null and dCategory !=''">
+			AND D_CATEGORY LIKE '%' || #{dCategory} || '%'
+		</if>
+		<if test="dLocal != null and dLocal !=''">
+			AND D_LOCAL = #{dLocal}
+		</if>
 		<![CDATA[
-		WHERE D_CHECK = 'y' AND D_NUM > ${ dNum }
+			AND D_CHECK = 'y' AND D_NUM > ${ dNum }
 		]]>
 	</select>
 	
 	<select id="selectPrev" parameterType="Dboard" resultType="int">
 		SELECT NVL(MAX(D_NUM),${dNum})
 		FROM DBOARD
+		WHERE 1=1
+		<if test="searchFiled != null and searchFiled !=''">
+			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'
+		</if>
+		<if test="dCategory != null and dCategory !=''">
+			AND D_CATEGORY LIKE '%' || #{dCategory} || '%'
+		</if>
+		<if test="dLocal != null and dLocal !=''">
+			AND D_LOCAL = #{dLocal}
+		</if>
 		<![CDATA[
-		WHERE D_CHECK = 'y' AND D_NUM < ${ dNum }
+		AND D_CHECK = 'y' AND D_NUM < ${ dNum }
 		]]>
 	
 	</select>

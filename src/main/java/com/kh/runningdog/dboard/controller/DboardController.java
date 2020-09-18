@@ -105,8 +105,8 @@ public class DboardController {
 	}
 
 	@RequestMapping("dboardList.do")
-	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard)
-	{
+	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard){
+
 
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
@@ -303,12 +303,25 @@ public class DboardController {
 	}
 	
 	@RequestMapping("dboardnext.do")
-	public String dboardNext(Model model,@ModelAttribute("Dboard") Dboard dboard) {
+	public String dboardNext(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
 		//다음글 번호조회
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
+		
+		
+		
 		int dboardNextNum = dboardService.selectNext(dboard);
 		//다음글번호를 받고 다음글로 조회
 		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		
+		model.addAttribute("dLocal", dboard.getdLocal());
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("searchFiled", dboard.getSearchFiled());
+		model.addAttribute("searchValue",dboard.getSearchValue());
+		
 		
 		String url = "";
 		if (dboard.getdNum() != dboardNextNum) {
@@ -324,12 +337,24 @@ public class DboardController {
 	}
 	
 	@RequestMapping("dboardprev.do")
-	public String dboardPrev(Model model,@ModelAttribute("Dboard") Dboard dboard) {
-		//다음글 번호조회
+	public String dboardPrev(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
+		
+		
+		//이전 번호조회
 		int dboardPrevNum = dboardService.selectPrevNum(dboard);
-		//다음글번호를 받고 다음글로 조회
+		//이전글번호를 받고 다음글로 조회
 		Dboard dboardPrev = dboardService.selectOne(dboardPrevNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
+
+		model.addAttribute("dLocal", dboard.getdLocal());
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("searchFiled", dboard.getSearchFiled());
+		model.addAttribute("searchValue",dboard.getSearchValue());
+		
 		String url = "";
 		if ( dboard.getdNum() != dboardPrevNum) {
 			model.addAttribute("dboard", dboardPrev);

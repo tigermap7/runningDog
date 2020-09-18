@@ -54,7 +54,7 @@ $(function() {
                             <dl>
                                 <dt>
                                 	
-                                    <div class="viewImg"><img id="imgControll" onclick="fnImgPop(this.src)" src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }"></div>
+                                    <div class="viewImg"><img src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }" id="imgControll" onclick="fnImgPop(this.src)" ></div>
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
                                     <c:url var = "dSuccess" value= "dUpSuccess.do">
 										<c:param name="dNum" value="${ dboard.dNum }"/>
@@ -100,7 +100,7 @@ $(function() {
                                             </tr>
                                             <tr>
                                                 <th>발견장소</th>
-                                                <td colspan="3">${ dboard.dFindLocal }</td>
+                                                <td colspan="3">${ dboard.dFindLocal } 부근</td>
                                             </tr>
                                             <tr>
                                                 <th>특이사항</th>
@@ -148,18 +148,17 @@ $(function() {
                             <div class="viewContent">
                             ${ dboard.dContent }
                             </div>
-                            <tr>
- 						 <td>발견 장소</td>
- 						 <td>
-											<div class="map_wrap">
-												<div class="hAddr">
-													<div id="map"
-														style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
-													</div>
-												</div>
-											</div>
-											<script type="text/javascript"
-												src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
+						<tr>
+							<td>발견 장소</td>
+							<td>
+								<div class="map_wrap">
+									<div class="hAddr">
+										<div id="map"
+											style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
+										</div>
+									</div>
+								</div> <script type="text/javascript"
+									src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
 								<script>
 									var mapContainer = document
 											.getElementById('map'), // 지도를 표시할 div 
@@ -219,9 +218,17 @@ $(function() {
 						</c:url>
 						<c:url var="dboardNext" value="dboardnext.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
+							<c:param name="dLocal" value="${ dLocal }"/>
+                            <c:param name="searchFiled" value="${pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${pageVO.searchValue }" />
+							<c:param name="dCategory" value="${ d.dCategory }"/>
 						</c:url>
 						<c:url var="dboardPrev" value="dboardprev.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
+							<c:param name="dLocal" value="${ dLocal }"/>
+                            <c:param name="searchFiled" value="${pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${pageVO.searchValue }" />
+							<c:param name="dCategory" value="${ d.dCategory }"/>
 						</c:url>
                         <div class="viewBtn-wrap">
                             <button class="nextBtn" onclick="location='${ dboardPrev }'"><i class="xi-angle-left-min"></i> 이전</button>
@@ -290,7 +297,7 @@ function getCommentList() {
 				arrdreContent[i] = decodeURIComponent(jsonObj.list[i].dreContent).replace(/\+/gi, " ");
 				arruniqueNum[i] = jsonObj.list[i].uniqueNum;
 				output +='<li><dl>'+
-                        '<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
+                        '<dt class="img"><img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}"></dt>'+
                         '<dd><h4>'+arrdreWriter[i]+ '/'+ arruniqueNum[i]+'</h4></dd>'+
                         '<dt class="cmt_date">'+arrdreMdate[i]+'</dt></dl>'+
                     	'<p>'+arrdreContent[i]+'</p>'+

@@ -68,6 +68,10 @@
                                 <div>
                                 <c:url var = "dCate" value= "dboardList.do">
 									<c:param name="dLocal" value="${ dLocal }"/>
+									<c:param name="dLocal" value="${ dLocal }"/>
+                                 	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+									<c:param name="dCategory" value="${ d.dCategory }"/>
 								</c:url>
 								
                                 <form action="" name="dCategory">
@@ -119,6 +123,9 @@
                                  	<c:param name="pageNo" value="${ pageVO.pageNo }"/>
                                  	<c:param name="dNum" value="${ d.dNum }"/>
                                  	<c:param name="dLocal" value="${ dLocal }"/>
+                                 	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+									<c:param name="dCategory" value="${ d.dCategory }"/>
                                  </c:url>
                                  <c:if test = "${d.dSuccess eq 'n'}">
                                 
@@ -184,6 +191,7 @@
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
 											<c:param name="dLocal" value="${ dLocal }"/>
+											<c:param name="dCategory" value="${ d.dCategory }"/>
 										</c:url>
 										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
@@ -194,6 +202,7 @@
 												<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 												<c:param name="searchValue" value="${pageVO.searchValue }"/>
 												<c:param name="dLocal" value="${ dLocal }"/>
+												<c:param name="dCategory" value="${ d.dCategory }"/>
 											</c:url>
 										<c:choose>
 											<c:when test="${i eq pageVO.pageNo }">
@@ -211,6 +220,7 @@
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
 											<c:param name="dLocal" value="${ dLocal }"/>
+											<c:param name="dCategory" value="${ d.dCategory }"/>
 										</c:url>
 										<a href="${dl3 }"><i
 											class="xi-angle-right"></i></a>
