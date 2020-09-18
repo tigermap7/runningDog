@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,9 +79,9 @@ public class AdminMemberController {
 //		return "admin/member/allMember";
 //	}
 	
-	@RequestMapping("allMember.ad")
+	@RequestMapping("adminMemberList.ad")
 	public String allMemberPage(Model model, HttpServletRequest request, SessionStatus status) {
-		logger.info("allMember run...");
+		logger.info("adminMemberList run...");
 		
 		//검색값 받기
 		String search = request.getParameter("memberSearch");
@@ -125,21 +126,21 @@ public class AdminMemberController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("memberPage", memberPage);
-		return "admin/member/allMember";
+		return "admin/member/adminMemberList";
 		
 	}
 	
 	
 
-	@RequestMapping("memberInsert.ad")
+	@RequestMapping("adminMemberInsert.ad")
 	public String adminMemberInsertPage() {
-		return "admin/member/memberInsert";
+		return "admin/member/adminMemberInsert";
 	}
 	//회원추가
-	@RequestMapping(value="memberInsertAction.ad", method=RequestMethod.POST)
+	@RequestMapping(value="adminMemberInsertAction.ad", method=RequestMethod.POST)
 	@ResponseBody
 	public String adminMemberInsertAction(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
-		logger.info("memberInsert run...");
+		logger.info("adminMemberInsertAction run...");
 		logger.info("member : " + member);
 		logger.info("member adminCke : " + member.getAdminChk() );
 		
@@ -248,7 +249,7 @@ public class AdminMemberController {
 	
 	
 	//관리자 회원상세
-	@RequestMapping("memberView.ad")
+	@RequestMapping("adminMemberView.ad")
 	public String adminMemberViewPage(Model model, HttpServletResponse response, @RequestParam("uniqueNum") int uniqueNum) throws IOException {
 		
 		Member selectUser = memberService.selectUserOne(uniqueNum);
@@ -257,18 +258,18 @@ public class AdminMemberController {
 		
 		if (selectUser != null) {
 			model.addAttribute("selectUser", selectUser);
-			url = "admin/member/memberView";
+			url = "admin/member/adminMemberView";
 		} else {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>alert('해당 회원이 존재하지 않습니다.'); history.go(-1);</script>");
             out.flush();
 		}
-		return "admin/member/memberView";
+		return url;
 	}
 	
 	//관리자 회원수정
-	@RequestMapping(value="memberModified.ad", method=RequestMethod.POST)
+	@RequestMapping(value="adminMemberModified.ad", method=RequestMethod.POST)
 	public String adminMemberModifiedAction(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name="uniqueNum", required = false) int uniqueNum, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
 
 		Member selectUser = memberService.selectUserOne(uniqueNum);
@@ -364,10 +365,10 @@ public class AdminMemberController {
 				if(memberService.adminUpdateMember(member) > 0) {
 					logger.info("확인7");
 					model.addAttribute(uniqueNum);
-					url = "redirect:memberView.ad?uniqueNum=" + uniqueNum;
+					url = "redirect:adminMemberView.ad?uniqueNum=" + uniqueNum;
 				} else {
 					logger.info("확인8");
-		            out.println("<script>alert('해당 회원이 존재하지 않습니다.'); history.go(-1);</script>");
+		            out.println("<script>alert('존재하지 않는 회원입니다.'); history.go(-1);</script>");
 		            out.flush();
 				}
 				logger.info("member : " + member);
@@ -384,42 +385,58 @@ public class AdminMemberController {
 	
 	
 	//상세페이지에서 해당회원 탈퇴처리 컨트롤러
-	@RequestMapping(value="adminLeaveMember.ad")
+	@RequestMapping(value="adminViewLeaveAction.ad")
 	public String leaveMemberActionMethod(Member member, HttpSession session, HttpServletResponse response, @RequestParam(name="uniqueNum", required = false) int uniqueNum) throws IOException {
-		logger.info("adminLeaveMember run...");
+		logger.info("adminViewLeaveAction run...");
 
 		Member selectUser = memberService.selectUserOne(uniqueNum);
 
 		String url = null;
 		
-		if (selectUser != null) {
-			if (memberService.insertLeaveMember(member) > 0) {
-				if (memberService.adminDeleteMember(selectUser) > 0) {
-					url = "redirect:/allMember.ad";
-				} else {
-					session.setAttribute("message", "회원탈퇴처리 실패");
-					url = "common/error";
-				}
-			} else {
-				session.setAttribute("message", "회원탈퇴처리 목록으로 insert 실패");
-				url = "common/error";
+		if (selectUser != null && memberService.insertLeaveMember(member) > 0) {
+			if (memberService.adminDeleteMember(selectUser) > 0) {
+		        response.setContentType("text/html; charset=UTF-8");
+		        PrintWriter out = response.getWriter();
+	            out.println("<script>alert('해당 회원의 탈퇴처리가 완료되었습니다.\\n전체회원 리스트로 이동합니다.'); location.href='adminMemberList.ad';</script>");
+	            out.flush();
 			}
 		} else {
-			session.setAttribute("message", "회원탈퇴처리 조회 실패");
-			url = "common/error";
+	        response.setContentType("text/html; charset=UTF-8");
+	        PrintWriter out = response.getWriter();
+            out.println("<script>alert('해당 회원의 탈퇴처리가 실패하였습니다.\\n다시 시도해주세요.'); history.go(-1);</script>");
+            out.flush();
 		}
 		return url;
 	}
 	
 	
 	
-
+	//회원 리스트에서 체크박스 선택 후 회원탈퇴처리
+	@RequestMapping("memberLeaveAction.ad")
+    @ResponseBody
+	public int adminLeaveMemberPage(Map<String, Object> commandMap) throws Exception {
+		int result = 1;
+		try {
+			int cnt = Integer.parseInt((String) commandMap.get("CNT"));
+			String rprtOdr = (String) commandMap.get("RPRT_ODR");
+			String[] strArray = rprtOdr.split(",");
+			for (int i = 0; i < cnt; i++) {
+				int temp = Integer.parseInt((String) strArray[i]);
+				commandMap.put("RPRT_ODR", temp);
+				memberService.adminDeleteMember(commandMap);
+			}
+		} catch (Exception e) {
+			//log.debug(e.getMessage());
+			result = 0;
+		}
+		return result;
+	}
 	
 
 	
-	@RequestMapping("leaveMember.ad")
+	@RequestMapping("adminMemberLeave.ad")
 	public String adminLeaveMemberPage() {
-		return "admin/member/leaveMember";
+		return "admin/member/adminMemberLeave";
 	}
 	
 	

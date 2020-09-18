@@ -9,8 +9,8 @@
         <li>
             <h2><a href="#collapse1" class="collapsed" data-toggle="collapse"><i class="xi-users-o"></i> 사용자관리 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse1" class="collapse show" data-parent="#accordion">
-                <a href="allMember.ad">전체회원 리스트</a>
-                <a href="leaveMember.ad">탈퇴회원 리스트</a>
+                <a href="adminMemberList.ad">전체회원 리스트</a>
+                <a href="adminMemberLeave.ad">탈퇴회원 리스트</a>
             </div>
         </li>
         <li>

@@ -66,7 +66,7 @@
 				</dl>
 				<!-- 프로필 끝 -->
 				
-				<form method="post" action="memberModified.ad" enctype="multipart/form-data">
+				<form method="post" action="adminMemberModified.ad" enctype="multipart/form-data">
 				<input type="hidden" value="${ selectUser.uniqueNum }" name="uniqueNum">
                 <table class="adminInfo">
                     <colgroup>
@@ -143,7 +143,7 @@
                 </table>
 
                 <div class="write-btn">
-                    <input type="button" class="btn btn-delete" value="탈퇴처리" onclick="location.href='adminLeaveMember.ad?uniqueNum=${selectUser.uniqueNum}'">
+                    <input type="button" class="btn btn-delete" value="탈퇴처리" onclick="location.href='adminViewLeaveAction.ad?uniqueNum=${selectUser.uniqueNum}'">
                     <input type="reset" class="btn btn-list" value="취소하기">
                     <input type="submit" class="btn btn-success" value="수정하기">
                 </div>

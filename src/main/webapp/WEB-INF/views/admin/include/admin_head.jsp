@@ -19,7 +19,7 @@
 <script src="resources/common/js/bootstrap.js"></script>
 <script src="resources/common/js/swiper.min.js"></script>
 <script src="resources/common/js/summernote-ko-KR.js"></script>
-<script src="resources/common/js/common.js"></script>
+<script src="resources/admin/js/common.js"></script>
 <script src="resources/admin/js/member.js"></script>
 <script src="resources/common/js/sponsor.js"></script>
 

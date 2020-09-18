@@ -89,7 +89,7 @@
 					    <c:set var="listNo" value="${ memberPage.listCount - (memberPage.listLimit *( memberPage.currentPage - 1)) }"/>
                    		<c:forEach var="member" items="${ requestScope.list }">
 	                       <tr>
-							<c:url var="memberView" value="memberView.ad">
+							<c:url var="memberView" value="adminMemberView.ad">
 								<c:param name="uniqueNum" value="${ member.uniqueNum }" />
 								<c:param name="page" value="${ page }" />
 							</c:url>
@@ -148,8 +148,8 @@
 
                 <!-- 버튼 -->
                 <div class="list-btn">
-                    <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택탈퇴</button>
-                    <button type="button" id="" class="btn-right writeBtn" onclick="location='memberInsert.ad'"><i class="xi-pen-o"></i> 회원추가</button>
+                    <button type="button" id="" class="btn-left chkBtn" onclick="leaveChkAction()"><i class="xi-cut"></i> 선택탈퇴</button>
+                    <button type="button" id="" class="btn-right writeBtn" onclick="location='adminMemberInsert.ad'"><i class="xi-pen-o"></i> 회원추가</button>
                 </div>
                 <!-- //버튼 -->
 

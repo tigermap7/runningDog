@@ -114,7 +114,7 @@
 	
                 <div class="write-btn">
                     <input type="reset" class="btn btn-list" value="취소하기">
-                    <input id="memberInsertAction" type="button" class="btn btn-success memberInsert_btn" value="회원등록">
+                    <input id="adminMemberInsertAction" type="button" class="btn btn-success memberInsert_btn" value="회원등록">
                 </div>
 				</form>
             </div>

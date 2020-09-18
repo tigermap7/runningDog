@@ -110,7 +110,7 @@ $(function () {
 			$.ajax({
 	            type:'post',
 	            enctype: 'multipart/form-data',
-	            url:'memberInsertAction.ad',
+	            url:'adminMemberInsertAction.ad',
 	            data: formData, // 필수
 	            processData: false, // 필수
 	            contentType: false, // 필수
@@ -137,6 +137,9 @@ $(function () {
     
     
     
+
+    
+    
 });
 
 
@@ -144,7 +147,33 @@ $(function () {
 
 
 
-
+function leaveChkAction(){
+    var cnt = $("input[name='leaveChk']:checked").length;
+    var arr = new Array();
+    $("input[name='leaveChk']:checked").each(function() {
+        arr.push($(this).attr('id'));
+    });
+    if(cnt == 0){
+        alert("선택된 회원이 없습니다.");
+    }
+    else{
+        $.ajax = {
+            type:'post',
+            url: "memberLeaveAction.ad",
+            data: "RPRT_ODR=" + arr + "&CNT=" + cnt,
+            dataType:"json",
+            success: function(jdata){
+                if(jdata != 1) {
+                    alert("삭제 오류");
+                }
+                else{
+                    alert("삭제 성공");
+                }
+            },
+    		error : function(jqXHR, textstatus, errorthrown) { console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);}
+		};
+    }
+}
 
 
 

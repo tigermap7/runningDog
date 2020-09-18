@@ -14,11 +14,11 @@
 <div id="fmobileMenu">
 	<c:if test="${ !empty sessionScope.loginMember}">
     <ul class="fmypage_menu">
-		<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
-        <li><a href="allMember.ad">관리자페이지</a></li>
+		<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y' }">
+        <li><a href="adminMemberList.ad">관리자페이지</a></li>
         <li><a href="logout.do">로그아웃</a></li>
 	    </c:if>
-		<c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
+		<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">
         <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
         <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
         <li><a href="moveChatting.do">나의 채팅</a></li>
@@ -31,10 +31,10 @@
     <a href="#none" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"><i class="xi-align-justify"></i><br/>카테고리</a>
     <a href="slist.do"><i class="xi-piggy-bank"></i><br/>후원하기</a>
     <a href="/WEB-INF/views/mypage/myChatting.jsp"><i class="xi-message-o"></i><br/>나의채팅 <span>+1</span></a>
-	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
+	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y' }">
     <a href="#none" class="mypageBtn"><i class="xi-user-plus-o"></i><br/>관리자</a>
 	</c:if>
-	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
+	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">
     <a href="#none" class="mypageBtn"><i class="xi-user-plus-o"></i><br/>마이페이지</a>
     </c:if>
     <c:if test="${ empty sessionScope.loginMember }">

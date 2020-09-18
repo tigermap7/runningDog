@@ -1,104 +1,117 @@
 package com.kh.runningdog.member.model.vo;
 
+import java.sql.Date;
+
 public class LeaveMember implements java.io.Serializable {
 	private static final long serialVersionUID = 1112L;
 
-	private int listMemberNo;
-	private int lUniqueNum;
-	private String lUserId;
-	private String lUserPwd;
-	private String lNickname;
-	private String lPhone;
-	private String lJoinDate;
-	private String lLeaveDate;
-	private String lLoginType;
+	private int leaveUniqueNum;
+	private String leaveUserId;
+	private String leaveUserPwd;
+	private String leaveNickname;
+	private String leavePhone;
+	private String originProfile;
+	private String renameProfile;
+	private java.sql.Date leaveJoinDate;
+	private java.sql.Date leaveDate;
+	private String leaveLoginType;
 
 	public LeaveMember() {}
 
-	public LeaveMember(int listMemberNo, int lUniqueNum, String lUserId, String lUserPwd, String lNickname,
-			String lPhone, String lJoinDate, String lLeaveDate, String lLoginType) {
+	public LeaveMember(int leaveUniqueNum, String leaveUserId, String leaveUserPwd, String leaveNickname,
+			String leavePhone, String originProfile, String renameProfile, Date leaveJoinDate, Date leaveDate,
+			String leaveLoginType) {
 		super();
-		this.listMemberNo = listMemberNo;
-		this.lUniqueNum = lUniqueNum;
-		this.lUserId = lUserId;
-		this.lUserPwd = lUserPwd;
-		this.lNickname = lNickname;
-		this.lPhone = lPhone;
-		this.lJoinDate = lJoinDate;
-		this.lLeaveDate = lLeaveDate;
-		this.lLoginType = lLoginType;
+		this.leaveUniqueNum = leaveUniqueNum;
+		this.leaveUserId = leaveUserId;
+		this.leaveUserPwd = leaveUserPwd;
+		this.leaveNickname = leaveNickname;
+		this.leavePhone = leavePhone;
+		this.originProfile = originProfile;
+		this.renameProfile = renameProfile;
+		this.leaveJoinDate = leaveJoinDate;
+		this.leaveDate = leaveDate;
+		this.leaveLoginType = leaveLoginType;
 	}
 
-	public int getListMemberNo() {
-		return listMemberNo;
+	public int getLeaveUniqueNum() {
+		return leaveUniqueNum;
 	}
 
-	public void setListMemberNo(int listMemberNo) {
-		this.listMemberNo = listMemberNo;
+	public void setLeaveUniqueNum(int leaveUniqueNum) {
+		this.leaveUniqueNum = leaveUniqueNum;
 	}
 
-	public int getlUniqueNum() {
-		return lUniqueNum;
+	public String getLeaveUserId() {
+		return leaveUserId;
 	}
 
-	public void setlUniqueNum(int lUniqueNum) {
-		this.lUniqueNum = lUniqueNum;
+	public void setLeaveUserId(String leaveUserId) {
+		this.leaveUserId = leaveUserId;
 	}
 
-	public String getlUserId() {
-		return lUserId;
+	public String getLeaveUserPwd() {
+		return leaveUserPwd;
 	}
 
-	public void setlUserId(String lUserId) {
-		this.lUserId = lUserId;
+	public void setLeaveUserPwd(String leaveUserPwd) {
+		this.leaveUserPwd = leaveUserPwd;
 	}
 
-	public String getlUserPwd() {
-		return lUserPwd;
+	public String getLeaveNickname() {
+		return leaveNickname;
 	}
 
-	public void setlUserPwd(String lUserPwd) {
-		this.lUserPwd = lUserPwd;
+	public void setLeaveNickname(String leaveNickname) {
+		this.leaveNickname = leaveNickname;
 	}
 
-	public String getlNickname() {
-		return lNickname;
+	public String getLeavePhone() {
+		return leavePhone;
 	}
 
-	public void setlNickname(String lNickname) {
-		this.lNickname = lNickname;
+	public void setLeavePhone(String leavePhone) {
+		this.leavePhone = leavePhone;
 	}
 
-	public String getlPhone() {
-		return lPhone;
+	public String getOriginProfile() {
+		return originProfile;
 	}
 
-	public void setlPhone(String lPhone) {
-		this.lPhone = lPhone;
+	public void setOriginProfile(String originProfile) {
+		this.originProfile = originProfile;
 	}
 
-	public String getlJoinDate() {
-		return lJoinDate;
+	public String getRenameProfile() {
+		return renameProfile;
 	}
 
-	public void setlJoinDate(String lJoinDate) {
-		this.lJoinDate = lJoinDate;
+	public void setRenameProfile(String renameProfile) {
+		this.renameProfile = renameProfile;
 	}
 
-	public String getlLeaveDate() {
-		return lLeaveDate;
+	public java.sql.Date getLeaveJoinDate() {
+		return leaveJoinDate;
 	}
 
-	public void setlLeaveDate(String lLeaveDate) {
-		this.lLeaveDate = lLeaveDate;
+	public void setLeaveJoinDate(java.sql.Date leaveJoinDate) {
+		this.leaveJoinDate = leaveJoinDate;
 	}
 
-	public String getlLoginType() {
-		return lLoginType;
+	public java.sql.Date getLeaveDate() {
+		return leaveDate;
 	}
 
-	public void setlLoginType(String lLoginType) {
-		this.lLoginType = lLoginType;
+	public void setLeaveDate(java.sql.Date leaveDate) {
+		this.leaveDate = leaveDate;
+	}
+
+	public String getLeaveLoginType() {
+		return leaveLoginType;
+	}
+
+	public void setLeaveLoginType(String leaveLoginType) {
+		this.leaveLoginType = leaveLoginType;
 	}
 
 	public static long getSerialversionuid() {
@@ -107,9 +120,10 @@ public class LeaveMember implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "LeaveMember [listMemberNo=" + listMemberNo + ", lUniqueNum=" + lUniqueNum + ", lUserId=" + lUserId
-				+ ", lUserPwd=" + lUserPwd + ", lNickname=" + lNickname + ", lPhone=" + lPhone + ", lJoinDate="
-				+ lJoinDate + ", lLeaveDate=" + lLeaveDate + ", lLoginType=" + lLoginType + "]";
+		return "LeaveMember [leaveUniqueNum=" + leaveUniqueNum + ", leaveUserId=" + leaveUserId + ", leaveUserPwd="
+				+ leaveUserPwd + ", leaveNickname=" + leaveNickname + ", leavePhone=" + leavePhone + ", originProfile="
+				+ originProfile + ", renameProfile=" + renameProfile + ", leaveJoinDate=" + leaveJoinDate
+				+ ", leaveDate=" + leaveDate + ", leaveLoginType=" + leaveLoginType + "]";
 	}
 
 }

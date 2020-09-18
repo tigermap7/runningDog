@@ -10,13 +10,13 @@
                 <li onclick="location='#none'"><i class="xi-lightbulb-o"></i><span>[서울시 강북구 미아동]</span>흰색 포메리안을 강아지를 찾습니다.</li>
             </ul>
             <ul class="util">
-            	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
+            	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y' }">
+                <li><a class="hover_line01" href="adminMemberList.ad">관리자페이지</a></li>
                 <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
-                <li><a class="hover_line01" href="allMember.ad">관리자페이지</a></li>
                 </c:if>
-            	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
-                <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
+            	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">
                 <li><a class="hover_line01" href="mypage.do?userId=${loginMember.userId}">마이페이지</a></li>
+                <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
             	</c:if>
             	<c:if test="${ empty sessionScope.loginMember }">
                 <li><a class="hover_line01" href="login.do">로그인</a></li>
@@ -76,8 +76,6 @@
                     <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
                     <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
                     <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
-                    <li><a href="/runningdog/views/notice/noticeList.jsp">공지사항</a></li>
-                    <li><a href="/runningdog/views/protect/serviceList.jsp">자원봉사모집</a></li>
                     <li><a href="nlist.do">공지사항</a></li>
                 </ul>
             </li>

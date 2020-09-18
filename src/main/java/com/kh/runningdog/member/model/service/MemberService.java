@@ -1,6 +1,7 @@
 package com.kh.runningdog.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.runningdog.member.model.vo.Member;
 import com.kh.runningdog.member.model.vo.MemberPage;
@@ -37,6 +38,8 @@ public interface MemberService {
 	int adminInsertMember(Member member);
 	int adminUpdateMember(Member member);
 	int adminDeleteMember(Member selectUser);
+	
+	Member adminDeleteMember(Map<String, Object> commandMap);
 	
 
 }
