@@ -26,6 +26,8 @@
             <!-- 본문내용 -->
             <div class="adminInfo_wrap">
                 <h2>회원정보 수정</h2>
+                
+                
                 <!-- 프로필 -->
 				<dl class="profile">
 					<dt>
@@ -63,7 +65,9 @@
 					</dd>
 				</dl>
 				<!-- 프로필 끝 -->
-				<form method="post" action="memberModified.do" enctype="multipart/form-data">
+				
+				<form method="post" action="memberModified.ad" enctype="multipart/form-data">
+				<input type="hidden" value="${ selectUser.uniqueNum }" name="uniqueNum">
                 <table class="adminInfo">
                     <colgroup>
                         <col width="25%">
@@ -82,8 +86,8 @@
                             <td>프로필 사진</td>
                             <td colspan="3">
                                 <c:if test="${ !empty selectUser.originProfile }">
-								${ loginMember.originProfile } &nbsp;
-								<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+								${ selectUser.originProfile } &nbsp;
+								<label><input type="checkbox" name="deleteFlag" value="yes"> 삭제하기</label>
 								</c:if>
 								<c:if test="${ empty selectUser.originProfile }">
 								<input type="file" name="profilImage" title="프로필 사진"/>
@@ -106,29 +110,29 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>관리자 권한여부</td>
-                            <td class="adminChk">
-                                <select name="adminChk" class="adminChk">
-                                	<c:if test="${ selectUser.adminChk == 'Y' }">
-		                            <option value="Y" selected>관리자 권한부여</option>
-		                            <option value="N">일반 회원</option>         
-                                	</c:if>
-                                	<c:if test="${ selectUser.adminChk == 'N' }">
-		                            <option value="Y">관리자 권한부여</option>
-		                            <option value="N" selected>일반 회원</option>                   
-                                	</c:if>
-                       			</select>
-                            </td>
-                            <td style="text-align:center;">로그인 제한여부</td>
+                            <td>로그인 제한설정</td>
                             <td class="loginLimit">
                                 <select name="loginLimit" class="loginLimit">
                                 	<c:if test="${ selectUser.loginLimit == 'Y'}">
-		                            <option value="Y" selected>로그인 제한 ◎</option>
-		                            <option value="N">로그인 제한 x</option>                   
+		                            <option value="Y" selected>제한하기</option>
+		                            <option value="N">제한없음</option>                   
                                 	</c:if>
                                 	<c:if test="${ selectUser.loginLimit == 'N'}">
-		                            <option value="Y">로그인 제한 ◎</option>
-		                            <option value="N" selected>로그인 제한 x</option>                   
+		                            <option value="Y">제한하기</option>
+		                            <option value="N" selected>제한없음</option>                   
+                                	</c:if>
+                       			</select>
+                            </td>
+                            <td style="text-align:center; font-weight:500;">관리자 권한설정</td>
+                            <td class="adminChk">
+                                <select name="adminChk" class="adminChk">
+                                	<c:if test="${ selectUser.adminChk == 'Y' }">
+		                            <option value="Y" selected>관리자</option>
+		                            <option value="N">일반회원</option>         
+                                	</c:if>
+                                	<c:if test="${ selectUser.adminChk == 'N' }">
+		                            <option value="Y">관리자 권한부여</option>
+		                            <option value="N" selected>일반회원</option>                   
                                 	</c:if>
                        			</select>
                             </td>
@@ -139,6 +143,7 @@
                 </table>
 
                 <div class="write-btn">
+                    <input type="button" class="btn btn-delete" value="탈퇴처리" onclick="location.href='adminLeaveMember.ad?uniqueNum=${selectUser.uniqueNum}'">
                     <input type="reset" class="btn btn-list" value="취소하기">
                     <input type="submit" class="btn btn-success" value="수정하기">
                 </div>

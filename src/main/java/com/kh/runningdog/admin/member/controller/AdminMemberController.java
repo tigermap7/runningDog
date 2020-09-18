@@ -10,6 +10,7 @@ import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -265,9 +266,10 @@ public class AdminMemberController {
 		}
 		return "admin/member/memberView";
 	}
+	
 	//관리자 회원수정
-	@RequestMapping(value="memberModified.do", method=RequestMethod.POST)
-	public String adminMemberModifiedAction(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam("uniqueNum", required = false) int uniqueNum, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
+	@RequestMapping(value="memberModified.ad", method=RequestMethod.POST)
+	public String adminMemberModifiedAction(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name="uniqueNum", required = false) int uniqueNum, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
 
 		Member selectUser = memberService.selectUserOne(uniqueNum);
 		
@@ -276,21 +278,32 @@ public class AdminMemberController {
 		
 		String url = "";
 
-		int nChk = 0;
-		boolean myNickname2 = false;
+		int nChk = 0, pChk = 0;
+		boolean myNickname2 = false, myPhone2 = false;
 		
 		myNickname2 = selectUser.getNickname().equals(member.getNickname());
-		
+		myPhone2 = selectUser.getPhone().equals(member.getPhone());
+
 		logger.info("확인1");
-		
+
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
 		if (selectUser != null) {
+			logger.info("확인2");
+			logger.info("확인!!!! : " + nicknameChk.getNickname().equals(member.getNickname()));
+			logger.info("확인!!!! : " + nicknameChk.getPhone().equals(member.getPhone()));
 			if(nicknameChk != null && nicknameChk.getNickname().equals(member.getNickname()) == true && myNickname2 == false) {
+				logger.info("확인3");
+	            out.println("<script>alert('이미 존재하는 닉네임 입니다.\\n다시 입력해주세요.'); history.go(-1);</script>");
+	            out.flush();
+			} else if(phoneChk != null && phoneChk.getPhone().equals(member.getPhone()) == true && myPhone2 == false) {
+				logger.info("확인4");
+	            out.println("<script>alert('이미 가입된 핸드폰 번호 입니다.\\n다시 입력해주세요.'); history.go(-1);</script>");
+	            out.flush();
+			} else if (nChk == 0 && pChk == 0) {
 
-				logger.info("확인1");
-				url = "notNickname";
-			} else if (nChk == 0) {
-
-				logger.info("확인2");
+				logger.info("확인5");
 				//해당 유저의 프로필 파일이름
 				String originProfile = selectUser.getOriginProfile();
 				String renameProfile = selectUser.getRenameProfile();
@@ -347,24 +360,52 @@ public class AdminMemberController {
 					member.setRenameProfile(renameProfile);
 				}
 
-				logger.info("확인3");
-				if(memberService.adminUpdateMember(uniqueNum) > 0) {
-					logger.info("확인4");
+				logger.info("확인6");
+				if(memberService.adminUpdateMember(member) > 0) {
+					logger.info("확인7");
 					model.addAttribute(uniqueNum);
-					url = "admin/member/memberView";
+					url = "redirect:memberView.ad?uniqueNum=" + uniqueNum;
 				} else {
-					logger.info("확인5");
-		            response.setContentType("text/html; charset=UTF-8");
-		            PrintWriter out = response.getWriter();
+					logger.info("확인8");
 		            out.println("<script>alert('해당 회원이 존재하지 않습니다.'); history.go(-1);</script>");
 		            out.flush();
 				}
-				logger.info("확인6");
+				logger.info("member : " + member);
 					
 			}
 		} else {
-			logger.info("확인7 : " + selectUser);
+			logger.info("확인9 : " + selectUser);
 			model.addAttribute("selectUser", selectUser);
+			url = "common/error";
+		}
+		return url;
+	}
+	
+	
+	
+	//상세페이지에서 해당회원 탈퇴처리 컨트롤러
+	@RequestMapping(value="adminLeaveMember.ad")
+	public String leaveMemberActionMethod(Member member, HttpSession session, HttpServletResponse response, @RequestParam(name="uniqueNum", required = false) int uniqueNum) throws IOException {
+		logger.info("adminLeaveMember run...");
+
+		Member selectUser = memberService.selectUserOne(uniqueNum);
+
+		String url = null;
+		
+		if (selectUser != null) {
+			if (memberService.insertLeaveMember(member) > 0) {
+				if (memberService.adminDeleteMember(selectUser) > 0) {
+					url = "redirect:/allMember.ad";
+				} else {
+					session.setAttribute("message", "회원탈퇴처리 실패");
+					url = "common/error";
+				}
+			} else {
+				session.setAttribute("message", "회원탈퇴처리 목록으로 insert 실패");
+				url = "common/error";
+			}
+		} else {
+			session.setAttribute("message", "회원탈퇴처리 조회 실패");
 			url = "common/error";
 		}
 		return url;

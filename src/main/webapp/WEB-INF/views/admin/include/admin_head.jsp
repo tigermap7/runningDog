@@ -11,6 +11,7 @@
 
 <title>관리자 화면</title>
 
+<link rel="shortcut icon" href="resources/images/common/favicon.ico">
 <link rel="stylesheet" type="text/css" href="resources/admin/css/common.css">
 <link rel="stylesheet" type="text/css" href="resources/common/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="resources/common/css/swiper.min.css">

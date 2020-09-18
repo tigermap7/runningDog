@@ -22,12 +22,12 @@ public interface MemberService {
 	int selectNicknameCount(Member member);
 	int updateMemberPwd(Member member);
 	int updatemyinfo(Member member);
+	int deleteMember(String userId);
 	
 	//공용
 	int insertMember(Member member);
 	int updateMember(Member member);
 	int insertLeaveMember(Member member);
-	int deleteMember(String userId);
 	
 	
 	//관리자
@@ -35,7 +35,8 @@ public interface MemberService {
 	int selectMemberCount(MemberPage memberSerch);
 	Member selectUserOne(int uniqueNum);
 	int adminInsertMember(Member member);
-	int adminUpdateMember(int uniqueNum);
+	int adminUpdateMember(Member member);
+	int adminDeleteMember(Member selectUser);
 	
 
 }

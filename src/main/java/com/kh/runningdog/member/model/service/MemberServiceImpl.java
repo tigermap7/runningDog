@@ -60,6 +60,11 @@ public class MemberServiceImpl implements MemberService {
 	public int updatemyinfo(Member member) {
 		return memberDao.updatemyinfo(member);
 	}
+	
+	@Override
+	public int deleteMember(String userId) {
+		return memberDao.deleteMember(userId);
+	}
 
 	
 	
@@ -78,11 +83,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insertLeaveMember(Member member) {
 		return memberDao.insertLeaveMember(member);
-	}
-	
-	@Override
-	public int deleteMember(String userId) {
-		return memberDao.deleteMember(userId);
 	}
 	
 	
@@ -110,8 +110,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int adminUpdateMember(int uniqueNum) {
-		return memberDao.adminUpdateMember(uniqueNum);
+	public int adminUpdateMember(Member member) {
+		return memberDao.adminUpdateMember(member);
+	}
+	
+	@Override
+	public int adminDeleteMember(Member selectUser) {
+		return memberDao.adminDeleteMember(selectUser);
 	}
 
 	
@@ -128,6 +133,7 @@ public class MemberServiceImpl implements MemberService {
 	public int selectNicknameCount(Member member) {
 		return memberDao.selectNicknameCount(member);
 	}
+
 
 
 }

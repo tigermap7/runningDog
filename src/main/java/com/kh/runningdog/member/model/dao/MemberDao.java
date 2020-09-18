@@ -109,8 +109,12 @@ public class MemberDao {
 		return session.insert("memberMapper.adminInsertMember", member);
 	}
 	
-	public int adminUpdateMember(int uniqueNum) {
-		return session.insert("memberMapper.adminUpdateMember", uniqueNum);
+	public int adminUpdateMember(Member member) {
+		return session.update("memberMapper.adminUpdateMember", member);
+	}
+	
+	public int adminDeleteMember(Member selectUser) {
+		return session.update("memberMapper.adminDeleteMember", selectUser);
 	}
 
 
@@ -123,5 +127,8 @@ public class MemberDao {
 	public int selectNicknameCount(Member member) {
 		return session.selectOne("memberMapper.selectNicknameCount", member);
 	}
+
+
+
 	
 }

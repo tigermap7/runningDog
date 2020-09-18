@@ -61,9 +61,9 @@
                         <col width="15%">
                         <col width="10%">
                         <col width="10%">
-                        <col width="8%">
                         <col width="6%">
-                        <col width="6%">
+                        <col width="5%">
+                        <col width="5%">
                     </colgroup>
                     <thead>
                         <tr>
@@ -113,8 +113,21 @@
 	                           <td class="loginType" onclick="location='${ memberView }'">일반</td>
 	                           </c:if>
 	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
-	                           <td class="loginLimit" onclick="location='${ memberView }'">${ member.loginLimit }</td>
-	                           <td class="adminChk" onclick="location='${ memberView }'">${ member.adminChk }</td>
+	                           
+	                           <c:if test="${ member.loginLimit == 'Y'}">
+	                           <td class="loginLimit" onclick="location='${ memberView }'"><i class="xi-check-circle-o"></i></td>
+	                           </c:if>
+	                           <c:if test="${ member.loginLimit == 'N'}">
+	                           <td class="loginLimit" onclick="location='${ memberView }'"></td>
+	                           </c:if>
+	                           
+	                           <c:if test="${ member.adminChk == 'Y'}">
+	                           <td class="adminChk" onclick="location='${ memberView }'"><i class="xi-check-circle-o"></i></td>
+	                           
+	                           </c:if>
+	                           <c:if test="${ member.adminChk == 'N'}">
+	                           <td class="adminChk" onclick="location='${ memberView }'"></td>
+	                           </c:if>
 	                       <c:set var="listNo" value="${listNo - 1}"/>
 	                       </tr>
 	                   	</c:forEach>

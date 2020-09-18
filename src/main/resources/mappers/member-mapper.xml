@@ -66,6 +66,10 @@
 		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile} where user_id = #{userId}
 	</update>
 	
+	<delete id="deleteMember" parameterType="Member">
+		delete member where user_id = #{userId}
+	</delete>
+	
 	
 	
 	<!-- 공용 -->
@@ -85,12 +89,8 @@
 		INSERT INTO LEAVE_MEMBER (L_UNIQUE_NUM, L_USER_ID, L_USER_PWD, L_NICKNAME, L_PHONE, L_JOIN_DATE, L_LOGIN_TYPE)
 		SELECT UNIQUE_NUM, USER_ID, USER_PWD, NICKNAME, PHONE, JOIN_DATE, LOGIN_TYPE
 		FROM MEMBER
-		WHERE user_id = #{userId}
+		WHERE UNIQUE_NUM = #{uniqueNum}
 	</insert>
-	
-	<delete id="deleteMember" parameterType="Member">
-		delete member where user_id = #{userId}
-	</delete>
 	
 	
 	
@@ -98,7 +98,7 @@
 	<select id="selectMemberList" resultType="Member" parameterType="com.kh.runningdog.member.model.vo.MemberPage">
 		SELECT *
 			FROM (SELECT ROWNUM RNUM, UNIQUE_NUM, USER_ID, NICKNAME, PHONE, ORIGIN_PROFILE,
-            RENAME_PROFILE,JOIN_DATE, LAST_ACCESS_DATE, LOGIN_TYPE, LOGIN_LIMIT
+            RENAME_PROFILE,JOIN_DATE, LAST_ACCESS_DATE, LOGIN_TYPE, LOGIN_LIMIT, ADMIN_CHK
             FROM (SELECT * FROM MEMBER
         	<if test="search == 'userId'">
 				WHERE USER_ID LIKE '%' ||  #{keyword} || '%'
@@ -109,11 +109,10 @@
 	  		<if test="search == 'phone'">
 	  			WHERE PHONE LIKE '%' ||  #{keyword} || '%'
 			</if>
-            ))
+            ORDER BY JOIN_DATE DESC))
             <![CDATA[
 	  		WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
 	  		]]>
-            ORDER BY JOIN_DATE DESC
 	</select>
 	
 	<select id="selectMemberCount" resultType="_int" parameterType="com.kh.runningdog.member.model.vo.MemberPage">
@@ -129,10 +128,12 @@
 	</insert>
 	
 	<insert id="adminUpdateMember" parameterType="Member">
-		
 		update member set nickname = #{nickname}, origin_profile = #{originProfile}, rename_profile = #{renameProfile}, admin_chk = #{adminChk}, login_limit = #{loginLimit} where unique_num = #{uniqueNum}
-	
 	</insert>
+	
+	<delete id="adminDeleteMember" parameterType="Member">
+		delete member where unique_num = #{uniqueNum}
+	</delete>
 	
 	
 	

@@ -11,8 +11,8 @@
 
 <title>지금 달려갈 개</title>
 
-<link href="resources/common/css/common.css" rel="stylesheet">
 <link rel="shortcut icon" href="resources/images/common/favicon.ico">
+<link href="resources/common/css/common.css" rel="stylesheet">
 
 <script src="resources/dboard/js/dboard.js"></script>
 <script src="resources/common/js/jquery-3.5.1.min.js"></script>

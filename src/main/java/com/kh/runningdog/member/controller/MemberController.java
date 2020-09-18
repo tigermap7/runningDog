@@ -104,6 +104,7 @@ public class MemberController {
 		logger.info("loginAction run...");
 		Member loginMember = memberService.selectLogin(member);
 		ArrayList<Integer> myChatList = null;
+		
 		String url = null;
 		
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
@@ -460,7 +461,7 @@ public class MemberController {
 	
 	//회원탈퇴 컨트롤러
 	@RequestMapping(value="leaveMember.do", method=RequestMethod.POST)
-	public String leaveMemberActionMethod(Member member,@RequestParam("userId") String userId, HttpSession session) throws IOException {
+	public String leaveMemberActionMethod(Member member, HttpSession session) throws IOException {
 		String url = null;
 		logger.info("leaveMember run...");
 		Member userPwdChk = memberService.selectUserPwdCheck(member);
@@ -468,7 +469,7 @@ public class MemberController {
 		if (bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd())) {
 			if (memberService.insertLeaveMember(member) > 0) {
 
-				if (memberService.deleteMember(userId.trim()) > 0) {
+				if (memberService.deleteMember(member.getUniqueNum()) > 0) {
 					return "redirect:/logout.do";
 				} else {
 					session.setAttribute("message", "회원탈퇴 실패");
