@@ -73,9 +73,12 @@
 				#{ sContent }, 0, sysdate, #{ sAmount }, 0, #{ sOriginal }, #{ sRename })
 	</insert>
 	
-	<!-- <update id="updateSponsor" parameterType="Sponsor">
-		
-	</update> -->
+	<update id="updateSponsor" parameterType="Sponsor">
+		update sponsor
+		set (s_title = #{ sTitle }, s_summary = #{ sSummary }, s_content = #{ sContent },
+				s_amount = #{ sAmount }, s_original = #{ sOriginal }, s_rename = #{ sRename })
+		where s_num = #{ sNum }
+	</update>
 	
 	<delete id="deleteSponsor">
 		delete from sponsor where s_num in

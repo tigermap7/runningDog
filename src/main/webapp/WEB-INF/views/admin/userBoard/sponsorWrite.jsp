@@ -61,8 +61,8 @@
                 </table>
                 
                 <div class="write-btn">
-                    <input type="button" class="btn btn-list" value="목록으로">
-                    <input type="reset" class="btn btn-cancel" value="취소하기">
+                    <input type="button" class="btn btn-list" value="목록으로" onclick="javascript:location.href='aslist.ad'">
+                    <input type="reset" class="btn btn-cancel" value="취소하기" onclick="Refresh(); return false;">
                     <input type="submit" class="btn btn-success" value="작성하기">
                 </div>
             </div>

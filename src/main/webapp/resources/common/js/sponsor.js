@@ -77,7 +77,6 @@ function snsGo(e, id, title, summary) {
 
 //썸머노트 이미지 업로드
 function sendFile(file, el) {
-	console.log("파일업로드 함수 작동");
 	var form_data = new FormData();
 	form_data.append('file', file);
 	$.ajax({
@@ -89,7 +88,6 @@ function sendFile(file, el) {
 		enctype: 'multipart/form-data',
 		processData: false,
 		success: function(img_name) {
-			console.log("파일업로드명 받아오기");
 			$(el).summernote('editor.insertImage', img_name);
 		}
 	});
@@ -148,6 +146,39 @@ $(function(){
 		}
 	});
 });	
+
+function Refresh() {
+	$('#summernote').summernote('reset');
+	window.location.reload();
+}
+
+$(document).ready(function() {
+	$('#showSelect').hide();
+});
+
+function showFileSelect(snum) {
+	console.log(snum);
+	$.ajax({
+		data: {snum},
+		type: "post",
+		url: 'sfileDel.ad',
+		success: function(){
+			console.log("파일 삭제 성공");
+		},
+		error : function(reqest, status, errorData){
+			console.log("error code : " + request.status
+					+ "\nMessage : " + request.responseText
+					+ "\nError : " + errorData);
+		}
+	});
+	
+	var files = document.getElementById("file");
+	var originalFile = document.getElementById("ofile");
+	files.removeChild(originalFile);
+	$('#showSelect').show();
+	
+}
+
 
 
 

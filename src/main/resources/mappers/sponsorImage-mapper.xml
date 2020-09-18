@@ -35,11 +35,15 @@
 	
 	<!-- <update id="updateSponsor" parameterType="Sponsor">
 		
-	</update>
+	</update> -->
 	
-	<delete id="deletSponsor" parameterType="int">
-		delete from member where s_num = #{ snum }
-	</delete> -->
+	<delete id="deletSponsorImage">
+		delete from sponsorImage
+		where s_num = #{ snum } and si_name in
+		<foreach collection="mlist" item="arr" open="(" close=")" separator=",">
+			#{ arr }
+		</foreach>
+	</delete>
 	
 	
 </mapper>

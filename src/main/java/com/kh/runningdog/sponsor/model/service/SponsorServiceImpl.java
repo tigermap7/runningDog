@@ -71,6 +71,16 @@ public class SponsorServiceImpl implements SponsorService{
 	public ArrayList<Sponsor> selectSearch(HashMap<String, String> key) {
 		return sponsorDao.selectSearch(key);
 	}
+
+	@Override
+	public int updateSponsor(Sponsor sponsor) {
+		return sponsorDao.updateSponsor(sponsor);
+	}
+
+	@Override
+	public int deleteSponsorImage(ArrayList<String> mlist, int sNum) {
+		return sponsorDao.deleteSponsorImage(mlist, sNum);
+	}
 	
 	
 }

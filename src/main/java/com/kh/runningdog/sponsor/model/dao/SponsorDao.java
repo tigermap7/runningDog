@@ -79,6 +79,17 @@ public class SponsorDao {
 		List<Sponsor> list = session.selectList("sponsorMapper.selectSearch", key);
 		return (ArrayList<Sponsor>) list;
 	}
+
+	public int updateSponsor(Sponsor sponsor) {
+		return session.update("sponsorMapper.updateSponsor", sponsor);
+	}
+
+	public int deleteSponsorImage(ArrayList<String> mlist, int sNum) {
+		HashMap<String, Object> key = new HashMap<>();
+		key.put("mlist", mlist);
+		key.put("snum", sNum);
+		return session.delete("sponsorImageMapper.deleteSponsorImage", key);
+	}
 	
 	
 	

@@ -12,10 +12,15 @@ public interface SponsorService {
 	ArrayList<Sponsor> selectList(int currentPage, int countList);
 	public abstract Sponsor selectOne(int sNum);
 	public abstract int selectSNum();
-	void insertSContentImage(ArrayList<String> clist, int sNum);
-	public abstract ArrayList<String> selectImageList();
 	public abstract ArrayList<Sponsor> selectThumb(String[] checkRow);
-	public abstract ArrayList<SponsorImage> selectImageList(String[] checkRow);
 	public abstract int deleteSponsor(String[] checkRow);
 	public abstract ArrayList<Sponsor> selectSearch(HashMap<String, String> key);
+	int updateSponsor(Sponsor sponsor);
+	
+	//sponsorImage
+	void insertSContentImage(ArrayList<String> clist, int sNum);
+	public abstract ArrayList<SponsorImage> selectImageList(String[] checkRow);
+	int deleteSponsorImage(ArrayList<String> mlist, int sNum);
+	public abstract ArrayList<String> selectImageList();
+	
 }

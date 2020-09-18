@@ -8,7 +8,7 @@
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
 	</head>
-	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+	<body oncontextmenu="return false" ondragstart="return false">
 		<div id="wrap">
             <c:import url="/WEB-INF/views/include/header.jsp"/>
 			<!-- 컨텐츠 -->

@@ -6,8 +6,22 @@
 <html>
 <head>
     <c:import url="../include/admin_head.jsp"/>
+    <style type="text/css">
+    	#summernote {
+    		user-select: text;
+    	}
+    </style>
+    <script type="text/javascript">
+    	var content = '${ sponsor.sContent }';
+    	
+    	$(function(){
+    		$('#summernote').summernote(content);
+    		// and set code
+    		$('#summernote').summernote('code', content);
+    	});
+    </script>
 </head>
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<body oncontextmenu="return false" ondragstart="return false">
     <div id="wrap">
         <c:import url="../include/admin_header.jsp"/>
 
@@ -24,8 +38,11 @@
             <!-- //상단 타이틀 -->
 
             <!-- 본문내용 -->
-            <form id="editor" method="post" enctype="multipart/form-data" action="sinsert.ad" class="form-inline">
+            <form id="editor" method="post" enctype="multipart/form-data" action="supdate.ad" class="form-inline">
             	<input type="hidden" value="${ loginMember.nickname }" name="sId">
+            	<input type="hidden" value="${ sponsor.sNum }" name="sNum">
+            	<input type="hidden" value="${ sponsor.sOriginal }" name="sOriginal">
+            	<input type="hidden" value="${ sponsor.sRename }" name="sRename">
             <div class="write-area">
             
                 <h2>후원하기 수정</h2>
@@ -49,14 +66,16 @@
                             <td>목표 금액</td>
                             <td><input  value="${ amount }" onkeyup="addCommas(this.value)" id="amt" type="text" name="amount" class="form-control" placeholder="0" required style="width:150px; text-align:right;"></td>
                         </tr>
-                        <tr>
+                        <tr id="file">
                             <td>썸네일</td>
                             <c:if test="${ !empty sponsor.sOriginal }">
-                            	<td>${ sponsor.sOriginal } &nbsp; &nbsp;<button onclick="spuv" class="btn btn-list" style="font-size:13px; padding:4px;">파일삭제</td>
+                            	<td id="ofile">${ sponsor.sOriginal } &nbsp; &nbsp;
+                            	<button class="deleteBtn" onclick="showFileSelect(${ sponsor.sNum });"><i class="xi-cut"></i> 파일삭제</button></td>
                             </c:if>
                             <c:if test="${ empty sponsor.sOriginal }">
                             	<td><input type="file" name="upfile"></td>
                             </c:if>
+                            	<td id="showSelect"><input type="file" name="upfile"></td>
                         </tr>
                         <tr>
                             <td>내용</td>
@@ -66,8 +85,11 @@
                 </table>
                 
                 <div class="write-btn">
-                    <input type="button" class="btn btn-list" value="목록으로">
-                    <input type="reset" class="btn btn-cancel" value="취소하기">
+                		<c:url value="aslist.ad" var="lis">
+                			<c:param name="page" value="${ page }" />
+                		</c:url>
+                    <input type="button" class="btn btn-list" value="목록으로" onclick="javascript:location.href='${ lis }'">
+                    <input type="reset" class="btn btn-cancel" value="취소하기" onclick="Refresh();">
                     <input type="submit" class="btn btn-success" value="작성하기">
                 </div>
             </div>

@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,16 +95,94 @@ public class AdminSponsorController {
 		return mv;
 	}
 	
-    @RequestMapping("asupview.ad") //modelAndView로 고치기
-    public ModelAndView moveSponsorUpdateView(ModelAndView mv, Sponsor sponsor) {
+    @RequestMapping("asupview.ad")
+    public ModelAndView moveSponsorUpdateView(ModelAndView mv, Sponsor sponsor, HttpServletResponse response, @RequestParam() int page) {
     	sponsor = sponsorService.selectOne(sponsor.getsNum());
     	DecimalFormat formatter = new DecimalFormat("###,###");
     	String amount = formatter.format(sponsor.getsAmount());
     	
+    	mv.addObject("page", page);
     	mv.addObject("amount", amount);
     	mv.addObject("sponsor", sponsor);
     	mv.setViewName("admin/userBoard/sponsorUpdateView");
     	return mv;
+    }
+    
+    @RequestMapping("sfileDel.ad")
+    public void sUpFileDelete(@RequestParam() int snum, HttpServletRequest request, Sponsor sponsor) {
+    	String savePath = savePath(request) + "/thumbnail";
+    	String[] sNum = new String[]{Integer.toString(snum)};
+    	ArrayList<Sponsor> list = sponsorService.selectThumb(sNum);
+    	new File(savePath + "\\" + list.get(0).getsOriginal()).delete();
+    	new File(savePath + "\\" + list.get(0).getsRename()).delete();
+    }
+    
+    @RequestMapping("supdate.ad")
+    public String sUpdate(Sponsor sponsor, HttpServletRequest request, @RequestParam(name = "upfile", required = false) MultipartFile upfile) {
+    	int sNum = sponsor.getsNum();
+    	
+    	sponsor.setsAmount(Integer.parseInt(request.getParameter("amount").replaceAll(",", "")));
+    	
+    	if(upfile != null) {
+    		String savePath = savePath(request) + "/thumbnail";
+    		String thumbName = upfile.getOriginalFilename();
+    		sponsor.setsOriginal(thumbName);
+    		File ofile = new File(savePath + "\\" + thumbName);
+
+    		try {
+    			upfile.transferTo(ofile);
+    			sponsor.setsRename(makeThumnail(savePath, thumbName, ofile));
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+
+    	int result = sponsorService.updateSponsor(sponsor);
+    	
+    	//--------------------------------------------------
+    	//1. 사진이 변경되지 않은 경우 : 테이블, sContent 양쪽 다 존재
+		//2. 사진이 변경된 경우
+		//	- sContent에서 삭제 : 테이블에도 삭제해야함
+		//	- sContent에서 추가된 경우 : 테이블에도 추가되어야함
+    	String view = "";
+    	if(result > 0) {
+    		//스케쥴러를 이용하기 위해 컨텐츠 이미지 테이블에 저장
+    		ArrayList<String> plist = new ArrayList<>(); //추가된 이미지 저장용
+    		ArrayList<String> mlist = new ArrayList<>(); //삭제된 이미지 저장용
+    		
+    		Pattern pattern = Pattern.compile("t/(.*?)\\r");
+    		Matcher matcher = pattern.matcher(sponsor.getsContent());
+    		
+    		//테이블에 저장되어 있는 내용 이미지 파일명
+    		ArrayList<SponsorImage> keepImg = sponsorService.selectImageList(new String[]{Integer.toString(sNum)});
+    		ArrayList<String> ilist = new ArrayList<>();
+    		for(SponsorImage i : keepImg) {
+    			ilist.add(i.getSiName());
+    		}
+    		//sContent 내용에 존재하는 이미지 파일명 읽어 저장
+    		ArrayList<String> clist = new ArrayList<>();
+    		while(matcher.find()) {
+    			clist.add(matcher.group(1));
+    		}
+    		
+    		if(ilist.containsAll(clist))
+    			view = "redirect:asdetial.ad?sNum=" + sNum + "&page=1";
+    		else {
+    			for(String s : clist) {
+    				if(!ilist.contains(s))
+    					plist.add(s);
+    			}
+    			for(String s : ilist) {
+    				if(!clist.contains(s))
+    					mlist.add(s);
+    			}
+    		}
+    		if(plist.size() > 0)
+    			sponsorService.insertSContentImage(plist, sNum);
+    		if(mlist.size() > 0)
+    			sponsorService.deleteSponsorImage(mlist, sNum);
+    	}
+    	return view;
     }
     
     //파일 경로
@@ -236,12 +315,12 @@ public class AdminSponsorController {
 		int date = c.get(Calendar.DATE);
 		
 		int index = ofileName.lastIndexOf(".");
-		String fileExt = ofileName.substring(index + 1);
+		String fileExt = ofileName.substring(index + 1).replaceAll("(\\p{Z}+|\\p{Z}+$)", "");
 		ofileName = ofileName.substring(0, index);
 		String refileName = ofileName + "-" + year + month + date + "." + fileExt;
 		
 		file.transferTo(new File(savePath + "/" + refileName));
-		out.println("resources/sponsor/summernoteContent" + "/" + refileName);
+		out.print("resources/sponsor/summernoteContent" + "/" + refileName);
 		out.close();
 		
 		} catch(IOException e) {
