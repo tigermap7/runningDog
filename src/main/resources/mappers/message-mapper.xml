@@ -31,6 +31,10 @@
 		select count(*) from message where roomno = #{roomNo} and readcheck = 'N' and receiver != #{receiver}
 	</select>
 	
+	<select id="selectTotalUnreadCount" parameterType="_int" resultType="_int">
+		select count(*) from message where receiver = #{uniqueNum} and readcheck = 'N'
+	</select>
+	
 	<insert id="insertChatLog" parameterType="Message">
 		insert into message
 		values(MESSAGE_SEQ.nextval, #{roomNo}, #{sender}, #{receiver}, #{sendTime}, #{content}, #{readCheck})

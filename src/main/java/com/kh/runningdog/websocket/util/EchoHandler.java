@@ -6,30 +6,30 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.kh.runningdog.chatting.model.service.MessageServiceImpl;
+import com.kh.runningdog.chatting.model.service.ChatroomService;
+import com.kh.runningdog.chatting.model.service.MessageService;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
 import com.kh.runningdog.chatting.model.vo.Message;
 import com.kh.runningdog.member.model.vo.Member;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 @RequestMapping("/echo")
 public class EchoHandler extends TextWebSocketHandler {
 	@Autowired
-	private MessageServiceImpl messageService;
+	private MessageService messageService;
+	
+	@Autowired
+	private ChatroomService chatroomService;
 	
 	private Map<String, WebSocketSession> sessions = new HashMap<String, WebSocketSession>();
 //	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
@@ -97,6 +97,13 @@ public class EchoHandler extends TextWebSocketHandler {
 	        	saveMessage.setReadCheck("N");
 			}
 	        int result = messageService.insertChatLog(saveMessage);
+	        
+	        Chatroom chatRoom = new Chatroom();
+	        chatRoom.setRoomNo(roomno);
+	        chatRoom.setLastMessage(receivedMessage);
+	        chatRoom.setLastDate(date);
+	        chatroomService.updateLastResp(chatRoom);
+	        
 			break;
 
 		default:

@@ -45,6 +45,10 @@
 		values(ROOM_SEQ.nextval, #{inviteeNo}, #{lastMessage}, #{inviteeName}, sysdate)
 		select * from dual
 	</insert>
+	
+	<update id="updateLastResp" parameterType="Chatroom">
+		update chatroom set lastmessage = #{lastMessage}, lastdate = #{lastDate} where roomno = #{roomNo}
+	</update>
 
 	<delete id="deleteChat" parameterType="_int">
 		delete from chatroom where roomno = #{roomNo}

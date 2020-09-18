@@ -22,7 +22,7 @@
     <a href="/runningdog/"><i class="xi-home-o"></i><br/>홈으로</a>
     <a href="#none" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"><i class="xi-align-justify"></i><br/>카테고리</a>
     <a href="slist.do"><i class="xi-piggy-bank"></i><br/>후원하기</a>
-    <a href="/WEB-INF/views/mypage/myChatting.jsp"><i class="xi-message-o"></i><br/>나의채팅 <span>+1</span></a>
+    <a href="moveChatting.do"><i class="xi-message-o"></i><br/>나의채팅 <span id="unread"></span></a>
     <c:if test="${ !empty sessionScope.loginMember }">
     <a href="#none" class="mypageBtn"><i class="xi-user-plus-o"></i><br/>마이페이지</a>
     </c:if>
@@ -58,4 +58,34 @@
             $(".fmypage_menu").hide();
         });
     });
+</script>
+<script type="text/javascript">
+function chatList() {
+	var myChatList = ${sessionScope.myChatList};
+	console.log(myChatList);
+	$.ajax({
+		url: "totalUnread.do",
+		type: "get",
+		dataType: "json",
+		success: function(data) {
+			console.log("success : " + data);
+			var jsonStr = JSON.stringify(data);
+			var json = JSON.parse(jsonStr);
+			var values = "";
+			if (json.count > 0) {
+				values = "+" + json.count; 
+			}
+
+			$("#unread").html(values);
+		},
+		error : function(jqXHR, textstatus, errorthrown) {
+			console.log("error : " + jqXHR + ", " + textstatus + ", "
+					+ errorthrown);
+		},
+		complete: function() {
+		      setTimeout(chatList, 60000);
+	    }
+	});
+};
+setTimeout(chatList, 10);
 </script>

@@ -142,10 +142,24 @@ public class ChattingController {
 			job.put("receiver", URLEncoder.encode(room.getNickname(), "utf-8"));
 			job.put("receiverNo", room.getMemberNo());
 			job.put("lastdate", room.getLastDate().toString());
+			job.put("lastmessage", URLEncoder.encode(room.getLastMessage(), "utf-8"));
 			job.put("unread", unread);
 			jarr.add(job);
 		}
 		sendJson.put("list", jarr);
 		return sendJson.toJSONString();
+	}
+	
+	@RequestMapping("totalUnread.do")
+	@ResponseBody
+	public String totalUnreadCount(HttpSession session) {
+		Member member = (Member) session.getAttribute("loginMember");
+		int uniqueNum = member.getUniqueNum();
+		
+		int count = messageService.selectTotalUnreadCount(uniqueNum);
+		
+		JSONObject job = new JSONObject();
+		job.put("count", count);
+		return job.toJSONString();
 	}
 }

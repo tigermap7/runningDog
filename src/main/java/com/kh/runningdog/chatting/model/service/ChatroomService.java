@@ -13,4 +13,5 @@ public interface ChatroomService {
 	int insertStartChat(StartChat startChat);
 	int deleteChat(int roomNo);
 	int selectExistsRoomNo(StartChat startChat);
+	int updateLastResp(Chatroom chatRoom);
 }

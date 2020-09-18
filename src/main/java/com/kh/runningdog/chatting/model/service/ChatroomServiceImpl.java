@@ -44,4 +44,8 @@ public class ChatroomServiceImpl implements ChatroomService{
 		return chatroomDao.selectExistsRoomNo(startChat);
 	}
 
+	public int updateLastResp(Chatroom chatRoom) {
+		return chatroomDao.updateLastResp(chatRoom);
+	}
+
 }

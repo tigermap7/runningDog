@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">나의 채팅</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="moveChatting.do">나의 채팅</a></li>
                             </ul>
                         </div>
                         <h2><span>나의 채팅</span></h2>
@@ -114,7 +114,7 @@
 			                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
 			                            	+ "<td class=\"title\">"
 			                                + "<h2>" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") + "<span>" + json.list[i].lastdate + "일 마지막 응답</span></h2>"
-			                                + "<p>lastmessage</p></td>"
+			                                + "<p>" + decodeURIComponent(json.list[i].lastmessage).replace(/\+/gi, " ") + "</p></td>"
 			                                + "<td><span>"+ json.list[i].unread +"</span></td></tr>"
 			                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
 								}

@@ -39,4 +39,7 @@ public class ChatroomDao {
 			return 0;
 		}
 	}
+	public int updateLastResp(Chatroom chatRoom) {
+		return session.update("chatroomMapper.updateLastResp", chatRoom);
+	}
 }

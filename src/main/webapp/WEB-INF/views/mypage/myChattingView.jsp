@@ -32,8 +32,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">나의 채팅</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="moveChatting.do">나의 채팅</a></li>
                             </ul>
                         </div>
                         <h2><span>나의 채팅</span></h2>
@@ -52,8 +52,7 @@
                             <dl class="userInfo">
                                 <dt><button class="xi-backspace" onclick="javascript:history.back();"></button></dt>
                                 <dd>
-                                    <h2>멍무이 <span>#1971345</span></h2>
-                                    <p>2020.08.31일 마지막 응답</p>
+                                    <h2>${param.receiver} <span>#${param.receiverNo}</span></h2>
                                 </dd>
                                 <dt class="chattingController">
                                     <button type="button"><i class="xi-ellipsis-v"></i></button>
@@ -64,7 +63,6 @@
                                 </dt>
                             </dl>
                             <div class="chattingView" id="chatdata">
-                                <legend>2020.08.31</legend>
                                 <div>
                                     <h3><i class="xi-comment-o"></i> 채팅안내</h3>
                                     <p>욕설, 모욕, 상대방이 불쾌할 수 있는 언어의 사용을 금지합니다. 이웃끼리 매너있는 채팅문화를 만들어주세요."</p>

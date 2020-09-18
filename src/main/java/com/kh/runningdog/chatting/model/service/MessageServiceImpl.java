@@ -33,4 +33,9 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.updateReadcheck(message);
 	}
 
+	@Override
+	public int selectTotalUnreadCount(int uniqueNum) {
+		return messageDao.selectTotalUnreadCount(uniqueNum);
+	}
+
 }

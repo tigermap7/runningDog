@@ -33,4 +33,8 @@ public class MessageDao {
 		return session.update("messageMapper.updateReadcheck", message);
 	}
 
+	public int selectTotalUnreadCount(int uniqueNum) {
+		return session.selectOne("messageMapper.selectTotalUnreadCount", uniqueNum);
+	}
+
 }

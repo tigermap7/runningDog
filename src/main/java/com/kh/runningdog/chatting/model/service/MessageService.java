@@ -9,4 +9,5 @@ public interface MessageService {
 	ArrayList<Message> selectChatLog(int roomNo);
 	int selectUnread(Message message);
 	int updateReadcheck(Message message);
+	int selectTotalUnreadCount(int uniqueNum);
 }
