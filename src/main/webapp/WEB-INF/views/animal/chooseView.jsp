@@ -256,8 +256,15 @@ $(function() {
                       $(function(){
                     	  getCommentList()
                       });
-
-
+                      var arrdreNum = new Array();
+          			var arrdNum = new Array();
+          			var arrdreWriter = new Array();
+          			var arrdreMdate = new Array();
+          			var arrdreContent = new Array();
+          			var arruniqueNum = new Array();
+          			var arrLevel =new Array();
+          			var index = new Array();
+					var idx ="";
 function getCommentList() {	
 	$.ajax({
 		url : "dreplyList.do",
@@ -270,17 +277,12 @@ function getCommentList() {
 			var objStr = JSON.stringify(data);
 			var jsonObj = JSON.parse(objStr);
 			var totalcount = (jsonObj.list).length;	
-			var arrdreNum = new Array();
-			var arrdNum = new Array();
-			var arrdreWriter = new Array();
-			var arrdreMdate = new Array();
-			var arrdreContent = new Array();
-			var arruniqueNum = new Array();
-			var arrLevel =new Array();
+			
 			var output = "";
 			$("#totalcount").text('댓글 갯수 : ' + totalcount );
 
 			for(var i in jsonObj.list) {
+				idx = i;
 				arrdreNum[i] = jsonObj.list[i].dreNum;
 				arrdNum[i] = jsonObj.list[i].dNum;
 				arrdreWriter[i] = decodeURIComponent(jsonObj.list[i].dreWriter).replace(/\+/gi, " ");
@@ -302,13 +304,13 @@ function getCommentList() {
 						'<div class="cmt_ok"><input type="button" class="updateDreply" onclick="updateDreply(${result.code})" value="수정"></div></div></div></fieldset>'+
 						'</form></div><div style="display:none" class="Subcmt" id="commentReply">'+
            			    '<form action="" method="post">'+
-           			 	'<input type="hidden" name="dreNum" id="dreNumLevel" value="'+arrdreNum[i]+'"'+
-						'<input type="hidden" name="dNum" id="dNum" value="'+arrdNum[i]+'">'+
-						'<input type="hidden" name="dreWriter" id="dreWriterLevel" value="${loginMember.nickname}">'+
-						'<input type="hidden" name="uniqueNum" id="uniqueNumLevel" value="${loginMember.uniqueNum}">'+
+           			 	'<input type="hidden" name="dreNumLevel" id="dreNumLevel" value="'+arrdreNum[i]+'"'+
+						'<input type="hidden" name="dNumLevel" id="dNum" value="'+arrdNum[i]+'">'+
+						'<input type="hidden" name="dreWriterLevel" id="dreWriterLevel" value="${loginMember.nickname}">'+
+						'<input type="hidden" name="uniqueNumLevel" id="uniqueNumLevel" value="${loginMember.uniqueNum}">'+
 						'<fieldset><div class="cmt_form"><div class="cmt_body">'+
-						'<textarea name="dreContent" id="dreContentLevel" style="resize: none; width:100%; min-height:100px; max-height:100px;"'+ 'onfocus="this.value='+"''"+';"></textarea>'+
-                        '<div class="cmt_ok"><input type="button" onclick="DreplyLevelSubmit(${result.code})" value="등록" ></div></div></div></fieldset></form></div></li>';
+						'<textarea name="dreContentLevel" id="dreContentLevel" style="resize: none; width:100%; min-height:100px; max-height:100px;"'+ 'onfocus="this.value='+"''"+';"></textarea>'+
+                        '<div class="cmt_ok"><input type="button" onclick="DreplyLevelSubmit('+idx+')" value="등록" ></div></div></div></fieldset></form></div></li>';
 			}
 	
 			
@@ -324,8 +326,8 @@ function getCommentList() {
 }	
 
 // 댓글 추가
-function DreplySubmit(code) {
-	if (document.getElementByName("dreContent").value == "") {
+function DreplySubmit(code,idx) {
+	if (document.getElementById("dreContent").value == "") {
 		alert("내용을 입력해주세요");
 		return false;
 	}else
@@ -351,15 +353,15 @@ function DreplySubmit(code) {
 }
 
 //대댓글 추가
-function DreplyLevelSubmit(code) {
-	if (document.getElementById("dreContentLevel").value == "") {
+function DreplyLevelSubmit(idx) {
+	if (document.getElementByName("dreContentLevel")[idx].value == "") {
 		alert("내용을 입력해주세요");
 		return false;
 	}else
 		$.ajax({
 			url : "insertDreplyLevel.do",
 			type:'POST',
-			data : {dreContent : $('#dreContentLevel').val(),dNum : $('#dNum').val(),dreNum : $('#dreNumLevel').val(), dreWriter : $('#dreWriterLevel').val(), uniqueNum : $('#uniqueNumLevel').val()},
+			data : {dreContent :$('#dreContent').val() ,dNum : $('#dNum').val(),dreNum : $('#dreNumLevel').val(), dreWriter : $('#dreWriterLevel').val(), uniqueNum : $('#uniqueNumLevel').val()},
 			success : function(data){
 				console.log(data);
 				if(data == 1) {

@@ -10,9 +10,13 @@ public interface DboardService {
 	int insertDboard(Dboard dboard);
 
 	int selectListCount(Dboard dboard);
-
+	
+	int selectAdminCount(Dboard dboard);
+	
 	ArrayList<Dboard> selectList(Dboard dboard);
 
+	ArrayList<Dboard> selectAdminList(Dboard dboard);
+	
 	Dboard selectOne(int dNum);
 
 	int updateDboard(Dboard dboard);

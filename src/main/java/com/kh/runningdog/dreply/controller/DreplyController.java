@@ -36,6 +36,7 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 	public String selectDreplyList (HttpServletResponse response, @RequestParam(name ="dNum") int dNum,Dreply dreply) throws IOException {
 		
 		logger.info("댓글 리스트 : "+dreply + "게시물번호 : " +dNum);
+		
 		dreply.setdNum(dNum);
 		ArrayList<Dreply> list = dreplyService.selectList(dNum);
 		
@@ -119,7 +120,13 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 	
 	@RequestMapping(value="insertDreplyLevel.do", method=RequestMethod.POST)
 	public void insertDreplyLevel (Dreply dreply, @RequestParam(value="dNum") int dNum, HttpServletResponse response) throws IOException {
-		logger.info("대댓글 insert 값 : ", dreply + "게시글 번호 : " + dNum);
+		
+		logger.info("대댓글 번호 : " + dNum);
+		logger.info("대댓글 uniqueNum : " + dreply.getUniqueNum());
+		logger.info("대댓글 dreContent : " + dreply.getDreContent());
+		logger.info("대댓글 dreNum : " + dreply.getDreNum());
+		logger.info("대댓글 dreWriter : " + dreply.getDreWriter());
+		
 		
 		response.setContentType("text/html; charset=utf-8");
 		dreply.setdNum(dNum);

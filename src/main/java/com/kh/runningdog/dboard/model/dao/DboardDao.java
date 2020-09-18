@@ -38,7 +38,11 @@ public class DboardDao {
 		List<Dboard> list = session.selectList("dboardMapper.selectList", dboard);
 		return (ArrayList<Dboard>)list;
 	}
-
+	
+	public ArrayList<Dboard> selectAdminList(Dboard dboard) {
+		List<Dboard> list = session.selectList("dboardMapper.selectAdminList", dboard);
+		return (ArrayList<Dboard>)list;
+	}
 
 	public Dboard selectOne(int dNum) {
 		return session.selectOne("dboardMapper.selectOne", dNum);
@@ -68,4 +72,11 @@ public class DboardDao {
 	public int selectPrev(Dboard dboard) {
 		return session.selectOne("dboardMapper.selectPrev",dboard);
 	}
+
+
+	public int selectAdminCount(Dboard dboard) {
+		return session.selectOne("dboardMapper.selectAdminCount", dboard);
+	}
+	
+
 }

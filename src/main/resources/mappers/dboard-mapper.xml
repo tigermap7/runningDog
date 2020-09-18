@@ -63,7 +63,24 @@
 		<if test="dLocal != null and dLocal !=''">
 			AND D_LOCAL = #{dLocal}
 		</if>
+			AND D_CHECK = 'y'
 	</select>
+	
+	<select id="selectAdminCount" parameterType="Dboard" resultType="int">
+		SELECT COUNT(*)
+		FROM DBOARD
+		WHERE 1=1
+		<if test="searchFiled != null and searchFiled !=''">
+			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+		</if>
+		<if test="dCategory != null and dCategory !=''">
+			AND d_category LIKE  '%' || #{dCategory} || '%'
+		</if>
+		<if test="dLocal != null and dLocal !=''">
+			AND D_LOCAL = #{dLocal}
+		</if>
+	</select>
+	
 	
 	<select id="selectList" parameterType="Dboard" resultType="Dboard">
 		SELECT *
@@ -72,6 +89,26 @@
 			  MAP_X, MAP_Y, D_CHECK, D_SUCCESS, VIEW_IMAGE, LIST_IMAGE
 			  FROM (SELECT *
 			  		FROM DBOARD WHERE D_CHECK = 'y' 
+			  		<if test="searchFiled != null and searchFiled !=''">
+					AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+					</if>
+					<if test="dCategory != null and dCategory !=''">
+					AND D_CATEGORY LIKE  '%' || #{dCategory} || '%'
+					</if>
+					<if test="dLocal != null and dLocal !=''">
+					AND D_LOCAL = #{dLocal}
+					</if>
+					ORDER BY D_NUM DESC))
+		WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}
+	</select>
+	
+	<select id="selectAdminList" parameterType="Dboard" resultType="Dboard">
+		SELECT *
+		FROM (SELECT ROWNUM RNUM, D_NUM, USER_ID, UNIQUE_NUM, D_WRITER, D_TITLE, D_CONTENT, D_FIND_DATE,
+			  D_FIND_LOCAL, D_GENDER, D_CATEGORY, D_LOCAL, D_PHONE, D_POINT, D_DATE, D_MDATE, D_COUNT,
+			  MAP_X, MAP_Y, D_CHECK, D_SUCCESS, VIEW_IMAGE, LIST_IMAGE
+			  FROM (SELECT *
+			  		FROM DBOARD WHERE 1=1
 			  		<if test="searchFiled != null and searchFiled !=''">
 					AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 					</if>

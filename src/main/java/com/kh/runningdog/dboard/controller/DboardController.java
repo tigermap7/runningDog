@@ -24,6 +24,7 @@ import com.kh.runningdog.common.ImageUtil.Image;
 import com.kh.runningdog.common.ImageUtil.ImageLoader;
 import com.kh.runningdog.dboard.model.service.DboardService;
 import com.kh.runningdog.dboard.model.vo.Dboard;
+import com.kh.runningdog.dboard.model.vo.PageVO;
 
 @Controller
 public class DboardController {
@@ -103,8 +104,9 @@ public class DboardController {
 		return url;
 	}
 
-	@RequestMapping(value = "dboardList.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard) {
+	@RequestMapping("dboardList.do")
+	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard)
+	{
 
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
@@ -113,8 +115,11 @@ public class DboardController {
 		logger.info("SearchFiled : " + dboard.getSearchFiled());
 		logger.info("SearchValue : " + dboard.getSearchValue());
 		int totalCount = dboardService.selectListCount(dboard); // 게시물 총갯수를 구한다
-
-		dboard.setTotalCount(totalCount); // 페이징 처리를 위한 setter 호출
+		
+		
+		//게시물 총횟수랑 첫 페이지에 몇개의 리스트를 보여줄지 체크,
+		//pageVO에 makePaing 메소드에 페이지리스트 갯수를 넣어줌
+		dboard.setTotalCount(totalCount,12); // 페이징 처리를 위한 setter 호출
 
 		model.addAttribute("pageVO", dboard);
 		logger.info("PageSize // 한 페이지에 보여줄 게시글 수 : " + dboard.getPageSize());

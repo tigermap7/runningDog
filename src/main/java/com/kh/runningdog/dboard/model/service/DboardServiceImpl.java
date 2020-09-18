@@ -62,4 +62,14 @@ public class DboardServiceImpl implements DboardService{
 	public int selectPrevNum(Dboard dboard) {
 		return dboardDao.selectPrev(dboard);
 	}
+
+	@Override
+	public int selectAdminCount(Dboard dboard) {
+		return dboardDao.selectAdminCount(dboard);
+	}
+
+	@Override
+	public ArrayList<Dboard> selectAdminList(Dboard dboard) {
+		return dboardDao.selectAdminList(dboard);
+	}
 }

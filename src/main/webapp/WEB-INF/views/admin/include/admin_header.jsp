@@ -16,7 +16,7 @@
         <li>
             <h2><a href="#collapse2" class="collapsed" data-toggle="collapse"><i class="xi-document"></i> 사용자게시판 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse2" class="collapse show" data-parent="#accordion">
-                <a href="/WEB-INF/views/admin/userBoard/chooseList.jsp">유기동물 주인찾기 관리</a>
+                <a href="dboardList.ad">유기동물 주인찾기 관리</a>
                 <a href="/runningdog/vlist.ad">자원봉사모집 관리</a>
                 <a href="aslist.ad">후원하기 관리</a>
                 <a href="nlist.ad">공지사항 관리</a>

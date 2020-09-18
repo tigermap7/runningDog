@@ -40,7 +40,7 @@
                         <!--서브 검색-->
                         
                         <!-- searchFiled 로 구분하고 값은 searchValue 로 받음 -->
-                       <form action="dboardList.do" method="post">
+                       <form action="dboardList.do" method="">
                       	 <div class="search_wrap" id ="search">
                             <input type="hidden" name="dCategory" value="${ dCategory }">
                             <input type="hidden" name="dLocal" value="${ dLocal }">
@@ -205,7 +205,7 @@
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
-									<c:if test="${pageVO.pageNo !=pageVO.finalPageNo }">
+									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
 										<c:url var = "dl3" value= "dboardList.do">
 											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
