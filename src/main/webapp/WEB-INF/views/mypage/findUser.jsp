@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">나의 채팅</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="moveChatting.do">나의 채팅</a></li>
                             </ul>
                         </div>
                         <h2><span>나의 채팅</span></h2>

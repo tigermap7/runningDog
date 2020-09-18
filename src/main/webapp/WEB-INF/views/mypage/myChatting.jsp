@@ -128,11 +128,11 @@
 								+ errorthrown);
 					},
 					complete: function() {
-					      setTimeout(chatList, 60000);
+					      setTimeout(chatList, 30000);
 				    }
 				});
 			};
-    		setTimeout(chatList, 10);
+    		setTimeout(chatList, 1000);
 		</script>
 	</body>
 </html>

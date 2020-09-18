@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="selectMyChatCount" parameterType="Chatroom" resultType="_int">
-		select count(*) from chatroom where memberno != #{memberNo}
+		select count(*) from chatroom where memberno = #{memberNo}
 	</select>
 	
 	<select id="selectExistsRoomNo" parameterType="com.kh.runningdog.chatting.model.vo.StartChat" resultType="_int">
