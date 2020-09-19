@@ -142,7 +142,7 @@ public class ChattingController {
 			job.put("receiver", URLEncoder.encode(room.getNickname(), "utf-8"));
 			job.put("receiverNo", room.getMemberNo());
 			job.put("lastdate", room.getLastDate().toString());
-			job.put("lastmessage", URLEncoder.encode(room.getLastMessage(), "utf-8"));
+			job.put("lastmessage", URLEncoder.encode((room.getLastMessage() == null ? "" : room.getLastMessage()), "utf-8"));
 			job.put("unread", unread);
 			jarr.add(job);
 		}
