@@ -47,7 +47,7 @@ public class SponsorServiceImpl implements SponsorService{
 	}
 
 	@Override
-	public ArrayList<String> selectImageList() {
+	public ArrayList<SponsorImage> selectImageList() {
 		return sponsorDao.selectImageList();
 	}
 

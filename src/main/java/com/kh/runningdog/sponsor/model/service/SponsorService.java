@@ -21,6 +21,6 @@ public interface SponsorService {
 	int insertSContentImage(ArrayList<String> clist, int sNum);
 	public abstract ArrayList<SponsorImage> selectImageList(String[] checkRow);
 	int deleteSponsorImage(ArrayList<String> mlist, int sNum);
-	public abstract ArrayList<String> selectImageList();
+	public abstract ArrayList<SponsorImage> selectImageList();
 	
 }

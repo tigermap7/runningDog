@@ -54,9 +54,9 @@ public class SponsorDao {
 		return session.insert("sponsorImageMapper.insertSCImage", map);
 	}
 
-	public ArrayList<String> selectImageList() {
-		List<String> list = session.selectList("sponsorImageMapper.selectImageList");
-		return (ArrayList<String>)list;
+	public ArrayList<SponsorImage> selectImageList() {
+		List<SponsorImage> list = session.selectList("sponsorImageMapper.selectImageList");
+		return (ArrayList<SponsorImage>)list;
 	}
 
 	public ArrayList<Sponsor> selectThumb(String[] checkRow) {

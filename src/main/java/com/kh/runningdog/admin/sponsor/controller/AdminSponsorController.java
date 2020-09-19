@@ -346,18 +346,19 @@ public class AdminSponsorController {
 	}
 
 	//스케쥴러
-	@Scheduled(cron="0 30 14 * 5 ?") //매주 금요일 오후 2시 30분
+	@Scheduled(cron = "0 0 14 * * 6") //매주 금요일 오후 2시
 	public void checkContentFile() {
+		System.out.println("스케줄링 테스트");
 		String cFolder = "C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\sponsor\\summernoteContent";
 
-		ArrayList<String> list = sponsorService.selectImageList();
+		ArrayList<SponsorImage> list = sponsorService.selectImageList();
 		ArrayList<String> del = new ArrayList<String>();
 
 		//하위의 모든 파일
 		for(File info : FileUtils.listFiles(new File(cFolder), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
 			String inFolder = info.getName(); //서버폴더에 저장된 파일명
 			for(int i=0; i<list.size(); i++) {
-				String realFile = list.get(i); //테이블에 저장된 파일명
+				String realFile = list.get(i).getSiName(); //테이블에 저장된 파일명
 				if(realFile.equals(inFolder))
 					break;
 				else if(!realFile.equals(inFolder) && i == list.size()-1)
