@@ -49,13 +49,13 @@ function CopyUrlToClipboard(num) {
 }
 
 function snsGo(e, id, title, summary) {
-	var url = "http://192.168.35.70:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
-	
+	//var url = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
+//	var url = "http://127.0.0.1:9392/runningdog/";
 	//$("meta[property='og\\:title']").attr("content", title );
     //$("meta[property='og\\:url']").attr("content", url );                    
     //$("meta[property='og\\:description']").attr("content", summary );
 //    console.log(url + "\n" + title + "\n" + summary);
-//	$('head').append( StringTool.format('<meta property="og:url" content="{0}" />', url) );
+//	$('head').append('<meta property=og:url/>', url);
 //	$('head').append(StringTool.format('<meta property="og:type" content="{0}" />', 'article'));
 //	$('head').append(StringTool.format('<meta property="og:title" content="{0}" />', title));
 //	$('head').append(StringTool.format('<meta property="og:summary" content="{0}" />', summary));
@@ -67,7 +67,7 @@ function snsGo(e, id, title, summary) {
 	switch(e) {
 	case 1 : break; //네이버
 	case 2 : break; //카카오톡
-	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url); break; //페이스북 + '&t=' + encodeURIComponent(title)
+	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break;
 	case 4 : loc = 'http://www.twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break; //트위터
 	}
 	window.open(loc, '', 'width=400,height=400,left=600');
@@ -164,6 +164,16 @@ function showFileSelect(snum) {
 		url: 'sfileDel.ad',
 		success: function(){
 			console.log("파일 삭제 성공");
+			
+			var editor = document.getElementById("editor");
+			var inof = document.getElementById("of");
+			var inrf = document.getElementById("rf");
+			
+			editor.removeChild(inof);
+			editor.removeChild(inrf);
+			
+			editor.addChild('<input type="hidden" value="null" name="sRename">');
+			editor.addChild('<input type="hidden" value="null" name="sOriginal">');
 		},
 		error : function(reqest, status, errorData){
 			console.log("error code : " + request.status

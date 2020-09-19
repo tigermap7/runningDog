@@ -6,11 +6,6 @@
 <html>
 <head>
     <c:import url="../include/admin_head.jsp"/>
-    <style type="text/css">
-    	#summernote {
-    		user-select: text;
-    	}
-    </style>
     <script type="text/javascript">
     	var content = '${ sponsor.sContent }';
     	
@@ -41,8 +36,8 @@
             <form id="editor" method="post" enctype="multipart/form-data" action="supdate.ad" class="form-inline">
             	<input type="hidden" value="${ loginMember.nickname }" name="sId">
             	<input type="hidden" value="${ sponsor.sNum }" name="sNum">
-            	<input type="hidden" value="${ sponsor.sOriginal }" name="sOriginal">
-            	<input type="hidden" value="${ sponsor.sRename }" name="sRename">
+            	<input type="hidden" value="${ sponsor.sOriginal }" name="sOriginal" id="of">
+            	<input type="hidden" value="${ sponsor.sRename }" name="sRename" id="rf">
             <div class="write-area">
             
                 <h2>후원하기 수정</h2>

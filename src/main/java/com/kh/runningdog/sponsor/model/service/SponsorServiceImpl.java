@@ -42,9 +42,8 @@ public class SponsorServiceImpl implements SponsorService{
 	}
 
 	@Override
-	public void insertSContentImage(ArrayList<String> clist, int sNum) {
-		sponsorDao.insertSContentImage(clist, sNum);
-		
+	public int insertSContentImage(ArrayList<String> clist, int sNum) {
+		return sponsorDao.insertSContentImage(clist, sNum);
 	}
 
 	@Override

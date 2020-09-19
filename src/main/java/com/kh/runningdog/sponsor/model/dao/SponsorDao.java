@@ -47,13 +47,11 @@ public class SponsorDao {
 		return session.selectOne("sponsorMapper.selectSNum");
 	}
 
-	public void insertSContentImage(ArrayList<String> clist, int sNum) { //map으로 변경가능
-		ContentImage ct = new ContentImage();
-		ct.setsNum(sNum);
-		for(String s : clist) {
-			ct.setFileName(s);
-			session.insert("sponsorImageMapper.insertSCImage", ct);
-		}
+	public int insertSContentImage(ArrayList<String> clist, int sNum) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("clist", clist);
+		map.put("sNum", sNum);
+		return session.insert("sponsorImageMapper.insertSCImage", map);
 	}
 
 	public ArrayList<String> selectImageList() {

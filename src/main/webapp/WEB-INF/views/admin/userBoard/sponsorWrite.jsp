@@ -7,7 +7,7 @@
 <head>
     <c:import url="../include/admin_head.jsp"/>
 </head>
-<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<body oncontextmenu="return false" ondragstart="return false">
     <div id="wrap">
         <c:import url="../include/admin_header.jsp"/>
 

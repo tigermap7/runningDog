@@ -18,7 +18,7 @@ public interface SponsorService {
 	int updateSponsor(Sponsor sponsor);
 	
 	//sponsorImage
-	void insertSContentImage(ArrayList<String> clist, int sNum);
+	int insertSContentImage(ArrayList<String> clist, int sNum);
 	public abstract ArrayList<SponsorImage> selectImageList(String[] checkRow);
 	int deleteSponsorImage(ArrayList<String> mlist, int sNum);
 	public abstract ArrayList<String> selectImageList();
