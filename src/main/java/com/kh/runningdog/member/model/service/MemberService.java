@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.kh.runningdog.member.model.vo.Member;
+import com.kh.runningdog.member.model.vo.LeaveMember;
 import com.kh.runningdog.member.model.vo.MemberPage;
 
 public interface MemberService {
@@ -40,6 +41,11 @@ public interface MemberService {
 	int adminDeleteMember(Member selectUser);
 	
 	Member adminDeleteMember(Map<String, Object> commandMap);
+	
+	//관리자 탈퇴회원
+	ArrayList<Member> selectMemberLeaveList(MemberPage memberPage);
+	int selectMemberLeaveCount(MemberPage memberSerch);
+	LeaveMember selectLeaveUserOne(int leaveUniqueNum);
 	
 
 }

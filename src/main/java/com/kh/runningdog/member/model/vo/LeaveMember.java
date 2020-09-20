@@ -10,8 +10,8 @@ public class LeaveMember implements java.io.Serializable {
 	private String leaveUserPwd;
 	private String leaveNickname;
 	private String leavePhone;
-	private String originProfile;
-	private String renameProfile;
+	private String leaveOriginProfile;
+	private String leaveRenameProfile;
 	private java.sql.Date leaveJoinDate;
 	private java.sql.Date leaveDate;
 	private String leaveLoginType;
@@ -19,7 +19,7 @@ public class LeaveMember implements java.io.Serializable {
 	public LeaveMember() {}
 
 	public LeaveMember(int leaveUniqueNum, String leaveUserId, String leaveUserPwd, String leaveNickname,
-			String leavePhone, String originProfile, String renameProfile, Date leaveJoinDate, Date leaveDate,
+			String leavePhone, String leaveOriginProfile, String leaveRenameProfile, Date leaveJoinDate, Date leaveDate,
 			String leaveLoginType) {
 		super();
 		this.leaveUniqueNum = leaveUniqueNum;
@@ -27,8 +27,8 @@ public class LeaveMember implements java.io.Serializable {
 		this.leaveUserPwd = leaveUserPwd;
 		this.leaveNickname = leaveNickname;
 		this.leavePhone = leavePhone;
-		this.originProfile = originProfile;
-		this.renameProfile = renameProfile;
+		this.leaveOriginProfile = leaveOriginProfile;
+		this.leaveRenameProfile = leaveRenameProfile;
 		this.leaveJoinDate = leaveJoinDate;
 		this.leaveDate = leaveDate;
 		this.leaveLoginType = leaveLoginType;
@@ -74,20 +74,20 @@ public class LeaveMember implements java.io.Serializable {
 		this.leavePhone = leavePhone;
 	}
 
-	public String getOriginProfile() {
-		return originProfile;
+	public String getLeaveOriginProfile() {
+		return leaveOriginProfile;
 	}
 
-	public void setOriginProfile(String originProfile) {
-		this.originProfile = originProfile;
+	public void setLeaveOriginProfile(String leaveOriginProfile) {
+		this.leaveOriginProfile = leaveOriginProfile;
 	}
 
-	public String getRenameProfile() {
-		return renameProfile;
+	public String getLeaveRenameProfile() {
+		return leaveRenameProfile;
 	}
 
-	public void setRenameProfile(String renameProfile) {
-		this.renameProfile = renameProfile;
+	public void setLeaveRenameProfile(String leaveRenameProfile) {
+		this.leaveRenameProfile = leaveRenameProfile;
 	}
 
 	public java.sql.Date getLeaveJoinDate() {
@@ -121,9 +121,11 @@ public class LeaveMember implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "LeaveMember [leaveUniqueNum=" + leaveUniqueNum + ", leaveUserId=" + leaveUserId + ", leaveUserPwd="
-				+ leaveUserPwd + ", leaveNickname=" + leaveNickname + ", leavePhone=" + leavePhone + ", originProfile="
-				+ originProfile + ", renameProfile=" + renameProfile + ", leaveJoinDate=" + leaveJoinDate
-				+ ", leaveDate=" + leaveDate + ", leaveLoginType=" + leaveLoginType + "]";
+				+ leaveUserPwd + ", leaveNickname=" + leaveNickname + ", leavePhone=" + leavePhone
+				+ ", leaveOriginProfile=" + leaveOriginProfile + ", leaveRenameProfile=" + leaveRenameProfile
+				+ ", leaveJoinDate=" + leaveJoinDate + ", leaveDate=" + leaveDate + ", leaveLoginType=" + leaveLoginType
+				+ "]";
 	}
 
+	
 }

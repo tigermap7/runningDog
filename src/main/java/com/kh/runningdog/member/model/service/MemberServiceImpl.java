@@ -1,12 +1,14 @@
 package com.kh.runningdog.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.runningdog.member.model.dao.MemberDao;
 import com.kh.runningdog.member.model.vo.Member;
+import com.kh.runningdog.member.model.vo.LeaveMember;
 import com.kh.runningdog.member.model.vo.MemberPage;
 
 @Service("memberService")
@@ -119,6 +121,21 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.adminDeleteMember(selectUser);
 	}
 
+	@Override
+	public ArrayList<Member> selectMemberLeaveList(MemberPage memberPage) {
+		return memberDao.selectMemberLeaveList(memberPage);
+	}
+
+	@Override
+	public int selectMemberLeaveCount(MemberPage memberSerch) {
+		return memberDao.selectMemberLeaveCount(memberSerch);
+	}
+
+	@Override
+	public LeaveMember selectLeaveUserOne(int leaveUniqueNum) {
+		return memberDao.selectLeaveUserOne(leaveUniqueNum);
+	}
+
 	
 	
 	
@@ -132,6 +149,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int selectNicknameCount(Member member) {
 		return memberDao.selectNicknameCount(member);
+	}
+
+	@Override
+	public Member adminDeleteMember(Map<String, Object> commandMap) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -157,10 +157,12 @@ function leaveChkAction(){
         alert("선택된 회원이 없습니다.");
     }
     else{
+    	console.log("cnt : " + cnt);
+    	console.log("arr : " + arr);
         $.ajax = {
             type:'post',
             url: "memberLeaveAction.ad",
-            data: "RPRT_ODR=" + arr + "&CNT=" + cnt,
+            data: "leaveChk=" + arr + "&CNT=" + cnt,
             dataType:"json",
             success: function(jdata){
                 if(jdata != 1) {

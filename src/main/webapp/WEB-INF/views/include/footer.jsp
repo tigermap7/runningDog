@@ -15,7 +15,7 @@
 	<c:if test="${ !empty sessionScope.loginMember}">
     <ul class="fmypage_menu">
 		<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y' }">
-        <li><a href="adminMemberList.ad">관리자페이지</a></li>
+        <li><a href="memberAllList.ad">관리자페이지</a></li>
         <li><a href="logout.do">로그아웃</a></li>
 	    </c:if>
 		<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">

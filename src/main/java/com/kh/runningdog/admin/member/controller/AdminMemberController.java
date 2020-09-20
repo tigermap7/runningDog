@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.runningdog.member.model.service.MemberService;
 import com.kh.runningdog.member.model.vo.Member;
+import com.kh.runningdog.member.model.vo.LeaveMember;
 import com.kh.runningdog.member.model.vo.MemberPage;
 
 import java.util.ArrayList;
@@ -79,9 +80,9 @@ public class AdminMemberController {
 //		return "admin/member/allMember";
 //	}
 	
-	@RequestMapping("adminMemberList.ad")
-	public String allMemberPage(Model model, HttpServletRequest request, SessionStatus status) {
-		logger.info("adminMemberList run...");
+	@RequestMapping("memberAllList.ad")
+	public String memberAllListPage(Model model, HttpServletRequest request, SessionStatus status) {
+		logger.info("memberAllList run...");
 		
 		//검색값 받기
 		String search = request.getParameter("memberSearch");
@@ -126,7 +127,7 @@ public class AdminMemberController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("memberPage", memberPage);
-		return "admin/member/adminMemberList";
+		return "admin/member/adminMemberAllList";
 		
 	}
 	
@@ -397,7 +398,7 @@ public class AdminMemberController {
 			if (memberService.adminDeleteMember(selectUser) > 0) {
 		        response.setContentType("text/html; charset=UTF-8");
 		        PrintWriter out = response.getWriter();
-	            out.println("<script>alert('해당 회원의 탈퇴처리가 완료되었습니다.\\n전체회원 리스트로 이동합니다.'); location.href='adminMemberList.ad';</script>");
+	            out.println("<script>alert('해당 회원의 탈퇴처리가 완료되었습니다.\\n전체회원 리스트로 이동합니다.'); location.href='memberAllList.ad';</script>");
 	            out.flush();
 			}
 		} else {
@@ -412,25 +413,43 @@ public class AdminMemberController {
 	
 	
 	//회원 리스트에서 체크박스 선택 후 회원탈퇴처리
-	@RequestMapping("memberLeaveAction.ad")
-    @ResponseBody
-	public int adminLeaveMemberPage(Map<String, Object> commandMap) throws Exception {
-		int result = 1;
-		try {
-			int cnt = Integer.parseInt((String) commandMap.get("CNT"));
-			String rprtOdr = (String) commandMap.get("RPRT_ODR");
-			String[] strArray = rprtOdr.split(",");
-			for (int i = 0; i < cnt; i++) {
-				int temp = Integer.parseInt((String) strArray[i]);
-				commandMap.put("RPRT_ODR", temp);
-				memberService.adminDeleteMember(commandMap);
-			}
-		} catch (Exception e) {
-			//log.debug(e.getMessage());
-			result = 0;
-		}
-		return result;
-	}
+//	@RequestMapping("memberLeaveAction.ad")
+//    @ResponseBody
+//	public int adminLeaveMemberPage(@RequestParam("leaveChk") int leaveChk, HttpServletRequest request, Map<String, Object> commandMap) throws Exception {
+//
+//		logger.info("확인1");
+//		logger.info("commandMap : " + commandMap);
+//		
+//		String[] leaveChkArr = request.getParameterValues("leaveChk");
+//		logger.info("leaveChkArr : " + leaveChkArr);
+//		
+//		int result = 1;
+//		logger.info("확인2");
+//		try {
+//			logger.info("확인3");
+//			logger.info("result : " + result);
+//			int cnt = Integer.parseInt((String) commandMap.get("CNT"));
+//			logger.info("cnt : " + cnt);
+//			String rprtOdr = (String) commandMap.get("uniqueNum");
+//			String[] strArray = rprtOdr.split(",");
+//			logger.info("rprtOdr : " + rprtOdr);
+//			logger.info("strArray : " + strArray);
+//			logger.info("확인4");
+//			for (int i = 0; i < cnt; i++) {
+//				logger.info("확인5");
+//				int temp = Integer.parseInt((String) strArray[i]);
+//				commandMap.put("RPRT_ODR", temp);
+//				logger.info("temp : " + temp);
+//				memberService.delete("ReportDAO.deleteReport", commandMap);
+//				logger.info("확인6");
+//			}
+//		} catch (Exception e) {
+//			logger.info("확인7");
+//			//log.debug(e.getMessage());
+//			result = 0;
+//		}
+//		return result;
+//	}
 	
 
 	
@@ -453,6 +472,78 @@ public class AdminMemberController {
 	
 	
 	
+	@RequestMapping("memberLeaveList.ad")
+	public String memberLeaveListPage(Model model, HttpServletRequest request, SessionStatus status) {
+		logger.info("memberLeaveList run...");
+		
+		//검색값 받기
+		String search = request.getParameter("memberSearch");
+		String keyword = request.getParameter("keyword");
+
+		logger.info("search : " + search);
+		logger.info("keyword : " + keyword);
+		
+		//키워드 있을경우 앞뒤 공백제거
+		if(!(keyword == null || keyword == "")) {	
+			keyword = keyword.replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");  //앞뒤 공백 제거
+		}
+		
+		int currentPage = 1; //기본 현재 페이지
+		if(request.getParameter("page") != null) {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		// list 개수 받는 객체
+		MemberPage memberSerch = new MemberPage();
+		memberSerch.setSearch(search);
+		memberSerch.setKeyword(keyword);
+
+		logger.info("memberSerch : " + memberSerch);
+		
+		int listCount = memberService.selectMemberLeaveCount(memberSerch); //총 목록 갯수
+		int listLimit = 10;//페이지 게시글 출력 갯수
+		logger.info("listCount : " + listCount);
+		
+		MemberPage memberPage = new MemberPage(currentPage, listCount, listLimit); //현재 페이지와 총 갯수 보내서, startPage, endpage등.. 값 만들기
+		
+		//검색값 memberPage 에 넣기 (mybatis mapper로 보낼때 파라메타값 하나만 보낼 수 있다)
+		memberPage.setSearch(search);
+		memberPage.setKeyword(keyword);
+
+		logger.info("memberPage : " + memberPage);
+		
+		ArrayList<Member> list = memberService.selectMemberLeaveList(memberPage);
+
+		logger.info("list : " + list);
+		logger.info("memberPage : " + memberPage);
+		logger.info("memberSerch : " + memberSerch);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("memberPage", memberPage);
+		return "admin/member/adminMemberLeaveList";
+		
+	}
+	
+	
+	//관리자 탈퇴회원상세
+	@RequestMapping("adminMemberLeaveView.ad")
+	public String adminMemberLeaveViewPage(Model model, HttpServletResponse response, @RequestParam("leaveUniqueNum") int leaveUniqueNum) throws IOException {
+		
+		LeaveMember selectLeaveUser = memberService.selectLeaveUserOne(leaveUniqueNum);
+		
+		String url = "";
+		
+		if (selectLeaveUser != null) {
+			model.addAttribute("selectLeaveUser", selectLeaveUser);
+			url = "admin/member/adminMemberLeaveView";
+		} else {
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('해당 회원이 존재하지 않습니다.'); history.go(-1);</script>");
+            out.flush();
+		}
+		return url;
+	}
 	
 	
 	

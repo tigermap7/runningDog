@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.runningdog.member.model.vo.Member;
+import com.kh.runningdog.member.model.vo.LeaveMember;
 import com.kh.runningdog.member.model.vo.MemberPage;
 
 @Repository("MemberDao")
@@ -117,6 +118,19 @@ public class MemberDao {
 		return session.update("memberMapper.adminDeleteMember", selectUser);
 	}
 
+	public ArrayList<Member> selectMemberLeaveList(MemberPage memberPage) {
+		List<Member> list = session.selectList("leaveMemberMapper.selectMemberLeaveList", memberPage);
+		return (ArrayList<Member>)list;
+	}
+
+	public int selectMemberLeaveCount(MemberPage memberSerch) {
+		return session.selectOne("leaveMemberMapper.selectMemberLeaveCount", memberSerch);
+	}
+
+	public LeaveMember selectLeaveUserOne(int leaveUniqueNum) {
+		return session.selectOne("leaveMemberMapper.selectLeaveUserOne", leaveUniqueNum);
+	}
+
 
 
 
@@ -127,6 +141,10 @@ public class MemberDao {
 	public int selectNicknameCount(Member member) {
 		return session.selectOne("memberMapper.selectNicknameCount", member);
 	}
+
+
+
+
 
 
 
