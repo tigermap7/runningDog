@@ -34,8 +34,17 @@
 
                     <div class="subContent">
                         <!--상세-->
-                        <form name="formname" method="post" enctype="multipart/form-data" action="vupdate.do" class="form-inline">
-                        <div class="write-area">
+                        <form name="formname" method="post" enctype="multipart/form-data" action="vupdate.do" id="volun" class="form-inline">
+                        <input type="hidden" name="volno" value="${ volunteer.volno }">
+                        <input type="hidden" name="volor1" value="${ volunteer.volor1 }">
+                        <input type="hidden" name="volor2" value="${ volunteer.volor2 }">
+                        <input type="hidden" name="volor3" value="${ volunteer.volor3 }">
+                        <input type="hidden" name="volor4" value="${ volunteer.volor4 }">
+                        <input type="hidden" name="volre1" value="${ volunteer.volre1 }">
+                        <input type="hidden" name="volre2" value="${ volunteer.volre2 }">
+                        <input type="hidden" name="volre3" value="${ volunteer.volre3 }">
+                        <input type="hidden" name="volre4" value="${ volunteer.volre4 }">
+                        <div class="write-area" id="inHere" >
                         
                             <h2>자원봉사모집 작성</h2>
                             <p>여러분의 봉사활동으로 많은 유기동물들이 보살핌을 받고 있습니다.</p>
@@ -48,17 +57,47 @@
                                 <tbody>
                                     <tr>
                                         <td>제목</td>
-                                        <td><input type="text" name="voltitle" value="${volunteer.voltitle}" class="form-control w100p" placeholder="제목 입력" required/></td>
+                                        <td><input type="text" name="voltitle" value="${volunteer.voltitle}" class="form-control w100p" required/></td>
                                     </tr>
                                     <tr>
                                         <td>첨부파일</td>
-                                        <td>
+                                        <td id="files">
                                         <c:if test="${!empty volunteer.volor1 }">
-                                            <input type="file" name="ofile1" value="${volunteer.volor1}" class="mb5"/>
-                                            <input type="file" name="ofile2" value="${volunteer.volor2}" class="mb5"/>
-                                            <input type="file" name="ofile3" value="${volunteer.volor3}" class="mb5"/>
-                                            <input type="file" name="ofile4" value="${volunteer.volor4}" class="mb5"/>
+                                        	<p id="original1">${  volunteer.volor1 }&nbsp;&nbsp;
+                                        	<button class="deleteBtn" onclick="showFileSelect1(); deletefile1();"><i class="xi-cut"></i> 파일삭제</button></p>
+                                            <%-- <input type="file" name="ofile1" value="${volunteer.volor1}" class="mb5"/> --%>
                                         </c:if>
+                                        <c:if test="${ empty volunteer.volor1 }">
+                                            <input type="file" name="newfile1" class="mb5"/>
+                                        </c:if>
+                                        <input type="file" id="showSelect1" name="refile1" class="mb5">
+                                         
+                                        <c:if test="${!empty volunteer.volor2 }">
+                                        	<p id="original2">${  volunteer.volor2 }&nbsp;&nbsp;
+                                        	<button class="deleteBtn" onclick="showFileSelect2(); deletefile2();"><i class="xi-cut"></i> 파일삭제</button></p>
+                                        </c:if>
+                                        <c:if test="${ empty volunteer.volor2 }">
+                                            <input type="file" name="newfile2" class="mb5"/>
+                                        </c:if>
+                                        <input type="file" id="showSelect2" name="refile2" class="mb5"> 
+                                        
+                                        <c:if test="${!empty volunteer.volor3 }">
+                                        	<p id="original3">${  volunteer.volor3 }&nbsp;&nbsp;
+                                        	<button class="deleteBtn" onclick="showFileSelect3(); deletefile3();"><i class="xi-cut"></i> 파일삭제</button></p>
+                                        </c:if>
+                                        <c:if test="${ empty volunteer.volor3 }">
+                                            <input type="file" name="newfile3" class="mb5"/>
+                                        </c:if>
+                                        <input type="file" id="showSelect3" name="refile3" class="mb5"> 
+                                        
+                                        <c:if test="${!empty volunteer.volor4 }">
+                                        	<p id="original4">${  volunteer.volor4 }&nbsp;&nbsp;
+                                        	<button class="deleteBtn" onclick="showFileSelect4(); deletefile4();"><i class="xi-cut"></i> 파일삭제</button></p>
+                                        </c:if>
+                                        <c:if test="${ empty volunteer.volor4 }">
+                                            <input type="file" name="newfile4" class="mb5"/>
+                                        </c:if>
+                                        <input type="file" id="showSelect4" name="refile4" class="mb5"> 
                                         </td>
                                     </tr>
                                     <tr>
@@ -67,11 +106,11 @@
                                     </tr>
                                     <tr>
                                         <td>연락처</td>
-                                        <td><input type="tel" name="voltel" value="${volunteer.voltel}" class="form-control w50p" placeholder="'-'포함 입력" required/></td>
+                                        <td><input type="tel" name="voltel" value="${volunteer.voltel}" class="form-control w50p"  required/></td>
                                     </tr>
                                     <tr>
                                         <td>센터명</td>
-                                        <td><input type="text" name="volname" value="${volunteer.volname}" class="form-control w50p" placeholder="센터명 입력" required readonly/></td>
+                                        <td><input type="text" name="volname" value="${volunteer.volname}" class="form-control w50p"  required readonly/></td>
                                     </tr>
                                     <tr>
                                         <td>지역</td>
@@ -80,12 +119,9 @@
                                     <tr>
                                         <td>모집기간</td>
                                         <td>
-                                            <select class="form-control w30p">
-                                            <option>상시모집</option>
-                                            <option>모집완료</option>
-                                               <c:if test="<option>모집완료</option>">
-                                                   <input name="volche" value="N">
-                                               </c:if>
+                                            <select class="form-control w30p" name="volche">
+                                            <option value="Y">상시모집</option>
+                                            <option value="N">모집완료</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -106,8 +142,8 @@
                         </div>
 
                         <div class="write-btn">
-                            <input type="button" class="btn btn-list" onclick="location.href='vlist.do'" value="목록으로">
-                            <input type="reset" class="btn btn-cancel" value="취소하기">
+                            <input type="button" class="btn btn-list" onclick="javascript:history.go(-1); return false;" value="목록으로">
+                            <input type="reset" class="btn btn-cancel" onclick="Refresh()" value="취소하기">
                             <input type="submit" class="btn btn-success" value="수정하기">
                         </div>
                         </form>
@@ -119,5 +155,72 @@
 
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
+	<script type="text/javascript">
+	
+	/* 첨부파일 선택창 숨기기 */
+  	$(document).ready(function(){
+  		$('#showSelect1').hide();
+  		$('#showSelect2').hide();
+  		$('#showSelect3').hide();
+  		$('#showSelect4').hide();
+  	});
+  	
+  	/* 파일 삭제 누르면 첨부파일 선택창 나오게 하기 */
+  	function showFileSelect1(){
+  		var files = document.getElementById("files");
+  		var originalFile = document.getElementById("original1");
+  		files.removeChild(originalFile);
+  		$('#showSelect1').show();
+  	}
+  	function showFileSelect2(){
+  		var files = document.getElementById("files");
+  		var originalFile = document.getElementById("original2");
+  		files.removeChild(originalFile);
+  		$('#showSelect2').show();
+  	}
+  	function showFileSelect3(){
+  		var files = document.getElementById("files");
+  		var originalFile = document.getElementById("original3");
+  		files.removeChild(originalFile);
+  		$('#showSelect3').show();
+  	}
+  	function showFileSelect4(){
+  		var files = document.getElementById("files");
+  		var originalFile = document.getElementById("original4");
+  		files.removeChild(originalFile);
+  		$('#showSelect4').show();
+  	}
+  	
+  	/* 삭제버튼 눌렀을때 original파일 이름 보내기 */
+  	function deletefile1(){
+  		var deleteFilename = '<c:out value="${volunteer.volor1}"/>';
+  		var tag ="<input type='hidden' name='deleteFilename1' value='" + deleteFilename + "'>";
+  		$("#inHere").append(tag);
+  		console.log("1번 파일삭제" + deleteFilename + tag);
+  	}
+  	function deletefile2(){
+  		var deleteFilename = '<c:out value="${volunteer.volor2}"/>';
+  		var tag ="<input type='hidden' name='deleteFilename2' value='" + deleteFilename + "'>";
+  		$("#inHere").append(tag);
+  		console.log("2번 파일삭제" + deleteFilename + tag);
+  	}
+  	function deletefile3(){
+  		var deleteFilename = '<c:out value="${volunteer.volor3}"/>';
+  		var tag ="<input type='hidden' name='deleteFilename3' value='" + deleteFilename + "'>";
+  		$("#inHere").append(tag);
+  		console.log("3번 파일삭제" + deleteFilename + tag);
+  	}	
+  	function deletefile4(){
+  		var deleteFilename = '<c:out value="${volunteer.volor4}"/>';
+  		var tag ="<input type='hidden' name='deleteFilename4' value='" + deleteFilename + "'>";
+  		$("#inHere").append(tag);
+  		console.log("4번 파일삭제" + deleteFilename + tag);
+  	}	
+	
+	/* 수정 최소하기 버튼 눌리면 새로고침하기 */
+	function Refresh(){
+		window.location.reload();
+	}
+	 </script>
 	</body>
 </html>
