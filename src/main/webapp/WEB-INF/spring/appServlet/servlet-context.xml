@@ -87,10 +87,7 @@
 			스프링 3.2 부터 exclude-mappin 앨리먼트 사용할 수 있음
 			<exclude-mapping path="/board/blist.do" /> -->
 			<!-- <mapping path="/blist.do" /> -->
-			<mapping path="/**"/>
-	        <exclude-mapping path="/resources/**"/>
-	        <exclude-mapping path="/main.do"/>
-	        <exclude-mapping path="/login.do"/>
+			<mapping path="/moveChatting.do"/>
 	        <beans:ref bean="loginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>

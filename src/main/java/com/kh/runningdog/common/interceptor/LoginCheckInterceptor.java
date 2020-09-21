@@ -54,8 +54,8 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 		HttpSession session = request.getSession();
-		Object obj = request.getAttribute("loginMember");
-		
+		Object obj = session.getAttribute("loginMember");
+		logger.info("obj : " + obj);
 		if (obj == null) {
 			logger.debug("비로그인 상태 접근");
 			response.setCharacterEncoding("UTF-8");
