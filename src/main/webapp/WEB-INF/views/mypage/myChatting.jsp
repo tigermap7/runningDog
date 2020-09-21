@@ -92,7 +92,8 @@
 		</div>
 		
 		<script type="text/javascript">
-			function chatList() {
+			function updateChatList() {
+				console.trace('chatList call');
 				var myChatList = ${sessionScope.myChatList};
 				console.log(myChatList);
 				$.ajax({
@@ -106,20 +107,17 @@
 						var json = JSON.parse(jsonStr);
 						
 						var values = ""; 
-						for ( var i in json.list) {
-							for ( var roomNo in myChatList) {
-								if (myChatList[roomNo] == json.list[i].roomNo) {
-									values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + json.list[i].roomNo 
-											+ "&receiver=" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") 
-											+ "&receiverNo=" + json.list[i].receiverNo + "'\">"
-			                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
-			                            	+ "<td class=\"title\">"
-			                                + "<h2>" + decodeURIComponent(json.list[i].receiver).replace(/\+/gi, " ") + "<span>" + json.list[i].lastdate + "일 마지막 응답</span></h2>"
-			                                + "<p>" + decodeURIComponent(json.list[i].lastmessage).replace(/\+/gi, " ") + "</p></td>"
-			                                + "<td><span>"+ json.list[i].unread +"</span></td></tr>"
-			                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-								}
-							}
+						for (var i = 0; i < json.list.length; i++) {
+							var chatUpdate = json.list[i];
+							values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + chatUpdate.roomNo 
+									+ "&receiver=" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") 
+									+ "&receiverNo=" + chatUpdate.receiverNo + "'\">"
+	                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
+	                            	+ "<td class=\"title\">"
+	                                + "<h2>" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") + "<span>" + chatUpdate.lastdate + "일 마지막 응답</span></h2>"
+	                                + "<p>" + decodeURIComponent(chatUpdate.lastmessage).replace(/\+/gi, " ") + "</p></td>";
+	                        values +=  chatUpdate.unread > 0 ? "<td><span>"+ chatUpdate.unread +"</span></td></tr>" : "<td></td></tr>";
+	                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
 						} // for in
 
 						$("#chatList").html(values);
@@ -129,11 +127,11 @@
 								+ errorthrown);
 					},
 					complete: function() {
-					      setTimeout(chatList, 30000);
+					      setTimeout(updateChatList, 30000);
 				    }
 				});
 			};
-    		setTimeout(chatList, 1000);
+    		setTimeout(updateChatList, 1000);
 		</script>
 	</body>
 </html>

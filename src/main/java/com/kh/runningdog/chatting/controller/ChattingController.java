@@ -123,6 +123,10 @@ public class ChattingController {
 		int uniqueNum = member.getUniqueNum();
 		Chatroom chatRoom = new Chatroom();
 		chatRoom.setMemberNo(member.getUniqueNum());
+
+		ArrayList<Integer> myChatList = chatroomService.selectMyChatList(chatRoom);
+		session.setAttribute("myChatList", myChatList);
+		
 		ArrayList<Chatroom> roomList = chatroomService.selectMyChatMember(chatRoom);
 		
 		int unread = 0;
@@ -134,17 +138,19 @@ public class ChattingController {
 		JSONArray jarr = new JSONArray();
 		
 		for (Chatroom room : roomList) {
-			JSONObject job = new JSONObject();
-			message.setRoomNo(room.getRoomNo());
-			message.setReceiver(room.getMemberNo());
-			unread = messageService.selectUnread(message);
-			job.put("roomNo", room.getRoomNo());
-			job.put("receiver", URLEncoder.encode(room.getNickname(), "utf-8"));
-			job.put("receiverNo", room.getMemberNo());
-			job.put("lastdate", room.getLastDate().toString());
-			job.put("lastmessage", URLEncoder.encode((room.getLastMessage() == null ? "" : room.getLastMessage()), "utf-8"));
-			job.put("unread", unread);
-			jarr.add(job);
+			if (myChatList.contains(room.getRoomNo())) {
+				JSONObject job = new JSONObject();
+				message.setRoomNo(room.getRoomNo());
+				message.setReceiver(room.getMemberNo());
+				unread = messageService.selectUnread(message);
+				job.put("roomNo", room.getRoomNo());
+				job.put("receiver", URLEncoder.encode(room.getNickname(), "utf-8"));
+				job.put("receiverNo", room.getMemberNo());
+				job.put("lastdate", room.getLastDate().toString());
+				job.put("lastmessage", URLEncoder.encode((room.getLastMessage() == null ? "" : room.getLastMessage()), "utf-8"));
+				job.put("unread", unread);
+				jarr.add(job);
+			}
 		}
 		sendJson.put("list", jarr);
 		return sendJson.toJSONString();

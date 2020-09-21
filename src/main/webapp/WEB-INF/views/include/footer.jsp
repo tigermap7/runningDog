@@ -60,7 +60,7 @@
     });
 </script>
 <script type="text/javascript">
-function chatList() {
+function updateTotalUnread() {
 	var myChatList = ${sessionScope.myChatList};
 	console.log(myChatList);
 	$.ajax({
@@ -83,9 +83,9 @@ function chatList() {
 					+ errorthrown);
 		},
 		complete: function() {
-		      setTimeout(chatList, 60000);
+		      setTimeout(updateTotalUnread, 60000);
 	    }
 	});
 };
-setTimeout(chatList, 10);
+setTimeout(updateTotalUnread, 10);
 </script>
