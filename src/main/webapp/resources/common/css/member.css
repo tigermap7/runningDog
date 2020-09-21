@@ -467,6 +467,18 @@
 .chattingList tbody tr td {
     padding: 0.9375rem;
 }
+.chattingList tbody tr td:last-child {
+	text-align:center;
+}
+.chattingList tbody tr td:last-child span {
+	background-color: #fb3860;
+	width: 30px;
+	height:30px;
+	line-height:30px;
+	border-radius:50%;
+	display:inline-block;
+	color:#fff;
+}
 .chattingList tbody tr td.img:first-child {
 }
 .chattingList tbody tr td.img:first-child img {

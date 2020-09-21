@@ -71,7 +71,7 @@
                             </tbody>
                         </table>
                         <!-- 페이징 -->
-                        <dl class="list-paging">
+                        <!-- <dl class="list-paging">
                             <dd>
                                 <a href="#none"><i class="xi-angle-left"></i></a>
                                 <a href="#none" class="active">1</a>
@@ -81,7 +81,7 @@
                                 <a href="#none">5</a>
                                 <a href="#none"><i class="xi-angle-right"></i></a>
                             </dd>
-                        </dl>
+                        </dl> -->
                         <!-- //페이징 -->
                     </div>
                 </div>
