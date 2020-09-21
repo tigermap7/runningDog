@@ -1,6 +1,7 @@
 package com.kh.runningdog.common.interceptor;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /*import com.kh.runningdog.member.model.vo.Member;*/
@@ -48,6 +50,33 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	 * 
 	 * }
 	 */
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+		HttpSession session = request.getSession();
+		Object obj = request.getAttribute("loginMember");
+		
+		if (obj == null) {
+			logger.debug("비로그인 상태 접근");
+			response.setCharacterEncoding("UTF-8");
 
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter printwriter = response.getWriter();
+
+			printwriter.print("<script>alert('로그인을 해주십시오'); location.href='login.do';</script>");
+
+			printwriter.flush();
+
+			printwriter.close();
+			return false;
+		}
+		return true;
+	}
+	
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView) throws Exception {
+        // TODO Auto-generated method stub
+        super.postHandle(request, response, handler, modelAndView);
+	}
 }
 
