@@ -71,13 +71,18 @@
 					</thead>
 					<tbody>
 						<tr>
+						
+						<!-- 관리자용 게시물 번호를 따로 만들기 위해서 listNo 생성 -->
 							<c:set var="listNo"
 								value="${ totalCount - ( 10*(pageVO.pageNo-1)) }" />
 							<c:forEach items="${requestScope.dboardList }" var="d">
 								<c:url var="dboardView" value="dboardView.ad">
-									<c:param name="pageNo" value="${ pageVO.pageNo }" />
-									<c:param name="dNum" value="${ d.dNum }" />
-									<c:param name="dLocal" value="${ dLocal }" />
+									<c:param name="pageNo" value="${ pageVO.pageNo }"/>
+                                 	<c:param name="dNum" value="${ d.dNum }"/>
+                                 	<c:param name="dLocal" value="${ dLocal }"/>
+                                 	<c:param name="searchFiled" value="${ searchFiled }" />
+									<c:param name="searchValue" value="${ searchValue }" />
+									<c:param name="dCategory" value="${ dCategory }"/>
 								</c:url>
 								<td class="checkBox" on><input type="checkbox" name="" id="" value=""></td>
 								<td class="number" onclick="location='${ dboardView }'">${ listNo }</td>

@@ -59,7 +59,7 @@ public class DboardServiceImpl implements DboardService{
 	}
 
 	@Override
-	public int selectPrevNum(Dboard dboard) {
+	public int selectPrev(Dboard dboard) {
 		return dboardDao.selectPrev(dboard);
 	}
 
@@ -71,5 +71,15 @@ public class DboardServiceImpl implements DboardService{
 	@Override
 	public ArrayList<Dboard> selectAdminList(Dboard dboard) {
 		return dboardDao.selectAdminList(dboard);
+	}
+
+	@Override
+	public int selectAdminNext(Dboard dboard) {
+		return dboardDao.selectAdminNext(dboard);
+	}
+	
+	@Override
+	public int selectAdminPrev(Dboard dboard) {
+		return dboardDao.selectAdminPrev(dboard);
 	}
 }

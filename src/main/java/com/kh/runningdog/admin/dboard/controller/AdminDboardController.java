@@ -94,7 +94,71 @@ public class AdminDboardController {
 	}
 	
 	
+	@RequestMapping("dboardnext.ad")
+	public String dboardNext(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+		//다음글 번호조회
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
+		
+		
+		int dboardNextNum = dboardService.selectAdminNext(dboard);
+		//다음글번호를 받고 다음글로 조회
+		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
+		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		
+		model.addAttribute("dLocal", dboard.getdLocal());
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("searchFiled", dboard.getSearchFiled());
+		model.addAttribute("searchValue",dboard.getSearchValue());
+		
+		
+		String url = "";
+		if (dboard.getdNum() != dboardNextNum) {
+			model.addAttribute("dboard", dboardNext);
+			url = "admin/userBoard/chooseAdminView";
+		} else {
+			model.addAttribute("dboard",dboard);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "javascript:history.back()");
+			url = "common/errorDboard";
+		}
+		return url;
+	}
 	
+	@RequestMapping("dboardprev.ad")
+	public String dboardPrev(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
+		
+		//이전 번호조회
+		//게시물 표시여부 체크하고 게시물 다음글 보기
+		//flag 값 여부로 관리자 구분보다는 mapper 추가로
+		int dboardPrevNum = dboardService.selectAdminPrev(dboard);
+		//이전글번호를 받고 다음글로 조회
+		Dboard dboardPrev = dboardService.selectOne(dboardPrevNum);
+		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		
+		model.addAttribute("dLocal", dboard.getdLocal());
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("searchFiled", dboard.getSearchFiled());
+		model.addAttribute("searchValue",dboard.getSearchValue());
+		
+		String url = "";
+		if ( dboard.getdNum() != dboardPrevNum) {
+			model.addAttribute("dboard", dboardPrev);
+			url = "admin/userBoard/chooseAdminView";
+		} else {
+			model.addAttribute("dboard",dboard);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "javascript:history.back()");
+			url = "common/errorDboard";
+		}
+		return url;
+	}
 	
 	
 }

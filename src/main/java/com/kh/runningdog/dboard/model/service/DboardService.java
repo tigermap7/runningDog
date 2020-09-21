@@ -25,8 +25,12 @@ public interface DboardService {
 
 	int updateDboardSuc(Dboard dboard);
 
+	int selectPrev(Dboard dboard);
+
 	int selectNext(Dboard dboard);
 
-	int selectPrevNum(Dboard dboard);
+	int selectAdminNext(Dboard dboard);
+	
+	int selectAdminPrev(Dboard dboard);
 	
 }

@@ -77,6 +77,14 @@ public class DboardDao {
 	public int selectAdminCount(Dboard dboard) {
 		return session.selectOne("dboardMapper.selectAdminCount", dboard);
 	}
+
+
+	public int selectAdminNext(Dboard dboard) {
+		return session.selectOne("dboardMapper.selectAdminNext", dboard);
+	}
 	
+	public int selectAdminPrev(Dboard dboard) {
+		return session.selectOne("dboardMapper.selectAdminPrev", dboard);
+	}
 
 }

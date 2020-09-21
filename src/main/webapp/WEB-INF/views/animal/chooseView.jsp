@@ -219,16 +219,16 @@ $(function() {
 						<c:url var="dboardNext" value="dboardnext.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
 							<c:param name="dLocal" value="${ dLocal }"/>
-                            <c:param name="searchFiled" value="${pageVO.searchFiled }" />
-							<c:param name="searchValue" value="${pageVO.searchValue }" />
-							<c:param name="dCategory" value="${ d.dCategory }"/>
+                            <c:param name="searchFiled" value="${ searchFiled }" />
+							<c:param name="searchValue" value="${ searchValue }" />
+							<c:param name="dCategory" value="${ dCategory }"/>
 						</c:url>
 						<c:url var="dboardPrev" value="dboardprev.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
 							<c:param name="dLocal" value="${ dLocal }"/>
-                            <c:param name="searchFiled" value="${pageVO.searchFiled }" />
-							<c:param name="searchValue" value="${pageVO.searchValue }" />
-							<c:param name="dCategory" value="${ d.dCategory }"/>
+                            <c:param name="searchFiled" value="${ searchFiled }" />
+							<c:param name="searchValue" value="${ searchValue }" />
+							<c:param name="dCategory" value="${ dCategory }"/>
 						</c:url>
                         <div class="viewBtn-wrap">
                             <button class="nextBtn" onclick="location='${ dboardPrev }'"><i class="xi-angle-left-min"></i> 이전</button>

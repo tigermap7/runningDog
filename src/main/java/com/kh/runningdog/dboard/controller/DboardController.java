@@ -78,11 +78,16 @@ public class DboardController {
 				}
 				viewImg = ImageLoader.fromFile(viewPath);
 				listImg = ImageLoader.fromFile(listPath);
+				//리사이징할 이미지의 폭이 주어진 값 보다 작을 경우 에러가 나기 때문에
+				//리사이징할 이미지의 크기가 작을경우 그 폭을 유지하며 리사이징 처리 하기 위해 Width값 강제 적용
+				int viewWidth = (viewImg.getWidth() > 800)? 800 : viewImg.getWidth();
+				int listWidth = (listImg.getWidth() > 300)? 300 : listImg.getWidth();
 
 				// 너비 300으로 리사이징 처리 화질은 최대한 보정
 				// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
-				viewImg.getResizedToWidth(800).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
-				listImg.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
+				viewImg.getResizedToWidth(viewWidth).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
+				listImg.getResizedToWidth(listWidth).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
+
 
 
 			} catch (IllegalStateException | IOException e) {
@@ -154,10 +159,22 @@ public class DboardController {
 	}
 
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum,Model model) {
+	public String selectOne(@RequestParam("dNum") int dNum,Model model,HttpServletRequest request) {
+		
+		
 		Dboard dboard = dboardService.selectOne(dNum);
 		logger.info("dboard View게시글 번호" + dNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		
+		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		
+		model.addAttribute("dLocal", dboard.getdLocal());
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("searchFiled", dboard.getSearchFiled());
+		model.addAttribute("searchValue", dboard.getSearchValue());
 		String url = "";
 		if (dboard != null) {
 			model.addAttribute("dboard", dboard);
@@ -232,11 +249,15 @@ public class DboardController {
 					}
 					viewImg = ImageLoader.fromFile(viewPath);
 					listImg = ImageLoader.fromFile(listPath);
+					//리사이징할 이미지의 폭이 주어진 값 보다 작을 경우 에러가 나기 때문에
+					//리사이징할 이미지의 크기가 작을경우 그 폭을 유지하며 리사이징 처리 하기 위해 Width값 강제 적용
+					int viewWidth = (viewImg.getWidth() > 800)? 800 : viewImg.getWidth();
+					int listWidth = (listImg.getWidth() > 300)? 300 : listImg.getWidth();
 
 					// 너비 300으로 리사이징 처리 화질은 최대한 보정
 					// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
-					viewImg.getResizedToWidth(800).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
-					listImg.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
+					viewImg.getResizedToWidth(viewWidth).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
+					listImg.getResizedToWidth(listWidth).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
 
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
@@ -311,7 +332,6 @@ public class DboardController {
 		dboard.setdLocal(request.getParameter("dLocal"));
 		
 		
-		
 		int dboardNextNum = dboardService.selectNext(dboard);
 		//다음글번호를 받고 다음글로 조회
 		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
@@ -330,7 +350,7 @@ public class DboardController {
 		} else {
 			model.addAttribute("dboard",dboard);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
-			model.addAttribute("url", "dboardView.do?dNum="+dboard.getdNum());
+			model.addAttribute("url", "javascript:history.back()");
 			url = "common/errorDboard";
 		}
 		return url;
@@ -343,13 +363,12 @@ public class DboardController {
 		dboard.setdCategory(request.getParameter("dCategory"));
 		dboard.setdLocal(request.getParameter("dLocal"));
 		
-		
 		//이전 번호조회
-		int dboardPrevNum = dboardService.selectPrevNum(dboard);
+		int dboardPrevNum = dboardService.selectPrev(dboard);
 		//이전글번호를 받고 다음글로 조회
 		Dboard dboardPrev = dboardService.selectOne(dboardPrevNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
-
+		
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("searchFiled", dboard.getSearchFiled());
@@ -362,7 +381,7 @@ public class DboardController {
 		} else {
 			model.addAttribute("dboard",dboard);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
-			model.addAttribute("url", "dboardView.do?dNum="+dboard.getdNum());
+			model.addAttribute("url", "javascript:history.back()");
 			url = "common/errorDboard";
 		}
 		return url;

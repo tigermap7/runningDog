@@ -204,16 +204,16 @@ $(function() {
 				<c:url var="dboardNext" value="dboardnext.ad">
 					<c:param name="dNum" value="${ dboard.dNum }" />
 					<c:param name="dLocal" value="${ dLocal }" />
-					<c:param name="searchFiled" value="${pageVO.searchFiled }" />
-					<c:param name="searchValue" value="${pageVO.searchValue }" />
-					<c:param name="dCategory" value="${ d.dCategory }" />
+					<c:param name="searchFiled" value="${ searchFiled }" />
+					<c:param name="searchValue" value="${ searchValue }" />
+					<c:param name="dCategory" value="${ dCategory }" />
 				</c:url>
 				<c:url var="dboardPrev" value="dboardprev.ad">
 					<c:param name="dNum" value="${ dboard.dNum }" />
 					<c:param name="dLocal" value="${ dLocal }" />
-					<c:param name="searchFiled" value="${pageVO.searchFiled }" />
-					<c:param name="searchValue" value="${pageVO.searchValue }" />
-					<c:param name="dCategory" value="${ d.dCategory }" />
+					<c:param name="searchFiled" value="${ searchFiled }" />
+					<c:param name="searchValue" value="${ searchValue }" />
+					<c:param name="dCategory" value="${ dCategory }" />
 				</c:url>
 				<div class="viewBtn-wrap">
 					<button class="nextBtn" onclick="location='${ dboardPrev }'">
