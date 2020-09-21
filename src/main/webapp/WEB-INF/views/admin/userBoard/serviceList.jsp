@@ -27,7 +27,45 @@
                 </div>
             </div>
             <!-- //상단 타이틀 -->
+            
+<script type="text/javascript">
+//검색 분류 선택 확인
+$(function(){
+   $("[name='sel']").on("click", function(){
+      if($("select[name='type'] option:selected").val().length == 0) {
+         alert("분류를 선택해주세요");
+         return false;
+      }
+   });
+});
 
+//(전체/선택) 삭제
+function checkAll(){
+	if($("input[name=checkAll]").is(":checked")){
+		$("input[name=checkDel]").prop("checked", true);
+	}else{
+		$("input[name=checkDel]").prop("checked", false);
+	}
+}
+
+function deleteAction(){
+	var checkRow = "";
+	$("input[name='checkDel']:checked").each(function(){
+		checkRow = checkRow + $(this).val()+",";
+	});
+	checkRow = checkRow.substring(0, checkRow.lastIndexOf(","));
+	
+	if(checkRow == ""){
+		alert("삭제할 대상을 선택하세요.");
+		return false;
+	}
+	
+	console.log("### checkRow => {"+checkRow+"}");
+	
+	if(confirm("삭제 하시겠습니까?"))
+		location.href = "vdelete.ad?checkRow=" + checkRow ;
+}
+</script>
             <!-- 본문내용 -->
             <div class="list_wrap">
                 <!-- 검색영역 -->
@@ -36,13 +74,13 @@
                     <form action="vlist.ad" method="get" id="">
                     <div class="searchBox">
                         <select name="type" class="ListSelect">
-                                <option value="none" elected="selected">전체</option>
+                                <option value="" selected disabled>전체</option>
                                  <option value="address">지역</option>
-                                <option value="term">봉사기간</option>
+                                <option value="term">봉사기간(월)</option>
                         </select>
                         <div>
                             <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
-                            <button type="submit" class="top-search"><i class="xi-search"></i></button>
+                            <button type="submit" name="sel" class="top-search"><i class="xi-search"></i></button>
                         </div>
                     </div>
                     </form>
@@ -60,11 +98,11 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>선택</th>
+                            <th>전체 &nbsp;&nbsp;<input type="checkbox" name="checkAll" onclick="checkAll();"></th>
                             <th>번호</th>
                             <th>모집상태</th>
-                            <!-- <th>썸네일</th> -->
-                            <th>지역</th>
+                            <th>썸네일</th>
+                            <!-- <th>지역</th> -->
                             <th>제목</th>
                             <th>센터명</th>
                             <th>등록일</th>
@@ -81,8 +119,8 @@
                                   	 		<c:param name="volno" value="${v.volno}"/>
                                   	 		<c:param name="page" value="${currentPage}"/>
                             </c:url>
-                        <tr onclick="location.href='${vd}'">
-                            <td><input type="checkbox" name="" id="" value=""></td>
+                        <tr>
+                            <td><input type="checkbox" name="checkDel" id="" value="${v.volno }"></td>
                             <td class="number" onclick="location.href='${vd}'">${v.volno}</td>
                             <c:if test="${ v.volche eq'Y'}">
                             <td class="kinds" onclick="location.href='${vd}'"><span class="protect">상시모집</span></td>
@@ -90,28 +128,20 @@
                              <c:if test="${ v.volche eq'N'}">
                             <td class="kinds" onclick="location.href='${vd}'"><span class="protect">모집완료</span></td>
                             </c:if>
-                            <%-- <td class="thumbnail" onclick="location.href='${vd}'">
-                            <c:if test="${ empty v.volre1 and v.volre2 and v.volre3 and v.volre4 }">
-                            	<img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
+                            <td class="thumbnail" onclick="location.href=''">
+                            <c:if test="${ empty v.volre1 }">
+                            	<img src="/runningdog/resources/images/test/animalNews04.jpg">
                             </c:if>
-                            <c:if test="${ !empty v.volre1 and v.volre2 and v.volre3 and v.volre4 }">
-                            	<img src="/runningdog/resources/vfiles/${volunteer.volre1 }"></td>
-                            </c:if> --%>
-                            <td class="location" onclick="location.href='${vd}'">${v.voladdress}</td>
+                            <c:if test="${ !empty v.volre1 }">
+                            	<img src="/runningdog/resources/vfiles/${v.volre1}">
+                            </c:if>
+                            </td>
+                            <%-- <td class="location" onclick="location.href='${vd}'">${v.voladdress}</td> --%>
                             <td class="title" onclick="location.href='${vd}'">${ v.voltitle }</td>
                             <td class="name" onclick="location.href='${vd}'">${v.volname}</td>
                             <td class="date" onclick="location.href='${vd}'">${v.voldate}</td>
                         </tr>
                      </c:forEach>
-                        <!-- <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='serviceView.jsp'">9</td>
-                            <td class="kinds" onclick="location='serviceView.jsp'"><span class="protect">모집중</span></td>
-                            <td class="thumbnail" onclick="location='serviceView.jsp'"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-                            <td class="title" onclick="location='serviceView.jsp'">작은 생명을 위한 도움의 손길이 필요합니다.</td>
-                            <td class="name" onclick="location='serviceView.jsp'">조남동 센터</td>
-                            <td class="date" onclick="location='serviceView.jsp'">2020.09.01</td>
-                        </tr> -->
                     </tbody>
                 </table>
                 <p class="warning_text"> *삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p>
@@ -119,7 +149,7 @@
 
                 <!-- 버튼 -->
                 <div class="list-btn">
-                    <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택삭제</button>
+                    <button type="button" id="" class="btn-left chkBtn" onclick="deleteAction();"><i class="xi-cut"></i> 선택삭제</button>
                    <!--  <button type="button" id="" class="btn-right writeBtn" onclick="location='serviceWrite.jsp'"><i class="xi-pen-o"></i> 글작성</button> -->
                 </div>
                 <!-- //버튼 -->

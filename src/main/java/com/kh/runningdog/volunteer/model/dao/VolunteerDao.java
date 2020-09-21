@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -46,6 +48,9 @@ public class VolunteerDao {
 	public int deleteVolunteer( Volunteer volunteer) {
 		return session.delete("volunteerMapper.deleteVolunteer", volunteer);
 	}
+	public int deleteVolunteerAdmin(String[] checkRow) {
+		return session.delete("volunteerMapper.deleteVolunteerAdmin", checkRow);
+	}
 	public ArrayList<Vreply> selectVreplyList(int volno){
 		List<Vreply> list = session.selectList("volunteerMapper.selectVreplylist", volno);
 		return (ArrayList<Vreply>)list;
@@ -61,6 +66,14 @@ public class VolunteerDao {
 	}
 	public int getListCountVreply(int volno) {
 		return session.selectOne("volunteerMapper.getListCountVreply", volno);
+	}
+
+	public int selectVolunteerPre(int volno) {
+		return session.selectOne("volunteerMapper.selectVolunteerPre", volno);
+	}
+
+	public int selectVolunteerNext(int volno) {
+		return session.selectOne("volunteerMapper.selectVolunteerNext", volno);
 	}
 
 }

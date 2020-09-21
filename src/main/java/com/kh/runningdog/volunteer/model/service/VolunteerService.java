@@ -13,9 +13,12 @@ public interface VolunteerService {
 	int insertVolunteer(Volunteer volunteer);
 	int updateVolunteer(Volunteer volunteer);
 	int deleteVolunteer(Volunteer volunteer);
+	int deleteVolunteerAdmin(String[] checkRow);
 	ArrayList<Vreply> selectVreplyList(int volno);
 	int insertVreply(Vreply vreply);
 	int updateVreply(Vreply vreply);
 	int deleteVreply(int vreply_no);
 	int getListCountVreply(int volno);
+	int selectVolunteerPre(int volno);
+	int selectVolunteerNext(int volno);
 }
