@@ -2,6 +2,7 @@ package com.kh.runningdog.member.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,13 +115,22 @@ public class MemberDao {
 		return session.update("memberMapper.adminUpdateMember", member);
 	}
 	
-	public int adminDeleteMember(Member selectUser) {
-		return session.update("memberMapper.adminDeleteMember", selectUser);
+	public int adminLeaveMember(Member selectUser) {
+		return session.update("memberMapper.adminLeaveMember", selectUser);
 	}
 
-	public ArrayList<Member> selectMemberLeaveList(MemberPage memberPage) {
-		List<Member> list = session.selectList("leaveMemberMapper.selectMemberLeaveList", memberPage);
-		return (ArrayList<Member>)list;
+	public int insertLeaveMemberChk(int temp) {
+		return session.insert("memberMapper.insertLeaveMemberChk", temp);
+	}
+
+	public int leaveMemberChk(int temp) {
+		return session.delete("memberMapper.leaveMemberChk", temp);
+	}
+	
+
+	public ArrayList<LeaveMember> selectMemberLeaveList(MemberPage memberPage) {
+		List<LeaveMember> list = session.selectList("leaveMemberMapper.selectMemberLeaveList", memberPage);
+		return (ArrayList<LeaveMember>)list;
 	}
 
 	public int selectMemberLeaveCount(MemberPage memberSerch) {
@@ -130,9 +140,12 @@ public class MemberDao {
 	public LeaveMember selectLeaveUserOne(int leaveUniqueNum) {
 		return session.selectOne("leaveMemberMapper.selectLeaveUserOne", leaveUniqueNum);
 	}
+	
+	public int deleteChk(int temp) {
+		return session.delete("leaveMemberMapper.deleteChk", temp);
+	}
 
-
-
+	
 
 	public ArrayList<Member> selectNicknameCheckList(Member member) {
 		List<Member> list = session.selectList("memberMapper.selectNicknameCheckList", member);
@@ -141,6 +154,12 @@ public class MemberDao {
 	public int selectNicknameCount(Member member) {
 		return session.selectOne("memberMapper.selectNicknameCount", member);
 	}
+
+
+
+
+
+
 
 
 

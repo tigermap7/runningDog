@@ -93,42 +93,47 @@
 								<c:param name="uniqueNum" value="${ member.uniqueNum }" />
 								<c:param name="page" value="${ page }" />
 							</c:url>
-							   <td class="checkBox"><input type="checkbox" name="leaveChk" id="${ member.uniqueNum }" value=""></td>
-	                           <td class="number" onclick="location='${ memberView }'">${ listNo }</td>
-	                           <td class="userId" onclick="location='${ memberView }'">${ member.userId }</td>
-	                           <td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${savePath}${member.renameProfile}"/>${ member.nickname }</td>
-	                           <td class="phone" onclick="location='${ memberView }'">${ member.phone }</td>
-	                           <td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.joinDate }"/></td>
-	                           <td class="lastAccessDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.lastAccessDate }"/></td>
-	                           <c:if test="${ member.loginType eq 'kakao' }">
-	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
-	                           </c:if>
-	                           <c:if test="${ member.loginType eq 'facebook' }">
-	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-facebook-official"></i></td>
-	                           </c:if>
-	                           <c:if test="${ member.loginType eq 'naver' }">
-	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-naver-square"></i></td>
-	                           </c:if>
-	                           <c:if test="${ member.loginType eq null }">
-	                           <td class="loginType" onclick="location='${ memberView }'">일반</td>
-	                           </c:if>
-	                           
-	                           <c:if test="${ member.loginLimit == 'Y'}">
-	                           <td class="loginLimit" onclick="location='${ memberView }'"><i class="xi-check-circle-o"></i></td>
-	                           </c:if>
-	                           <c:if test="${ member.loginLimit == 'N'}">
-	                           <td class="loginLimit" onclick="location='${ memberView }'"></td>
-	                           </c:if>
-	                           
-	                           <c:if test="${ member.adminChk == 'Y'}">
-	                           <td class="adminChk" onclick="location='${ memberView }'"><i class="xi-check-circle-o"></i></td>
-	                           
-	                           </c:if>
-	                           <c:if test="${ member.adminChk == 'N'}">
-	                           <td class="adminChk" onclick="location='${ memberView }'"></td>
-	                           </c:if>
-	                       <c:set var="listNo" value="${listNo - 1}"/>
-	                       </tr>
+								<td class="checkBox"><input type="checkbox" name="leaveChk" id="${ member.uniqueNum }" value=""></td>
+								<td class="number" onclick="location='${ memberView }'">${ listNo }</td>
+								<td class="userId" onclick="location='${ memberView }'">${ member.userId }</td>
+								<c:if test="${ member.renameProfile eq null }">
+								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/common/userBg.png"/>${ member.nickname }</td>
+								</c:if>        
+								<c:if test="${ member.renameProfile ne null }">
+								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${savePath}${member.renameProfile}"/>${ member.nickname }</td>
+								</c:if>
+								<td class="phone" onclick="location='${ memberView }'">${ member.phone }</td>
+								<td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.joinDate }"/></td>
+								<td class="lastAccessDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.lastAccessDate }"/></td>
+								<c:if test="${ member.loginType eq 'kakao' }">
+								<td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
+								</c:if>
+								<c:if test="${ member.loginType eq 'facebook' }">
+								<td class="loginType" onclick="location='${ memberView }'"><i class="xi-facebook-official"></i></td>
+								</c:if>
+								<c:if test="${ member.loginType eq 'naver' }">
+								<td class="loginType" onclick="location='${ memberView }'"><i class="xi-naver-square"></i></td>
+								</c:if>
+								<c:if test="${ member.loginType eq null }">
+								<td class="loginType" onclick="location='${ memberView }'">일반</td>
+								</c:if>
+								
+								<c:if test="${ member.loginLimit == 'Y'}">
+								<td class="loginLimit" onclick="location='${ memberView }'"><i class="xi-check-circle-o"></i></td>
+								</c:if>
+								<c:if test="${ member.loginLimit == 'N'}">
+								<td class="loginLimit" onclick="location='${ memberView }'"></td>
+								</c:if>
+								
+								<c:if test="${ member.adminChk == 'Y'}">
+								<td class="adminChk" onclick="location='${ memberView }'"><i class="xi-check-circle-o"></i></td>
+								
+								</c:if>
+								<c:if test="${ member.adminChk == 'N'}">
+								<td class="adminChk" onclick="location='${ memberView }'"></td>
+								</c:if>
+							<c:set var="listNo" value="${listNo - 1}"/>
+							</tr>
 	                   	</c:forEach>
 						</c:if>
                     	<c:if test="${ list.size() eq 0 }">

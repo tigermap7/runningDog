@@ -117,7 +117,7 @@
 }
 .profile dd div.loginType i {
     font-size: 28px;
-    vertical-align: middle;
+    vertical-align: sub;
 }
 .profile dd div.loginType i.xi-kakaotalk {
     color: #333;
@@ -164,8 +164,8 @@
     border-right: 1px solid #ddd;
     color: #fff;
 }
-.list_wrap .list thead tr th:first-child {
-    border-left: 1px solid #ddd;
+.list_wrap .list thead tr th:last-child {
+    border-right: none;
 }
 .list_wrap .list thead tr.hr {
     background-color: #aaa;

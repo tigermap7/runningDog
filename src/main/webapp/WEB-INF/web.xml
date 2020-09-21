@@ -57,7 +57,18 @@
 		<url-pattern>*.do</url-pattern>
 		<url-pattern>*.ad</url-pattern>
 		<url-pattern>/</url-pattern>
-		</servlet-mapping>
-
+	</servlet-mapping>
+	
+	<!-- PRE class=brush:xml>
+		<listener>
+	        <listener-class>com.kh.runningdog.visitCount.model.vo.VisitCounter</listener-class>
+	        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	    </listener>
+	 
+	    <context-param>
+	        <param-name>contextConfigLocation</param-name>
+	        <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+	    </context-param>
+	</PRE-->
 
 </web-app>

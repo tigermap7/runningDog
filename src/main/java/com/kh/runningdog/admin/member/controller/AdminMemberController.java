@@ -32,35 +32,6 @@ import com.kh.runningdog.member.model.vo.Member;
 import com.kh.runningdog.member.model.vo.LeaveMember;
 import com.kh.runningdog.member.model.vo.MemberPage;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.kh.runningdog.member.model.service.MemberService;
-import com.kh.runningdog.member.model.vo.Member;
-
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.kh.runningdog.member.model.service.MemberService;
-import com.kh.runningdog.member.model.vo.Member;
 
 @Controller
 public class AdminMemberController {
@@ -142,8 +113,6 @@ public class AdminMemberController {
 	@ResponseBody
 	public String adminMemberInsertAction(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
 		logger.info("adminMemberInsertAction run...");
-		logger.info("member : " + member);
-		logger.info("member adminCke : " + member.getAdminChk() );
 		
 		//암호화 처리
 		member.setUserPwd(bcryptoPasswordEncoder.encode(member.getUserPwd()));
@@ -228,19 +197,14 @@ public class AdminMemberController {
 					member.setOriginProfile(originProfile);
 					member.setRenameProfile(renameProfile);
 				}
-				
 				if(memberService.adminInsertMember(member) > 0) {
 					url = "memberInsertOk";
 				}
-				
 			} else {
-				
 				if(memberService.adminInsertMember(member) > 0) {
 					url = "memberInsertOk";
 				}
-				
 			}
-			
 		} else {
 			model.addAttribute("message", "회원추가 실패.");
 			return "common/error";
@@ -286,26 +250,18 @@ public class AdminMemberController {
 		myNickname2 = selectUser.getNickname().equals(member.getNickname());
 		myPhone2 = selectUser.getPhone().equals(member.getPhone());
 
-		logger.info("확인1");
-
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
         
 		if (selectUser != null) {
-			logger.info("확인2");
-			logger.info("확인!!!! : " + nicknameChk.getNickname().equals(member.getNickname()));
-			logger.info("확인!!!! : " + nicknameChk.getPhone().equals(member.getPhone()));
 			if(nicknameChk != null && nicknameChk.getNickname().equals(member.getNickname()) == true && myNickname2 == false) {
-				logger.info("확인3");
 	            out.println("<script>alert('이미 존재하는 닉네임 입니다.\\n다시 입력해주세요.'); history.go(-1);</script>");
 	            out.flush();
 			} else if(phoneChk != null && phoneChk.getPhone().equals(member.getPhone()) == true && myPhone2 == false) {
-				logger.info("확인4");
 	            out.println("<script>alert('이미 가입된 핸드폰 번호 입니다.\\n다시 입력해주세요.'); history.go(-1);</script>");
 	            out.flush();
 			} else if (nChk == 0 && pChk == 0) {
 
-				logger.info("확인5");
 				//해당 유저의 프로필 파일이름
 				String originProfile = selectUser.getOriginProfile();
 				String renameProfile = selectUser.getRenameProfile();
@@ -362,21 +318,15 @@ public class AdminMemberController {
 					member.setRenameProfile(renameProfile);
 				}
 
-				logger.info("확인6");
 				if(memberService.adminUpdateMember(member) > 0) {
-					logger.info("확인7");
 					model.addAttribute(uniqueNum);
 					url = "redirect:adminMemberView.ad?uniqueNum=" + uniqueNum;
 				} else {
-					logger.info("확인8");
 		            out.println("<script>alert('존재하지 않는 회원입니다.'); history.go(-1);</script>");
 		            out.flush();
 				}
-				logger.info("member : " + member);
-					
 			}
 		} else {
-			logger.info("확인9 : " + selectUser);
 			model.addAttribute("selectUser", selectUser);
 			url = "common/error";
 		}
@@ -395,7 +345,7 @@ public class AdminMemberController {
 		String url = null;
 		
 		if (selectUser != null && memberService.insertLeaveMember(member) > 0) {
-			if (memberService.adminDeleteMember(selectUser) > 0) {
+			if (memberService.adminLeaveMember(selectUser) > 0) {
 		        response.setContentType("text/html; charset=UTF-8");
 		        PrintWriter out = response.getWriter();
 	            out.println("<script>alert('해당 회원의 탈퇴처리가 완료되었습니다.\\n전체회원 리스트로 이동합니다.'); location.href='memberAllList.ad';</script>");
@@ -411,67 +361,48 @@ public class AdminMemberController {
 	}
 	
 	
-	
 	//회원 리스트에서 체크박스 선택 후 회원탈퇴처리
-//	@RequestMapping("memberLeaveAction.ad")
-//    @ResponseBody
-//	public int adminLeaveMemberPage(@RequestParam("leaveChk") int leaveChk, HttpServletRequest request, Map<String, Object> commandMap) throws Exception {
-//
-//		logger.info("확인1");
-//		logger.info("commandMap : " + commandMap);
-//		
-//		String[] leaveChkArr = request.getParameterValues("leaveChk");
-//		logger.info("leaveChkArr : " + leaveChkArr);
-//		
-//		int result = 1;
-//		logger.info("확인2");
-//		try {
-//			logger.info("확인3");
-//			logger.info("result : " + result);
-//			int cnt = Integer.parseInt((String) commandMap.get("CNT"));
-//			logger.info("cnt : " + cnt);
-//			String rprtOdr = (String) commandMap.get("uniqueNum");
-//			String[] strArray = rprtOdr.split(",");
-//			logger.info("rprtOdr : " + rprtOdr);
-//			logger.info("strArray : " + strArray);
-//			logger.info("확인4");
-//			for (int i = 0; i < cnt; i++) {
-//				logger.info("확인5");
-//				int temp = Integer.parseInt((String) strArray[i]);
-//				commandMap.put("RPRT_ODR", temp);
-//				logger.info("temp : " + temp);
-//				memberService.delete("ReportDAO.deleteReport", commandMap);
-//				logger.info("확인6");
-//			}
-//		} catch (Exception e) {
-//			logger.info("확인7");
-//			//log.debug(e.getMessage());
-//			result = 0;
-//		}
-//		return result;
-//	}
+	@RequestMapping(value = "memberLeaveAction.ad", method = RequestMethod.POST)
+    @ResponseBody
+	public int memberLeaveAction(@RequestParam Map<String, Object> commandMap) throws Exception {
+		logger.info("memberLeaveAction run...");
+		
+		int result = 1;
+
+		try {
+			int cnt = Integer.parseInt((String) commandMap.get("CNT"));
+			String rprtOdr = (String) commandMap.get("RPRT_ODR");
+			String[] strArray = rprtOdr.split(",");
+
+			for (int i = 0; i < cnt; i++) {
+				int temp = Integer.parseInt((String) strArray[i]);
+				commandMap.put("RPRT_ODR", temp);
+				if(memberService.insertLeaveMemberChk(temp) > 0) {
+					memberService.leaveMemberChk(temp);
+				}
+			}
+		} catch (Exception e) {
+			//log.debug(e.getMessage());
+			result = 0;
+		}
+		return result;
+	}
 	
 
 	
-	@RequestMapping("adminMemberLeave.ad")
-	public String adminLeaveMemberPage() {
-		return "admin/member/adminMemberLeave";
-	}
+//	
+//	@RequestMapping("adminInfo.ad")
+//	public String adminInfoPage() {
+//		return "admin/etc/adminInfo";
+//	}
+//	
+//	@RequestMapping("etcView.ad")
+//	public String etcViewPage() {
+//		return "admin/etc/etcView";
+//	}
 	
 	
-	
-	@RequestMapping("adminInfo.ad")
-	public String adminInfoPage() {
-		return "admin/etc/adminInfo";
-	}
-	
-	@RequestMapping("etcView.ad")
-	public String etcViewPage() {
-		return "admin/etc/etcView";
-	}
-	
-	
-	
+	//관리자 탈퇴회원 리스트
 	@RequestMapping("memberLeaveList.ad")
 	public String memberLeaveListPage(Model model, HttpServletRequest request, SessionStatus status) {
 		logger.info("memberLeaveList run...");
@@ -479,9 +410,6 @@ public class AdminMemberController {
 		//검색값 받기
 		String search = request.getParameter("memberSearch");
 		String keyword = request.getParameter("keyword");
-
-		logger.info("search : " + search);
-		logger.info("keyword : " + keyword);
 		
 		//키워드 있을경우 앞뒤 공백제거
 		if(!(keyword == null || keyword == "")) {	
@@ -498,11 +426,8 @@ public class AdminMemberController {
 		memberSerch.setSearch(search);
 		memberSerch.setKeyword(keyword);
 
-		logger.info("memberSerch : " + memberSerch);
-		
 		int listCount = memberService.selectMemberLeaveCount(memberSerch); //총 목록 갯수
 		int listLimit = 10;//페이지 게시글 출력 갯수
-		logger.info("listCount : " + listCount);
 		
 		MemberPage memberPage = new MemberPage(currentPage, listCount, listLimit); //현재 페이지와 총 갯수 보내서, startPage, endpage등.. 값 만들기
 		
@@ -510,19 +435,40 @@ public class AdminMemberController {
 		memberPage.setSearch(search);
 		memberPage.setKeyword(keyword);
 
-		logger.info("memberPage : " + memberPage);
-		
-		ArrayList<Member> list = memberService.selectMemberLeaveList(memberPage);
-
-		logger.info("list : " + list);
-		logger.info("memberPage : " + memberPage);
-		logger.info("memberSerch : " + memberSerch);
+		ArrayList<LeaveMember> list = memberService.selectMemberLeaveList(memberPage);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("memberPage", memberPage);
 		return "admin/member/adminMemberLeaveList";
 		
 	}
+	
+	
+	//탈퇴회원 리스트에서 체크박스 선택 후 회원삭제처리
+	@RequestMapping(value = "memberDeleteAction.ad", method = RequestMethod.POST)
+    @ResponseBody
+	public int memberDeleteAction(@RequestParam Map<String, Object> commandMap) throws Exception {
+		logger.info("memberDeleteAction run...");
+		
+		int result = 1;
+
+		try {
+			int cnt = Integer.parseInt((String) commandMap.get("CNT"));
+			String rprtOdr = (String) commandMap.get("RPRT_ODR");
+			String[] strArray = rprtOdr.split(",");
+
+			for (int i = 0; i < cnt; i++) {
+				int temp = Integer.parseInt((String) strArray[i]);
+				commandMap.put("RPRT_ODR", temp);
+				memberService.deleteChk(temp);
+			}
+		} catch (Exception e) {
+			//log.debug(e.getMessage());
+			result = 0;
+		}
+		return result;
+	}
+	
 	
 	
 	//관리자 탈퇴회원상세

@@ -58,5 +58,9 @@
 		select * from leave_member where leave_unique_num = #{leaveUniqueNum}
 	</select>
 	
+	<delete id="deleteChk" parameterType="_int">
+		delete leave_member where leave_unique_num = #{temp}
+	</delete>
+	
 	
 </mapper>

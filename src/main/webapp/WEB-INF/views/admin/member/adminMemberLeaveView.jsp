@@ -48,17 +48,16 @@
 						<div><span>가입일</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectLeaveUser.leaveJoinDate}</div>
 						<div><span>탈퇴일</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectLeaveUser.leaveDate}</div>
 						<div class="loginType"><span>로그인유형</span>&nbsp;&nbsp;:&nbsp;&nbsp;
-							<i class="xi-kakaotalk"></i>
-							<c:if test="${ selectLeaveUser.leaveLoginType }">
+							<c:if test="${ selectLeaveUser.leaveLoginType eq 'kakao' }">
 							<i class="xi-kakaotalk"></i>
 							</c:if>
-							<c:if test="${ selectLeaveUser.leaveLoginType }">
+							<c:if test="${ selectLeaveUser.leaveLoginType eq 'facebook' }">
 							<i class="xi-facebook-official"></i>
 							</c:if>
-							<c:if test="${ selectLeaveUser.leaveLoginType }">
+							<c:if test="${ selectLeaveUser.leaveLoginType eq 'naver' }">
 							<i class="xi-naver-square"></i></td>
 							</c:if>
-							<c:if test="${ selectLeaveUser.leaveLoginType }">
+							<c:if test="${ selectLeaveUser.leaveLoginType eq null }">
 							일반
 							</c:if>
 						</div>

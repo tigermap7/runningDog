@@ -136,114 +136,72 @@ $(function () {
 	});
     
     
-    
-
-    
-    
 });
 
 
 
 
 
-
-function leaveChkAction(){
-    var cnt = $("input[name='leaveChk']:checked").length;
-    var arr = new Array();
-    $("input[name='leaveChk']:checked").each(function() {
-        arr.push($(this).attr('id'));
-    });
-    if(cnt == 0){
-        alert("선택된 회원이 없습니다.");
-    }
-    else{
-    	console.log("cnt : " + cnt);
-    	console.log("arr : " + arr);
-        $.ajax = {
-            type:'post',
-            url: "memberLeaveAction.ad",
-            data: "leaveChk=" + arr + "&CNT=" + cnt,
-            dataType:"json",
-            success: function(jdata){
-                if(jdata != 1) {
-                    alert("삭제 오류");
-                }
-                else{
-                    alert("삭제 성공");
-                }
-            },
-    		error : function(jqXHR, textstatus, errorthrown) { console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);}
-		};
-    }
+//관리자 회원탈퇴
+function leaveChkAction() {
+	var cnt = $("input[name='leaveChk']:checked").length;
+	var arr = new Array();
+	$("input[name='leaveChk']:checked").each(function() {
+		arr.push($(this).attr('id'));
+	});
+	if (cnt == 0) {
+		alert("선택된 회원이 없습니다.");
+	} else if(cnt != 0 && confirm("선택한 회원을 탈퇴처리 하시겠습니까?")) {
+		$.ajax({
+			type : 'POST',
+			url : "memberLeaveAction.ad",
+			data : "RPRT_ODR=" + arr + "&CNT=" + cnt,
+			dataType : "json",
+			success : function(data) {
+				if (data != 1) {
+					alert("선택된 회원 탙퇴가 실패했습니다.");
+				} else {
+					alert("선택된 회원 탈퇴가 성공했습니다.");
+					location.reload();
+				}
+			},
+			error : function(jqXHR, textstatus, errorthrown) {
+				console.log("error : " + jqXHR + ", " + textstatus + ", "
+						+ errorthrown);
+			}
+		});
+	}
 }
 
 
-
-
-
-
-
-//관리자 회원탈퇴//
-$(function () {
-	$("#leaveBtn").click(function() {
-	var checkarr = []
-		$("input[name=leaveChk]:checked").each(function() {
-		   checkarr.push($(this).val());
-		   console.log(checkarr);
-		});
-		// 배열 < 스트링 변환 < 자바에서 배열로 < 가공처리
+//관리자 탈퇴회원 DB 삭제
+function deleteChkAction() {
+	var cnt = $("input[name='deleteChk']:checked").length;
+	var arr = new Array();
+	$("input[name='deleteChk']:checked").each(function() {
+		arr.push($(this).attr('id'));
+	});
+	if (cnt == 0) {
+		alert("선택된 회원이 없습니다.");
+	} else if(cnt != 0 && confirm("선택한 회원을 삭제처리 하시겠습니까?")) {
 		$.ajax({
-			url:'/anavada/adminleave.ad',
-			type: 'get',
-			traditional: true,
-			data: {
-				checkarr : checkarr.join(',')
-			},
-			success : function(data){
-				console.log("컨트롤러에서 받은 MSG : " + data);
-				var dataSplit = data.split('/');
-				if (dataSplit.length === 2) {
-					alert(/*dataSplit[1] + */dataSplit[0] + '명의 회원이 탈퇴되었습니다.');
-				location.reload();
+			type : 'POST',
+			url : "memberDeleteAction.ad",
+			data : "RPRT_ODR=" + arr + "&CNT=" + cnt,
+			dataType : "json",
+			success : function(data) {
+				if (data != 1) {
+					alert("선택된 회원 삭재가 실패했습니다.");
+				} else {
+					alert("선택된 회원 삭제가 성공했습니다.");
+					location.reload();
 				}
 			},
-			//Ajax 실패시 호출
-			error : function(jqXHR, textStatus, errorThrown){
-			console.log("jqXHR : " +jqXHR +"textStatus : " + textStatus + "errorThrown : " + errorThrown);
+			error : function(jqXHR, textstatus, errorthrown) {
+				console.log("error : " + jqXHR + ", " + textstatus + ", "
+						+ errorthrown);
 			}
 		});
-	});
-});
+	}
+}
 
-
-//관리자 회원삭제//
-$(function () {
-	$("#deleteBtn").click(function() {
-	var checkarr = []
-		$("input[name=leaveChk]:checked").each(function() {
-		   checkarr.push($(this).val());
-		   console.log(checkarr);
-		});
-		// 배열 < 스트링 변환 < 자바에서 배열로 < 가공처리
-		$.ajax({
-			url:'/anavada/admindelete.ad',
-			type: 'get',
-			traditional: true,
-			data: {
-				checkarr : checkarr.join(',')
-			},
-			success : function(data){
-				console.log("컨트롤러에서 받은 MSG : " + data);
-				var dataSplit = data.split('/');
-				if (dataSplit.length === 2) {
-				alert(/*dataSplit[1] + */dataSplit[0] + '명의 회원이 삭제되었습니다.');
-				location.reload();
-				}
-			},
-			//Ajax 실패시 호출
-			error : function(jqXHR, textStatus, errorThrown){
-			console.log("jqXHR : " +jqXHR +"textStatus : " + textStatus + "errorThrown : " + errorThrown);
-			}
-		});
-	});
-});

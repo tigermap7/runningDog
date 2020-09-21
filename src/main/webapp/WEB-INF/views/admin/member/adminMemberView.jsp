@@ -48,17 +48,16 @@
 						<div><span>가입일</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.joinDate}</div>
 						<div><span>최근접속일</span>&nbsp;&nbsp;:&nbsp;&nbsp;${selectUser.lastAccessDate}</div>
 						<div class="loginType"><span>로그인유형</span>&nbsp;&nbsp;:&nbsp;&nbsp;
-							<i class="xi-kakaotalk"></i>
-							<c:if test="${ selectUser.loginType }">
+							<c:if test="${ selectUser.loginType eq 'kakao' }">
 							<i class="xi-kakaotalk"></i>
 							</c:if>
-							<c:if test="${ selectUser.loginType }">
+							<c:if test="${ selectUser.loginType eq 'facebook' }">
 							<i class="xi-facebook-official"></i>
 							</c:if>
-							<c:if test="${ selectUser.loginType }">
+							<c:if test="${ selectUser.loginType eq 'naver' }">
 							<i class="xi-naver-square"></i></td>
 							</c:if>
-							<c:if test="${ selectUser.loginType }">
+							<c:if test="${ selectUser.loginType eq null }">
 							일반
 							</c:if>
 						</div>
@@ -106,44 +105,65 @@
                         <tr>
                             <td>휴대폰번호</td>
                             <td colspan="3" class="tel">
-	                            <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력" value="${ selectUser.phone }" readonly/>
+	                            <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력" value="${ selectUser.phone }"/>
+                         	    <p id="phoneWarning">
+	                                <span></span>
+	                            </p>
                             </td>
                         </tr>
+                        <c:if test="${ selectUser.userId eq 'admin@runningdog.com' }">
                         <tr>
                             <td>로그인 제한설정</td>
                             <td class="loginLimit">
                                 <select name="loginLimit" class="loginLimit">
-                                	<c:if test="${ selectUser.loginLimit == 'Y'}">
+		                            <option value="N" selected>제한없음</option>     
+                       			</select>
+                            </td>
+                            <td style="text-align:center; font-weight:500;">관리자 권한설정</td>
+                            <td class="adminChk">
+                                <select name="adminChk" class="adminChk">
+		                            <option value="Y" selected>관리자</option>
+                       			</select>
+                            </td>
+                        </tr>
+                        </c:if>
+                        <c:if test="${ selectUser.userId ne 'admin@runningdog.com' }">
+                        <tr>
+                            <td>로그인 제한설정</td>
+                            <td class="loginLimit">
+                                <select name="loginLimit" class="loginLimit">
+                                	<c:if test="${ selectUser.loginLimit eq 'Y'}">
 		                            <option value="Y" selected>제한하기</option>
-		                            <option value="N">제한없음</option>                   
+		                            <option value="N">제한없음</option>
                                 	</c:if>
-                                	<c:if test="${ selectUser.loginLimit == 'N'}">
+                                	<c:if test="${ selectUser.loginLimit eq 'N'}">
+		                            <option value="N" selected>제한없음</option>
 		                            <option value="Y">제한하기</option>
-		                            <option value="N" selected>제한없음</option>                   
                                 	</c:if>
                        			</select>
                             </td>
                             <td style="text-align:center; font-weight:500;">관리자 권한설정</td>
                             <td class="adminChk">
                                 <select name="adminChk" class="adminChk">
-                                	<c:if test="${ selectUser.adminChk == 'Y' }">
+                                	<c:if test="${ selectUser.adminChk eq 'Y' }">
 		                            <option value="Y" selected>관리자</option>
-		                            <option value="N">일반회원</option>         
+		                            <option value="N">일반회원</option>
                                 	</c:if>
-                                	<c:if test="${ selectUser.adminChk == 'N' }">
-		                            <option value="Y">관리자 권한부여</option>
-		                            <option value="N" selected>일반회원</option>                   
+                                	<c:if test="${ selectUser.adminChk eq 'N' }">
+		                            <option value="N" selected>일반회원</option>
+		                            <option value="Y">관리자</option>
                                 	</c:if>
                        			</select>
                             </td>
                         </tr>
-                        <tr>
-                        </tr>
+                        </c:if>
                     </tbody>
                 </table>
 
                 <div class="write-btn">
+                    <c:if test="${ selectUser.userId ne 'admin@runningdog.com' }">
                     <input type="button" class="btn btn-delete" value="탈퇴처리" onclick="location.href='adminViewLeaveAction.ad?uniqueNum=${selectUser.uniqueNum}'">
+                    </c:if>
                     <input type="reset" class="btn btn-list" value="취소하기">
                     <input type="submit" class="btn btn-success" value="수정하기">
                 </div>

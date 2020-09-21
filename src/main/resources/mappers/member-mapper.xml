@@ -128,11 +128,22 @@
 	</insert>
 	
 	<insert id="adminUpdateMember" parameterType="Member">
-		update member set nickname = #{nickname}, origin_profile = #{originProfile}, rename_profile = #{renameProfile}, admin_chk = #{adminChk}, login_limit = #{loginLimit} where unique_num = #{uniqueNum}
+		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile}, admin_chk = #{adminChk}, login_limit = #{loginLimit} where unique_num = #{uniqueNum}
 	</insert>
 	
-	<delete id="adminDeleteMember" parameterType="Member">
+	<delete id="adminLeaveMember" parameterType="Member">
 		delete member where unique_num = #{uniqueNum}
+	</delete>
+	
+	<delete id="insertLeaveMemberChk" parameterType="_int">
+		INSERT INTO LEAVE_MEMBER (LEAVE_UNIQUE_NUM, LEAVE_USER_ID, LEAVE_USER_PWD, LEAVE_NICKNAME, LEAVE_PHONE, LEAVE_ORIGIN_PROFILE, LEAVE_RENAME_PROFILE, LEAVE_JOIN_DATE, LEAVE_LOGIN_TYPE)
+		SELECT UNIQUE_NUM, USER_ID, USER_PWD, NICKNAME, PHONE, ORIGIN_PROFILE, RENAME_PROFILE, JOIN_DATE, LOGIN_TYPE
+		FROM MEMBER
+		WHERE UNIQUE_NUM = #{temp}
+	</delete>
+	
+	<delete id="leaveMemberChk" parameterType="_int">
+		delete member where unique_num = #{temp}
 	</delete>
 	
 	

@@ -117,12 +117,23 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int adminDeleteMember(Member selectUser) {
-		return memberDao.adminDeleteMember(selectUser);
+	public int adminLeaveMember(Member selectUser) {
+		return memberDao.adminLeaveMember(selectUser);
 	}
 
 	@Override
-	public ArrayList<Member> selectMemberLeaveList(MemberPage memberPage) {
+	public int insertLeaveMemberChk(int temp) {
+		return memberDao.insertLeaveMemberChk(temp);
+	}
+
+	@Override
+	public int leaveMemberChk(int temp) {
+		return memberDao.leaveMemberChk(temp);
+	}
+	
+
+	@Override
+	public ArrayList<LeaveMember> selectMemberLeaveList(MemberPage memberPage) {
 		return memberDao.selectMemberLeaveList(memberPage);
 	}
 
@@ -136,7 +147,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectLeaveUserOne(leaveUniqueNum);
 	}
 
-	
+	@Override
+	public int deleteChk(int temp) {
+		return memberDao.deleteChk(temp);
+	}
+
 	
 	
 	
@@ -151,11 +166,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectNicknameCount(member);
 	}
 
-	@Override
-	public Member adminDeleteMember(Map<String, Object> commandMap) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 

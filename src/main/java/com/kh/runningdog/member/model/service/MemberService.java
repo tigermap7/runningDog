@@ -38,14 +38,15 @@ public interface MemberService {
 	Member selectUserOne(int uniqueNum);
 	int adminInsertMember(Member member);
 	int adminUpdateMember(Member member);
-	int adminDeleteMember(Member selectUser);
-	
-	Member adminDeleteMember(Map<String, Object> commandMap);
+	int adminLeaveMember(Member selectUser);
+	int insertLeaveMemberChk(int temp);
+	int leaveMemberChk(int temp);
 	
 	//관리자 탈퇴회원
-	ArrayList<Member> selectMemberLeaveList(MemberPage memberPage);
+	ArrayList<LeaveMember> selectMemberLeaveList(MemberPage memberPage);
 	int selectMemberLeaveCount(MemberPage memberSerch);
 	LeaveMember selectLeaveUserOne(int leaveUniqueNum);
+	int deleteChk(int temp);
 	
 
 }

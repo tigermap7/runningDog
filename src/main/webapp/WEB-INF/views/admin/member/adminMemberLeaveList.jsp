@@ -90,7 +90,7 @@
 								<c:param name="leaveUniqueNum" value="${ leaveMember.leaveUniqueNum }" />
 								<c:param name="page" value="${ page }" />
 							</c:url>
-							   <td class="checkBox"><input type="checkbox" name="leaveChk" id="${ leaveMember.leaveUniqueNum }" value=""></td>
+							   <td class="checkBox"><input type="checkbox" name="deleteChk" id="${ leaveMember.leaveUniqueNum }" value=""></td>
 	                           <td class="number" onclick="location='${ memberView }'">${ listNo }</td>
 	                           <td class="userId" onclick="location='${ memberView }'">${ leaveMember.leaveUserId }</td>
 	                           <td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${savePath}${leaveMember.leaveRenameProfile}"/>${ leaveMember.leaveNickname }</td>
@@ -129,7 +129,7 @@
 
                 <!-- 버튼 -->
                 <div class="list-btn">
-                    <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택삭제</button>
+                    <button type="button" id="" class="btn-left chkBtn" onclick="deleteChkAction()"><i class="xi-cut"></i> 선택삭제</button>
                 </div>
                 <!-- //버튼 -->
                 
