@@ -302,7 +302,7 @@
                             <input type="submit" class="btn btn-success" value="수정하기">
                         </div>
                         </form>
-                        <!-- 글쓰기 끝 -->
+                        <!-- 수정하기 끝 -->
                     </div>
                 </div>
             </div>

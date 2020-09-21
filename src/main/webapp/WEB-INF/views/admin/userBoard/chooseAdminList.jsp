@@ -120,7 +120,7 @@
                 <!-- 버튼 -->
                 <div class="list-btn">
                     <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택삭제</button>
-                    <button type="button" id="" class="btn-right writeBtn" onclick="location='chooseWrite.jsp'"><i class="xi-pen-o"></i> 글작성</button>
+                    <button type="button" id="" class="btn-right writeBtn" onclick="location='dinsertPage.ad'"><i class="xi-pen-o"></i> 글작성</button>
                 </div>
                 <!-- //버튼 -->
 

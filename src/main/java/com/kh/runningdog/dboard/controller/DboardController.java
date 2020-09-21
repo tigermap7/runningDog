@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +42,7 @@ public class DboardController {
 
 	@RequestMapping("dinsertPage.do")
 	public String moveDinsertPage() {
-		return "animal/chooseWrite";
+		return "animal/chooseAdminWrite";
 	}
 	
 	@RequestMapping(value = "dinsert.do", method = RequestMethod.POST)
@@ -87,13 +89,9 @@ public class DboardController {
 				// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
 				viewImg.getResizedToWidth(viewWidth).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
 				listImg.getResizedToWidth(listWidth).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
-
-
-
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-
 			dboard.setviewImage(viewRename);
 			dboard.setlistImage(listRename);
 		}
@@ -271,8 +269,11 @@ public class DboardController {
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url = "";
 		if (dboardService.updateDboard(dboard) > 0) {
-			model.addAttribute("dNum", dboard.getdNum());
-			url = "redirect:/dboardView.do";
+			//업데이트 후 detail 페이지 이동시 정보 전부 보여주게 하기 위함
+			Dboard dboardView =dboardService.selectOne(dboard.getdNum());
+			model.addAttribute("dboard",dboardView);
+
+			url = "animal/chooseView";
 		} else {
 			model.addAttribute("msg", "게시글 수정 실패 다시 확인해 주세요");
 			model.addAttribute("url", "dboardView.do");
@@ -301,27 +302,27 @@ public class DboardController {
 		return url;
 	}
 	
-	@RequestMapping("dUpSuccess.do")
-	public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
-								Dboard dboard,Model model) {
-		dboard.setdSuccess(dSuccess);
-		logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
-		int result = dboardService.updateDboardSuc(dboard);
-		
-		
-		String url="";
-		if (result > 0) {
-			model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
-			model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
-			url = "common/errorDboard";
-		} else {
-			model.addAttribute("dNum", dboard.getdNum());
-			model.addAttribute("msg", "분양 여부 업데이트 실패");
-			model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
-			url = "common/errorDboard";
-		}
-		return url;
-	}
+    @RequestMapping("dUpSuccess.do")
+    public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
+                                Dboard dboard,Model model) {
+        dboard.setdSuccess(dSuccess);
+        logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
+        int result = dboardService.updateDboardSuc(dboard);
+        
+        
+        String url="";
+        if (result > 0) {
+            model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
+            model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
+            url = "common/errorDboard";
+        } else {
+            model.addAttribute("dNum", dboard.getdNum());
+            model.addAttribute("msg", "분양 여부 업데이트 실패");
+            model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
+            url = "common/errorDboard";
+        }
+        return url;
+    }
 	
 	@RequestMapping("dboardnext.do")
 	public String dboardNext(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {

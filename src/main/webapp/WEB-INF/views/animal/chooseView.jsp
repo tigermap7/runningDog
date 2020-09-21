@@ -19,6 +19,7 @@ $(function() {
 	});
 });
 
+
 </script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
@@ -55,16 +56,17 @@ $(function() {
                                 <dt>
                                 	
                                     <div class="viewImg"><img src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }" id="imgControll" onclick="fnImgPop(this.src)" ></div>
-                                    <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
+                                    <!--<a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
                                     <c:url var = "dSuccess" value= "dUpSuccess.do">
 										<c:param name="dNum" value="${ dboard.dNum }"/>
 										<c:param name="dSuccess" value="${ dboard.dSuccess }"/>
-									</c:url>
+									</c:url> 
                                     <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                                     <!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
                                     <c:if test= "${sessionScope.loginMember.userId == dboard.userId }">
-                                    <a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
+                                    	<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
+                                    
                                     </c:if>
                                 </dt>
                                 <dd>
@@ -303,7 +305,7 @@ function getCommentList() {
                     	'<p>'+arrdreContent[i]+'</p>'+
                     	'<div class="cmt_conBtn"> <button class="Subcmt_btn">대댓글</button>'+
             			'<button onclick= \"location.href='+"''"+'" style="float: right;">삭제</button>'+
-            			'<button class="Cmt_update_btn" >수정</button><br><div class="Cmt_update" style="display: none;">'+
+            			'<button class="Cmt_update_btn" >수정</button><br><br><div class="Cmt_update" style="display: none;">'+
 						'<form name="updateDreply" action="" method="post">'+
 						'<input type="hidden" name="dreNum" id="dreNumUp" value="'+arrdreNum[i]+'">'+
 						'<fieldset><div class="cmt_form">'+
@@ -333,7 +335,7 @@ function getCommentList() {
 }	
 
 // 댓글 추가
-function DreplySubmit(code,idx) {
+function DreplySubmit(code) {
 	if (document.getElementById("dreContent").value == "") {
 		alert("내용을 입력해주세요");
 		return false;
