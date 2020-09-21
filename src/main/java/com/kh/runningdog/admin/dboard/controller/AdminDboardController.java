@@ -328,10 +328,33 @@ public class AdminDboardController {
 			url = "admin/userBoard/chooseAdminView";
 		} else {
 			model.addAttribute("msg", "게시글 수정 실패 다시 확인해 주세요");
-			model.addAttribute("url", "dboardView.do");
+			model.addAttribute("url", "dboardView.ad");
 			url = "common/errorDboard";
 		}
 		return url;
 	}
+	
+	@RequestMapping("dUpSuccess.ad")
+    public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
+                                Dboard dboard,Model model) {
+        dboard.setdSuccess(dSuccess);
+        logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
+        int result = dboardService.updateDboardSuc(dboard);
+        
+        
+        String url="";
+        if (result > 0) {
+            model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
+            model.addAttribute("url", "dboardView.ad"+"?dNum="+dboard.getdNum());
+            url = "common/errorDboard";
+        } else {
+            model.addAttribute("dNum", dboard.getdNum());
+            model.addAttribute("msg", "분양 여부 업데이트 실패");
+            model.addAttribute("url", "dboardView.ad"+"?dNum="+dboard.getdNum());
+            url = "common/errorDboard";
+        }
+        return url;
+    }
+	
 	
 }

@@ -363,7 +363,7 @@ function DreplySubmit(code) {
 
 //대댓글 추가
 function DreplyLevelSubmit(idx) {
-	if (document.getElementByName("dreContentLevel")[idx].value == "") {
+	if (document.getElementById("dreContentLevel").value == "") {
 		alert("내용을 입력해주세요");
 		return false;
 	}else

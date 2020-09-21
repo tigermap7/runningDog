@@ -125,7 +125,8 @@
 	<select id="selectOne" parameterType="_int" resultMap="resultDboard">
 		SELECT * FROM DBOARD WHERE D_NUM = #{ dNum }
 	</select>
-	
+	<!-- 검색한 글 번호중 현재 조회한 글 보다 큰 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
+	현재 번호를 리턴시킴 --> 
 	<select id="selectNext" parameterType="Dboard" resultType="int">
 		SELECT NVL(MIN(D_NUM),${dNum})
 		FROM DBOARD
@@ -143,7 +144,8 @@
 			AND D_CHECK = 'y' AND D_NUM > ${ dNum }
 		]]>
 	</select>
-	
+	<!-- 검색한 글 번호중 현재 조회한 글 보다 큰 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
+	현재 번호를 리턴시킴 --> 
 		<select id="selectAdminNext" parameterType="Dboard" resultType="int">
 		SELECT NVL(MIN(D_NUM),${dNum})
 		FROM DBOARD
@@ -157,8 +159,12 @@
 		<if test="dLocal != null and dLocal !=''">
 			AND D_LOCAL = #{dLocal}
 		</if>
+		<![CDATA[
+		AND D_NUM > ${ dNum }
+		]]>
 	</select>
-	
+	<!-- 검색한 글 번호중 현재 조회한 글 보다 작은 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
+	현재 번호를 리턴시킴 --> 
 	<select id="selectPrev" parameterType="Dboard" resultType="int">
 		SELECT NVL(MAX(D_NUM),${dNum})
 		FROM DBOARD
@@ -175,8 +181,11 @@
 		<![CDATA[
 		AND D_CHECK = 'y' AND D_NUM < ${ dNum }
 		]]>
+		
 	</select>
 	
+	<!-- 검색한 글 번호중 현재 조회한 글 보다 작은 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
+	현재 번호를 리턴시킴 --> 
 	<select id="selectAdminPrev" parameterType="Dboard" resultType="int">
 		SELECT NVL(MAX(D_NUM),${dNum})
 		FROM DBOARD
@@ -190,6 +199,10 @@
 		<if test="dLocal != null and dLocal !=''">
 			AND D_LOCAL = #{dLocal}
 		</if>
+		<![CDATA[
+		AND D_NUM < ${ dNum }
+		]]>
+		
 	</select>
 	
 	<insert id="insertDboard" parameterType="Dboard">

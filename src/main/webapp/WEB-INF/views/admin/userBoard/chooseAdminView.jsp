@@ -43,7 +43,7 @@ $(function() {
                 <dl>
                     <dt>
                         <div class="viewImg"><img src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }" id="imgControll" onclick="fnImgPop(this.src)" ></div>
-						<c:url var="dSuccess" value="dUpSuccess.do">
+						<c:url var="dSuccess" value="dUpSuccess.ad">
 							<c:param name="dNum" value="${ dboard.dNum }" />
 							<c:param name="dSuccess" value="${ dboard.dSuccess }" />
 						</c:url>
