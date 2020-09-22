@@ -57,17 +57,7 @@
                                 <col width="10%">
                             </colgroup>
                             <tbody id="chatList">
-                            	<%-- <c:forEach var="room" items="${list}">
-                                <tr onclick="javascript:location.href='moveChattingView.do?roomNo=${room.getRoomNo()}&receiver=${room.getNickname()}&receiverNo=${room.getMemberNo()}'">
-                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
-                                    <td class="title">
-                                        <h2>${room.getNickname()} <span><fmt:formatDate value="${room.getLastDate()}" pattern="YYYY.MM.dd"/>일 마지막 응답</span></h2>
-                                        <p>${room.getLastMessage()}</p>
-                                    </td>
-                                    <!-- <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td> -->
-                                    <td><span>5</span></td>
-                                </tr>
-                            	</c:forEach> --%>
+                            	
                             </tbody>
                         </table>
                         <!-- 페이징 -->
@@ -105,21 +95,24 @@
 						console.log("success : " + data);
 						var jsonStr = JSON.stringify(data);
 						var json = JSON.parse(jsonStr);
-						
-						var values = ""; 
-						for (var i = 0; i < json.list.length; i++) {
-							var chatUpdate = json.list[i];
-							values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + chatUpdate.roomNo 
-									+ "&receiver=" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") 
-									+ "&receiverNo=" + chatUpdate.receiverNo + "'\">"
-	                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
-	                            	+ "<td class=\"title\">"
-	                                + "<h2>" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") + "<span>" + chatUpdate.lastdate + "일 마지막 응답</span></h2>"
-	                                + "<p>" + decodeURIComponent(chatUpdate.lastmessage).replace(/\+/gi, " ") + "</p></td>";
-	                        values +=  chatUpdate.unread > 0 ? "<td><span>"+ chatUpdate.unread +"</span></td></tr>" : "<td></td></tr>";
-	                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
-						} // for in
-
+						console.log(json.list.length);
+						var values = "";
+						if (json.list.length != 0) {
+							for (var i = 0; i < json.list.length; i++) {
+								var chatUpdate = json.list[i];
+								values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + chatUpdate.roomNo 
+										+ "&receiver=" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") 
+										+ "&receiverNo=" + chatUpdate.receiverNo + "'\">"
+		                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
+		                            	+ "<td class=\"title\">"
+		                                + "<h2>" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") + "<span>" + chatUpdate.lastdate + "일 마지막 응답</span></h2>"
+		                                + "<p>" + decodeURIComponent(chatUpdate.lastmessage).replace(/\+/gi, " ") + "</p></td>";
+		                        values +=  chatUpdate.unread > 0 ? "<td><span>"+ chatUpdate.unread +"</span></td></tr>" : "<td></td></tr>";
+		                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
+							} // for in
+						} else {
+							values = "현재 참여한 채팅방이 없습니다";
+						}
 						$("#chatList").html(values);
 					},
 					error : function(jqXHR, textstatus, errorthrown) {
