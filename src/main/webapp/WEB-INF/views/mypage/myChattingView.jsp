@@ -180,6 +180,7 @@
 					printHTML += "</dt></dl>";
 		
 					$("#chatdata").append(printHTML);
+					$("#chatdata").scrollTop($("#chatdata")[0].scrollHeight);
 				} else{
 					var printHTML = "<dl class='user_left'>";
 					printHTML += "<dt><img src='resources/images/common/userBg.png'></dt>";
@@ -188,7 +189,6 @@
 					
 					$("#chatdata").append(printHTML);
 				}
-				$("#chatdata").scrollTop($("#chatdata")[0].scrollHeight);
 			}
 				console.log('chatting data: ' + data);
 			break;
