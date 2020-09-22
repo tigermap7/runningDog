@@ -12,19 +12,27 @@
 	        <img src="/runningdog/resources/images/memberImg/${savePath}${sessionScope.loginMember.renameProfile}"/>
 	        </c:if>
         </div>
+        <c:if test="${ !empty sessionScope.loginMember}">
         <h3>${sessionScope.loginMember.nickname} 님 </h3>
-        <p>회원번호 #${sessionScope.loginMember.uniqueNum}</p>
         <ul>
-            <li><b>게시글 12</b></li>
+            <li>회원번호<b> #${sessionScope.loginMember.uniqueNum}</b></li>
             <li><button type="button" onclick="location.href='logout.do'">로그아웃</button></li>
         </ul>
+        </c:if>
+        <c:if test="${ empty sessionScope.loginMember}">
+        <h3>로그인되어 있지 않은 상태입니다.</h3>
+        <ul>
+            <li>회원번호<b> #000</b></li>
+            <li><button type="button" onclick="location.href='login.do'">로그인</button></li>
+        </ul>
+        </c:if>
     </div>
     <ul class="leftGnb">
-	   	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
-	        <li><a href="admin.do">관리자페이지</a></li>
+	   	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y'  }">
+	        <li><a href="allMember.ad">관리자페이지</a></li>
 	       </c:if>
-	   	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
-	        <li><a href="mypage.do">나의 프로필</a></li>
+	   	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">
+	        <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
 	        <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
 	        <li><a href="moveChatting.do">나의 채팅</a></li>
 	        <li><a href="/WEB-INF/views/mypage/myComment.jsp">나의 댓글</a></li>

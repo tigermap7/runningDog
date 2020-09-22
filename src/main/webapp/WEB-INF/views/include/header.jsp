@@ -55,16 +55,16 @@
             
             
             <ul class="util">
-            	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
+            	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y' }">
+                <li><a class="hover_line01" href="memberAllList.ad">관리자페이지</a></li>
                 <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
-                <li><a class="hover_line01" href="admin.ad?userId=${loginMember.userId}">관리자페이지</a></li>
                 </c:if>
-            	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId ne 'admin@runningdog.com' }">
-                <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
+            	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">
                 <li><a class="hover_line01" href="mypage.do?userId=${loginMember.userId}">마이페이지</a></li>
+                <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
             	</c:if>
             	<c:if test="${ empty sessionScope.loginMember }">
-                <li><a class="hover_line01" href="login.do?userId=${loginMember.userId}">로그인</a></li>
+                <li><a class="hover_line01" href="login.do">로그인</a></li>
                 <li><a class="hover_line01" href="join.do">회원가입</a></li>
             	</c:if>
             </ul>
@@ -140,7 +140,7 @@
             <li>
                 <div><a href="#none">멤버</a></div>
                 <ul class="depth2">
-                    <li><a href="login.do?userId=${loginMember.userId}">로그인</a></li>
+                    <li><a href="login.do">로그인</a></li>
                     <li><a href="join.do">회원가입</a></li>
                     <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
                     <li><a href="/runningdog/views/mypage/myservice.jsp">나의 자원봉사</a></li>

@@ -1,71 +1,112 @@
 -- *****************************************************************************************
--- MEMBER Å×ÀÌºí »èÁ¦
+-- MEMBER ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 DROP TABLE MEMBER CASCADE CONSTRAINTS;
 
--- MEMBER Å×ÀÌºí »ý¼º
+-- MEMBER ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE MEMBER (
-    UNIQUE_NUM   NUMBER CONSTRAINT UNPK PRIMARY KEY NOT NULL,
-    USER_ID   VARCHAR2(30) NOT NULL UNIQUE,
+    UNIQUE_NUM	NUMBER CONSTRAINT UNPK PRIMARY KEY NOT NULL,
+    USER_ID	VARCHAR2(30) NOT NULL UNIQUE,
     USER_PWD VARCHAR2(60) NOT NULL,
-    NICKNAME   VARCHAR2(30) NOT NULL UNIQUE,
+    NICKNAME	VARCHAR2(30) NOT NULL UNIQUE,
     PHONE VARCHAR2(30) NOT NULL,
     ORIGIN_PROFILE VARCHAR2(200),
     RENAME_PROFILE VARCHAR2(200),
     JOIN_DATE DATE DEFAULT SYSDATE,
     LAST_ACCESS_DATE DATE DEFAULT SYSDATE,
     LOGIN_TYPE VARCHAR2(10),
+    ADMIN_CHK CHAR(1) DEFAULT 'N' NOT NULL,
+    CONSTRAINT ADMINCHK CHECK (ADMIN_CHK IN ('Y','N')),
     LOGIN_LIMIT CHAR(1) DEFAULT 'N' NOT NULL,
     CONSTRAINT L_LIMIT CHECK (LOGIN_LIMIT IN ('Y','N'))
 );
 
--- ½ÃÄö½º »èÁ¦
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 DROP SEQUENCE UNIQUE_NUM_SEQ;
--- ½ÃÄö½º ¼³Á¤
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE SEQUENCE UNIQUE_NUM_SEQ INCREMENT BY 1 START WITH 1 MINVALUE 1 NOMAXVALUE NOCYCLE NOCACHE;
 
--- MEMBER ÄÃ·³¸í
-COMMENT ON COLUMN MEMBER.UNIQUE_NUM IS 'È¸¿ø¹øÈ£';
-COMMENT ON COLUMN MEMBER.USER_ID IS '¾ÆÀÌµð(ÀÌ¸ÞÀÏ)';
-COMMENT ON COLUMN MEMBER.USER_PWD IS 'ºñ¹Ð¹øÈ£';
-COMMENT ON COLUMN MEMBER.NICKNAME IS '´Ð³×ÀÓ';
-COMMENT ON COLUMN MEMBER.PHONE IS 'ÇÚµåÆù¹øÈ£';
-COMMENT ON COLUMN MEMBER.ORIGIN_PROFILE IS 'ÇÁ·ÎÇÊÀÌ¹ÌÁö ¿øº»ÀÌ¸§';
-COMMENT ON COLUMN MEMBER.RENAME_PROFILE IS 'ÇÁ·ÎÇÊÀÌ¹ÌÁö »õÀÌ¸§';
-COMMENT ON COLUMN MEMBER.JOIN_DATE IS '°¡ÀÔÀÏ';
-COMMENT ON COLUMN MEMBER.LAST_ACCESS_DATE IS 'ÃÖ±ÙÁ¢¼ÓÀÏ';
-COMMENT ON COLUMN MEMBER.LOGIN_TYPE IS '·Î±×ÀÎÅ¸ÀÔ';
-COMMENT ON COLUMN MEMBER.LOGIN_LIMIT IS '·Î±×ÀÎÁ¦ÇÑ';
+-- MEMBER ï¿½Ã·ï¿½ï¿½ï¿½
+COMMENT ON COLUMN MEMBER.UNIQUE_NUM IS 'È¸ï¿½ï¿½ï¿½ï¿½È£';
+COMMENT ON COLUMN MEMBER.USER_ID IS 'ï¿½ï¿½ï¿½Ìµï¿½(ï¿½Ì¸ï¿½ï¿½ï¿½)';
+COMMENT ON COLUMN MEMBER.USER_PWD IS 'ï¿½ï¿½Ð¹ï¿½È£';
+COMMENT ON COLUMN MEMBER.NICKNAME IS 'ï¿½Ð³ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN MEMBER.PHONE IS 'ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½È£';
+COMMENT ON COLUMN MEMBER.ORIGIN_PROFILE IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½';
+COMMENT ON COLUMN MEMBER.RENAME_PROFILE IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½';
+COMMENT ON COLUMN MEMBER.JOIN_DATE IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN MEMBER.LAST_ACCESS_DATE IS 'ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN MEMBER.LOGIN_TYPE IS 'ï¿½Î±ï¿½ï¿½ï¿½Å¸ï¿½ï¿½';
+COMMENT ON COLUMN MEMBER.ADMIN_CHK IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN MEMBER.LOGIN_LIMIT IS 'ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
+COMMIT;
 
 -- MEMBER insert
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'admin@runningdog.com', '$2a$10$kyuLy.TfWFJqAhAhPeO8DeC4zA5VWYnD8TS5BVEg4ETtqq76x.5Fa', '°ü¸®ÀÚ', '010-1111-1111', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'spark1048@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '¸Û¹«ÀÌ', '010-3387-7583', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user01@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '¸»¶ûÄ«¿ì', '010-2222-2222', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user02@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'Çì½¬±×·¹ÀÌ', '010-3333-3333', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user03@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'Çì½¬ºê¶ó¿î', '010-4444-4444', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user04@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ÆÄ¶ó¿À', '010-5555-5555', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user05@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ÇÎÅ©¸ù¸ù', '010-6666-6666', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user06@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ÆÈ¶ûÄ«', '010-7777-8888', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user07@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '¹ãÅçÀÌ', '010-9999-9999', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user08@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '¹é°õÀÌ', '010-1010-1010', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user09@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '¾ç¿ËÀÌ', '010-2020-2020', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user10@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '¸Á¸Á', '010-3030-3030', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user11@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ÄÚÄÚ', '010-4040-4040', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user12@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'À¯ÀÌ', '010-5050-5050', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user13@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ÄÚ·Î·Î', '010-6060-6060', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user14@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '¼¾½Ã¾Æ', '010-7070-7070', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user15@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'Æ¼¾Æ¶ó', '010-8080-8080', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user16@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '¾ÆÀÌÀ¯', '010-9090-9090', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user17@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'º§ºª', '010-2121-2121', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user18@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '½Ä»§', '010-3131-3131', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user19@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '½Ã¹Ù°³', '010-4141-4141', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user20@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '³É³ÉÆÝÄ¡', '010-5151-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'admin@runningdog.com', '$2a$10$kyuLy.TfWFJqAhAhPeO8DeC4zA5VWYnD8TS5BVEg4ETtqq76x.5Fa', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '010-1111-1111', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/08/10', '20/08/10', null, 'Y', DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'spark1048@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Û¹ï¿½ï¿½ï¿½', '010-3387-7583', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/08/11', '20/08/11', null, 'Y', DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user01@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½', '010-2222-2222', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/08/12', '20/08/12', null,DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user02@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ì½¬ï¿½×·ï¿½ï¿½ï¿½', '010-3333-3333', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/08/13', '20/08/13', null,DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user03@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ì½¬ï¿½ï¿½ï¿½ï¿½', '010-4444-4444', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/01', '20/09/01', null,DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user04@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ä¶ï¿½ï¿½', '010-5555-5555', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/02', '20/09/02', null,DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user05@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½', '010-6666-6666', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/03', '20/09/03', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user06@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½È¶ï¿½Ä«', '010-7777-8888', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/04', '20/09/04', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user07@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '010-9999-9999', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/05', '20/09/05', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user08@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½', '010-1010-1010', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/06', '20/09/06', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user09@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½', '010-2020-2020', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/07', '20/09/07', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user10@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½', '010-3030-3030', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/08', '20/09/08', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user11@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½', '010-4040-4040', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/09', '20/09/08', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user12@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½', '010-5050-5050', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/10', '20/09/10', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user13@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ú·Î·ï¿½', '010-6060-6060', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/11', '20/09/11', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user14@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½Ã¾ï¿½', '010-7070-7070', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/11', '20/09/11', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user15@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'Æ¼ï¿½Æ¶ï¿½', '010-8080-8080', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/12', '20/09/12', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user16@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '010-9090-9090', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/12', '20/09/12', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user17@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½', '010-2121-2121', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/12', '20/09/12', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user18@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ä»ï¿½', '010-3131-3131', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/12', '20/09/12', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user19@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ã¹Ù°ï¿½', '010-4141-4141', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/12', '20/09/12', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user20@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½É³ï¿½ï¿½ï¿½Ä¡', '010-5151-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user21@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'Å©ï¿½ï¿½', '010-6161-6161', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user22@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ú¿ï¿½', '010-7171-7171', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user23@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'Å°Ä«', '010-8181-8181', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user24@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½Ä«ï¿½ï¿½', '010-9191-9191', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user25@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ö¹ï¿½', '010-1212-1212', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user26@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½', '010-1313-1313', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user27@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '010-1414-1414', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user28@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½', '010-1515-1515', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user29@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ý¿ä½ºï¿½ï¿½', '010-1616-1616', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user30@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ä¸¶', '010-1717-1717', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/13', '20/09/13', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user31@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½Ì¿ï¿½', '010-1818-1818', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user32@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½', '010-1919-1919', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user33@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½', '010-5151-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user34@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ù³ï¿½ï¿½ï¿½', '010-5152-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user35@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ ï¿½ï¿½ï¿½Ö´ï¿½', '010-5153-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user36@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '010-5154-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user37@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '010-5155-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user38@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½', '010-5156-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user39@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½Å»ï¿½ï¿½', '010-5157-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user40@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½Å»ï¿½ï¿½ï¿½ï¿½', '010-5158-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user41@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½Ô¾ï¿½', '010-5159-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user42@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½×·ï¿½ï¿½Ù°ï¿½', '010-5111-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', '20/09/14', '20/09/14', null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user43@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ü²ï¿½ï¿½ï¿½', '010-5121-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user44@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ü²ÜµÇ¸ï¿½', '010-5131-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user45@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï½ºï¿½ï¿½ï¿½ï¿½', '010-5141-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user46@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï½ºï¿½å¿£', '010-5161-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user47@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '010-5171-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user48@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½', '010-5181-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user49@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½îµ¿ï¿½Ò±ï¿½', '010-5191-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user50@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½Ï¾ï¿½Ä§', '010-5251-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user51@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ï¾î³ªï¿½ï¿½', '010-5351-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user52@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½', '010-5451-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user53@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½', '010-5551-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user54@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½', '010-5651-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user55@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½', '010-5751-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user56@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½', '010-5851-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
+INSERT INTO MEMBER VALUES(UNIQUE_NUM_SEQ.NEXTVAL, 'user57@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¼ï¿½', '010-5951-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg', DEFAULT, DEFAULT, null, DEFAULT, DEFAULT);
 
 
--- LEAVE_MEMBER Å×ÀÌºí »èÁ¦
+-- LEAVE_MEMBER ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 DROP TABLE LEAVE_MEMBER CASCADE CONSTRAINTS;
 
--- LEAVE_MEMBER Å×ÀÌºí »ý¼º
+-- LEAVE_MEMBER ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE LEAVE_MEMBER (
     L_UNIQUE_NUM NUMBER NOT NULL,
     L_USER_ID VARCHAR2(30) NOT NULL,
@@ -77,19 +118,19 @@ CREATE TABLE LEAVE_MEMBER (
     L_LOGIN_TYPE VARCHAR2(10)
 );
 
--- LEAVE_MEMBER ÄÃ·³¸í
-COMMENT ON COLUMN LEAVE_MEMBER.L_UNIQUE_NUM IS 'È¸¿ø¹øÈ£';
-COMMENT ON COLUMN LEAVE_MEMBER.L_USER_ID IS '¾ÆÀÌµð(ÀÌ¸ÞÀÏ)';
-COMMENT ON COLUMN LEAVE_MEMBER.L_USER_PWD IS 'ºñ¹Ð¹øÈ£';
-COMMENT ON COLUMN LEAVE_MEMBER.L_NICKNAME IS '´Ð³×ÀÓ';
-COMMENT ON COLUMN LEAVE_MEMBER.L_PHONE IS 'ÇÚµåÆù¹øÈ£';
-COMMENT ON COLUMN LEAVE_MEMBER.L_JOIN_DATE IS '°¡ÀÔÀÏ';
-COMMENT ON COLUMN LEAVE_MEMBER.L_LEAVE_DATE IS 'Å»ÅðÀÏ';
-COMMENT ON COLUMN LEAVE_MEMBER.L_LOGIN_TYPE IS '·Î±×ÀÎÅ¸ÀÔ';
+-- LEAVE_MEMBER ï¿½Ã·ï¿½ï¿½ï¿½
+COMMENT ON COLUMN LEAVE_MEMBER.L_UNIQUE_NUM IS 'È¸ï¿½ï¿½ï¿½ï¿½È£';
+COMMENT ON COLUMN LEAVE_MEMBER.L_USER_ID IS 'ï¿½ï¿½ï¿½Ìµï¿½(ï¿½Ì¸ï¿½ï¿½ï¿½)';
+COMMENT ON COLUMN LEAVE_MEMBER.L_USER_PWD IS 'ï¿½ï¿½Ð¹ï¿½È£';
+COMMENT ON COLUMN LEAVE_MEMBER.L_NICKNAME IS 'ï¿½Ð³ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN LEAVE_MEMBER.L_PHONE IS 'ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½È£';
+COMMENT ON COLUMN LEAVE_MEMBER.L_JOIN_DATE IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN LEAVE_MEMBER.L_LEAVE_DATE IS 'Å»ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN LEAVE_MEMBER.L_LOGIN_TYPE IS 'ï¿½Î±ï¿½ï¿½ï¿½Å¸ï¿½ï¿½';
 
 
 -- LEAVE_MEMBER insert
-INSERT INTO LEAVE_MEMBER VALUES(3, 'test01@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ÇÑ³²ÀÚ', '010-9090-9090', DEFAULT, DEFAULT, '³×ÀÌ¹ö');
+INSERT INTO LEAVE_MEMBER VALUES(3, 'test01@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', 'ï¿½Ñ³ï¿½ï¿½ï¿½', '010-9090-9090', DEFAULT, DEFAULT, 'ï¿½ï¿½ï¿½Ì¹ï¿½');
 
 COMMIT;
 -- *****************************************************************************************
@@ -136,23 +177,23 @@ CREATE TABLE "MESSAGE" (
     "READCHECK" CHAR(1) DEFAULT 'N' NOT NULL
 );
 
-COMMENT ON COLUMN "CHATROOM"."ROOMNO" IS 'Ã¤ÆÃ¹æ ¹øÈ£';
+COMMENT ON COLUMN "CHATROOM"."ROOMNO" IS 'Ã¤ï¿½Ã¹ï¿½ ï¿½ï¿½È£';
 
-COMMENT ON COLUMN "CHATROOM"."MEMBERNO" IS 'Ã¤ÆÃ¹æ ¸â¹ö';
+COMMENT ON COLUMN "CHATROOM"."MEMBERNO" IS 'Ã¤ï¿½Ã¹ï¿½ ï¿½ï¿½ï¿½';
 
-COMMENT ON COLUMN "CHATROOM"."LASTDATE" IS '¸¶Áö¸· ¼öÁ¤ ³¯Â¥';
+COMMENT ON COLUMN "CHATROOM"."LASTDATE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥';
 
-COMMENT ON COLUMN "MESSAGE"."MESSAGENO" IS '¸Þ¼¼Áö ¹øÈ£';
+COMMENT ON COLUMN "MESSAGE"."MESSAGENO" IS 'ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
 
-COMMENT ON COLUMN "MESSAGE"."ROOMNO" IS 'Ã¤ÆÃ¹æ ¹øÈ£';
+COMMENT ON COLUMN "MESSAGE"."ROOMNO" IS 'Ã¤ï¿½Ã¹ï¿½ ï¿½ï¿½È£';
 
-COMMENT ON COLUMN "MESSAGE"."SENDER" IS '¼Û½ÅÀÚ';
+COMMENT ON COLUMN "MESSAGE"."SENDER" IS 'ï¿½Û½ï¿½ï¿½ï¿½';
 
-COMMENT ON COLUMN "MESSAGE"."RECEIVER" IS '¼ö½ÅÀÚ';
+COMMENT ON COLUMN "MESSAGE"."RECEIVER" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
-COMMENT ON COLUMN "MESSAGE"."SENDTIME" IS '¸Þ¼¼Áö Àü¼Û ½Ã°¢';
+COMMENT ON COLUMN "MESSAGE"."SENDTIME" IS 'ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½';
 
-COMMENT ON COLUMN "MESSAGE"."CONTENT" IS '¸Þ¼¼Áö ³»¿ë';
+COMMENT ON COLUMN "MESSAGE"."CONTENT" IS 'ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
 
 ALTER TABLE "CHATROOM" ADD CONSTRAINT "PK_CHATROOM" PRIMARY KEY (
    "ROOMNO",
@@ -177,10 +218,10 @@ COMMIT;
 
 
 -- *****************************************************************************************
--- NOTICE Å×ÀÌºí »èÁ¦
+-- NOTICE ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 DROP TABLE NOTICE CASCADE CONSTRAINTS;
 
--- NOTICE Å×ÀÌºí »ý¼º
+-- NOTICE ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE NOTICE (
    NOTICE_NO   NUMBER      NOT NULL,
    NOTICE_WRITER   VARCHAR2(30)      NOT NULL,
@@ -196,83 +237,94 @@ CREATE TABLE NOTICE (
    NOTICE_ORIGINAL_FILENAME3    VARCHAR2(260)      NULL,
    NOTICE_RENAME_FILENAME3   VARCHAR2(50)      NULL
 );
--- PK ¼³Á¤
+-- PK ï¿½ï¿½ï¿½ï¿½
 ALTER TABLE NOTICE ADD CONSTRAINT PK_NOTICE_NO PRIMARY KEY(NOTICE_NO);
 -- ALTER TABLE NOTICE DROP CONSTRAINT PK_NOTICE_NO;
 
--- NOTICE ÄÚ¸àÆ®
-COMMENT ON COLUMN NOTICE.NOTICE_NO IS '±Û¹øÈ£';
-COMMENT ON COLUMN NOTICE.NOTICE_WRITER IS 'ÀÛ¼ºÀÚ´Ð³×ÀÓ';
-COMMENT ON COLUMN NOTICE.NOTICE_TITLE IS 'Á¦¸ñ';
-COMMENT ON COLUMN NOTICE.NOTICE_CONTENT IS '³»¿ë';
-COMMENT ON COLUMN NOTICE.NOTICE_DATE IS 'ÀÛ¼º³¯Â¥';
-COMMENT ON COLUMN NOTICE.NOTICE_READCOUNT IS 'Á¶È¸¼ö';
-COMMENT ON COLUMN NOTICE.NOTICE_STATE IS '¾Ë¸²¼³Á¤';
-COMMENT ON COLUMN NOTICE.NOTICE_ORIGINAL_FILENAME1 IS 'Ã·ºÎÆÄÀÏ±âÁ¸¸í1';
-COMMENT ON COLUMN NOTICE.NOTICE_RENAME_FILENAME1 IS 'Ã·ºÎÆÄÀÏº¯°æ¸í1';
-COMMENT ON COLUMN NOTICE.NOTICE_ORIGINAL_FILENAME2 IS 'Ã·ºÎÆÄÀÏ±âÁ¸¸í2';
-COMMENT ON COLUMN NOTICE.NOTICE_RENAME_FILENAME2 IS 'Ã·ºÎÆÄÀÏº¯°æ¸í2';
-COMMENT ON COLUMN NOTICE.NOTICE_ORIGINAL_FILENAME3 IS 'Ã·ºÎÆÄÀÏ±âÁ¸¸í3';
-COMMENT ON COLUMN NOTICE.NOTICE_RENAME_FILENAME3 IS 'Ã·ºÎÆÄÀÏº¯°æ¸í3';
+-- NOTICE ï¿½Ú¸ï¿½Æ®
+COMMENT ON COLUMN NOTICE.NOTICE_NO IS 'ï¿½Û¹ï¿½È£';
+COMMENT ON COLUMN NOTICE.NOTICE_WRITER IS 'ï¿½Û¼ï¿½ï¿½Ú´Ð³ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN NOTICE.NOTICE_TITLE IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN NOTICE.NOTICE_CONTENT IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN NOTICE.NOTICE_DATE IS 'ï¿½Û¼ï¿½ï¿½ï¿½Â¥';
+COMMENT ON COLUMN NOTICE.NOTICE_READCOUNT IS 'ï¿½ï¿½È¸ï¿½ï¿½';
+COMMENT ON COLUMN NOTICE.NOTICE_STATE IS 'ï¿½Ë¸ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN NOTICE.NOTICE_ORIGINAL_FILENAME1 IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½1';
+COMMENT ON COLUMN NOTICE.NOTICE_RENAME_FILENAME1 IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½1';
+COMMENT ON COLUMN NOTICE.NOTICE_ORIGINAL_FILENAME2 IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½2';
+COMMENT ON COLUMN NOTICE.NOTICE_RENAME_FILENAME2 IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½2';
+COMMENT ON COLUMN NOTICE.NOTICE_ORIGINAL_FILENAME3 IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½3';
+COMMENT ON COLUMN NOTICE.NOTICE_RENAME_FILENAME3 IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½3';
 
--- ½ÃÄö½º »èÁ¦
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 DROP SEQUENCE NOTICE_NO_SEQ;
--- ½ÃÄö½º ¼³Á¤
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE SEQUENCE NOTICE_NO_SEQ INCREMENT BY 1 START WITH 1 MINVALUE 1 NOMAXVALUE NOCYCLE NOCACHE;
 
 
 -- NOTICE TEST INSERT
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', 'Ã¹¹øÂ° °øÁö»çÇ×', 'Ã¹¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', sysdate, default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', sysdate, default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', 'µÎ¹øÂ° °øÁö»çÇ×', 'µÎ¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', sysdate, default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', sysdate, default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '¼¼¹øÂ° °øÁö»çÇ×', 'Ã¹¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', '20200701', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', '20200701', default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '³×¹øÂ° °øÁö»çÇ×', 'µÎ¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', '20200801', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½×¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', '20200801', default);
 
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount, NOTICE_STATE)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '´Ù¼¸¹øÂ° °øÁö»çÇ×', '°øÁö»çÇ× ³»¿ë~ ºí¶óºí¶ó', sysdate, default, 'checked');
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Ù¼ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½~ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', sysdate, default, 'checked');
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount, NOTICE_STATE)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '¿©¼¸¹øÂ° °øÁö»çÇ×', '°øÁö»çÇ× ³»¿ë~ ºí¶óºí¶ó', sysdate, default, 'checked');
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½~ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', sysdate, default, 'checked');
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', 'ÀÏ°ö¹øÂ° °øÁö»çÇ×', '°øÁö»çÇ× ³»¿ë~ ºí¶óºí¶ó', '20200809', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Ï°ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½~ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '20200809', default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '¿©´ü¹øÂ° °øÁö»çÇ×', '°øÁö»çÇ× ³»¿ë~ ºí¶óºí¶ó', '20200808', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½~ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '20200808', default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '¿©´ü¹øÂ° °øÁö»çÇ×', '°øÁö»çÇ× ³»¿ë~ ºí¶óºí¶ó', '20200810', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½~ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '20200810', default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', 'Ã¹¹øÂ° °øÁö»çÇ×', 'Ã¹¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', sysdate, default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', sysdate, default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', 'µÎ¹øÂ° °øÁö»çÇ×', 'µÎ¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', sysdate, default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', sysdate, default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '¼¼¹øÂ° °øÁö»çÇ×', 'Ã¹¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', '20200701', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', '20200701', default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '³×¹øÂ° °øÁö»çÇ×', 'µÎ¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', '20200801', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½×¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', '20200801', default);
 
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', 'Ã¹¹øÂ° °øÁö»çÇ×', 'Ã¹¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', sysdate, default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', sysdate, default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', 'µÎ¹øÂ° °øÁö»çÇ×', 'µÎ¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', sysdate, default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', sysdate, default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '¼¼¹øÂ° °øÁö»çÇ×', 'Ã¹¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', '20200701', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', '20200701', default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '³×¹øÂ° °øÁö»çÇ×', 'µÎ¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', '20200801', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½×¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', '20200801', default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '¼¼¹øÂ° ³»¿ë °øÁö»çÇ×', 'Ã¹¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', '20200701', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', '20200701', default);
 INSERT INTO NOTICE(NOTICE_NO, NOTICE_WRITER, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, notice_readcount)
-VALUES(NOTICE_NO_SEQ.nextval, '°ü¸®ÀÚ', '³×¹øÂ° ³»¿ë °øÁö»çÇ×', 'µÎ¹øÂ° °øÁö»çÇ× ÀÔ´Ï´Ù', '20200801', default);
+VALUES(NOTICE_NO_SEQ.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½×¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½', '20200801', default);
 
--- FK ¼³Á¤
-ALTER TABLE NOTICE ADD CONSTRAINT FK_MEMBER_TO_NOTICE_WRITER FOREIGN KEY(NOTICE_WRITER) REFERENCES MEMBER(NICKNAME); -- ÀÛ¼ºÀÚ ´Ð³×ÀÓÀ¸·Î FK ¼³Á¤
+-- FK ï¿½ï¿½ï¿½ï¿½
+ALTER TABLE NOTICE ADD CONSTRAINT FK_MEMBER_TO_NOTICE_WRITER FOREIGN KEY(NOTICE_WRITER) REFERENCES MEMBER(NICKNAME); -- ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ FK ï¿½ï¿½ï¿½ï¿½
 
 COMMIT;
+-- *****************************************************************************************
+
+-- Å»ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+--INSERT INTO LEAVE_MEMBER (L_USER_ID, L_USER_PWD, L_NICKNAME, L_UNIQUE_NUM, L_PHONE, L_JOIN_DATE, L_LOGIN_TYPE)
+--SELECT USER_ID, USER_PWD, NICKNAME, UNIQUE_NUM, PHONE, JOIN_DATE, LOGIN_TYPE
+--FROM MEMBER
+--WHERE UNIQUE_NUM = 2;
+--
+---- Å»ï¿½ï¿½Ã³ï¿½ï¿½
+--DELETE FROM MEMBER WHERE UNIQUE_NUM = 2;
+--
+--COMMIT;
 
 
-
---DBOARD »èÁ¦
+--DBOARD ï¿½ï¿½ï¿½ï¿½
 DROP TABLE DBOARD CASCADE CONSTRAINTS;
---DBOARD »ý¼º
+--DBOARD ï¿½ï¿½ï¿½ï¿½
 
 CREATE TABLE DBOARD (
 	D_NUM	NUMBER	NOT NULL,
@@ -299,12 +351,12 @@ CREATE TABLE DBOARD (
 	LIST_IMAGE	VARCHAR2(50)	NULL
 );
 
--- ½ÃÄö½º »èÁ¦
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 DROP SEQUENCE DBOARD_NUM_SEQ;
--- ½ÃÄö½º ¼³Á¤
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE SEQUENCE DBOARD_NUM_SEQ INCREMENT BY 1 START WITH 1 MINVALUE 1 NOMAXVALUE NOCYCLE NOCACHE;
 
--- ±ÇÇÑ ¼³Á¤
+-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 ALTER TABLE DBOARD ADD CONSTRAINT D_CHECKD CHECK (D_CHECK IN ('y', 'n'));
 ALTER TABLE DBOARD ADD CONSTRAINT D_CHECKSUCCESS CHECK (D_SUCCESS IN ('y', 'n'));
 ALTER TABLE DBOARD ADD CONSTRAINT PK_DBOARD PRIMARY KEY (D_NUM);
@@ -315,37 +367,37 @@ REFERENCES MEMBER (UNIQUE_NUM);
 ALTER TABLE DBOARD ADD CONSTRAINT FK_MEMBER_TO_DBOARD_3 FOREIGN KEY (D_WRITER)
 REFERENCES MEMBER (NICKNAME);
 
---DBOARD ÄÃ·³¸í
-COMMENT ON COLUMN DBOARD.D_NUM IS '±Û¹øÈ£';
-COMMENT ON COLUMN DBOARD.USER_ID IS 'À¯ÀúID';
-COMMENT ON COLUMN DBOARD.UNIQUE_NUM IS 'À¯Àú¹øÈ£';
-COMMENT ON COLUMN DBOARD.D_WRITER IS 'ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN DBOARD.D_TITLE IS '±ÛÁ¦¸ñ';
-COMMENT ON COLUMN DBOARD.D_CONTENT IS '»ó¼¼¼³¸í';
-COMMENT ON COLUMN DBOARD.D_FIND_DATE IS '¹ß°ß³¯Â¥';
-COMMENT ON COLUMN DBOARD.D_FIND_LOCAL IS '¹ß°ßÀå¼Ò';
-COMMENT ON COLUMN DBOARD.D_GENDER IS '¼ºº°';
-COMMENT ON COLUMN DBOARD.D_CATEGORY IS '¹Ý·Áµ¿¹°Á¾·ù';
-COMMENT ON COLUMN DBOARD.D_LOCAL IS 'Áö¿ª½Ã¹øÈ£';
-COMMENT ON COLUMN DBOARD.D_PHONE IS '¿¬¶ôÃ³';
+--DBOARD ï¿½Ã·ï¿½ï¿½ï¿½
+COMMENT ON COLUMN DBOARD.D_NUM IS 'ï¿½Û¹ï¿½È£';
+COMMENT ON COLUMN DBOARD.USER_ID IS 'ï¿½ï¿½ï¿½ï¿½ID';
+COMMENT ON COLUMN DBOARD.UNIQUE_NUM IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£';
+COMMENT ON COLUMN DBOARD.D_WRITER IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_TITLE IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_CONTENT IS 'ï¿½ó¼¼¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_FIND_DATE IS 'ï¿½ß°ß³ï¿½Â¥';
+COMMENT ON COLUMN DBOARD.D_FIND_LOCAL IS 'ï¿½ß°ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_GENDER IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_CATEGORY IS 'ï¿½Ý·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_LOCAL IS 'ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹ï¿½È£';
+COMMENT ON COLUMN DBOARD.D_PHONE IS 'ï¿½ï¿½ï¿½ï¿½Ã³';
 COMMENT ON COLUMN DBOARD.D_POINT IS 'Æ¯Â¡';
-COMMENT ON COLUMN DBOARD.D_DATE IS 'ÀÛ¼ºÀÏÀÚ';
-COMMENT ON COLUMN DBOARD.D_MDATE IS '¼öÁ¤ÀÏÀÚ';
-COMMENT ON COLUMN DBOARD.D_COUNT IS 'Á¶È¸¼ö';
-COMMENT ON COLUMN DBOARD.MAP_X IS '°æµµX';
-COMMENT ON COLUMN DBOARD.MAP_Y IS 'À§µµY';
-COMMENT ON COLUMN DBOARD.D_CHECK IS '°Ô½Ã¹°Ç¥½Ã¿©ºÎ';
-COMMENT ON COLUMN DBOARD.D_SUCCESS IS 'ºÐ¾ç¿©ºÎ';
-COMMENT ON COLUMN DBOARD.VIEW_IMAGE IS 'VIEWÀÌ¹ÌÁö';
-COMMENT ON COLUMN DBOARD.LIST_IMAGE IS 'LISTÀÌ¹ÌÁö';
+COMMENT ON COLUMN DBOARD.D_DATE IS 'ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_MDATE IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_COUNT IS 'ï¿½ï¿½È¸ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.MAP_X IS 'ï¿½æµµX';
+COMMENT ON COLUMN DBOARD.MAP_Y IS 'ï¿½ï¿½ï¿½ï¿½Y';
+COMMENT ON COLUMN DBOARD.D_CHECK IS 'ï¿½Ô½Ã¹ï¿½Ç¥ï¿½Ã¿ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.D_SUCCESS IS 'ï¿½Ð¾ç¿©ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.VIEW_IMAGE IS 'VIEWï¿½Ì¹ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DBOARD.LIST_IMAGE IS 'LISTï¿½Ì¹ï¿½ï¿½ï¿½';
 
 COMMIT;
 
 
---DREPLY »èÁ¦
+--DREPLY ï¿½ï¿½ï¿½ï¿½
 DROP TABLE DREPLY CASCADE CONSTRAINTS;
 
---DREPLY Å×ÀÌºí »ý¼º
+--DREPLY ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE TABLE DREPLY (
 	DRE_NUM	NUMBER	NOT NULL,
 	D_NUM	NUMBER	NOT NULL,
@@ -359,21 +411,21 @@ CREATE TABLE DREPLY (
 );
 
 
--- ½ÃÄö½º »èÁ¦
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 DROP SEQUENCE DRE_NUM_SEQ;
--- ½ÃÄö½º ¼³Á¤
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 CREATE SEQUENCE DRE_NUM_SEQ INCREMENT BY 1 START WITH 1 MINVALUE 1 NOMAXVALUE NOCYCLE NOCACHE;
 
---DREPLY ÄÃ·³¸í
-COMMENT ON COLUMN DREPLY.DRE_NUM IS '´ñ±Û¹øÈ£';
-COMMENT ON COLUMN DREPLY.D_NUM IS '°Ô½Ã±Û¹øÈ£';
-COMMENT ON COLUMN DREPLY.DRE_WRITER IS '´ñ±ÛÀÛ¼ºÀÚ';
-COMMENT ON COLUMN DREPLY.DRE_CONTENT IS '´ñ±Û³»¿ë';
-COMMENT ON COLUMN DREPLY.DRE_DATE IS '´ñ±ÛÀÛ¼ºÀÏÀÚ';
-COMMENT ON COLUMN DREPLY.DRE_MDATE IS '´ñ±Û¼öÁ¤ÀÏÀÚ';
-COMMENT ON COLUMN DREPLY.DRE_PARENTS IS 'ºÎ¸ð´ñ±Û¹øÈ£';
-COMMENT ON COLUMN DREPLY.DRE_LEVEL IS '´ñ±Û·¹º§';
-COMMENT ON COLUMN DREPLY.UNIQUE_NUM IS 'È¸¿ø¹øÈ£';
+--DREPLY ï¿½Ã·ï¿½ï¿½ï¿½
+COMMENT ON COLUMN DREPLY.DRE_NUM IS 'ï¿½ï¿½Û¹ï¿½È£';
+COMMENT ON COLUMN DREPLY.D_NUM IS 'ï¿½Ô½Ã±Û¹ï¿½È£';
+COMMENT ON COLUMN DREPLY.DRE_WRITER IS 'ï¿½ï¿½ï¿½ï¿½Û¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DREPLY.DRE_CONTENT IS 'ï¿½ï¿½Û³ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DREPLY.DRE_DATE IS 'ï¿½ï¿½ï¿½ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DREPLY.DRE_MDATE IS 'ï¿½ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DREPLY.DRE_PARENTS IS 'ï¿½Î¸ï¿½ï¿½Û¹ï¿½È£';
+COMMENT ON COLUMN DREPLY.DRE_LEVEL IS 'ï¿½ï¿½Û·ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN DREPLY.UNIQUE_NUM IS 'È¸ï¿½ï¿½ï¿½ï¿½È£';
 
 ALTER TABLE DREPLY ADD CONSTRAINT PK_DREPLY PRIMARY KEY (DRE_NUM);
 ALTER TABLE DREPLY ADD CONSTRAINT FK_DBOARD_TO_DREPLY_1 FOREIGN KEY (D_NUM)
@@ -385,65 +437,65 @@ REFERENCES MEMBER (NICKNAME);
 COMMIT;
 
 
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>','2020-09-11','¼­¿ï Á¾·Î±¸ ¼¼Á¾·Î 1-1','m','c','3','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020.09.14 16:33:23','2020.09.14 16:33:23',5,'126.97500284627557','37.58081593581446','y','n','20200914163323v.jpg','20200914163323l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>','2020-09-08','¼­¿ï ¿ë»ê±¸ ÇÑ³²µ¿ »ê 10-16','m','d','0','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020.09.14 16:34:00','2020.09.14 16:34:00',0,'126.99818950525241','37.54391374843221','y','n','20200914163359v.jpg','20200914163359l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','°¨±Ö µå¼Å º¸¼Ì¼ö²Î?<br><br>ÁÖÀÎ »¡¸® Ã£¾ÆÁÖ¼Ì¼ö²Î?','2020-09-11','ÀüºÏ Á¤À¾½Ã »ê¿Ü¸é ¿À°ø¸® 1803','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 16:36:41','2020.09.14 16:36:41',0,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','°¨±Ö µå¼Å º¸¼Ì¼ö²Î?<br><br>ÁÖÀÎ »¡¸® Ã£¾ÆÁÖ¼Ì¼ö²Î?','2020-09-11','ÀüºÏ Á¤À¾½Ã »ê¿Ü¸é ¿À°ø¸® 1803','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 16:36:41','2020.09.14 16:36:41',1,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>','2020-09-09','¼­¿ï ¼­´ë¹®±¸ ºÏ¾ÆÇöµ¿ 198-8','f','e','15','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 17:07:10','2020.09.14 17:07:10',3,'126.95182897226876','37.56235637432702','y','n','20200914170710v.jpg','20200914170710l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-08','¼­¿ï Áß±¸ ½Å´çµ¿ 393-17','m','d','0','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 17:46:43','2020-09-14 17:46:43',0,'127.00977908233565','37.56236579632654','y','n','20200914174642v.jpg','20200914174642l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-10','¼­¿ï ¼ºµ¿±¸ ÇÏ¿Õ½Ê¸®µ¿ 966-13','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:15:31','2020-09-14 18:15:31',0,'127.03295912707527','37.56236160086959','n','n','20200914181530v.jpg','20200914181530l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-08','¼­¿ï ±¤Áø±¸ ÀÚ¾çµ¿ 613-8','m','d','1','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:20:39','2020-09-14 18:20:39',0,'127.07928986490187','37.53466090322994','y','n','20200914182038v.jpg','20200914182038l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>','2020-09-09','Á¦ÁÖÆ¯º°ÀÚÄ¡µµ ¼­±ÍÆ÷½Ã »ö´Þµ¿ »ê 1-3','f','e','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:22:43','2020-09-14 18:22:43',6,'126.42639896341197','33.32471338278109','y','n','20200914182242v.jpg','20200914182242l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹èÁ¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ°æ','2020-09-09','ÃæºÏ Ã»ÁÖ½Ã Èï´ö±¸ ¿À¼ÛÀ¾ »óÁ¤¸® »ê 60','f','e','15','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:24:16','2020-09-14 18:24:16',7,'127.33030667128493','36.64844332313082','y','n','20200914182416v.jpg','20200914182416l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>','2020-09-09','¼­¿ï µ¿ÀÛ±¸ º»µ¿ 477','m','c','14','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-14 18:25:48','2020-09-14 18:25:48',8,'126.95185864003885','37.5162251846861','y','n','20200914182548v.jpg','20200914182548l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-09','¼­¿ï Á¾·Î±¸ Ã¢½Åµ¿ 442-1','f','c','8','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-14 18:30:54','2020-09-14 18:30:54',9,'127.00978028854118','37.571591994014','y','n','20200914183052v.jpg','20200914183052l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-09','¼­¿ï ¼ººÏ±¸ ¾È¾Ïµ¿5°¡ 1-2','m','d','5','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:32:22','2020-09-14 19:29:39',0,'127.03297132871401','37.59004014639429','y','n','20200914183222v.jpg','20200914183222l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','°Ô½Ã¹°À» °è¼Ó ¿Ã¸®°í ÀÖ½À´Ï´Ù<br><br>¾î¶»°Ô ÇØº¼±î¿ä','2020-09-02','°æ±â ±¸¸®½Ã ¼öÅÃµ¿ 549-6','m','d','13','010-6362-9392','º´°É·È³ªº½','2020-09-14 18:35:36','2020-09-14 19:28:43',10,'127.14893262962325','37.59917693892422','y','n','20200914183535v.jpg','20200914183535l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>','2020-09-11','¼­¿ï Á¾·Î±¸ ¼¼Á¾·Î 1-1','m','c','3','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020.09.14 16:33:23','2020.09.14 16:33:23',0,'126.97500284627557','37.58081593581446','y','n','20200914163323v.jpg','20200914163323l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>','2020-09-08','¼­¿ï ¿ë»ê±¸ ÇÑ³²µ¿ »ê 10-16','m','d','0','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020.09.14 16:34:00','2020.09.14 16:34:00',0,'126.99818950525241','37.54391374843221','y','n','20200914163359v.jpg','20200914163359l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','°¨±Ö µå¼Å º¸¼Ì¼ö²Î?<br><br>ÁÖÀÎ »¡¸® Ã£¾ÆÁÖ¼Ì¼ö²Î?','2020-09-11','ÀüºÏ Á¤À¾½Ã »ê¿Ü¸é ¿À°ø¸® 1803','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 16:36:41','2020.09.14 16:36:41',11,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>','2020-09-09','¼­¿ï ¼­´ë¹®±¸ ºÏ¾ÆÇöµ¿ 198-8','f','e','15','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 17:07:10','2020.09.14 17:07:10',13,'126.95182897226876','37.56235637432702','y','n','20200914170710v.jpg','20200914170710l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-08','¼­¿ï Áß±¸ ½Å´çµ¿ 393-17','m','d','0','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 17:46:43','2020-09-14 17:46:43',0,'127.00977908233565','37.56236579632654','y','n','20200914174642v.jpg','20200914174642l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-10','¼­¿ï ¼ºµ¿±¸ ÇÏ¿Õ½Ê¸®µ¿ 966-13','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:15:31','2020-09-14 18:15:31',0,'127.03295912707527','37.56236160086959','n','n','20200914181530v.jpg','20200914181530l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-08','¼­¿ï ±¤Áø±¸ ÀÚ¾çµ¿ 613-8','m','d','1','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:20:39','2020-09-14 18:20:39',0,'127.07928986490187','37.53466090322994','y','n','20200914182038v.jpg','20200914182038l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>','2020-09-09','Á¦ÁÖÆ¯º°ÀÚÄ¡µµ ¼­±ÍÆ÷½Ã »ö´Þµ¿ »ê 1-3','f','e','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:22:43','2020-09-14 18:22:43',14,'126.42639896341197','33.32471338278109','y','n','20200914182242v.jpg','20200914182242l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹èÁ¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ°æ','2020-09-09','ÃæºÏ Ã»ÁÖ½Ã Èï´ö±¸ ¿À¼ÛÀ¾ »óÁ¤¸® »ê 60','f','e','15','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:24:16','2020-09-14 18:24:16',15,'127.33030667128493','36.64844332313082','y','n','20200914182416v.jpg','20200914182416l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>','2020-09-09','¼­¿ï µ¿ÀÛ±¸ º»µ¿ 477','m','c','14','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-14 18:25:48','2020-09-14 18:25:48',0,'126.95185864003885','37.5162251846861','y','n','20200914182548v.jpg','20200914182548l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-09','¼­¿ï Á¾·Î±¸ Ã¢½Åµ¿ 442-1','f','c','8','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-14 18:30:54','2020-09-14 18:30:54',0,'127.00978028854118','37.571591994014','y','n','20200914183052v.jpg','20200914183052l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-09','¼­¿ï ¼ººÏ±¸ ¾È¾Ïµ¿5°¡ 1-2','m','d','5','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:32:22','2020-09-14 19:29:39',0,'127.03297132871401','37.59004014639429','y','n','20200914183222v.jpg','20200914183222l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','°Ô½Ã¹°À» °è¼Ó ¿Ã¸®°í ÀÖ½À´Ï´Ù<br><br>¾î¶»°Ô ÇØº¼±î¿ä','2020-09-02','°æ±â ±¸¸®½Ã ¼öÅÃµ¿ 549-6','m','d','13','010-6362-9392','º´°É·È³ªº½','2020-09-14 18:35:36','2020-09-14 19:28:43',0,'127.14893262962325','37.59917693892422','y','n','20200914183535v.jpg','20200914183535l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>','2020-09-11','¼­¿ï Á¾·Î±¸ ¼¼Á¾·Î 1-1','m','c','3','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020.09.14 16:33:23','2020.09.14 16:33:23',5,'126.97500284627557','37.58081593581446','y','n','20200914163323v.jpg','20200914163323l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>','2020-09-08','¼­¿ï ¿ë»ê±¸ ÇÑ³²µ¿ »ê 10-16','m','d','0','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020.09.14 16:34:00','2020.09.14 16:34:00',0,'126.99818950525241','37.54391374843221','y','n','20200914163359v.jpg','20200914163359l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','°¨±Ö µå¼Å º¸¼Ì¼ö²Î?<br><br>ÁÖÀÎ »¡¸® Ã£¾ÆÁÖ¼Ì¼ö²Î?','2020-09-11','ÀüºÏ Á¤À¾½Ã »ê¿Ü¸é ¿À°ø¸® 1803','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 16:36:41','2020.09.14 16:36:41',0,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','°¨±Ö µå¼Å º¸¼Ì¼ö²Î?<br><br>ÁÖÀÎ »¡¸® Ã£¾ÆÁÖ¼Ì¼ö²Î?','2020-09-11','ÀüºÏ Á¤À¾½Ã »ê¿Ü¸é ¿À°ø¸® 1803','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 16:36:41','2020.09.14 16:36:41',1,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>','2020-09-09','¼­¿ï ¼­´ë¹®±¸ ºÏ¾ÆÇöµ¿ 198-8','f','e','15','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 17:07:10','2020.09.14 17:07:10',3,'126.95182897226876','37.56235637432702','y','n','20200914170710v.jpg','20200914170710l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-08','¼­¿ï Áß±¸ ½Å´çµ¿ 393-17','m','d','0','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 17:46:43','2020-09-14 17:46:43',0,'127.00977908233565','37.56236579632654','y','n','20200914174642v.jpg','20200914174642l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-10','¼­¿ï ¼ºµ¿±¸ ÇÏ¿Õ½Ê¸®µ¿ 966-13','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:15:31','2020-09-14 18:15:31',0,'127.03295912707527','37.56236160086959','n','n','20200914181530v.jpg','20200914181530l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-08','¼­¿ï ±¤Áø±¸ ÀÚ¾çµ¿ 613-8','m','d','1','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:20:39','2020-09-14 18:20:39',0,'127.07928986490187','37.53466090322994','y','n','20200914182038v.jpg','20200914182038l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>','2020-09-09','Á¦ÁÖÆ¯º°ÀÚÄ¡µµ ¼­±ÍÆ÷½Ã »ö´Þµ¿ »ê 1-3','f','e','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:22:43','2020-09-14 18:22:43',6,'126.42639896341197','33.32471338278109','y','n','20200914182242v.jpg','20200914182242l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹èÁ¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ°æ','2020-09-09','ÃæºÏ Ã»ÁÖ½Ã Èï´ö±¸ ¿À¼ÛÀ¾ »óÁ¤¸® »ê 60','f','e','15','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:24:16','2020-09-14 18:24:16',7,'127.33030667128493','36.64844332313082','y','n','20200914182416v.jpg','20200914182416l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>','2020-09-09','¼­¿ï µ¿ÀÛ±¸ º»µ¿ 477','m','c','4','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-14 18:25:48','2020-09-14 18:25:48',8,'126.95185864003885','37.5162251846861','y','n','20200914182548v.jpg','20200914182548l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-09','¼­¿ï Á¾·Î±¸ Ã¢½Åµ¿ 442-1','f','c','8','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-14 18:30:54','2020-09-14 18:30:54',9,'127.00978028854118','37.571591994014','y','n','20200914183052v.jpg','20200914183052l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-09','¼­¿ï ¼ººÏ±¸ ¾È¾Ïµ¿5°¡ 1-2','m','d','5','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:32:22','2020-09-14 19:29:39',0,'127.03297132871401','37.59004014639429','y','n','20200914183222v.jpg','20200914183222l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','°Ô½Ã¹°À» °è¼Ó ¿Ã¸®°í ÀÖ½À´Ï´Ù<br><br>¾î¶»°Ô ÇØº¼±î¿ä','2020-09-02','°æ±â ±¸¸®½Ã ¼öÅÃµ¿ 549-6','m','d','13','010-6362-9392','º´°É·È³ªº½','2020-09-14 18:35:36','2020-09-14 19:28:43',5,'127.14893262962325','37.59917693892422','y','n','20200914183535v.jpg','20200914183535l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>»¡¸® Ã£¾Æ°¡ÁÖ¼¼¿ä<br>','2020-09-11','¼­¿ï Á¾·Î±¸ ¼¼Á¾·Î 1-1','m','c','6','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020.09.14 16:33:23','2020.09.14 16:33:23',0,'126.97500284627557','37.58081593581446','y','n','20200914163323v.jpg','20200914163323l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>»¡¸® ÁÖÀÎÀ» Ã£¾ÒÀ¸¸é ÁÁ°Ú¾î¿ä<br>','2020-09-08','¼­¿ï ¿ë»ê±¸ ÇÑ³²µ¿ »ê 10-16','m','d','0','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020.09.14 16:34:00','2020.09.14 16:34:00',0,'126.99818950525241','37.54391374843221','y','n','20200914163359v.jpg','20200914163359l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','°¨±Ö µå¼Å º¸¼Ì¼ö²Î?<br><br>ÁÖÀÎ »¡¸® Ã£¾ÆÁÖ¼Ì¼ö²Î?','2020-09-11','ÀüºÏ Á¤À¾½Ã »ê¿Ü¸é ¿À°ø¸® 1803','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 16:36:41','2020.09.14 16:36:41',11,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>¾îµð¼­ ¿Í¾¥²Î?<br>','2020-09-09','¼­¿ï ¼­´ë¹®±¸ ºÏ¾ÆÇöµ¿ 198-8','f','e','3','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020.09.14 17:07:10','2020.09.14 17:07:10',13,'126.95182897226876','37.56235637432702','y','n','20200914170710v.jpg','20200914170710l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-08','¼­¿ï Áß±¸ ½Å´çµ¿ 393-17','m','d','0','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 17:46:43','2020-09-14 17:46:43',0,'127.00977908233565','37.56236579632654','y','n','20200914174642v.jpg','20200914174642l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-10','¼­¿ï ¼ºµ¿±¸ ÇÏ¿Õ½Ê¸®µ¿ 966-13','m','d','16','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:15:31','2020-09-14 18:15:31',0,'127.03295912707527','37.56236160086959','n','n','20200914181530v.jpg','20200914181530l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-08','¼­¿ï ±¤Áø±¸ ÀÚ¾çµ¿ 613-8','m','d','1','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:20:39','2020-09-14 18:20:39',0,'127.07928986490187','37.53466090322994','y','n','20200914182038v.jpg','20200914182038l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>Á¦ÁÖµµ¿¡¼­ ¿Í¼ö²Î?<br>','2020-09-09','Á¦ÁÖÆ¯º°ÀÚÄ¡µµ ¼­±ÍÆ÷½Ã »ö´Þµ¿ »ê 1-3','f','e','1','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:22:43','2020-09-14 18:22:43',14,'126.42639896341197','33.32471338278109','y','n','20200914182242v.jpg','20200914182242l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹èÁ¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ°æ','2020-09-09','ÃæºÏ Ã»ÁÖ½Ã Èï´ö±¸ ¿À¼ÛÀ¾ »óÁ¤¸® »ê 60','f','e','2','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:24:16','2020-09-14 18:24:16',15,'127.33030667128493','36.64844332313082','y','n','20200914182416v.jpg','20200914182416l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° °Ô½ÃÆÇ ÀÔ´Ï´Ù.','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä<br>','2020-09-09','¼­¿ï µ¿ÀÛ±¸ º»µ¿ 477','m','c','14','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-14 18:25:48','2020-09-14 18:25:48',0,'126.95185864003885','37.5162251846861','y','n','20200914182548v.jpg','20200914182548l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-09','¼­¿ï Á¾·Î±¸ Ã¢½Åµ¿ 442-1','f','c','8','010-6362-9392','¾ó±¼¿¡ ÀÛÀº ¹ÝÁ¡ÀÌ ÀÖ¾î¿ä','2020-09-14 18:30:54','2020-09-14 18:30:54',0,'127.00978028854118','37.571591994014','y','n','20200914183052v.jpg','20200914183052l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ<br>','2020-09-09','¼­¿ï ¼ººÏ±¸ ¾È¾Ïµ¿5°¡ 1-2','m','d','5','010-6362-9392','Á¦ÁÖµµ °¨±Ö³óÀå¿¡¼­ Ã£¾Ò¾î¿ä ±×·¡¼­ ³ë¶õ»ö¹è°æ','2020-09-14 18:32:22','2020-09-14 19:29:39',0,'127.03297132871401','37.59004014639429','y','n','20200914183222v.jpg','20200914183222l.jpg');
-Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'¸Û¹«ÀÌ','À¯±âµ¿¹° ÁÖÀÎÀ» Ã£½À´Ï´Ù.','°Ô½Ã¹°À» °è¼Ó ¿Ã¸®°í ÀÖ½À´Ï´Ù<br><br>¾î¶»°Ô ÇØº¼±î¿ä','2020-09-02','°æ±â ±¸¸®½Ã ¼öÅÃµ¿ 549-6','m','d','13','010-6362-9392','º´°É·È³ªº½','2020-09-14 18:35:36','2020-09-14 19:28:43',0,'127.14893262962325','37.59917693892422','y','n','20200914183535v.jpg','20200914183535l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1-1','m','c','3','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020.09.14 16:33:23','2020.09.14 16:33:23',5,'126.97500284627557','37.58081593581446','y','n','20200914163323v.jpg','20200914163323l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ê±¸ ï¿½Ñ³ï¿½ï¿½ï¿½ ï¿½ï¿½ 10-16','m','d','0','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020.09.14 16:34:00','2020.09.14 16:34:00',0,'126.99818950525241','37.54391374843221','y','n','20200914163359v.jpg','20200914163359l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½?<br><br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö¼Ì¼ï¿½ï¿½ï¿½?','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ü¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1803','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 16:36:41','2020.09.14 16:36:41',0,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½?<br><br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö¼Ì¼ï¿½ï¿½ï¿½?','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ü¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1803','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 16:36:41','2020.09.14 16:36:41',1,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ë¹®ï¿½ï¿½ ï¿½Ï¾ï¿½ï¿½ï¿½ï¿½ï¿½ 198-8','f','e','15','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 17:07:10','2020.09.14 17:07:10',3,'126.95182897226876','37.56235637432702','y','n','20200914170710v.jpg','20200914170710l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ß±ï¿½ ï¿½Å´çµ¿ 393-17','m','d','0','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 17:46:43','2020-09-14 17:46:43',0,'127.00977908233565','37.56236579632654','y','n','20200914174642v.jpg','20200914174642l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-10','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¿Õ½Ê¸ï¿½ï¿½ï¿½ 966-13','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:15:31','2020-09-14 18:15:31',0,'127.03295912707527','37.56236160086959','n','n','20200914181530v.jpg','20200914181530l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¾çµ¿ 613-8','m','d','1','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:20:39','2020-09-14 18:20:39',0,'127.07928986490187','37.53466090322994','y','n','20200914182038v.jpg','20200914182038l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½Æ¯ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þµï¿½ ï¿½ï¿½ 1-3','f','e','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:22:43','2020-09-14 18:22:43',6,'126.42639896341197','33.32471338278109','y','n','20200914182242v.jpg','20200914182242l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-09','ï¿½ï¿½ï¿½ Ã»ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 60','f','e','15','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:24:16','2020-09-14 18:24:16',7,'127.33030667128493','36.64844332313082','y','n','20200914182416v.jpg','20200914182416l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û±ï¿½ ï¿½ï¿½ï¿½ï¿½ 477','m','c','14','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-14 18:25:48','2020-09-14 18:25:48',8,'126.95185864003885','37.5162251846861','y','n','20200914182548v.jpg','20200914182548l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ Ã¢ï¿½Åµï¿½ 442-1','f','c','8','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-14 18:30:54','2020-09-14 18:30:54',9,'127.00978028854118','37.571591994014','y','n','20200914183052v.jpg','20200914183052l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½È¾Ïµï¿½5ï¿½ï¿½ 1-2','m','d','5','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:32:22','2020-09-14 19:29:39',0,'127.03297132871401','37.59004014639429','y','n','20200914183222v.jpg','20200914183222l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½<br><br>ï¿½î¶»ï¿½ï¿½ ï¿½Øºï¿½ï¿½ï¿½ï¿½','2020-09-02','ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ 549-6','m','d','13','010-6362-9392','ï¿½ï¿½ï¿½É·È³ï¿½ï¿½ï¿½','2020-09-14 18:35:36','2020-09-14 19:28:43',10,'127.14893262962325','37.59917693892422','y','n','20200914183535v.jpg','20200914183535l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1-1','m','c','3','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020.09.14 16:33:23','2020.09.14 16:33:23',0,'126.97500284627557','37.58081593581446','y','n','20200914163323v.jpg','20200914163323l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ê±¸ ï¿½Ñ³ï¿½ï¿½ï¿½ ï¿½ï¿½ 10-16','m','d','0','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020.09.14 16:34:00','2020.09.14 16:34:00',0,'126.99818950525241','37.54391374843221','y','n','20200914163359v.jpg','20200914163359l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½?<br><br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö¼Ì¼ï¿½ï¿½ï¿½?','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ü¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1803','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 16:36:41','2020.09.14 16:36:41',11,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ë¹®ï¿½ï¿½ ï¿½Ï¾ï¿½ï¿½ï¿½ï¿½ï¿½ 198-8','f','e','15','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 17:07:10','2020.09.14 17:07:10',13,'126.95182897226876','37.56235637432702','y','n','20200914170710v.jpg','20200914170710l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ß±ï¿½ ï¿½Å´çµ¿ 393-17','m','d','0','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 17:46:43','2020-09-14 17:46:43',0,'127.00977908233565','37.56236579632654','y','n','20200914174642v.jpg','20200914174642l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-10','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¿Õ½Ê¸ï¿½ï¿½ï¿½ 966-13','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:15:31','2020-09-14 18:15:31',0,'127.03295912707527','37.56236160086959','n','n','20200914181530v.jpg','20200914181530l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¾çµ¿ 613-8','m','d','1','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:20:39','2020-09-14 18:20:39',0,'127.07928986490187','37.53466090322994','y','n','20200914182038v.jpg','20200914182038l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½Æ¯ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þµï¿½ ï¿½ï¿½ 1-3','f','e','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:22:43','2020-09-14 18:22:43',14,'126.42639896341197','33.32471338278109','y','n','20200914182242v.jpg','20200914182242l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-09','ï¿½ï¿½ï¿½ Ã»ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 60','f','e','15','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:24:16','2020-09-14 18:24:16',15,'127.33030667128493','36.64844332313082','y','n','20200914182416v.jpg','20200914182416l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û±ï¿½ ï¿½ï¿½ï¿½ï¿½ 477','m','c','14','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-14 18:25:48','2020-09-14 18:25:48',0,'126.95185864003885','37.5162251846861','y','n','20200914182548v.jpg','20200914182548l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ Ã¢ï¿½Åµï¿½ 442-1','f','c','8','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-14 18:30:54','2020-09-14 18:30:54',0,'127.00978028854118','37.571591994014','y','n','20200914183052v.jpg','20200914183052l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½È¾Ïµï¿½5ï¿½ï¿½ 1-2','m','d','5','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:32:22','2020-09-14 19:29:39',0,'127.03297132871401','37.59004014639429','y','n','20200914183222v.jpg','20200914183222l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½<br><br>ï¿½î¶»ï¿½ï¿½ ï¿½Øºï¿½ï¿½ï¿½ï¿½','2020-09-02','ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ 549-6','m','d','13','010-6362-9392','ï¿½ï¿½ï¿½É·È³ï¿½ï¿½ï¿½','2020-09-14 18:35:36','2020-09-14 19:28:43',0,'127.14893262962325','37.59917693892422','y','n','20200914183535v.jpg','20200914183535l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1-1','m','c','3','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020.09.14 16:33:23','2020.09.14 16:33:23',5,'126.97500284627557','37.58081593581446','y','n','20200914163323v.jpg','20200914163323l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ê±¸ ï¿½Ñ³ï¿½ï¿½ï¿½ ï¿½ï¿½ 10-16','m','d','0','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020.09.14 16:34:00','2020.09.14 16:34:00',0,'126.99818950525241','37.54391374843221','y','n','20200914163359v.jpg','20200914163359l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½?<br><br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö¼Ì¼ï¿½ï¿½ï¿½?','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ü¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1803','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 16:36:41','2020.09.14 16:36:41',0,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½?<br><br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö¼Ì¼ï¿½ï¿½ï¿½?','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ü¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1803','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 16:36:41','2020.09.14 16:36:41',1,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ë¹®ï¿½ï¿½ ï¿½Ï¾ï¿½ï¿½ï¿½ï¿½ï¿½ 198-8','f','e','15','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 17:07:10','2020.09.14 17:07:10',3,'126.95182897226876','37.56235637432702','y','n','20200914170710v.jpg','20200914170710l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ß±ï¿½ ï¿½Å´çµ¿ 393-17','m','d','0','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 17:46:43','2020-09-14 17:46:43',0,'127.00977908233565','37.56236579632654','y','n','20200914174642v.jpg','20200914174642l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-10','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¿Õ½Ê¸ï¿½ï¿½ï¿½ 966-13','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:15:31','2020-09-14 18:15:31',0,'127.03295912707527','37.56236160086959','n','n','20200914181530v.jpg','20200914181530l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¾çµ¿ 613-8','m','d','1','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:20:39','2020-09-14 18:20:39',0,'127.07928986490187','37.53466090322994','y','n','20200914182038v.jpg','20200914182038l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½Æ¯ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þµï¿½ ï¿½ï¿½ 1-3','f','e','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:22:43','2020-09-14 18:22:43',6,'126.42639896341197','33.32471338278109','y','n','20200914182242v.jpg','20200914182242l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-09','ï¿½ï¿½ï¿½ Ã»ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 60','f','e','15','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:24:16','2020-09-14 18:24:16',7,'127.33030667128493','36.64844332313082','y','n','20200914182416v.jpg','20200914182416l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û±ï¿½ ï¿½ï¿½ï¿½ï¿½ 477','m','c','4','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-14 18:25:48','2020-09-14 18:25:48',8,'126.95185864003885','37.5162251846861','y','n','20200914182548v.jpg','20200914182548l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ Ã¢ï¿½Åµï¿½ 442-1','f','c','8','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-14 18:30:54','2020-09-14 18:30:54',9,'127.00978028854118','37.571591994014','y','n','20200914183052v.jpg','20200914183052l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½È¾Ïµï¿½5ï¿½ï¿½ 1-2','m','d','5','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:32:22','2020-09-14 19:29:39',0,'127.03297132871401','37.59004014639429','y','n','20200914183222v.jpg','20200914183222l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½<br><br>ï¿½î¶»ï¿½ï¿½ ï¿½Øºï¿½ï¿½ï¿½ï¿½','2020-09-02','ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ 549-6','m','d','13','010-6362-9392','ï¿½ï¿½ï¿½É·È³ï¿½ï¿½ï¿½','2020-09-14 18:35:36','2020-09-14 19:28:43',5,'127.14893262962325','37.59917693892422','y','n','20200914183535v.jpg','20200914183535l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ°ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<br>','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1-1','m','c','6','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020.09.14 16:33:23','2020.09.14 16:33:23',0,'126.97500284627557','37.58081593581446','y','n','20200914163323v.jpg','20200914163323l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½ï¿½<br>','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ê±¸ ï¿½Ñ³ï¿½ï¿½ï¿½ ï¿½ï¿½ 10-16','m','d','0','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020.09.14 16:34:00','2020.09.14 16:34:00',0,'126.99818950525241','37.54391374843221','y','n','20200914163359v.jpg','20200914163359l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½?<br><br>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö¼Ì¼ï¿½ï¿½ï¿½?','2020-09-11','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ü¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1803','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 16:36:41','2020.09.14 16:36:41',11,'127.0208389587483','35.61531538239695','y','n','20200914163641v.jpg','20200914163641l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½ï¿½ï¿½?<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ë¹®ï¿½ï¿½ ï¿½Ï¾ï¿½ï¿½ï¿½ï¿½ï¿½ 198-8','f','e','3','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020.09.14 17:07:10','2020.09.14 17:07:10',13,'126.95182897226876','37.56235637432702','y','n','20200914170710v.jpg','20200914170710l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ß±ï¿½ ï¿½Å´çµ¿ 393-17','m','d','0','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 17:46:43','2020-09-14 17:46:43',0,'127.00977908233565','37.56236579632654','y','n','20200914174642v.jpg','20200914174642l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-10','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¿Õ½Ê¸ï¿½ï¿½ï¿½ 966-13','m','d','16','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:15:31','2020-09-14 18:15:31',0,'127.03295912707527','37.56236160086959','n','n','20200914181530v.jpg','20200914181530l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-08','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¾çµ¿ 613-8','m','d','1','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:20:39','2020-09-14 18:20:39',0,'127.07928986490187','37.53466090322994','y','n','20200914182038v.jpg','20200914182038l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½ï¿½ï¿½?<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½Æ¯ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þµï¿½ ï¿½ï¿½ 1-3','f','e','1','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:22:43','2020-09-14 18:22:43',14,'126.42639896341197','33.32471338278109','y','n','20200914182242v.jpg','20200914182242l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-09','ï¿½ï¿½ï¿½ Ã»ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 60','f','e','2','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:24:16','2020-09-14 18:24:16',15,'127.33030667128493','36.64844332313082','y','n','20200914182416v.jpg','20200914182416l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û±ï¿½ ï¿½ï¿½ï¿½ï¿½ 477','m','c','14','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-14 18:25:48','2020-09-14 18:25:48',0,'126.95185864003885','37.5162251846861','y','n','20200914182548v.jpg','20200914182548l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ Ã¢ï¿½Åµï¿½ 442-1','f','c','8','010-6362-9392','ï¿½ó±¼¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½','2020-09-14 18:30:54','2020-09-14 18:30:54',0,'127.00978028854118','37.571591994014','y','n','20200914183052v.jpg','20200914183052l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>','2020-09-09','ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½È¾Ïµï¿½5ï¿½ï¿½ 1-2','m','d','5','010-6362-9392','ï¿½ï¿½ï¿½Öµï¿½ ï¿½ï¿½ï¿½Ö³ï¿½ï¿½å¿¡ï¿½ï¿½ Ã£ï¿½Ò¾ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','2020-09-14 18:32:22','2020-09-14 19:29:39',0,'127.03297132871401','37.59004014639429','y','n','20200914183222v.jpg','20200914183222l.jpg');
+Insert into RUNNINGDOG.DBOARD (D_NUM,USER_ID,UNIQUE_NUM,D_WRITER,D_TITLE,D_CONTENT,D_FIND_DATE,D_FIND_LOCAL,D_GENDER,D_CATEGORY,D_LOCAL,D_PHONE,D_POINT,D_DATE,D_MDATE,D_COUNT,MAP_X,MAP_Y,D_CHECK,D_SUCCESS,VIEW_IMAGE,LIST_IMAGE) values (DBOARD_NUM_SEQ.NEXTVAL,'spark1048@naver.com',2,'ï¿½Û¹ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½âµ¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½.','ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½<br><br>ï¿½î¶»ï¿½ï¿½ ï¿½Øºï¿½ï¿½ï¿½ï¿½','2020-09-02','ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ 549-6','m','d','13','010-6362-9392','ï¿½ï¿½ï¿½É·È³ï¿½ï¿½ï¿½','2020-09-14 18:35:36','2020-09-14 19:28:43',0,'127.14893262962325','37.59917693892422','y','n','20200914183535v.jpg','20200914183535l.jpg');
 
 COMMIT;
 
 
--- sponsor Å×ÀÌºí 9¿ù 14ÀÏ
+-- sponsor ï¿½ï¿½ï¿½Ìºï¿½ 9ï¿½ï¿½ 14ï¿½ï¿½
 drop table sponsor cascade constraints;
 
 create table sponsor (
@@ -460,39 +512,40 @@ create table sponsor (
     s_rename varchar2(50)
 );
 
-comment on column sponsor.s_num is '±Û¹øÈ£';
-comment on column sponsor.s_id is '°ü¸®ÀÚ ´Ð³×ÀÓ';
-comment on column sponsor.s_title is 'Á¦¸ñ';
-comment on column sponsor.s_summary is '¿ä¾à¼³¸í';
-comment on column sponsor.s_content is '³»¿ë';
-comment on column sponsor.s_count is 'Á¶È¸¼ö';
-comment on column sponsor.s_date is 'ÀÛ¼ºÀÏ';
-comment on column sponsor.s_amount is '¸ñÇ¥±Ý¾×';
-comment on column sponsor.s_current is '¸ðÁý±Ý¾×';
-comment on column sponsor.s_original is '¿À¸®Áö³Î ½æ³×ÀÏ';
-comment on column sponsor.s_rename is '¸®³×ÀÓ ½æ³×ÀÏ';
+comment on column sponsor.s_num is 'ï¿½Û¹ï¿½È£';
+comment on column sponsor.s_id is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½';
+comment on column sponsor.s_title is 'ï¿½ï¿½ï¿½ï¿½';
+comment on column sponsor.s_summary is 'ï¿½ï¿½à¼³ï¿½ï¿½';
+comment on column sponsor.s_content is 'ï¿½ï¿½ï¿½ï¿½';
+comment on column sponsor.s_count is 'ï¿½ï¿½È¸ï¿½ï¿½';
+comment on column sponsor.s_date is 'ï¿½Û¼ï¿½ï¿½ï¿½';
+comment on column sponsor.s_amount is 'ï¿½ï¿½Ç¥ï¿½Ý¾ï¿½';
+comment on column sponsor.s_current is 'ï¿½ï¿½ï¿½ï¿½ï¿½Ý¾ï¿½';
+comment on column sponsor.s_original is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½';
+comment on column sponsor.s_rename is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½';
 
+<<<<<<< HEAD
 drop sequence sponsor_num;
 create sequence sponsor_num increment by 1 start with 1 minvalue 1 nomaxvalue nocycle nocache;
 drop sequence sponsor_thumbnail_num;
 create sequence sponsor_thumbnail_num increment by 1 start with 1 minvalue 1 nomaxvalue nocycle nocache;
--- ´ëÃ¼º¯¼öÃ³¸®¿ë
+-- ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ï¿½ï¿½
 set define off; 
 insert into sponsor
-values (sponsor_num.nextval, '°ü¸®ÀÚ', 'Å×½ºÆ®Áß 1', 'Å×½ºÆ®Áß 1', '<p>----------</p><p>³»¿ë½ÃÀÛ<img src="resources/sponsor/summernoteContent/animalBg01-2020814.jpg
-" style="width: 781px;">Å×½ºÆ®Áß 1 / ´Ï¶ó¤Ã¤¤¸®¤¿³ª¿Ã´Ï¤¿¤··³³ª¤Ê¤©¤¤¤·¤±¶ó;¤Ã¤±¤¤</p><p>¤±¤¤¤·¤©;¤Ó¤¿³Õ¤©;´Ï¾Æ¤Ç¤©¤¤ÀÌ;¤¿·¯´Ï</p><ol><li style="text-align: left;">¤Ó¾È¤±·±;¤Ó·Ð¤·¤±·ª³Õ¸°¿À</li><li style="text-align: left;"><img src="resources/sponsor/summernoteContent/animalBg-2020814.jpg
-" style="width: 781px;">&nbsp;´×¶ó¤Ã¤±¤¤;¤Ó¶ó³Õ¸®¤¿³Ê¸°¸°¾î¸°<br></li></ol>', 0, sysdate, 5355252, 0, 'animalImg02.jpg', 'animalImg02-200913.jpg');
+values (sponsor_num.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½×½ï¿½Æ®ï¿½ï¿½ 1', 'ï¿½×½ï¿½Æ®ï¿½ï¿½ 1', '<p>----------</p><p>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<img src="resources/sponsor/summernoteContent/animalBg01-2020814.jpg
+" style="width: 781px;">ï¿½×½ï¿½Æ®ï¿½ï¿½ 1 / ï¿½Ï¶ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;ï¿½Ã¤ï¿½ï¿½ï¿½</p><p>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;ï¿½Ó¤ï¿½ï¿½Õ¤ï¿½;ï¿½Ï¾Æ¤Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p><ol><li style="text-align: left;">ï¿½Ó¾È¤ï¿½ï¿½ï¿½;ï¿½Ó·Ð¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½ï¿½</li><li style="text-align: left;"><img src="resources/sponsor/summernoteContent/animalBg-2020814.jpg
+" style="width: 781px;">&nbsp;ï¿½×¶ï¿½Ã¤ï¿½ï¿½ï¿½;ï¿½Ó¶ï¿½Õ¸ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½î¸°<br></li></ol>', 0, sysdate, 5355252, 0, 'animalImg02.jpg', 'animalImg02-200913.jpg');
 
 insert into sponsor
-values (sponsor_num.nextval, '°ü¸®ÀÚ', '½æ³×ÀÏ ±¸Çö Áß', '½æ³×ÀÏ ±¸Çö Áß', '<p>----------------------------------------------------------------</p><p>³»¿ë½ÃÀÛ</p><p><img src="resources/sponsor/summernoteContent/animalImg01-2020813.jpg
-" style="width: 600px;"></p><p><br></p><p>³»¿ë ÀÔ·Â</p><p><br></p><p><br></p><p><img src="resources/sponsor/summernoteContent/animalImg02-2020813.jpg
+values (sponsor_num.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½', '<p>----------------------------------------------------------------</p><p>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p><p><img src="resources/sponsor/summernoteContent/animalImg01-2020813.jpg
+" style="width: 600px;"></p><p><br></p><p>ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½</p><p><br></p><p><br></p><p><img src="resources/sponsor/summernoteContent/animalImg02-2020813.jpg
 " style="width: 600px;"><img src="resources/sponsor/summernoteContent/animalImg05-2020813.jpg
-" style="width: 600px;"></p><p><br></p><p>³»¿ë ÀÔ·Â ³¡</p><p>-----------</p><p><br></p><p><br></p><p>°ø¹é³¡</p>', 0, sysdate, 55555555, 0, 'sns_post.png', 'sns_post-200914.png');
+" style="width: 600px;"></p><p><br></p><p>ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½</p><p>-----------</p><p><br></p><p><br></p><p>ï¿½ï¿½ï¿½é³¡</p>', 0, sysdate, 55555555, 0, 'sns_post.png', 'sns_post-200914.png');
 
 insert into sponsor
-values (sponsor_num.nextval, '°ü¸®ÀÚ', 'Å×½ºÆ®Áß 3', 'Å×½ºÆ®Áß 3', '<p>----------</p><p>³»¿ë½ÃÀÛ<img src="resources/sponsor/summernoteContent/animalBg01-2020814.jpg
-" style="width: 781px;">Å×½ºÆ®Áß 1 / ´Ï¶ó¤Ã¤¤¸®¤¿³ª¿Ã´Ï¤¿¤··³³ª¤Ê¤©¤¤¤·¤±¶ó;¤Ã¤±¤¤</p><p>¤±¤¤¤·¤©;¤Ó¤¿³Õ¤©;´Ï¾Æ¤Ç¤©¤¤ÀÌ;¤¿·¯´Ï</p><ol><li style="text-align: left;">¤Ó¾È¤±·±;¤Ó·Ð¤·¤±·ª³Õ¸°¿À</li><li style="text-align: left;"><img src="resources/sponsor/summernoteContent/animalBg-2020814.jpg
-" style="width: 781px;">&nbsp;´×¶ó¤Ã¤±¤¤;¤Ó¶ó³Õ¸®¤¿³Ê¸°¸°¾î¸°<br></li></ol>', 0, sysdate, 4333252, 0, 'animalImg02.jpg', 'animalImg02-200913.jpg');
+values (sponsor_num.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½×½ï¿½Æ®ï¿½ï¿½ 3', 'ï¿½×½ï¿½Æ®ï¿½ï¿½ 3', '<p>----------</p><p>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<img src="resources/sponsor/summernoteContent/animalBg01-2020814.jpg
+" style="width: 781px;">ï¿½×½ï¿½Æ®ï¿½ï¿½ 1 / ï¿½Ï¶ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;ï¿½Ã¤ï¿½ï¿½ï¿½</p><p>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;ï¿½Ó¤ï¿½ï¿½Õ¤ï¿½;ï¿½Ï¾Æ¤Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p><ol><li style="text-align: left;">ï¿½Ó¾È¤ï¿½ï¿½ï¿½;ï¿½Ó·Ð¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½ï¿½</li><li style="text-align: left;"><img src="resources/sponsor/summernoteContent/animalBg-2020814.jpg
+" style="width: 781px;">&nbsp;ï¿½×¶ï¿½Ã¤ï¿½ï¿½ï¿½;ï¿½Ó¶ï¿½Õ¸ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½î¸°<br></li></ol>', 0, sysdate, 4333252, 0, 'animalImg02.jpg', 'animalImg02-200913.jpg');
 
 drop table sponsorImage cascade constraints;
 
@@ -502,9 +555,9 @@ create table sponsorImage (
     s_num number references sponsor on delete cascade not null
 );
 
-comment on column sponsorImage.si_num is '»çÁø¹øÈ£';
-comment on column sponsorImage.si_num is '³»¿ë»ðÀÔ»çÁø¸í';
-comment on column sponsorImage.si_num is '¿ø±Û¹øÈ£';
+comment on column sponsorImage.si_num is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£';
+comment on column sponsorImage.si_num is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½';
+comment on column sponsorImage.si_num is 'ï¿½ï¿½ï¿½Û¹ï¿½È£';
 
 insert into sponsorImage values (sponsor_thumbnail_num.nextval, 'animalBg01-2020814.jpg', 1);
 insert into sponsorImage values (sponsor_thumbnail_num.nextval, 'animalBg-2020814.jpg', 1);
@@ -517,7 +570,7 @@ insert into sponsorImage values (sponsor_thumbnail_num.nextval, 'animalBg-202081
 commit;
 
 --------------------------------------------------------
---  ÆÄÀÏÀÌ »ý¼ºµÊ - ¿ù¿äÀÏ-9¿ù-14-2020   
+--  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-9ï¿½ï¿½-14-2020   
 --------------------------------------------------------
 DROP TABLE "RUNNINGDOG"."VREPLY";
 DROP TABLE "RUNNINGDOG"."VOLUNTEER";
@@ -539,13 +592,13 @@ DROP TABLE "RUNNINGDOG"."VOLUNTEER";
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM" ;
 
-   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VREPLY_NO" IS '´ñ±Û¹øÈ£';
-   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VOLNO" IS '±Û¹øÈ£';
-   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."NICKNAME" IS '´Ð³×ÀÓ';
-   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VREPLY_DATE" IS 'ÀÛ¼ºÀÏ';
-   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VREPLY_CONTENT" IS '´ñ±Û³»¿ë';
-   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."PARANT_REPLY" IS 'ºÎ¸ð´ñ±Û¹øÈ£';
-   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VREPLY_LEVEL" IS '´ñ±Û·¹º§';
+   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VREPLY_NO" IS 'ï¿½ï¿½Û¹ï¿½È£';
+   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VOLNO" IS 'ï¿½Û¹ï¿½È£';
+   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."NICKNAME" IS 'ï¿½Ð³ï¿½ï¿½ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VREPLY_DATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VREPLY_CONTENT" IS 'ï¿½ï¿½Û³ï¿½ï¿½ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."PARANT_REPLY" IS 'ï¿½Î¸ï¿½ï¿½Û¹ï¿½È£';
+   COMMENT ON COLUMN "RUNNINGDOG"."VREPLY"."VREPLY_LEVEL" IS 'ï¿½ï¿½Û·ï¿½ï¿½ï¿½';
 --------------------------------------------------------
 --  DDL for Table VOLUNTEER
 --------------------------------------------------------
@@ -576,45 +629,45 @@ DROP TABLE "RUNNINGDOG"."VOLUNTEER";
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM" ;
 
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLNO" IS '±Û¹øÈ£';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLTITLE" IS '±ÛÁ¦¸ñ';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLWRITER" IS '´ã´çÀÚ';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLCONTENT" IS '³»¿ë';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLDATE" IS 'ÀÛ¼ºÀÏ';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLTEL" IS '¹øÈ£(¿¬¶ôÃ³)';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLTERM1" IS 'ºÀ»ç±â°£1';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLTERM2" IS 'ºÀ»ç±â°£2';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLNAME" IS '¼¾ÅÍ¸í';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLOR1" IS 'Ã·ºÎÆÄÀÏ±âÁ¸¸í1';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLRE1" IS 'Ã·ºÎÆÄÀÏº¯°æ¸í1';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLOR2" IS 'Ã·ºÎÆÄÀÏ±âÁ¸¸í2';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLRE2" IS 'Ã·ºÎÆÄÀÏº¯°æ¸í2';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLOR3" IS 'Ã·ºÎÆÄÀÏ±âÁ¸¸í3';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLRE3" IS 'Ã·ºÎÆÄÀÏº¯°æ¸í3';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLOR4" IS 'Ã·ºÎÆÄÀÏ±âÁ¸¸í4';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLRE4" IS 'Ã·ºÎÆÄÀÏº¯°æ¸í4';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLADDRESS" IS 'ÁÖ¼Ò¸í';
-   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLCHE" IS '¸ðÁýÇ¥½Ã';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLNO" IS 'ï¿½Û¹ï¿½È£';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLTITLE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLWRITER" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLCONTENT" IS 'ï¿½ï¿½ï¿½ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLDATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLTEL" IS 'ï¿½ï¿½È£(ï¿½ï¿½ï¿½ï¿½Ã³)';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLTERM1" IS 'ï¿½ï¿½ï¿½ï¿½â°£1';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLTERM2" IS 'ï¿½ï¿½ï¿½ï¿½â°£2';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLNAME" IS 'ï¿½ï¿½ï¿½Í¸ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLOR1" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½1';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLRE1" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½1';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLOR2" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½2';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLRE2" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½2';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLOR3" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½3';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLRE3" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½3';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLOR4" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½4';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLRE4" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½4';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLADDRESS" IS 'ï¿½Ö¼Ò¸ï¿½';
+   COMMENT ON COLUMN "RUNNINGDOG"."VOLUNTEER"."VOLCHE" IS 'ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½';
 REM INSERTING into RUNNINGDOG.VREPLY
 SET DEFINE OFF;
-Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (1,1,'¸Û¹«ÀÌ',to_date('20/09/12','RR/MM/DD'),'È¤½Ã ±×°÷¿¡ ´ÜÃ¼·Î ºÀ»ç¸¦ ½ÅÃ»ÇØµµ µÇ³ª¿ä?',null,null);
-Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (2,2,'¸Û¹«ÀÌ',to_date('20/09/12','RR/MM/DD'),'¾ÆÀÌµéÀÌ¶û °°ÀÌ ¹æ¹®ÇØ¼­ µ½°í ½Í³×¿ä',null,null);
-Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (14,2,'¸Û¹«ÀÌ',to_date('20/09/14','RR/MM/DD'),'°¨»çÇÕ´Ï´Ù',null,null);
-Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (8,7,'¸Û¹«ÀÌ',to_date('20/09/14','RR/MM/DD'),'¾ÖµéÀÌ ³Ê¹« ¿¹»Ú³×¿ä',null,null);
-Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (9,7,'¸Û¹«ÀÌ',to_date('20/09/14','RR/MM/DD'),'¿¬¶ôµå¸®°Ú½À´Ï´Ù!',null,null);
-Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (10,7,'¸Û¹«ÀÌ',to_date('20/09/14','RR/MM/DD'),'¾È³çÇÏ¼¼¿ä',null,null);
-Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (13,2,'¸Û¹«ÀÌ',to_date('20/09/14','RR/MM/DD'),'°¨»çÇÕ´Ï´Ù',null,null);
-Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (15,7,'¸Û¹«ÀÌ',to_date('20/09/14','RR/MM/DD'),'¾Æ¾Æ¾Æ¾Æ¾Æ¾Æ¾Æ',null,null);
+Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (1,1,'ï¿½Û¹ï¿½ï¿½ï¿½',to_date('20/09/12','RR/MM/DD'),'È¤ï¿½ï¿½ ï¿½×°ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ç¸¦ ï¿½ï¿½Ã»ï¿½Øµï¿½ ï¿½Ç³ï¿½ï¿½ï¿½?',null,null);
+Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (2,2,'ï¿½Û¹ï¿½ï¿½ï¿½',to_date('20/09/12','RR/MM/DD'),'ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½æ¹®ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Í³×¿ï¿½',null,null);
+Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (14,2,'ï¿½Û¹ï¿½ï¿½ï¿½',to_date('20/09/14','RR/MM/DD'),'ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½',null,null);
+Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (8,7,'ï¿½Û¹ï¿½ï¿½ï¿½',to_date('20/09/14','RR/MM/DD'),'ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½Ú³×¿ï¿½',null,null);
+Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (9,7,'ï¿½Û¹ï¿½ï¿½ï¿½',to_date('20/09/14','RR/MM/DD'),'ï¿½ï¿½ï¿½ï¿½ï¿½å¸®ï¿½Ú½ï¿½ï¿½Ï´ï¿½!',null,null);
+Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (10,7,'ï¿½Û¹ï¿½ï¿½ï¿½',to_date('20/09/14','RR/MM/DD'),'ï¿½È³ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½',null,null);
+Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (13,2,'ï¿½Û¹ï¿½ï¿½ï¿½',to_date('20/09/14','RR/MM/DD'),'ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½',null,null);
+Insert into RUNNINGDOG.VREPLY (VREPLY_NO,VOLNO,NICKNAME,VREPLY_DATE,VREPLY_CONTENT,PARANT_REPLY,VREPLY_LEVEL) values (15,7,'ï¿½Û¹ï¿½ï¿½ï¿½',to_date('20/09/14','RR/MM/DD'),'ï¿½Æ¾Æ¾Æ¾Æ¾Æ¾Æ¾ï¿½',null,null);
 REM INSERTING into RUNNINGDOG.VOLUNTEER
 SET DEFINE OFF;
-Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (1,'µµ¿òÀÌ ÇÊ¿äÇÕ´Ï´Ù','ÀÌ¼±Èñ','¹ö·ÁÁø À¯±â°ßµé°ú À¯±â¹¦µé¿¡°Ô »ç¶û°ú °ü½ÉÀÌ ÇÊ¿äÇÕ´Ï´Ù.',to_date('20/09/12','RR/MM/DD'),'010-6666-9999','20200801','20200901','¼öÁö»ç¶ûÀÌ³×',null,null,null,null,null,null,null,null,'°æ±âµµ ¿ëÀÎ½Ã','Y');
-Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (2,'¼Õ±æÀÌ ÇÊ¿äÇÕ´Ï´Ù','¹ÚÁ¤Çö','¾ÆÀÌµé¿¡°Ô »ç·áÁÖ´Â ÀÏ°ú ¸ñ¿å½ÃÄÑÁÖ´Â ÀÏ µî ´Ù¾çÇÑ µµ¿òÀÌ °£ÀýÈ÷ ÇÊ¿äÇÕ´Ï´Ù.',to_date('20/09/12','RR/MM/DD'),'010-2222-3333','20200701','20200901','±¤ÁÖ³ª´®',null,null,null,null,null,null,null,null,'°æ±âµµ ±¤ÁÖ½Ã','Y');
-Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (3,'»ç¶ûÀÌ ÇÊ¿äÇÕ´Ï´Ù','¹ÚÈ¿½Å','¹ö·ÁÁø À¯±â°ßµé°ú À¯±â¹¦µéÀÌ »ç¶û°ú °ü½ÉÀÌ ÇÊ¿äÇÕ´Ï´Ù.',to_date('20/09/12','RR/MM/DD'),'010-1111-2222','20200801','20200901','´ã¾çÀÌ³×',null,null,null,null,null,null,null,null,'°æ±âµµ È­¼º½Ã','Y');
-Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (4,'°ü½ÉÀÌ ÇÊ¿äÇÕ´Ï´Ù','Âü»ç¶û','Áö¼ÓÀûÀÎ °ü½ÉÀ¸·Î µ¹ºÁÁÙ Àå±âºÀ»çÀÚµéÀ» ¸ðÁýÇÕ´Ï´Ù.',to_date('20/09/12','RR/MM/DD'),'010-5454-6232',null,null,'ÇÑ³ª³×',null,null,null,null,null,null,null,null,'°æ±âµµ ÇÏ³²½Ã','Y');
-Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (5,'µµ¿òÀÌ ÇÊ¿äÇÕ´Ï´Ù','°øÈ¿Áø','°« ÅÂ¾î³­ ¾Æ±â°­¾ÆÁöµéÀ» »ç¶ûÀ¸·Î º¸»ìÆìÁÖ½Ç ºÀ»çÀÚµé ¸ðÁýÇÕ´Ï´Ù. .',to_date('20/09/12','RR/MM/DD'),'010-1234-4321','20200801','20200901','°úÃµº¸È£¼¾ÅÍ',null,null,null,null,null,null,null,null,'°æ±âµµ °úÃµ½Ã','Y');
-Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (6,'µµ¿òÀÇ ¼Õ±æ·Î ´Ù°¡¿ÍÁÖ½Ç ºÐÀ» ¸ðÁýÇÕ´Ï´Ù.','³ªÀ¯¿¬','È¥ÀÚ¼­ ¿î¿µÇÏ°í ÀÖ½À´Ï´Ù. µµ¿ÍÁÙ ÀÌµéÀÌ °£ÀýÈ÷ ÇÊ¿äÇÕ´Ï´Ù. ¸¶À½ÀÖÀ¸½Å ºÐµé ¿¬¶ôÁÖ¼¼¿ä.',to_date('20/09/12','RR/MM/DD'),'010-6666-7777',null,null,'»ç¶ûÀÌ³×',null,null,null,null,null,null,null,null,'°æ±âµµ ³²¾çÁÖ½Ã','Y');
-Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (7,'¹Ý·Áµ¿¹°À» »ç¶ûÇÏ´Â ºÀ»çÀÚµéÀ» ¸ðÁýÇÕ´Ï´Ù.','Á¶½Â¿ì','°­¾ÆÁöµéÀ» À§ÇØ ÇÔ²² µµ¿ÍÁÖ½Ç ÀÌµéÀ» Ã£½À´Ï´Ù 
-¾ðÁ¦µçÁö ¿¬¶ôÁÖ¼¼¿ä',to_date('20/09/13','RR/MM/DD'),'010-1234-9876','2020-09-01','2020-09-30','¼Ò¸ÁÀÌ³×','30000333592_1280.jpg','20200913005839405.jpg','°­¾ÆÁö »çÁø.jpg','20200913005839408.jpg','°­¾ÆÁö´«°¡¸².jpg','20200913005839411.jpg','²¥¾Ç.jpg','20200913005839413.jpg','°æ±âµµ ¿ëÀÎ½Ã Ã³ÀÎ±¸','Y');
+Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (1,'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½','ï¿½Ì¼ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ ï¿½ï¿½ï¿½â¹¦ï¿½é¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½.',to_date('20/09/12','RR/MM/DD'),'010-6666-9999','20200801','20200901','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½',null,null,null,null,null,null,null,null,'ï¿½ï¿½âµµ ï¿½ï¿½ï¿½Î½ï¿½','Y');
+Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (2,'ï¿½Õ±ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½Ìµé¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½.',to_date('20/09/12','RR/MM/DD'),'010-2222-3333','20200701','20200901','ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½',null,null,null,null,null,null,null,null,'ï¿½ï¿½âµµ ï¿½ï¿½ï¿½Ö½ï¿½','Y');
+Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (3,'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½','ï¿½ï¿½È¿ï¿½ï¿½','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ ï¿½ï¿½ï¿½â¹¦ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½.',to_date('20/09/12','RR/MM/DD'),'010-1111-2222','20200801','20200901','ï¿½ï¿½ï¿½ï¿½Ì³ï¿½',null,null,null,null,null,null,null,null,'ï¿½ï¿½âµµ È­ï¿½ï¿½ï¿½ï¿½','Y');
+Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (4,'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½','ï¿½ï¿½ï¿½ï¿½ï¿½','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.',to_date('20/09/12','RR/MM/DD'),'010-5454-6232',null,null,'ï¿½Ñ³ï¿½ï¿½ï¿½',null,null,null,null,null,null,null,null,'ï¿½ï¿½âµµ ï¿½Ï³ï¿½ï¿½ï¿½','Y');
+Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (5,'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½','ï¿½ï¿½È¿ï¿½ï¿½','ï¿½ï¿½ ï¿½Â¾î³­ ï¿½Æ±â°­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. .',to_date('20/09/12','RR/MM/DD'),'010-1234-4321','20200801','20200901','ï¿½ï¿½Ãµï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½',null,null,null,null,null,null,null,null,'ï¿½ï¿½âµµ ï¿½ï¿½Ãµï¿½ï¿½','Y');
+Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (6,'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Õ±ï¿½ï¿½ ï¿½Ù°ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','È¥ï¿½Ú¼ï¿½ ï¿½î¿µï¿½Ï°ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ðµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.',to_date('20/09/12','RR/MM/DD'),'010-6666-7777',null,null,'ï¿½ï¿½ï¿½ï¿½Ì³ï¿½',null,null,null,null,null,null,null,null,'ï¿½ï¿½âµµ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½','Y');
+Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VOLTEL,VOLTERM1,VOLTERM2,VOLNAME,VOLOR1,VOLRE1,VOLOR2,VOLRE2,VOLOR3,VOLRE3,VOLOR4,VOLRE4,VOLADDRESS,VOLCHE) values (7,'ï¿½Ý·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.','ï¿½ï¿½ï¿½Â¿ï¿½','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ï´ï¿½ 
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½',to_date('20/09/13','RR/MM/DD'),'010-1234-9876','2020-09-01','2020-09-30','ï¿½Ò¸ï¿½ï¿½Ì³ï¿½','30000333592_1280.jpg','20200913005839405.jpg','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.jpg','20200913005839408.jpg','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.jpg','20200913005839411.jpg','ï¿½ï¿½ï¿½ï¿½.jpg','20200913005839413.jpg','ï¿½ï¿½âµµ ï¿½ï¿½ï¿½Î½ï¿½ Ã³ï¿½Î±ï¿½','Y');
 --------------------------------------------------------
 --  DDL for Index PK_VREPLY
 --------------------------------------------------------
@@ -667,3 +720,175 @@ Insert into RUNNINGDOG.VOLUNTEER (VOLNO,VOLTITLE,VOLWRITER,VOLCONTENT,VOLDATE,VO
 	  REFERENCES "RUNNINGDOG"."VOLUNTEER" ("VOLNO") ON DELETE CASCADE ENABLE;
 
 commit;
+=======
+COMMIT;
+-------------------------- CHATTING -------------------------------
+DROP TABLE "CHATROOM";
+DROP TABLE "MESSAGE";
+DROP SEQUENCE "ROOM_SEQ";
+DROP SEQUENCE "MESSAGE_SEQ";
+
+CREATE SEQUENCE "ROOM_SEQ"
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+NOMAXVALUE
+NOCYCLE 
+NOCACHE;
+
+CREATE SEQUENCE "MESSAGE_SEQ"
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+NOMAXVALUE
+NOCYCLE 
+NOCACHE;
+
+CREATE TABLE "CHATROOM" (
+   "ROOMNO"   NUMBER      NOT NULL,
+   "MEMBERNO"   NUMBER   NOT NULL,
+   "LASTMESSAGE"   VARCHAR2(500),
+   "NICKNAME"   VARCHAR2(30)    NOT NULL,
+   "LASTDATE"   DATE    DEFAULT SYSDATE NOT NULL
+);
+
+CREATE TABLE "MESSAGE" (
+    "MESSAGENO" NUMBER  NOT NULL,
+    "ROOMNO"   NUMBER      NOT NULL,
+    "SENDER"    NUMBER    NOT NULL,
+    "RECEIVER"  NUMBER    NOT NULL,
+    "SENDTIME"  DATE    DEFAULT SYSDATE NOT NULL,
+    "CONTENT"   VARCHAR2(500) NOT NULL
+);
+
+COMMENT ON COLUMN "CHATROOM"."ROOMNO" IS 'Ã¤ï¿½Ã¹ï¿½ ï¿½ï¿½È£';
+
+COMMENT ON COLUMN "CHATROOM"."MEMBERNO" IS 'Ã¤ï¿½Ã¹ï¿½ ï¿½ï¿½ï¿½';
+
+COMMENT ON COLUMN "CHATROOM"."LASTDATE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥';
+
+COMMENT ON COLUMN "MESSAGE"."MESSAGENO" IS 'ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½È£';
+
+COMMENT ON COLUMN "MESSAGE"."ROOMNO" IS 'Ã¤ï¿½Ã¹ï¿½ ï¿½ï¿½È£';
+
+COMMENT ON COLUMN "MESSAGE"."SENDER" IS 'ï¿½Û½ï¿½ï¿½ï¿½';
+
+COMMENT ON COLUMN "MESSAGE"."RECEIVER" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+
+COMMENT ON COLUMN "MESSAGE"."SENDTIME" IS 'ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½';
+
+COMMENT ON COLUMN "MESSAGE"."CONTENT" IS 'ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½';
+
+ALTER TABLE "CHATROOM" ADD CONSTRAINT "PK_CHATROOM" PRIMARY KEY (
+   "ROOMNO",
+   "MEMBERNO"
+);
+
+ALTER TABLE "MESSAGE" ADD CONSTRAINT "PK_MESSAGE" PRIMARY KEY (
+   "MESSAGENO"
+);
+
+ALTER TABLE "CHATROOM" ADD CONSTRAINT "FK_MEMBER_TO_CHATROOM" FOREIGN KEY ("MEMBERNO")
+REFERENCES "MEMBER" ("UNIQUE_NUM") ON DELETE CASCADE ENABLE;
+
+COMMIT;
+
+--------------------------------------------------------------------------------------------
+
+
+
+DROP TABLE VOLUNTEER CASCADE CONSTRAINTS;
+
+CREATE TABLE VOLUNTEER (
+	"VOLNO"	NUMBER		NOT NULL,
+	"VOLTITLE"	VARCHAR2(100)		NOT NULL,
+	"VOLWRITER"	VARCHAR2(100),
+	"VOLCONTENT"	VARCHAR2(4000),
+	"VOLDATE"	DATE	DEFAULT SYSDATE,
+	"VOLTEL"	VARCHAR2(50),
+	"VOLTERM"	VARCHAR2(100),
+	"VOLNAME"	VARCHAR2(200),
+	"VOLOR1"	VARCHAR2(100),
+	"VOLRE1"	VARCHAR2(100),
+	"VOLOR2"	VARCHAR2(100),
+	"VOLRE2"	VARCHAR2(100),
+	"VOLOR3"	VARCHAR2(100),
+	"VOLRE3"	VARCHAR2(100),
+	"VOLADDRESS"	VARCHAR2(200),
+	"VOLCHE"	CHAR(1)	DEFAULT 'Y' ,
+    CONSTRAINT VCHE CHECK (VOLCHE IN ('Y','N')),
+    CONSTRAINT "PK_VOLUNTEER" PRIMARY KEY ("VOLNO")
+);
+
+COMMENT ON COLUMN "VOLUNTEER"."VOLNO" IS 'ï¿½Û¹ï¿½È£';
+COMMENT ON COLUMN "VOLUNTEER"."VOLTITLE" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOLUNTEER"."VOLWRITER" IS 'ï¿½ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOLUNTEER"."VOLCONTENT" IS 'ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOLUNTEER"."VOLDATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOLUNTEER"."VOLTEL" IS 'ï¿½ï¿½È£(ï¿½ï¿½ï¿½ï¿½Ã³)';
+COMMENT ON COLUMN "VOLUNTEER"."VOLTERM" IS 'ï¿½ï¿½ï¿½ï¿½â°£ï¿½ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VOLUNTEER"."VOLNAME" IS 'ï¿½ï¿½ï¿½Í¸ï¿½';
+COMMENT ON COLUMN "VOLUNTEER"."VOLOR1" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½1';
+COMMENT ON COLUMN "VOLUNTEER"."VOLRE1" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½1';
+COMMENT ON COLUMN "VOLUNTEER"."VOLOR2" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½2';
+COMMENT ON COLUMN "VOLUNTEER"."VOLRE2" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½2';
+COMMENT ON COLUMN "VOLUNTEER"."VOLOR3" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½3';
+COMMENT ON COLUMN "VOLUNTEER"."VOLRE3" IS 'Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½3';
+COMMENT ON COLUMN "VOLUNTEER"."VOLADDRESS" IS 'ï¿½Ö¼Ò¸ï¿½';
+COMMENT ON COLUMN "VOLUNTEER"."VOLCHE" IS 'ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½';
+
+COMMIT;
+
+-- INSERT VOLUNTEER
+INSERT INTO VOLUNTEER(VOLNO, VOLTITLE, VOLWRITER, VOLCONTENT, VOLDATE, VOLTEL, VOLTERM, VOLNAME, VOLADDRESS, VOLCHE)
+VALUES(1, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½', 'ï¿½Ì¼ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ ï¿½ï¿½ï¿½â¹¦ï¿½é¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½.', SYSDATE, '010-6666-9999', '20200801-20200901', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½', 'ï¿½ï¿½âµµ ï¿½ï¿½ï¿½Î½ï¿½', DEFAULT);
+INSERT INTO VOLUNTEER(VOLNO, VOLTITLE, VOLWRITER, VOLCONTENT, VOLDATE, VOLTEL, VOLTERM, VOLNAME, VOLADDRESS, VOLCHE)
+VALUES(2, 'ï¿½Õ±ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½Ìµé¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½.', SYSDATE, '010-2222-3333', '20200701-20200901', 'ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½', 'ï¿½ï¿½âµµ ï¿½ï¿½ï¿½Ö½ï¿½', DEFAULT);
+INSERT INTO VOLUNTEER(VOLNO, VOLTITLE, VOLWRITER, VOLCONTENT, VOLDATE, VOLTEL, VOLTERM, VOLNAME, VOLADDRESS, VOLCHE)
+VALUES(3, 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½', 'ï¿½ï¿½È¿ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ ï¿½ï¿½ï¿½â¹¦ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½.', SYSDATE, '010-1111-2222', '20200801-20200901', 'ï¿½ï¿½ï¿½ï¿½Ì³ï¿½', 'ï¿½ï¿½âµµ È­ï¿½ï¿½ï¿½ï¿½', DEFAULT);
+INSERT INTO VOLUNTEER(VOLNO, VOLTITLE, VOLWRITER, VOLCONTENT, VOLDATE, VOLTEL, VOLNAME, VOLADDRESS, VOLCHE)
+VALUES(4, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.', SYSDATE, '010-5454-6232', 'ï¿½Ñ³ï¿½ï¿½ï¿½', 'ï¿½ï¿½âµµ ï¿½Ï³ï¿½ï¿½ï¿½', DEFAULT);
+INSERT INTO VOLUNTEER(VOLNO, VOLTITLE, VOLWRITER, VOLCONTENT, VOLDATE, VOLTEL, VOLTERM, VOLNAME, VOLADDRESS, VOLCHE)
+VALUES(5, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½', 'ï¿½ï¿½È¿ï¿½ï¿½', 'ï¿½ï¿½ ï¿½Â¾î³­ ï¿½Æ±â°­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. .', SYSDATE, '010-1234-4321', '20200801-20200901', 'ï¿½ï¿½Ãµï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½âµµ ï¿½ï¿½Ãµï¿½ï¿½', DEFAULT);
+INSERT INTO VOLUNTEER(VOLNO, VOLTITLE, VOLWRITER, VOLCONTENT, VOLDATE, VOLTEL, VOLNAME, VOLADDRESS, VOLCHE)
+VALUES(6, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Õ±ï¿½ï¿½ ï¿½Ù°ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'È¥ï¿½Ú¼ï¿½ ï¿½î¿µï¿½Ï°ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ðµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.', SYSDATE, '010-6666-7777', 'ï¿½ï¿½ï¿½ï¿½Ì³ï¿½', 'ï¿½ï¿½âµµ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½', DEFAULT);
+
+COMMIT;
+
+DROP TABLE VREPLY CASCADE CONSTRAINTS;
+
+CREATE TABLE "VREPLY" (
+	"VREPLY_NO"	NUMBER		NOT NULL,
+	"VOLNO"	NUMBER		NOT NULL,
+	"NICKNAME"	VARCHAR2(30) NOT NULL,
+	"VREPLY_DATE"	DATE	DEFAULT SYSDATE	NOT NULL,
+	"VREPLY_CONTENT"	VARCHAR2(4000)		NOT NULL,
+	"PARANT_REPLY"	NUMBER		NULL,
+	"VREPLY_LEVEL"	NUMBER		NULL
+);
+COMMENT ON COLUMN "VREPLY"."VREPLY_NO" IS 'ï¿½ï¿½Û¹ï¿½È£';
+COMMENT ON COLUMN "VREPLY"."VOLNO" IS 'ï¿½Û¹ï¿½È£';
+COMMENT ON COLUMN "VREPLY"."NICKNAME" IS 'ï¿½Ð³ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VREPLY"."VREPLY_DATE" IS 'ï¿½Û¼ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VREPLY"."VREPLY_CONTENT" IS 'ï¿½ï¿½Û³ï¿½ï¿½ï¿½';
+COMMENT ON COLUMN "VREPLY"."PARANT_REPLY" IS 'ï¿½Î¸ï¿½ï¿½Û¹ï¿½È£';
+COMMENT ON COLUMN "VREPLY"."VREPLY_LEVEL" IS 'ï¿½ï¿½Û·ï¿½ï¿½ï¿½';
+
+ALTER TABLE "VREPLY" ADD CONSTRAINT "PK_VREPLY" PRIMARY KEY ("VREPLY_NO");
+ALTER TABLE "VREPLY" ADD CONSTRAINT "FK_VREPLY_NO" FOREIGN KEY ("VOLNO")REFERENCES "VOLUNTEER" ("VOLNO") ON DELETE CASCADE ENABLE;
+ALTER TABLE "VREPLY" ADD CONSTRAINT "FK_VREPLY_N" FOREIGN KEY ("NICKNAME")REFERENCES "MEMBER" ("NICKNAME") ON DELETE CASCADE ENABLE;
+
+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+DROP SEQUENCE VREPLY_SEQ;
+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+CREATE SEQUENCE VREPLY_SEQ INCREMENT BY 1 START WITH 1 MINVALUE 1 NOMAXVALUE NOCYCLE NOCACHE;
+
+--INSERT VREPLY
+INSERT INTO VREPLY(VREPLY_NO, VOLNO, NICKNAME, VREPLY_DATE, VREPLY_CONTENT)
+VALUES(VREPLY_SEQ.NEXTVAL, 2, 'ï¿½Û¹ï¿½ï¿½ï¿½', DEFAULT, 'È¤ï¿½ï¿½ ï¿½×°ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ç¸¦ ï¿½ï¿½Ã»ï¿½Øµï¿½ ï¿½Ç³ï¿½ï¿½ï¿½?');
+INSERT INTO VREPLY(VREPLY_NO, VOLNO, NICKNAME, VREPLY_DATE, VREPLY_CONTENT)
+VALUES(VREPLY_SEQ.NEXTVAL, 3, 'ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½', DEFAULT, 'ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½æ¹®ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Í³×¿ï¿½');
+
+
+COMMIT;
+>>>>>>> origin/member_20200908

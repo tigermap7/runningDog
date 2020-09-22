@@ -1,7 +1,6 @@
 package com.kh.runningdog.dboard.model.vo;
 
 
-
 public class Dboard extends PageVO implements java.io.Serializable{
 	private static final long serialVersionUID = 6L;
 	

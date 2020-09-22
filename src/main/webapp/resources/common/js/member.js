@@ -1,5 +1,3 @@
-
-
 $(function () {
 	//멤버공통 정규표현식  *로그인포함 ***********************************************
 	//아이디(이메일)정규식
@@ -100,11 +98,11 @@ $(function () {
     		$('#newUserPwdWarning span').html('');
         }
     });
-  //멤버공통 정규표현식  *로그인포함 끝 ***********************************************
+    //멤버공통 정규표현식  *로그인포함 끝 ***********************************************
     
     
     //회원가입 ajax
-    $('.join_btn').click(function() {
+    $('.joinAction').click(function() {
 	    var id = $('#userIdChk').val().trim();
         var pwd = $('#userPwdChk').val().trim();
         var pwd2 = $('#userPwdChk2').val().trim();
@@ -169,6 +167,7 @@ $(function () {
 		}
 	});
     
+   
     
 
 	//아이디(이메일) 찾기 ajax
@@ -190,7 +189,7 @@ $(function () {
 	            	if(data == "selectId") {
 	            		location.href = "idFindComplete.do";
 	                } else if(data == "notSelectId") {
-	        			$('#phoneWarning span').html("가입된 휴대폰번호가 아닙니다.\n다시 입력해주세요.");
+	        			$('#phoneWarning span').html("가입된 휴대폰번호가 아닙니다. 다시 입력해주세요.");
 		            }
 	            },
 	    		error : function(jqXHR, textstatus, errorthrown) { console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
@@ -245,12 +244,9 @@ $(function () {
 	
 	//나의 프로필 ajax
 	$('.myinfoBtn').click(function() {
+
 		var pwd = $('#userPwdChk').val().trim();
-		
-		/*if(filetype !='gif' ||filetype !='jpg' || filetype !='jpeg' || filetype !='jpe' || filetype !='jfif' ||  filetype !='png' || filetype !='bmp'){
-        	alert('이미지 타입의 파일이 아닙니다/n다시 업로드해주세요.');
-		}*/
-		
+
 		if(pwd != ''){
 			//formData 객체생성
 			var formData = new FormData($('#myinfoForm')[0]);
@@ -265,16 +261,9 @@ $(function () {
 	            contentType: false, // 필수
 	            cache: false,
 				success : function(data) {
-            		console.log("data : " + data);
-            		$('.profilImage').text(data.originalProfile);
-            		$('#nicknameChk').values(data.nickname);
-            		$('#phoneChk').values(data.phone);
-            		
-	            	if(data == "data") {
-	            		
-	        			alert('나의 프로필 변경이 완료되었습니다.');
-	        			window.location.href='mypage.do';
-	                } else if(data == "notNickname") {
+                	alert("회원가입을 축하합니다.\n로그인 후 '지금 달려갈 개'의 서비스를 이용하실 수 있습니다.");
+            		if(data == "notNickname") {
+	                	alert("회원가입을 축하합니다.\n로그인 후 '지금 달려갈 개'의 서비스를 이용하실 수 있습니다.");
 	        			$('#nicknameWarning span').html('이미 존재하는 닉네임 입니다.');
 	                	nickname.focus();
 	                } else if(data == "notPhone") {
@@ -344,6 +333,8 @@ $(function () {
 			
 	});
 	
+	
+	//회원탈퇴
 	$(".leaveBtn").click(function(){
 		var result = confirm('회원탈퇴를 하시겠습니까?\n탈퇴된 회원은 되돌릴 수 없으니 신중하게 선택해주세요.');
 		
@@ -391,6 +382,95 @@ $(function () {
 		}
 		
 	});
+	
+	
+	//소셜로그인 프로필 변경 ajax
+	$('.socialMyinfoBtn').click(function() {
+	    var nickname = $('#nicknameChk').val().trim();
+	    var phone = $('#phoneChk').val().trim();
+	    
+	    
+		if(nickname != '' && phone != ''){
+			//formData 객체생성
+			var formData = new FormData($('#socialMyinfoForm')[0]);
+			
+			$.ajax({
+	            type:'post',
+	            enctype: 'multipart/form-data',
+	            url:'socialMyinfoAction.do',
+	            data: formData, // 필수
+				dataType : "json",
+	            processData: false, // 필수
+	            contentType: false, // 필수
+	            cache: false,
+				success : function(data) {
+	            	if(data == "notNickname") {
+	                	console.log('안녕하세요.');
+	        			$('#nicknameWarning span').html('이미 존재하는 닉네임 입니다.');
+	                	nickname.focus();
+	                } else if(data == "notPhone") {
+	        			$('#phoneWarning span').html('이미 가입된 핸드폰 번호 입니다.');
+	                	phone.focus();
+	                }
+	            },
+	    		error : function(jqXHR, textstatus, errorthrown) { console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+	    		}
+			});	
+		} else {
+			alert('비밀번호를 입력해야 나의 프로필 수정이 가능합니다.');
+			$('#userPwdChk').focus();
+		}
+	});
+ 
+    
+    
+    
+    
+    
+    
+    
+    
+    //페이스북 회원가입 ajax
+    $('.facebookJoinAction').click(function() {
+	    var phone = $('#phoneChk').val().trim();
+
+	    if (phone == null || phone == '' || phone == 'undefined') {
+    		$('#phoneWarning span').html('휴대폰번호를 입력해주세요.');
+        }
+	    if ($("#chkY").is(":checked") == false) {
+			alert('서비스 이용약관, 개인정보처리방침 동의 시 회원가입이 가능합니다.');
+			$('#chkY').focus();
+			return false;
+		}
+		
+		if(phone != '' && $('#chkY').is(':checked') == true){
+			
+			//formData 객체생성
+			var formData = new FormData($('#facebookJoinForm')[0]);
+			
+			$.ajax({
+	            type:'post',
+	            enctype: 'multipart/form-data',
+	            url:'facebookJoinAction.do',
+	            data: formData, // 필수
+	            processData: false, // 필수
+	            contentType: false, // 필수
+	            cache: false,
+	            success : function(data) {
+	                if(data == "notPhone") {
+	        			$('#phoneWarning span').html('이미 가입된 핸드폰 번호 입니다.');
+	                	phone.focus();
+	                } else if(data == "joinOk") {
+	                	alert("회원가입을 축하합니다.\n로그인 후 '지금 달려갈 개'의 서비스를 이용하실 수 있습니다.");
+	    				location.reload();
+	                	window.location.href = 'login.do';
+	                }
+	            },
+	    		error : function(jqXHR, textstatus, errorthrown) { console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);}
+    		});
+		}
+	});
+    
 	
 	
 		

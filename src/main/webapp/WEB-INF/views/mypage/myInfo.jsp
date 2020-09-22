@@ -34,6 +34,7 @@
                     <div class="subContent">
                         <div class="mypage_area">
                             <h2 class="mypage_title">나의 프로필 수정</h2>
+                            <c:if test="${ loginMember.loginType eq null }">
                             <form method="post" id="myinfoForm" name="myinfoAction.do" enctype="multipart/form-data">
                     		<legend>나의 프로필</legend>
                             <table class="InfoModify_table">
@@ -109,6 +110,67 @@
                                 <input type="reset" class="btn btn-list" value="취소하기">
                                 <input type="button" class="btn btn-success myinfoBtn" value="수정하기">
                             </div>
+                            </c:if>
+                            
+                            
+                            
+                            <c:if test="${ loginMember.loginType ne null }">
+                            <form method="post" id="socialMyinfoForm" name="socialMyinfoAction.do" enctype="multipart/form-data">
+                    		<legend>나의 프로필</legend>
+                            <table class="InfoModify_table">
+                                <colgroup>
+                                    <col width="25%">
+                                    <col width="75%">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td>아이디(이메일)</td>
+                                        <td><input type="text" name="userId" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" readonly/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>프로필 사진</td>
+                                        <td class="profilImage">
+                                       	 	<c:if test="${ !empty loginMember.originProfile }">
+											${ loginMember.originProfile } &nbsp;
+											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+											</c:if>
+											<c:if test="${ empty loginMember.originProfile }">
+											<input type="file" name="profilImage" title="프로필 사진"/>
+											</c:if>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>닉네임</td>
+                                        <td>
+                                        <input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임" value="${sessionScope.loginMember.nickname}"/>
+				                        <p id="socialNicknameWarning">
+				                       		<span></span>
+				                        </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>휴대폰번호</td>
+                                        <td class="telArea">
+                                        <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력"  value="${sessionScope.loginMember.phone}"/>
+			                            <p id="socialPhoneWarning">
+			                                <span></span>
+			                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button type="button" class="leaveBtn">탈퇴하기</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+            				</form>
+                            <div class="write-btn">
+                                <input type="reset" class="btn btn-list" value="취소하기">
+                                <input type="button" class="btn btn-success socialMyinfoBtn" value="수정하기">
+                            </div>
+                            </c:if>
             
                         </div>
                     </div>

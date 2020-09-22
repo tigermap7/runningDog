@@ -33,9 +33,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.chatting.model.service.ChatroomService;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
-import com.kh.runningdog.member.model.service.FindUtil;
-import com.kh.runningdog.member.model.service.MailUtil;
 import com.kh.runningdog.member.model.service.MemberService;
+import com.kh.runningdog.member.model.vo.FindUtil;
+import com.kh.runningdog.member.model.vo.MailUtil;
 import com.kh.runningdog.member.model.vo.Member;
 
 @Controller
@@ -85,31 +85,23 @@ public class MemberController {
 	}
 	
 	//세션 만료로 인한 자동로그아웃
-//	public void logoutActionMethod(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-//		
-//		session = request.getSession(false);
-//		String url = null;
-//		
-//		//세션 이용해서 로그아웃 처리
-//		if(session != null) {
-//			session.invalidate();
-//            response.setContentType("text/html; charset=UTF-8");
-//            PrintWriter out = response.getWriter();
-//            out.println("<script>alert('세션 만료로 인해 자동 로그아웃 되었습니다.\\n다시 로그인해주세요.'); history.go(-1);</script>");
-//            out.flush();
-//            url = "main/main";
-//		}
-//	}
+	public void logoutMethod(HttpSession session, HttpServletResponse response) throws IOException {
+		//세션 이용해서 로그아웃 처리
+		if(session == null) {
+			session.invalidate();
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('세션 만료로 인해 자동 로그아웃 되었습니다.\\n다시 로그인해주세요.'); history.go(-1);</script>");
+            out.flush();
+		}
+	}
 	
 	
 	//로그인컨트롤러
 	@RequestMapping(value="loginAction.do", method=RequestMethod.POST)
-	public String loginActionMethod(Member member, Chatroom room, Model model, HttpSession session, HttpServletRequest request
-            , HttpServletResponse response, SessionStatus status) throws IOException {
+	public String loginMethod(Member member, Chatroom room, Model model, HttpSession session, HttpServletResponse response, SessionStatus status) throws IOException {
 		logger.info("loginAction run...");
 		Member loginMember = memberService.selectLogin(member);
-		
-		/*참여한 채팅방 리스트 선언*/
 		ArrayList<Integer> myChatList = null;
 		
 		String url = null;
@@ -118,8 +110,6 @@ public class MemberController {
 			if (bcryptoPasswordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd())) {
 				// 나의 채팅방 정보 세션 저장
 				room.setMemberNo(loginMember.getUniqueNum());
-				
-				/*참여한 채팅방 리스트 불러온 후 세션에 저장*/
 				myChatList = chatroomService.selectMyChatList(room);
 				session.setAttribute("myChatList", myChatList);
 				
@@ -145,15 +135,20 @@ public class MemberController {
 		}
 		return url;
 	}
+	
+	
+	
+	
+	
 
 	//로그아웃컨트롤러	
 	@RequestMapping("logout.do")
-	public String logoutActionMethod(Model model, HttpSession session, HttpServletRequest request) {
+	public String logoutMethod(HttpSession session, HttpServletRequest request) {
 		logger.info("logout run...");
 		
 		session = request.getSession(false);
 		
-		//세션 이용해서 로그아웃 처리
+		//세션 로그아웃 처리
 		if(session != null) {
 			session.invalidate();
 			return "main/main";
@@ -167,7 +162,7 @@ public class MemberController {
 	//회원가입컨트롤러
 	@RequestMapping(value="joinAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String joinActionMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
+	public String joinMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
 		logger.info("joinAction run...");
 		logger.info("member : " + member);
 		
@@ -181,32 +176,24 @@ public class MemberController {
 		
 		String url = null;
 		int pChk = 0, iChk = 0, nChk = 0;
+		
+		iChk = (member.getUserId().equals(member.getUserId())) ? 1 : 0;
+		nChk = (member.getNickname().equals(member.getNickname())) ? 1 : 0;
+		pChk = (member.getPhone().equals(member.getPhone())) ? 1 : 0;
 
-		if(userIdChk != null) {
-			iChk = (member.getUserId().equals(member.getUserId())) ? 1 : 0;
-			if(iChk > 0) {
-				url = "notUserId";
-			}
-		} else if(nicknameChk != null) {
-			nChk = (member.getNickname().equals(member.getNickname())) ? 1 : 0;
-			if(nChk > 0) {
-				url = "notNickname";
-			}
-		} else if(phoneChk != null) {
-			pChk = (member.getPhone().equals(member.getPhone())) ? 1 : 0;
-			if(pChk > 0) {
-				url = "notPhone";
-			}
+		if(userIdChk != null && iChk > 0) {
+			url = "notUserId";
+		} else if(nicknameChk != null && nChk > 0) {
+			url = "notNickname";
+		} else if(phoneChk != null && pChk > 0) {
+			url = "notPhone";
 		} else if(iChk == 0 && nChk == 0 && pChk == 0) {
 			
 			if(profilImg.getOriginalFilename() != "") {
-				logger.info("확인4 : ");
+
 				//해당 유저의 프로필 파일이름
 				String originProfile = member.getOriginProfile();
 				String renameProfile = member.getRenameProfile();
-				
-				logger.info("originProfile : " + originProfile);
-				logger.info("renameProfile : " + renameProfile);
 				
 				String deleteFlag = request.getParameter("deleteFlag"); //삭제버튼
 
@@ -232,28 +219,27 @@ public class MemberController {
 				if (newOriginProfile != null) {
 					newRenameProfile = sdf.format(new java.sql.Date(System.currentTimeMillis()));
 					newRenameProfile += "." + newOriginProfile.substring(newOriginProfile.lastIndexOf(".") + 1);
+					
 					try {
-						logger.info("확인1");
 						profilImg.transferTo(new File(savePath + "\\" + newRenameProfile));
 					} catch (IllegalStateException | IOException e) {
 						e.printStackTrace();
 					}
+					
 					if (renameProfile != null) {
-						logger.info("확인2");
 						new File(savePath + "\\" + renameProfile).delete();
 					}
-					member.setOriginProfile(newOriginProfile);
-					member.setRenameProfile(newRenameProfile);
-					logger.info("확인3");
+					member.setOriginProfile(dateString+ "/" + newOriginProfile);
+					member.setRenameProfile(dateString+ "/" + newRenameProfile);
 					
 				} else if (!(originProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
-					logger.info("확인4");
+					
 					member.setOriginProfile(null);
 					member.setRenameProfile(null);
 					new File(savePath + "\\" + renameProfile).delete();
+					
 				} else if (!originProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
 						new File(savePath+ "\\" + renameProfile).length() == new File(savePath + "\\" + newRenameProfile).length())) {
-					logger.info("확인5");
 					member.setOriginProfile(originProfile);
 					member.setRenameProfile(renameProfile);
 				}
@@ -265,19 +251,20 @@ public class MemberController {
 					url = "joinOk";
 				}
 			}
-			
 		} else {
 			model.addAttribute("message", "회원가입 실패.");
 			return "common/error";
 		}
 		return url;
 	}
+		
+		
 	
 	
 	//아이디(이메일) 찾기 컨트롤러
 	@RequestMapping(value="idFindAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String idFindActionMethod(Member member, HttpServletResponse response, HttpSession session, SessionStatus status) throws IOException {
+	public String idFindMethod(Member member, HttpServletResponse response, HttpSession session, SessionStatus status) throws IOException {
 		logger.info("idFindAction run...");
 		
 		Member phoneChk = memberService.selectPhoneCheck(member);
@@ -301,7 +288,7 @@ public class MemberController {
 	//비밀번호 찾기 컨트롤러
 	@RequestMapping(value="pwdFindAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String pwdFindActionMethod(Member member, Model model, HttpServletResponse response, HttpSession session) throws IOException {
+	public String pwdFindMethod(Member member, HttpServletResponse response, HttpSession session) throws IOException {
 		logger.info("pwdFindAction run...");
 		
 		Member userIdPhoneChk = memberService.selectUserIdPhoneCheck(member);
@@ -340,9 +327,9 @@ public class MemberController {
 	
 	
 	//나의프로필 컨트롤러
-		@RequestMapping(value="myinfoAction.do", method=RequestMethod.POST)
-		@ResponseBody
-		public String myinfoActionMethod(Member member, Model model, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
+	@RequestMapping(value="myinfoAction.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String myinfoMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
 		logger.info("myinfoAction run...");
 		Member loginMember = memberService.selectLogin(member);
 		
@@ -353,28 +340,28 @@ public class MemberController {
 		
 		
 		String url = null;
-		int pChk = 0, nChk = 0, pwdChk = 0;
-		boolean myNickname2 = false, myPhone2 = false;
-		myNickname2 = loginMember.getNickname().equals(member.getNickname());
-		myPhone2 = loginMember.getPhone().equals(member.getPhone());
+		int nChk = 0, pChk = 0;
 		
-		if(nicknameChk != null && nicknameChk.getNickname().equals(member.getNickname()) == true && myNickname2 == false) {
-			url = "notNickname";
-		} else if(phoneChk != null && phoneChk.getPhone().equals(member.getPhone()) == true && myPhone2 == false) {
-			url = "notPhone";
-		} else if (nChk == 0 && pChk == 0 && bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd())) {
+		boolean myNickname = loginMember.getNickname().equals(member.getNickname());
+		boolean myPhone = loginMember.getPhone().equals(phoneChk.getPhone());
 
+		if(nicknameChk != null && myNickname != true) {
+			url = "notNickname";
+		} else if(phoneChk != null && myPhone != true) {
+			url = "notPhone";
+		} else if (bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd())) {
+	
 			//해당 유저의 프로필 파일이름
 			String originProfile = loginMember.getOriginProfile();
 			String renameProfile = loginMember.getRenameProfile();
 			
 			String deleteFlag = request.getParameter("deleteFlag"); //삭제버튼
-
+	
 			//오늘 날짜의 디렉토리 만들기
 			Calendar cal = Calendar.getInstance();
 			String dateString;
 			dateString = String.format("%04d%02d%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
-
+	
 			//이미지 저장 경로 / 오늘날짜 폴더
 			String savePath = request.getSession().getServletContext().getRealPath("resources/images/memberImg/" + dateString);
 			File folder = new File(savePath);
@@ -382,7 +369,7 @@ public class MemberController {
 			if (!folder.exists()) { // 디렉토리 없으면 생성.
 				folder.mkdirs();
 			}
-
+	
 			//오늘 날짜 파일명 변경
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 			String newOriginProfile = profilImg != null ? profilImg.getOriginalFilename() : null;
@@ -390,58 +377,47 @@ public class MemberController {
 			String newRenameProfile = null;
 			
 			if (newOriginProfile != null) {
+				
 				newRenameProfile = sdf.format(new java.sql.Date(System.currentTimeMillis()));
 				newRenameProfile += "." + newOriginProfile.substring(newOriginProfile.lastIndexOf(".") + 1);
+				
 				try {
-					logger.info("확인1");
 					profilImg.transferTo(new File(savePath + "\\" + newRenameProfile));
-
-					logger.info("확인2");
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
-				logger.info("확인3");
+				
 				if (renameProfile != null) {
-
-					logger.info("확인4");
 					new File(savePath + "\\" + renameProfile).delete();
 				}
-				logger.info("확인5");
+				
 				member.setOriginProfile(dateString+ "/" + newOriginProfile);
 				member.setRenameProfile(dateString+ "/" + newRenameProfile);
-
-				logger.info("확인6");
+	
 			} else if (!(originProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
-
-				logger.info("확인7");
+				
 				member.setOriginProfile(null);
 				member.setRenameProfile(null);
 				new File(savePath + "\\" + renameProfile).delete();
-				logger.info("확인8");
+				
 			} else if (!originProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
 					new File(savePath+ "\\" + renameProfile).length() == new File(savePath + "\\" + newRenameProfile).length())) {
-
-				logger.info("member.getOriginProfile() : " + member.getOriginProfile());
-				logger.info("확인9");
+	
 				member.setOriginProfile(originProfile);
 				member.setRenameProfile(renameProfile);
 			}
-
-			logger.info("확인10");
-			logger.info("memberService.updatemyinfo(member) : " + memberService.updatemyinfo(member));
-			logger.info("확인10");
+	
 			if(memberService.updatemyinfo(member) > 0) {
-				logger.info("확인11");
-
-				response.setContentType("application/json; charset = utf-8");
-				JSONObject data = new JSONObject();
-				data.put("originProfile", URLEncoder.encode(member.getOriginProfile(), "utf-8"));
-				data.put("nickname", URLEncoder.encode(member.getNickname(), "utf-8"));
-				data.put("phone", URLEncoder.encode(member.getPhone(), "utf-8"));
-
-				return data.toString();
-				
-				//return "redirect:myinfoOk";
+	
+//				response.setContentType("application/json; charset = utf-8");
+//				JSONObject data = new JSONObject();
+//				data.put("originProfile", URLEncoder.encode(member.getOriginProfile(), "utf-8"));
+//				data.put("nickname", URLEncoder.encode(member.getNickname(), "utf-8"));
+//				data.put("phone", URLEncoder.encode(member.getPhone(), "utf-8"));
+//	
+//				return data.toString();
+//				
+//				//return "redirect:myinfoOk";
 			}
 				
 		} else if(bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd()) == false) {
@@ -450,6 +426,7 @@ public class MemberController {
 			model.addAttribute("message", "나의 프로필 변경 실패.");
 			url = "common/error";
 		}
+		System.out.println(url);
 		return url;
 	}
 		
@@ -458,7 +435,7 @@ public class MemberController {
 	//나의 프로필 비밀번호 변경 컨트롤러
 	@RequestMapping(value="pwdChangeAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String pwdChangeActionMethod(Member member, Model model, HttpServletResponse response, HttpSession session) throws IOException {
+	public String pwdChangeMethod(Member member, HttpServletResponse response, HttpSession session) throws IOException {
 
 		Member userPwdChk = memberService.selectUserPwdCheck(member);
 		String url = null;
@@ -480,32 +457,28 @@ public class MemberController {
 	
 	//회원탈퇴 컨트롤러
 	@RequestMapping(value="leaveMember.do", method=RequestMethod.POST)
-	public String leaveMemberActionMethod(Member member,@RequestParam("userId") String userId, HttpSession session) throws IOException {
+	public String leaveMemberMethod(Member member, HttpSession session) throws IOException {
 		String url = null;
 		logger.info("leaveMember run...");
 		Member userPwdChk = memberService.selectUserPwdCheck(member);
-		logger.info("userPwdChk : " + userPwdChk);
-		logger.info("userPwdChk2 : " + bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd()));
+		
 		if (bcryptoPasswordEncoder.matches(member.getUserPwd(), userPwdChk.getUserPwd())) {
 			if (memberService.insertLeaveMember(member) > 0) {
 
-				logger.info("확인1");
-				if (memberService.deleteMember(userId.trim()) > 0) {
-					return "redirect:/logout.do";
-				} else {
-					session.setAttribute("message", "회원탈퇴 실패");
-					return "common/error";
-				}
+//				if (memberService.deleteMember(member.getUniqueNum()) > 0) {
+//					return "redirect:/logout.do";
+//				} else {
+//					session.setAttribute("message", "회원탈퇴 실패");
+//					return "common/error";
+//				}
 			} else {
 				session.setAttribute("message", "회원탈퇴 목록으로 insert 실패");
 				return "common/error";
 			}
 		} else {
-			logger.info("확인2");
 			url = "notUserPwd";
 		}
 		return url;
-		
 	}
 	/*채팅방 관련 코드*/
 	/*나의 채팅에서 유저검색*/
@@ -525,7 +498,243 @@ public class MemberController {
 
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 페이스북로그인 컨트롤러
+	@RequestMapping("facebookLogin.do")
+	public String facebookLoginMethod(Member member, Model model, @RequestParam("email") String userId, @RequestParam("name") String nickname, HttpSession session, HttpServletResponse response, SessionStatus status) throws IOException {
+		
+		member.setUserId(userId);
+		Member loginMember = memberService.selectFacebookLogin(member);
+		
+		String url = null;
+		
+		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
+			logger.info("로그인 성공");
+			
+			session.setAttribute("loginMember", loginMember);
+			status.setComplete(); // 요청성공, 200 전송
+			url = "main/main";
+		}else if(loginMember != null && loginMember.getLoginLimit().equals("Y")) {
+			logger.info("로그인 제한된 계정");
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인이 제한된 계정입니다.\\n관리자에게 문의주세요.'); history.go(-1);</script>");
+            out.flush();
+		}else{
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('간편로그인을 하기 위해선 회원가입이 필요합니다.');</script>");
+            out.flush();
+			model.addAttribute("userId", userId);
+			model.addAttribute("nickname", nickname);
+	         return "member/facebookJoin";
+		}
+		logger.info("리턴");
+		return url;
+	}
+	
+	
+	
+	
+	//페이스북 회원가입 컨트롤러
+	@RequestMapping(value="facebookJoinAction.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String facebookJoinMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
+		logger.info("joinAction run...");
+		logger.info("member : " + member);
+		
+		Member phoneChk = memberService.selectPhoneCheck(member);
+		
+		String url = null;
+		int pChk = 0;
 
+		if(phoneChk != null) {
+			pChk = (member.getPhone().equals(member.getPhone())) ? 1 : 0;
+			if(pChk > 0) {
+				url = "notPhone";
+			}
+		} else if(pChk == 0) {
+			
+			if(profilImg.getOriginalFilename() != "") {
+
+				//해당 유저의 프로필 파일이름
+				String originProfile = member.getOriginProfile();
+				String renameProfile = member.getRenameProfile();
+				
+				String deleteFlag = request.getParameter("deleteFlag"); //삭제버튼
+
+				//오늘 날짜의 디렉토리 만들기
+				Calendar cal = Calendar.getInstance();
+				String dateString;
+				dateString = String.format("%04d%02d%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+
+				//이미지 저장 경로 / 오늘날짜 폴더
+				String savePath = request.getSession().getServletContext().getRealPath("resources/images/memberImg/"+ dateString);
+				File folder = new File(savePath);
+				//오늘 날짜의 디렉토리가 없으면 생성
+				if (!folder.exists()) { // 디렉토리 없으면 생성.
+					folder.mkdirs();
+				}
+
+				//오늘 날짜 파일명 변경
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+				String newOriginProfile = profilImg != null ? profilImg.getOriginalFilename() : null;
+				
+				String newRenameProfile = null;
+				
+				if (newOriginProfile != null) {
+					newRenameProfile = sdf.format(new java.sql.Date(System.currentTimeMillis()));
+					newRenameProfile += "." + newOriginProfile.substring(newOriginProfile.lastIndexOf(".") + 1);
+					
+					try {
+						profilImg.transferTo(new File(savePath + "\\" + newRenameProfile));
+					} catch (IllegalStateException | IOException e) {
+						e.printStackTrace();
+					}
+					
+					if (renameProfile != null) {
+						new File(savePath + "\\" + renameProfile).delete();
+					}
+					member.setOriginProfile(dateString+ "/" + newOriginProfile);
+					member.setRenameProfile(dateString+ "/" + newRenameProfile);
+					
+				} else if (!(originProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
+					
+					member.setOriginProfile(null);
+					member.setRenameProfile(null);
+					new File(savePath + "\\" + renameProfile).delete();
+					
+				} else if (!originProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
+						new File(savePath+ "\\" + renameProfile).length() == new File(savePath + "\\" + newRenameProfile).length())) {
+					member.setOriginProfile(originProfile);
+					member.setRenameProfile(renameProfile);
+				}
+				if(memberService.insertFacabookMember(member) > 0) {
+					url = "joinOk";
+				}
+			} else {
+				if(memberService.insertFacabookMember(member) > 0) {
+					url = "joinOk";
+				}
+			}
+		} else {
+			model.addAttribute("message", "회원가입 실패.");
+			return "common/error";
+		}
+		return url;
+	}
+	
+	
+	
+	//소셜로그인 나의프로필 변경 컨트롤러
+	@RequestMapping(value="socialMyinfoAction.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String socialMyinfoMethod(Member member, Model model, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
+		logger.info("myinfoAction run...");
+		logger.info("member : " + member);
+		Member loginMember = memberService.selectLogin(member);
+		
+		//닉네임, 핸드폰 번호, 비밀번호 유효성검사
+		Member nicknameChk = memberService.selectNicknameCheck(member);
+		Member phoneChk = memberService.selectPhoneCheck(member);
+		
+		
+		String url = null;
+		int pChk = 0, nChk = 0, pwdChk = 0;
+		boolean myNickname2 = false, myPhone2 = false;
+		myNickname2 = loginMember.getNickname().equals(member.getNickname());
+		myPhone2 = loginMember.getPhone().equals(member.getPhone());
+
+		logger.info("loginMember : " + loginMember);
+		logger.info("nicknameChk.getNickname().equals(member.getNickname()) : " + nicknameChk.getNickname().equals(member.getNickname()));
+		logger.info("phoneChk.getPhone().equals(member.getPhone()) : " + phoneChk.getPhone().equals(member.getPhone()));
+		
+		if(nicknameChk != null && nicknameChk.getNickname().equals(member.getNickname()) == true && myNickname2 == false) {
+			logger.info("확인11111");
+			url = "notNickname";
+		} else if(phoneChk != null && phoneChk.getPhone().equals(member.getPhone()) == true && myPhone2 == false) {
+			logger.info("확인22222");
+			url = "notPhone";
+		} else if (nChk == 0 && pChk == 0) {
+	
+			//해당 유저의 프로필 파일이름
+			String originProfile = loginMember.getOriginProfile();
+			String renameProfile = loginMember.getRenameProfile();
+			
+			String deleteFlag = request.getParameter("deleteFlag"); //삭제버튼
+	
+			//오늘 날짜의 디렉토리 만들기
+			Calendar cal = Calendar.getInstance();
+			String dateString;
+			dateString = String.format("%04d%02d%02d", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+	
+			//이미지 저장 경로 / 오늘날짜 폴더
+			String savePath = request.getSession().getServletContext().getRealPath("resources/images/memberImg/" + dateString);
+			File folder = new File(savePath);
+			//오늘 날짜의 디렉토리가 없으면 생성
+			if (!folder.exists()) { // 디렉토리 없으면 생성.
+				folder.mkdirs();
+			}
+	
+			//오늘 날짜 파일명 변경
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String newOriginProfile = profilImg != null ? profilImg.getOriginalFilename() : null;
+			
+			String newRenameProfile = null;
+			
+			if (newOriginProfile != null) {
+				
+				newRenameProfile = sdf.format(new java.sql.Date(System.currentTimeMillis()));
+				newRenameProfile += "." + newOriginProfile.substring(newOriginProfile.lastIndexOf(".") + 1);
+				
+				try {
+					profilImg.transferTo(new File(savePath + "\\" + newRenameProfile));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				
+				if (renameProfile != null) {
+					new File(savePath + "\\" + renameProfile).delete();
+				}
+				
+				member.setOriginProfile(dateString+ "/" + newOriginProfile);
+				member.setRenameProfile(dateString+ "/" + newRenameProfile);
+	
+			} else if (!(originProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
+				
+				member.setOriginProfile(null);
+				member.setRenameProfile(null);
+				new File(savePath + "\\" + renameProfile).delete();
+				
+			} else if (!originProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
+					new File(savePath+ "\\" + renameProfile).length() == new File(savePath + "\\" + newRenameProfile).length())) {
+	
+				member.setOriginProfile(originProfile);
+				member.setRenameProfile(renameProfile);
+			}
+	
+			if(memberService.updatemyinfo(member) > 0) {
+				model.addAttribute("member", member);
+				url = "mypage.do";
+			}
+				
+		} else {
+			model.addAttribute("message", "나의 프로필 변경 실패.");
+			url = "common/error";
+		}
+		return url;
+	}
 /**************** user controller end ******************/
 	
 	

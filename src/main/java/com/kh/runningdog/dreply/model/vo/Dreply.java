@@ -1,7 +1,6 @@
 package com.kh.runningdog.dreply.model.vo;
 
 
-
 public class Dreply implements java.io.Serializable{
 	private static final long serialVersionUID = 6161L;
 	
@@ -40,36 +39,29 @@ public class Dreply implements java.io.Serializable{
 		return dreNum;
 	}
 
-
 	public void setDreNum(int dreNum) {
 		this.dreNum = dreNum;
 	}
-
 
 	public int getdNum() {
 		return dNum;
 	}
 
-
 	public void setdNum(int dNum) {
 		this.dNum = dNum;
 	}
-
 
 	public String getDreWriter() {
 		return dreWriter;
 	}
 
-
 	public void setDreWriter(String dreWriter) {
 		this.dreWriter = dreWriter;
 	}
 
-
 	public String getDreContent() {
 		return dreContent;
 	}
-
 
 	public void setDreContent(String dreContent) {
 		this.dreContent = dreContent;
@@ -100,7 +92,6 @@ public class Dreply implements java.io.Serializable{
 		return dreParents;
 	}
 
-
 	public void setDreParents(int dreParents) {
 		this.dreParents = dreParents;
 	}
@@ -119,7 +110,6 @@ public class Dreply implements java.io.Serializable{
 	public int getUniqueNum() {
 		return uniqueNum;
 	}
-
 
 	public void setUniqueNum(int uniqueNum) {
 		this.uniqueNum = uniqueNum;

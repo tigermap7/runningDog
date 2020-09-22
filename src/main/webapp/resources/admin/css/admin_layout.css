@@ -194,8 +194,7 @@
 #admin_footer {
     border-top:1px solid #ccc;
     width: 100%;
-    margin-left: 210px;
-    padding: 35px 50px;
+    padding: 35px 50px 35px 260px;
 }
 #admin_footer address {
     margin: 0;

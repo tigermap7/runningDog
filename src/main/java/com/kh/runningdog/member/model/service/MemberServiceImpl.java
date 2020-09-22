@@ -1,23 +1,23 @@
 package com.kh.runningdog.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.runningdog.member.model.dao.MemberDao;
 import com.kh.runningdog.member.model.vo.Member;
+import com.kh.runningdog.member.model.vo.LeaveMember;
+import com.kh.runningdog.member.model.vo.MemberPage;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDao memberDao;
 
-	@Override
-	public ArrayList<Member> selectList() {
-		return memberDao.selectList();
-	}
 	
+	//사용자
 	@Override
 	public Member selectMember(String userId) {
 		return memberDao.selectMember(userId);
@@ -52,7 +52,43 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectUserPwdCheck(Member member) {
 		return memberDao.selectUserPwdCheck(member);
 	}
+	
+	@Override
+	public int updateMemberPwd(Member member) {
+		return memberDao.updateMemberPwd(member);
+	}
+	
+	@Override
+	public int updatemyinfo(Member member) {
+		return memberDao.updatemyinfo(member);
+	}
+	
+	@Override
+	public int deleteMember(String userId) {
+		return memberDao.deleteMember(userId);
+	}
 
+	
+	//간편로그인, 회원가입, 소셜마이페이지
+	@Override
+	public Member selectFacebookLogin(Member member) {
+		return memberDao.selectFacebookLogin(member);
+	}
+
+	@Override
+	public int insertFacabookMember(Member member) {
+		return memberDao.insertFacabookMember(member);
+	}
+
+	@Override
+	public int updateSocialMyinfo(Member member) {
+		return memberDao.updateSocialMyinfo(member);
+	}
+
+	
+	
+	
+	//공용
 	@Override
 	public int insertMember(Member member) {
 		return memberDao.insertMember(member);
@@ -62,37 +98,93 @@ public class MemberServiceImpl implements MemberService {
 	public int updateMember(Member member) {
 		return memberDao.updateMember(member);
 	}
-
-	@Override
-	public int updateMemberPwd(Member member) {
-		return memberDao.updateMemberPwd(member);
-	}
-
-	@Override
-	public int updatemyinfo(Member member) {
-		return memberDao.updatemyinfo(member);
-	}
 	
-
 	@Override
 	public int insertLeaveMember(Member member) {
 		return memberDao.insertLeaveMember(member);
 	}
 	
+	
+	
+	
+	//관리자
 	@Override
-	public int deleteMember(String userId) {
-		return memberDao.deleteMember(userId);
+	public ArrayList<Member> selectMemberList(MemberPage memberPage) {
+		return memberDao.selectMemberList(memberPage);
+	}
+	
+	@Override
+	public int selectMemberCount(MemberPage memberSerch) {
+		return memberDao.selectMemberCount(memberSerch);
+	}
+	
+	@Override
+	public Member selectUserOne(int uniqueNum) {
+		return memberDao.selectUserOne(uniqueNum);
+	}
+	
+	@Override
+	public int adminInsertMember(Member member) {
+		return memberDao.adminInsertMember(member);
+	}
+	
+	@Override
+	public int adminUpdateMember(Member member) {
+		return memberDao.adminUpdateMember(member);
+	}
+	
+	@Override
+	public int adminLeaveMember(Member selectUser) {
+		return memberDao.adminLeaveMember(selectUser);
 	}
 
-	/*채팅방 관련 코드*/
+	@Override
+	public int insertLeaveMemberChk(int temp) {
+		return memberDao.insertLeaveMemberChk(temp);
+	}
+
+	@Override
+	public int leaveMemberChk(int temp) {
+		return memberDao.leaveMemberChk(temp);
+	}
+	
+
+	@Override
+	public ArrayList<LeaveMember> selectMemberLeaveList(MemberPage memberPage) {
+		return memberDao.selectMemberLeaveList(memberPage);
+	}
+
+	@Override
+	public int selectMemberLeaveCount(MemberPage memberSerch) {
+		return memberDao.selectMemberLeaveCount(memberSerch);
+	}
+
+	@Override
+	public LeaveMember selectLeaveUserOne(int leaveUniqueNum) {
+		return memberDao.selectLeaveUserOne(leaveUniqueNum);
+	}
+
+	@Override
+	public int deleteChk(int temp) {
+		return memberDao.deleteChk(temp);
+	}
+
+	
+	
+	
+	// 채팅에서 유저검색
 	@Override
 	public ArrayList<Member> selectNicknameCheckList(Member member) {
 		return memberDao.selectNicknameCheckList(member);
 	}
-	
+
 	@Override
 	public int selectNicknameCount(Member member) {
 		return memberDao.selectNicknameCount(member);
 	}
-	/*채팅방 관련 코드 끝*/
+
+
+
+
+
 }

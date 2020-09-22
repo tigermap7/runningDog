@@ -5,8 +5,52 @@
 <!DOCTYPE html>
 <html lang="ko" class="animalBg">
 	<head>
-        <c:import url="/WEB-INF/views/include/head.jsp"/>
-	</head>
+	<c:import url="/WEB-INF/views/include/head.jsp"/>
+	<!-- Load the JS SDK asynchronously -->
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v8.0&appId=1200941690288936&autoLogAppEvents=1" nonce="T57R8Bl1"></script>
+	<script>
+
+		function statusChangeCallback(response) { // Called with the results from FB.getLoginStatus().
+			console.log('statusChangeCallback');
+			console.log(response); // The current login status of the person.
+			if (response.status === 'connected') { // Logged into your webpage and Facebook.
+				testAPI();
+			} else { // Not logged into your webpage or we are unable to tell.
+				document.getElementById('status').innerHTML = 'Please log '
+						+ 'into this webpage.';
+			}
+		}
+
+		function checkLoginState() { // Called when a person is finished with the Login Button.
+			FB.getLoginStatus(function(response) { // See the onlogin handler
+				statusChangeCallback(response);
+			});
+		}
+
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId : '{app-id}',
+				cookie : true, // Enable cookies to allow the server to access the session.
+				xfbml : true, // Parse social plugins on this webpage.
+				version : '{api-version}' // Use this Graph API version for this call.
+			});
+
+			FB.getLoginStatus(function(response) { // Called after the JS SDK has been initialized.
+				statusChangeCallback(response); // Returns the login status.
+			});
+		};
+
+		function testAPI() { // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+			console.log('Welcome!  Fetching your information.... ');
+			FB.api('/me?fields=id,name,email', function(response) {
+				console.log('Successful login for: ' + response.name);
+				document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+
+				location.href = "facebookLogin.do?name=" + response.name + "&email=" + response.email
+			});
+		}
+	</script>
+</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
 			<!-- 컨텐츠 -->
@@ -47,16 +91,23 @@
                             <li onclick="location='#none'" class="nLogin">
                                 <span><i class="xi-naver"></i></span>네이버계정 로그인
                             </li>
-                            <li onclick="location='#none'" class="fLogin">
+                            <li scope="public_profile,email" onlogin="checkLoginState();" class="fLogin fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width="">
                                 <span><i class="xi-facebook"></i></span>페이스북계정 로그인
                             </li>
+							<div scope="public_profile,email" onlogin="checkLoginState();" class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div>
+							
                         </ul>
                     </div>
                     </form>
+                    <div id="status">
+					</div>
+					<div id="fb-root">
+					</div>
                 </div>
 				<!-- 로그인 끝 -->
 			</div>
 			<!-- 컨텐츠 끝 -->
 		</div>
 	</body>
+	
 </html>

@@ -11,10 +11,10 @@
 
 <title>관리자 화면</title>
 
+<link rel="shortcut icon" href="resources/images/common/favicon.ico">
 <link rel="stylesheet" type="text/css" href="resources/admin/css/common.css">
 <link rel="stylesheet" type="text/css" href="resources/common/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="resources/common/css/swiper.min.css">
-<script src="resources/admin/js/member.js"></script>
 <script src="resources/common/js/jquery-3.5.1.min.js"></script>
 <script src="resources/common/js/bootstrap.js"></script>
 <script src="resources/common/js/swiper.min.js"></script>
@@ -22,6 +22,7 @@
 <script src="resources/common/js/common.js"></script>
 <script src="resources/common/js/sponsor.js"></script>
 <script src="resources/dboard/js/dboard.js"></script>
+<script src="resources/admin/js/member.js"></script>
 
 <link href="${pageContext.request.contextPath}/resources/summernote/summernote.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/summernote/summernote.js"></script>
