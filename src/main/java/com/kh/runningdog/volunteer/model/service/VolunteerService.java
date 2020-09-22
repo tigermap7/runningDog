@@ -21,4 +21,5 @@ public interface VolunteerService {
 	int getListCountVreply(int volno);
 	int selectVolunteerPre(int volno);
 	int selectVolunteerNext(int volno);
+	Vreply selectVreply(int vreply_no);
 }

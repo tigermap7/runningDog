@@ -85,6 +85,11 @@ public class VolunteerServiceImpl implements VolunteerService{
 		return volunteerDao.deleteVolunteerAdmin(checkRow);
 	}
 
+	@Override
+	public Vreply selectVreply(int vreply_no) {
+		return volunteerDao.selectVreply(vreply_no);
+	}
+
 	
 	
 	

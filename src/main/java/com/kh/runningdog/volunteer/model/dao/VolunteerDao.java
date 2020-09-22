@@ -76,4 +76,8 @@ public class VolunteerDao {
 		return session.selectOne("volunteerMapper.selectVolunteerNext", volno);
 	}
 
+	public Vreply selectVreply(int vreply_no) {
+		return session.selectOne("volunteerMapper.selectVreply", vreply_no);
+	}
+
 }
