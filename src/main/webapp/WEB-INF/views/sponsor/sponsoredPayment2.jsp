@@ -7,19 +7,55 @@
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
         <script>
-            $(function(){
-                $(".privacyCke_con").hide();
-                $(".sPaymentInfo a.con1").click(function(){
-                    $(".privacyCke_con").show();
-                    $(".privacyCke_con textarea.con2").removeClass('on');
-                    $(".privacyCke_con textarea.con1").toggleClass('on');
-                });
-                $(".sPaymentInfo a.con2").click(function(){
-                    $(".privacyCke_con").show();
-                    $(".privacyCke_con textarea.con1").removeClass('on');
-                    $(".privacyCke_con textarea.con2").toggleClass('on');
-                });
-            });
+          //아임포트
+          $(function(){
+        	  IMP.init("imp88351393");
+        	  IMP.request_pay({
+        		  pg: "html5_inicis",
+        		  pay_method: "card",
+        		  merchant_uid: '${ sponsorList.spDate }',
+        		  name: '${ title }',
+        		  amount: '${ sponsorList.spCash }',
+        		  buyer_name : '${ sponsorList.spName }',
+        		  buyer_email : '${ sponsorList.spEmail }'
+        	  }, function(rsp){
+        		  if(rsp.success) {
+        			  var title = '${ title }';
+        			  var cash = '${ sponsorList.spCash }';
+        			  var num = '${ sponsorList.sNum }';
+        			  var date = '${ sponsorList.spDate }';
+        			  var job = new Object();
+        			  job.spDate = date;
+        			  job.spName = '${ sponsorList.spName }';
+        			  job.spEmail = '${ sponsorList.spEmail }';
+        			  job.spPhone = '${ sponsorList.spPhone }';
+        			  job.spSnumber = '${ sponsorList.spSnumber }';
+        			  job.spCash = cash;
+        			  job.spEch = '${ sponsorList.spEch }';
+        			  job.spPch = '${ sponsorList.spPch }';
+        			  job.spWay = '${ sponsorList.spWay }';
+        			  job.sNum = num;
+        			  
+        			  $.ajax({
+        				  url: 'sSponpay.do',
+        				  type: "post",
+        				  data: JSON.stringify(job),
+        				  contentType: "application/json; charset=utf-8",
+        				  success: function() {
+        					  location.href="spaysu.do?date="+date+"&title="+title;
+        				  },
+        				  error : function(reqest, status, errorData) {
+        						console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+        				  }
+        			  });
+        		  }else {
+        			  msg = '결제에 실패하였습니다.';
+                      msg += '에러내용 : ' + rsp.error_msg;
+                      alert(msg);
+                      location.href="slist.do";
+        		  }
+        	  });
+          });
         </script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
@@ -51,7 +87,6 @@
                         <form action="sSpon.do" method="post" id="spay">
                         <input type="hidden" value="${ sNum }" name="sNum">
                         <input type="hidden" value="null" name="spSnumber">
-                        <input type="hidden" value="${ title }" name="title">
                         <table class="sPaymentInfo">
                             <colgroup>
                                 <col width="20%">
@@ -168,7 +203,7 @@
                             </tbody>
                         </table>
                         <div class="sPayment_Btn">
-                            <button class="w50p" id="sub" type="submit"><i class="xi-piggy-bank"></i> 후원하기</button>
+                            <button class="w50p" type="submit" id="sub"><i class="xi-piggy-bank"></i> 후원하기</button>
                         </div>
                         </form>
                         <!-- 상세 끝 -->                        

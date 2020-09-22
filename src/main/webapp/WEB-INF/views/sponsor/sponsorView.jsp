@@ -37,13 +37,17 @@
                         <div class="sponsorView">
                             <div class="sPaymentTitle">
                                 <p>
-                                    조회수 : 118 · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
-                                    <a id="fixeda" class="linkBtn" data-toggle="popover"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    조회수 : ${ sponsor.sCount } · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
+                                    <a data-id="${ sponsor.sNum }" data-title="${ sponsor.sTitle }" data-summary="${ sponsor.sSummary }" class="linkBtn" data-toggle="popover"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </p>
                                 
                                 <div>
                                     <h3>'따뜻한 마음의 실천'</h3>
                                     <h2>${ sponsor.sTitle }</h2>
+                                    	<c:url var="spd" value="spay.do">
+                                    		<c:param value="${ s.sNum }" name="sNum"/>
+                                        	<c:param value="${ s.sTitle }" name="title"/>
+                                        </c:url>
                                     <span class="sPaymentBtn"><a href="spay.do"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
                                 </div>
                             </div>
@@ -52,6 +56,10 @@
                                 <img src="resources\\sponsor\\thumbnail/${ sponsor.sOriginal }"><br/><br/><br/>
                                 ${ sponsor.sContent }
                             </div>
+                            	<c:url var="spd" value="spay.do">
+                            		<c:param value="${ s.sNum }" name="sNum"/>
+                                	<c:param value="${ s.sTitle }" name="title"/>
+                                </c:url>
                             <span class="sPaymentBtn"><a href="slist.do"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
                                 
                         </div>

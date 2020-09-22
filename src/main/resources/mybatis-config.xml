@@ -27,6 +27,7 @@
 		<typeAlias type="com.kh.second.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.kh.second.test.model.vo.CryptoUser" alias="CryptoUser" /> -->
 		<typeAlias type="com.kh.runningdog.sponsor.model.vo.Sponsor" alias="Sponsor"/>
+		<typeAlias type="com.kh.runningdog.sponsor.model.vo.SponsorList" alias="SponsorList"/>
 		<typeAlias type="com.kh.runningdog.sponsor.model.vo.SponsorImage" alias="SponsorImage"/>
 		<typeAlias type="com.kh.runningdog.volunteer.model.vo.Volunteer" alias="Volunteer" />
 		<typeAlias type="com.kh.runningdog.volunteer.model.vo.Vreply" alias="Vreply" />
