@@ -149,139 +149,55 @@
                     </ul>
                 </div>
 
-
+				<!-- 파이썬 크롤링 에러날까봐 주석처리 해놓음 -->
+				<!-- 오늘의 이슈 ajax -->
+<!-- 				<script>
+		         $(function(){
+		        	 $.ajax({
+		        		 url : "mainIssueList.do",
+		        		 type : "post",
+		        		 dataType : "json",
+		        		 success : function(data) {
+		        			 console.log("mainIssueList success : " + data)
+		        			 var jsonStr = JSON.stringify(data);
+		        			 var json = JSON.parse(jsonStr);
+		        			 
+		        			 var values = "";
+		        			 for( var i in json.list) {
+		        	              values +=  '<li class="grid-item" onclick="moveIssueDetail("' + json.list[i].link + '")">'
+		        	              + '<div><a href="#none" class="xi-share-alt-o"></a>' 
+		        	              + '<img src="' + json.list[i].thumbnail + '"></div>'
+		        	              + '<dl><dt><img src="' + json.list[i].partnerImg + '"></dt>'
+		                          + '<dd><h3>' + decodeURIComponent(json.list[i].title) + '</h3>'
+		                          + '<p>'
+		                          + '작성자 : ' + decodeURIComponent(json.list[i].partnerName) + '<br/>'
+		                          + '작성일 : ' + json.list[i].date  
+		                          + '</p></dd></dl></li>';
+		        				 
+		        				 if(i == 7) {
+		        					 break;
+		        				 }
+		        				 console.log(i)
+		        			 }
+		        			 
+		        			 $("#mainIssueList").html($("#mainIssueList").html() + values);
+		        		 },
+		 				 error: function(jqXHR, textstatus, errorthrown) {
+							console.log("error : " + jqXHR + ", " + textstatus + ", "
+									+ errorthrown);
+		 				 }
+		        	 }); //ajax
+		        	 
+		         }); //document.ready 
+				
+		        </script> -->
+		        
+		        
                 <div class="main_animalNews">
                     <h2><span>'나의 작은 천사'</span>천사와<br/>함께보는 오늘의 이슈!</h2>
-                    <ul class="grid">
-                        <li class="grid-sizer"></li>
-                        <li class="grid-item" onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                            </div>
-                            <dl>
-                                <dt><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                <dd>
-                                    <h3>아련한 표정의 고양이, 무엇을 원하니..?</h3>
-                                    <p>
-                                        작성자 : koreadognews<br/>
-                                        조회수 : 102
-                                    </p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li class="grid-item" onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalNews02.jpg">
-                            </div>
-                            <dl>
-                                <dt><img src="/runningdog/resources/images/test/animalImg01.jpg"></dt>
-                                <dd>
-                                    <h3>고양이가 사랑받는 이유 4가지</h3>
-                                    <p>
-                                        작성자 : koreadognews<br/>
-                                        조회수 : 102
-                                    </p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li class="grid-item" onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                            </div>
-                            <dl>
-                                <dt><img src="/runningdog/resources/images/test/animalImg03.jpg"></dt>
-                                <dd>
-                                    <h3>반려동물이 먹어야할 필수 영양제 5가지</h3>
-                                    <p>
-                                        작성자 : koreadognews<br/>
-                                        조회수 : 102
-                                    </p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li class="grid-item" onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                            </div>
-                            <dl>
-                                <dt><img src="/runningdog/resources/images/test/animalImg04.jpg"></dt>
-                                <dd>
-                                    <h3>나와 함께하는 작은 친구. 멍무이</h3>
-                                    <p>
-                                        작성자 : koreadognews<br/>
-                                        조회수 : 102
-                                    </p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li class="grid-item" onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                            </div>
-                            <dl>
-                                <dt><img src="/runningdog/resources/images/test/animalImg03.jpg"></dt>
-                                <dd>
-                                    <h3>반려동물이 먹어야할 필수 영양제 5가지</h3>
-                                    <p>
-                                        작성자 : koreadognews<br/>
-                                        조회수 : 102
-                                    </p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li class="grid-item" onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                            </div>
-                            <dl>
-                                <dt><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                <dd>
-                                    <h3>아련한 표정의 고양이, 무엇을 원하니..?</h3>
-                                    <p>
-                                        작성자 : koreadognews<br/>
-                                        조회수 : 102
-                                    </p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li class="grid-item" onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                            </div>
-                            <dl>
-                                <dt><img src="/runningdog/resources/images/test/animalImg04.jpg"></dt>
-                                <dd>
-                                    <h3>나와 함께하는 작은 친구. 멍무이</h3>
-                                    <p>
-                                        작성자 : koreadognews<br/>
-                                        조회수 : 102
-                                    </p>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li class="grid-item" onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalNews02.jpg">
-                            </div>
-                            <dl>
-                                <dt><img src="/runningdog/resources/images/test/animalImg01.jpg"></dt>
-                                <dd>
-                                    <h3>고양이가 사랑받는 이유 4가지</h3>
-                                    <p>
-                                        작성자 : koreadognews<br/>
-                                        조회수 : 102
-                                    </p>
-                                </dd>
-                            </dl>
-                        </li>
+                    <ul class="grid" id="mainIssueList">
+                        <!-- li class="grid-sizer"></li-->
+                        <!-- 오늘의 이슈 최신순 리스트 출력 -->
                     </ul>
                 </div>
 
@@ -309,5 +225,7 @@
             </div>
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
+		
+		
 	</body>
 </html>
