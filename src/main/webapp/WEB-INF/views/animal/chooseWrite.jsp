@@ -93,7 +93,7 @@
                                     <tr>
                                         <td>썸네일 *</td>
                                         <td><input type="file" name="upfile" title="" accept="image/jpeg,image/png,image/jpeg,image/bmp" 
-                                        onchange='chk_file_type(this)' required/></td>
+                                        onchange='chk_file_type(this);checkSize(this);' required/></td>
                                     </tr>
                                     <tr>
                                         <td>발견날짜 *</td>
@@ -103,24 +103,26 @@
                                     </tr>
                                     <tr>
                                         <td>보호중 반려동물 *</td>
-                                        <td><label><input type="radio" name="dCategory" value="d" checked/>강아지</label>
+                                        <td>
+                                        	<label><input type="radio" name="dCategory" value="d" checked/>강아지</label>
                                         	<label><input type="radio" name="dCategory" value="c" />고양이</label>
                                         	<label><input type="radio" name="dCategory" value="e" />기타</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>성별 *</td>
-                                        <td><label><input type="radio" name="dGender" value="m" checked/>수컷</label>
+                                        <td>
+                                        	<label><input type="radio" name="dGender" value="m" checked/>수컷</label>
                                         	<label><input type="radio" name="dGender" value="f"/>암컷</label>
                                         </td>
                                     </tr>
                                      <tr>
                                         <td>연락처 *</td>
-                                        <td><input type="text" name="dPhone" id ="dPhone" onKeyup="inputTelNumber(this);" maxlength="13" class="form-control w50p" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" placeholder="특수문자없이 숫자만 입력해 주세요" required/></td>
+                                        <td>
+                                        	<input type="text" name="dPhone" id ="dPhone" onKeyup="inputTelNumber(this);" maxlength="13" class="form-control w50p" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" placeholder="특수문자없이 숫자만 입력해 주세요" required/>
+                                        </td>
                                     </tr>
                              
-                              
-                                    
                                     <tr>
                                         <td>보호자 대략 위치 *</td>
                                         <td><select name="dLocal" required="required">
@@ -147,7 +149,9 @@
                                     </tr>
                                     <tr>
                                         <td>특이사항 *</td>
-                                        <td><input type="text" name="dPoint" title="" class="form-control w100p" minlength="10" maxlength="60" placeholder="특징/성향/색상 입력" required/></td>
+                                        <td>
+                                        <input type="text" name="dPoint" title="" class="form-control w100p" minlength="10" maxlength="60" placeholder="특징/성향/색상 입력" required/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>발견 장소를 클릭해 주세요</td>
@@ -253,7 +257,9 @@
 									</tr>
                                     <tr>
                                         <td>세부내용 *</td>
-                                        <td><textarea name="dContent"  minlength="15" maxlength="1000" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" required placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea></td>
+                                        <td>
+                                        <textarea name="dContent"  minlength="15" maxlength="1000" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" required placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea>
+                                        </td>
                                     </tr>
                                     
                                 </tbody>

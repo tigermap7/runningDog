@@ -40,7 +40,7 @@
                         <!--서브 검색-->
                         
                         <!-- searchFiled 로 구분하고 값은 searchValue 로 받음 -->
-                       <form action="dboardList.do" method="post">
+                       <form action="dboardList.do" method="">
                       	 <div class="search_wrap" id ="search">
                             <input type="hidden" name="dCategory" value="${ dCategory }">
                             <input type="hidden" name="dLocal" value="${ dLocal }">
@@ -48,7 +48,7 @@
                             <!-- 삼항연산자로 selected 여부 구분 -->
                                 <option value="d_title" class="fontColor-dark" ${pageVO.searchFiled eq"d_title"?"selected":""}>제목</option>
                                 <option value="d_writer" class="fontColor-dark" ${pageVO.searchFiled eq"d_writer"?"selected":""}>임시보호자</option>
-                                <option value="d_local" class="fontColor-dark" ${pageVO.searchFiled eq"d_local"?"selected":""}>발견지역</option>
+                                <option value="d_find_local" class="fontColor-dark" ${pageVO.searchFiled eq"d_find_local"?"selected":""}>발견지역</option>
                             </select>
                             <div class="search-box">
                                 <input type="text" id="searchI" name="searchValue" placeholder="작은 천사들을 검색해주세요." value ="${ pageVO.searchValue }">
@@ -61,36 +61,17 @@
                         <div class="sort-area"> 
                          	<!-- 게시물 조회한 숫자 출력 -->
                             <h4>전체 ${ requestScope.totalCount }마리 '작은 천사'</h4>
-                            <form action="dboardList.do" name="dLocal">
-                            <input type="hidden" name="dCategory" value="${ dCategory }">
-								<select name="dLocal" class="LocationSelect"   onchange=this.form.submit()>
-                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체보기</option>
-                                    <option value="0" ${ dLocal eq"0"?"selected" :"" }>서울시</option>
-                                    <option value="1" ${ dLocal eq"1"?"selected" :"" }>인천시</option>
-                                    <option value="2" ${ dLocal eq"2"?"selected" :"" }>대전시</option>
-                                    <option value="3" ${ dLocal eq"3"?"selected" :"" }>광주시</option>
-                                    <option value="4" ${ dLocal eq"4"?"selected" :"" }>대구시</option>
-                                    <option value="5" ${ dLocal eq"5"?"selected" :"" }>울산시</option>
-                                    <option value="6" ${ dLocal eq"6"?"selected" :"" }>부산시</option>
-                                    <option value="7" ${ dLocal eq"7"?"selected" :"" }>경기도</option>
-                                    <option value="8" ${ dLocal eq"8"?"selected" :"" }>강원도</option>
-                                    <option value="9" ${ dLocal eq"9"?"selected" :"" }>세종시</option>
-                                    <option value="10" ${ dLocal eq"10"?"selected" :"" }>충청남도</option>
-                                    <option value="11" ${ dLocal eq"11"?"selected" :"" }>충청북도</option>
-                                    <option value="12" ${ dLocal eq"12"?"selected" :"" }>전라남도</option>
-                                    <option value="13" ${ dLocal eq"13"?"selected" :"" }>전라북도</option>
-                                    <option value="14" ${ dLocal eq"14"?"selected" :"" }>경상남도</option>
-                                    <option value="15" ${ dLocal eq"15"?"selected" :"" }>경상북도</option>
-                                    <option value="16" ${ dLocal eq"16"?"selected" :"" }>제주도</option>
-                            </select>
-								</form>
                             <div>
+                            <c:if test="${ !empty sessionScope.loginMember}">
                                 <a href="dinsertPage.do" class="writeBtn">글쓰기</a>
+                            </c:if>
                                 <div>
                                 <c:url var = "dCate" value= "dboardList.do">
-									<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
-									<c:param name="searchValue" value="${pageVO.searchValue }"/>
 									<c:param name="dLocal" value="${ dLocal }"/>
+									<c:param name="dLocal" value="${ dLocal }"/>
+                                 	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+									<c:param name="dCategory" value="${ d.dCategory }"/>
 								</c:url>
 								
                                 <form action="" name="dCategory">
@@ -101,6 +82,29 @@
                                     
                                  </form>
                                 </div>
+	                            <form action="dboardList.do" name="dLocal" class="location">
+	                            <input type="hidden" name="dCategory" value="${ dCategory }">
+									<select name="dLocal" class="LocationSelect"   onchange=this.form.submit()>
+	                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체보기</option>
+	                                    <option value="0" ${ dLocal eq"0"?"selected" :"" }>서울시</option>
+	                                    <option value="1" ${ dLocal eq"1"?"selected" :"" }>인천시</option>
+	                                    <option value="2" ${ dLocal eq"2"?"selected" :"" }>대전시</option>
+	                                    <option value="3" ${ dLocal eq"3"?"selected" :"" }>광주시</option>
+	                                    <option value="4" ${ dLocal eq"4"?"selected" :"" }>대구시</option>
+	                                    <option value="5" ${ dLocal eq"5"?"selected" :"" }>울산시</option>
+	                                    <option value="6" ${ dLocal eq"6"?"selected" :"" }>부산시</option>
+	                                    <option value="7" ${ dLocal eq"7"?"selected" :"" }>경기도</option>
+	                                    <option value="8" ${ dLocal eq"8"?"selected" :"" }>강원도</option>
+	                                    <option value="9" ${ dLocal eq"9"?"selected" :"" }>세종시</option>
+	                                    <option value="10" ${ dLocal eq"10"?"selected" :"" }>충청남도</option>
+	                                    <option value="11" ${ dLocal eq"11"?"selected" :"" }>충청북도</option>
+	                                    <option value="12" ${ dLocal eq"12"?"selected" :"" }>전라남도</option>
+	                                    <option value="13" ${ dLocal eq"13"?"selected" :"" }>전라북도</option>
+	                                    <option value="14" ${ dLocal eq"14"?"selected" :"" }>경상남도</option>
+	                                    <option value="15" ${ dLocal eq"15"?"selected" :"" }>경상북도</option>
+	                                    <option value="16" ${ dLocal eq"16"?"selected" :"" }>제주도</option>
+	                            </select>
+								</form>
                             </div>
                         </div>
                         <!-- 게시물이 0개라면 경고창을 띄우고 전 페이지로 이동 -->
@@ -119,6 +123,9 @@
                                  	<c:param name="pageNo" value="${ pageVO.pageNo }"/>
                                  	<c:param name="dNum" value="${ d.dNum }"/>
                                  	<c:param name="dLocal" value="${ dLocal }"/>
+                                 	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+									<c:param name="dCategory" value="${ d.dCategory }"/>
                                  </c:url>
                                  <c:if test = "${d.dSuccess eq 'n'}">
                                 
@@ -134,12 +141,14 @@
                                     <p>
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
-                                        발견지역 :  
-                                        <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
-                                         var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
+                                        발견지역 :  ${ d.dFindLocal } 부근<br/>
+                                        보호자 지역 :  <c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
+										 <c:forEach var ="lo" items="${local }" varStatus="l">
+                                         <c:if test="${l.count== (d.dLocal+1) }"> ${ lo }</c:if>
 										</c:forEach>
-                                         ${ d.dFindLocal }<br/>
-                                        <span>등록일 : ${ d.dDate }</span>
+                                        <span>
+                                        ${ d.dDate eq d.dMdate ?"등록일": "수정일"} : ${ d.dDate eq d.dMdate ?d.dDate : d.dMdate}
+                                        </span>
                                     </p>
                                 </li>
                                 </c:if>
@@ -155,12 +164,15 @@
                                     <p>
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
-                                        발견지역 : 
-										 <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
-                                         var="item" begin="${d.dLocal }" end="${d.dLocal }"> ${item}
+                                        발견지역 : ${ d.dFindLocal } 부근<br/>
+                                        보호자 지역 :<c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
+										 <c:forEach var ="lo" items="${local }" varStatus="l">
+                                         <c:if test="${l.count== (d.dLocal+1) }"> ${lo }</c:if>
 										</c:forEach>
-										 ${ d.dFindLocal }<br/>
-                                        <span>등록일 : ${ d.dDate }</span>
+                                        <span>
+                                        ${ d.dDate eq d.dMdate ?"등록일": "수정일"} : ${ d.dDate eq d.dMdate ?d.dDate : d.dMdate}
+                                        
+                                        </span>
                                     </p>
                                 </li>
                                 </c:if>
@@ -179,6 +191,7 @@
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
 											<c:param name="dLocal" value="${ dLocal }"/>
+											<c:param name="dCategory" value="${ d.dCategory }"/>
 										</c:url>
 										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
@@ -189,6 +202,7 @@
 												<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 												<c:param name="searchValue" value="${pageVO.searchValue }"/>
 												<c:param name="dLocal" value="${ dLocal }"/>
+												<c:param name="dCategory" value="${ d.dCategory }"/>
 											</c:url>
 										<c:choose>
 											<c:when test="${i eq pageVO.pageNo }">
@@ -200,12 +214,13 @@
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
-									<c:if test="${pageVO.pageNo !=pageVO.finalPageNo }">
+									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
 										<c:url var = "dl3" value= "dboardList.do">
 											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
 											<c:param name="dLocal" value="${ dLocal }"/>
+											<c:param name="dCategory" value="${ d.dCategory }"/>
 										</c:url>
 										<a href="${dl3 }"><i
 											class="xi-angle-right"></i></a>

@@ -10,9 +10,13 @@ public interface DboardService {
 	int insertDboard(Dboard dboard);
 
 	int selectListCount(Dboard dboard);
-
+	
+	int selectAdminCount(Dboard dboard);
+	
 	ArrayList<Dboard> selectList(Dboard dboard);
 
+	ArrayList<Dboard> selectAdminList(Dboard dboard);
+	
 	Dboard selectOne(int dNum);
 
 	int updateDboard(Dboard dboard);
@@ -20,5 +24,15 @@ public interface DboardService {
 	int updateDboardHide(Dboard dboard);
 
 	int updateDboardSuc(Dboard dboard);
+
+	int selectPrev(Dboard dboard);
+
+	int selectNext(Dboard dboard);
+
+	int selectAdminNext(Dboard dboard);
+	
+	int selectAdminPrev(Dboard dboard);
+
+	int updateAdminHide(String[] checkRow);
 	
 }

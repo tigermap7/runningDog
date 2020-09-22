@@ -1,6 +1,6 @@
 package com.kh.runningdog.dboard.model.vo;
 
-import java.sql.Date;
+
 
 public class Dboard extends PageVO implements java.io.Serializable{
 	private static final long serialVersionUID = 6L;
@@ -9,7 +9,7 @@ public class Dboard extends PageVO implements java.io.Serializable{
 	private String userId; //유저Email
 	private int uniqueNum; //유저번호
 	private String dWriter; //유저닉네임
-	private String dTitle; //글 제목
+	private String dTitle; //글 제목pub
 	private String dContent; //글 상세설명
 	private String dFindDate; //발견날짜
 	private String dFindLocal; //발견장소
@@ -18,8 +18,8 @@ public class Dboard extends PageVO implements java.io.Serializable{
 	private String dLocal; //지역시번호
 	private String dPhone; //연락처
 	private String dPoint; //특징
-	private java.sql.Date dDate; //작성일자
-	private java.sql.Date dMdate; //수정일자
+	private String dDate; //작성일자
+	private String dMdate; //수정일자
 	private int dCount; //조회수
 	private String mapX; //경도 X
 	private String mapY; //위도 Y
@@ -32,7 +32,7 @@ public class Dboard extends PageVO implements java.io.Serializable{
 
 	public Dboard(int dNum, String userId, int uniqueNum, String dWriter, String dTitle, String dContent,
 			String dFindDate, String dFindLocal, String dGender, String dCategory, String dLocal, String dPhone,
-			String dPoint, Date dDate, Date dMdate, int dCount, String mapX, String mapY, String dCheck,
+			String dPoint, String dDate, String dMdate, int dCount, String mapX, String mapY, String dCheck,
 			String dSuccess, String viewImage, String listImage) {
 		super();
 		this.dNum = dNum;
@@ -163,19 +163,19 @@ public class Dboard extends PageVO implements java.io.Serializable{
 		this.dPoint = dPoint;
 	}
 
-	public java.sql.Date getdDate() {
+	public String getdDate() {
 		return dDate;
 	}
 
-	public void setdDate(java.sql.Date dDate) {
+	public void setdDate(String dDate) {
 		this.dDate = dDate;
 	}
 
-	public java.sql.Date getdMdate() {
+	public String getdMdate() {
 		return dMdate;
 	}
 
-	public void setdMdate(java.sql.Date dMdate) {
+	public void setdMdate(String dMdate) {
 		this.dMdate = dMdate;
 	}
 

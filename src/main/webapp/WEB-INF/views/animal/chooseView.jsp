@@ -6,7 +6,21 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+<script type="text/javascript">
+$(function() {
+	$(document).on('click',".Subcmt_btn",function() {
+		$(this).siblings(".Subcmt").toggle(200);
+	});
+	$(document).on('click',".Subcmt_update_btn",function() {
+		$(this).siblings(".Subcmt_update").toggle(200);
+	});
+	$(document).on('click',".Cmt_update_btn",function() {
+		$(this).siblings(".Cmt_update").toggle(200);
+	});
+});
 
+
+</script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -40,17 +54,20 @@
                             <p class="topText">*「동물보호법」 제17조, 시행령7조 및 동법 시행규칙 제20조에 따라 유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</p>
                             <dl>
                                 <dt>
-                                	클릭하시면 원본 이미지 크기를 팝업합니다.
-                                    <div class="viewImg"><img id="imgControll" onclick="fnImgPop(this.src)" src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }"></div>
-                                    <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
+                                	
+                                    <div class="viewImg"><img src="/runningdog/resources/dboard/dboardImage/${ dboard.viewImage }" id="imgControll" onclick="fnImgPop(this.src)" ></div>
+                                    <!--<a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"> 메일보내기</i></a> -->
                                     <c:url var = "dSuccess" value= "dUpSuccess.do">
 										<c:param name="dNum" value="${ dboard.dNum }"/>
 										<c:param name="dSuccess" value="${ dboard.dSuccess }"/>
-									</c:url>
+									</c:url> 
                                     <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                                     <!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
-                                    <a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
+                                    <c:if test= "${sessionScope.loginMember.userId == dboard.userId }">
+                                    	<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
+                                    
+                                    </c:if>
                                 </dt>
                                 <dd>
                                     <h3>동물정보</h3>
@@ -85,7 +102,7 @@
                                             </tr>
                                             <tr>
                                                 <th>발견장소</th>
-                                                <td colspan="3">${ dboard.dFindLocal }</td>
+                                                <td colspan="3">${ dboard.dFindLocal } 부근</td>
                                             </tr>
                                             <tr>
                                                 <th>특이사항</th>
@@ -120,10 +137,10 @@
                                             <tr>
                                                 <th>지역</th>
                                                 <td colspan="3">
-                                                <c:forEach items="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[경상북도]|[제주시]', '|') }"
-                                         		var="item" begin="${ d.dLocal }" end="${ d.dLocal }"> ${ item }
-												</c:forEach>
-                                                </td>
+                                                <c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }" />
+												<c:forEach var="lo" items="${local }" varStatus="l">
+													<c:if test="${l.count== (dboard.dLocal+1) }"> ${lo }</c:if>
+												</c:forEach></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -133,18 +150,17 @@
                             <div class="viewContent">
                             ${ dboard.dContent }
                             </div>
-                            <tr>
- 						 <td>발견 장소</td>
- 						 <td>
-											<div class="map_wrap">
-												<div class="hAddr">
-													<div id="map"
-														style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
-													</div>
-												</div>
-											</div>
-											<script type="text/javascript"
-												src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
+						<tr>
+							<td>발견 장소</td>
+							<td>
+								<div class="map_wrap">
+									<div class="hAddr">
+										<div id="map"
+											style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
+										</div>
+									</div>
+								</div> <script type="text/javascript"
+									src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
 								<script>
 									var mapContainer = document
 											.getElementById('map'), // 지도를 표시할 div 
@@ -202,82 +218,232 @@
 						<c:url var="dboardHide" value="dHide.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
 						</c:url>
+						<c:url var="dboardNext" value="dboardnext.do">
+							<c:param name="dNum" value="${ dboard.dNum }"/>
+							<c:param name="dLocal" value="${ dLocal }"/>
+                            <c:param name="searchFiled" value="${ searchFiled }" />
+							<c:param name="searchValue" value="${ searchValue }" />
+							<c:param name="dCategory" value="${ dCategory }"/>
+						</c:url>
+						<c:url var="dboardPrev" value="dboardprev.do">
+							<c:param name="dNum" value="${ dboard.dNum }"/>
+							<c:param name="dLocal" value="${ dLocal }"/>
+                            <c:param name="searchFiled" value="${ searchFiled }" />
+							<c:param name="searchValue" value="${ searchValue }" />
+							<c:param name="dCategory" value="${ dCategory }"/>
+						</c:url>
                         <div class="viewBtn-wrap">
-                            <button class="nextBtn" onclick="location=''"><i class="xi-angle-left-min"></i> 이전</button>
+                            <button class="nextBtn" onclick="location='${ dboardPrev }'"><i class="xi-angle-left-min"></i> 이전</button>
                             <button class="listBtn" onclick="location='${ dlistMove }'"><i class="xi-rotate-left"></i> 목록</button>
+                            <c:if test= "${ sessionScope.loginMember.userId == dboard.userId }">
                             <button class="deleteBtn" onclick="location='${ dboardHide }'"><i class="xi-cut"></i> 삭제</button>
                             <button class="modifiedBtn" onclick="location='${ dupPageMove }'"><i class="xi-pen-o"></i> 수정</button>
-                            <button class="prevBtn" onclick="location=''">다음 <i class="xi-angle-right-min"></i></button>
+                            </c:if>
+                            <button class="prevBtn" onclick="location='${ dboardNext }'">다음 <i class="xi-angle-right-min"></i></button>
                         </div>
                         <!-- 버튼 끝 -->
-
-                        <!-- 댓글 -->
-                        <div class="cmt_wrap">
-                            <form action="" method="">
+                        
+                        <!-- 댓글 시작 -->
+                          <div class="cmt_wrap">
+                            <form name = "dreplyS"action="" method="post">
+                            <input type="hidden" id= "dNum" name="dNum" value="${dboard.dNum }">
+                            <input type="hidden" id="dreWriter" name="dreWriter" value="${loginMember.nickname }">
+                            <input type="hidden" id= "uniqueNum" name="uniqueNum" value="${loginMember.uniqueNum }">
                                 <fieldset>
                                     <div class="cmt_form">
                                         <h4 class="cmt_head">댓글 77</h4>
                                         <div class="cmt_body">
-        <textarea name="" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                            <div class="cmt_ok"><input type="submit" value="등록"></div>
+        <textarea name="dreContent" id = "dreContent" onfocus="this.value='';"></textarea>
+                                            <div class="cmt_ok"><input type="button" value="등록" onclick="DreplySubmit(${result.code})"></div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </form>
-                            <ul class="cmt_con">
-                                <li>
-                                    <dl>
-                                        <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd><h4>멍무이 / #1971345</h4></dd>
-                                        <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                                    </dl>
-                                    <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                                    <div class="cmt_conBtn">
-                                        <button>댓글</button>
-                                        <button>삭제</button>
-                                        <button>수정</button>
-                                    </div>
-                                    <div class="Subcmt_form">
-                                        <form action="dboardList.do" method="post">
-                                            <fieldset>
-                                                <div class="cmt_form">
-                                                    <div class="cmt_body">
-        <textarea name="" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                                    <div class="cmt_ok"><input type="submit" value="등록"></div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                </li>
-                                <li>
-                                    <dl>
-                                        <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd><h4>멍무이 / #1971345</h4></dd>
-                                        <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                                    </dl>
-                                    <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                                    <div class="cmt_conBtn">
-                                        <button>댓글</button>
-                                        <button>삭제</button>
-                                        <button>수정</button>
-                                    </div>
-                                    <div class="Subcmt_form">
-                                        <dl>
-                                            <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                            <dd><h4>담당자 : 박보검</h4></dd>
-                                            <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                                        </dl>
-                                        <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                                        <div class="cmt_conBtn">
-                                            <button>삭제</button>
-                                            <button>수정</button>
-                                        </div>
-                                    </div>
-                                </li>
+                            <ul class="cmt_con" id="dreply">
                             </ul>
-                        </div>
-                        <!-- 댓글 끝 -->
+ <script type="text/javascript">
+                      $(function(){
+                    	  getCommentList()
+                      });
+                      var arrdreNum = new Array();
+          			var arrdNum = new Array();
+          			var arrdreWriter = new Array();
+          			var arrdreMdate = new Array();
+          			var arrdreContent = new Array();
+          			var arruniqueNum = new Array();
+          			var arrLevel =new Array();
+          			var index = new Array();
+					var idx ="";
+function getCommentList() {	
+	$.ajax({
+		url : "dreplyList.do",
+		type : "post",
+		data : {dNum : ${dboard.dNum}},
+		dataType : "json",
+		success : function(data) {
+			console.log(data);
+
+			var objStr = JSON.stringify(data);
+			var jsonObj = JSON.parse(objStr);
+			var totalcount = (jsonObj.list).length;	
+			
+			var output = "";
+			$("#totalcount").text('댓글 갯수 : ' + totalcount );
+
+			for(var i in jsonObj.list) {
+				idx = i;
+				arrdreNum[i] = jsonObj.list[i].dreNum;
+				arrdNum[i] = jsonObj.list[i].dNum;
+				arrdreWriter[i] = decodeURIComponent(jsonObj.list[i].dreWriter).replace(/\+/gi, " ");
+				arrdreMdate[i] = jsonObj.list[i].dreMdate;
+				arrdreContent[i] = decodeURIComponent(jsonObj.list[i].dreContent).replace(/\+/gi, " ");
+				arruniqueNum[i] = jsonObj.list[i].uniqueNum;
+				output +='<li><dl>'+
+                        '<dt class="img"><img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}"></dt>'+
+                        '<dd><h4>'+arrdreWriter[i]+ '/'+ arruniqueNum[i]+'</h4></dd>'+
+                        '<dt class="cmt_date">'+arrdreMdate[i]+'</dt></dl>'+
+                    	'<p>'+arrdreContent[i]+'</p>'+
+                    	'<div class="cmt_conBtn"> <button class="Subcmt_btn">대댓글</button>'+
+            			'<button onclick= \"location.href='+"''"+'" style="float: right;">삭제</button>'+
+            			'<button class="Cmt_update_btn" >수정</button><br><br><div class="Cmt_update" style="display: none;">'+
+						'<form name="updateDreply" action="" method="post">'+
+						'<input type="hidden" name="dreNum" id="dreNumUp" value="'+arrdreNum[i]+'">'+
+						'<fieldset><div class="cmt_form">'+
+						'<div class="cmt_body"><textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" >'+arrdreContent[i]+'</textarea>'+
+						'<div class="cmt_ok"><input type="button" class="updateDreply" onclick="updateDreply(${result.code})" value="수정"></div></div></div></fieldset>'+
+						'</form></div><div style="display:none" class="Subcmt" id="commentReply">'+
+           			    '<form action="" method="post">'+
+           			 	'<input type="hidden" name="dreNumLevel" id="dreNumLevel" value="'+arrdreNum[i]+'"'+
+						'<input type="hidden" name="dNumLevel" id="dNum" value="'+arrdNum[i]+'">'+
+						'<input type="hidden" name="dreWriterLevel" id="dreWriterLevel" value="${loginMember.nickname}">'+
+						'<input type="hidden" name="uniqueNumLevel" id="uniqueNumLevel" value="${loginMember.uniqueNum}">'+
+						'<fieldset><div class="cmt_form"><div class="cmt_body">'+
+						'<textarea name="dreContentLevel" id="dreContentLevel" style="resize: none; width:100%; min-height:100px; max-height:100px;"'+ 'onfocus="this.value='+"''"+';"></textarea>'+
+                        '<div class="cmt_ok"><input type="button" onclick="DreplyLevelSubmit('+idx+')" value="등록" ></div></div></div></fieldset></form></div></li>';
+			}
+	
+			
+			$("#dreply").empty();
+			$("#dreply").html(output);
+			
+		},
+		error : function(jqXHR, textstatus, errorthrown) {
+			console.log("error : " + jqXHR + ", " + textstatus
+					+ ", " + errorthrown);
+		}
+	}); // ajax
+}	
+
+// 댓글 추가
+function DreplySubmit(code) {
+	if (document.getElementById("dreContent").value == "") {
+		alert("내용을 입력해주세요");
+		return false;
+	}else
+		$.ajax({
+			url : "insertDreply.do",
+			type:'POST',
+			data : {dreContent : $('#dreContent').val(),dNum : $('#dNum').val(), dreWriter : $('#dreWriter').val(), uniqueNum : $('#uniqueNum').val()},
+			success : function(data){
+				console.log(data);
+				if(data == 1) {
+					alert("댓글이 등록되었습니다."); 
+				} else {
+					alert("댓글 등록을 실패했습니다."); 
+				}
+				$("#dreContent").val("");
+				getCommentList();
+			},
+			error:function(request,status,error){
+				alert("로그인후 이용해주세요.");
+				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+			}
+		});
+}
+
+//대댓글 추가
+function DreplyLevelSubmit(idx) {
+	if (document.getElementById("dreContentLevel").value == "") {
+		alert("내용을 입력해주세요");
+		return false;
+	}else
+		$.ajax({
+			url : "insertDreplyLevel.do",
+			type:'POST',
+			data : {dreContent :$('#dreContent').val() ,dNum : $('#dNum').val(),dreNum : $('#dreNumLevel').val(), dreWriter : $('#dreWriterLevel').val(), uniqueNum : $('#uniqueNumLevel').val()},
+			success : function(data){
+				console.log(data);
+				if(data == 1) {
+					
+					alert("대댓글이 등록되었습니다."); 
+				} else {
+					alert("대댓글 등록을 실패했습니다."); 
+				}
+				$("#dreContentLevel").val("");
+				getCommentList();
+			},
+			error:function(request,status,error){
+				console.log(dNum);
+				console.log(dreNum);
+				alert("로그인후 이용해주세요.");
+				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+			}
+		});
+}
+//댓글 수정
+
+function updateDreply(code) {
+	if (document.getElementById("dreContentup").value == "") {
+		alert("내용을 입력해주세요");
+		return false;
+	}else
+		$.ajax({
+			url : "updateDreply.do",
+			type:'POST',
+			data : {dreContent : $('#dreContentup').val(),dreNum : $('#dreNum').val()},
+			success : function(data){
+				console.log(data);
+				if(data == 1) {
+					alert("댓글이 수정 되었습니다."); 
+				} else {
+					alert("댓글 수정을 실패했습니다."); 
+				}
+				$("#dreContent").val("");
+				getCommentList();
+			},
+			error:function(request,status,error){
+				alert("로그인후 이용해주세요.");
+				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+			}
+		});
+}
+
+
+
+// 댓글 삭제
+function Dreplydelete(dreNum) {
+	console.log(dreNum + "댓글 삭제하기")
+	
+	$.ajax({
+		url : "updateDreplyDel.do",
+		type:'POST',
+		data : {dreNum : dreNum },
+		success : function(data){
+			if(data == 1) {
+				alert("댓글이 삭제되었습니다."); 
+			} else {
+				alert("댓글 삭제를 실패했습니다."); 
+			}
+			getCommentList();
+		},
+		error:function(request,status,error){
+			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+		}
+	});
+}
+
+</script>
+
                     </div>
                 </div>
             </div>

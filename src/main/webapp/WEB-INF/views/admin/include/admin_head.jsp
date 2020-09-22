@@ -21,6 +21,7 @@
 <script src="resources/common/js/summernote-ko-KR.js"></script>
 <script src="resources/common/js/common.js"></script>
 <script src="resources/common/js/sponsor.js"></script>
+<script src="resources/dboard/js/dboard.js"></script>
 
 <link href="${pageContext.request.contextPath}/resources/summernote/summernote.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/summernote/summernote.js"></script>

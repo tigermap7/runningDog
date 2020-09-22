@@ -1,5 +1,44 @@
 
 
+    function checkHideAll(){
+    	if($("input[name=checkHideAll]").is(":checked")){
+    		$("input[name=checkHide]").prop("checked", true);
+    	}else{
+    		$("input[name=checkHide]").prop("checked", false);
+    	}
+    }
+			
+    function dboardHide(page){
+    	var page = page;
+    	var checkRow = "";
+    	$("input[name='checkHide']:checked").each(function(){
+    		checkRow = checkRow + $(this).val()+",";
+    	});
+    	checkRow = checkRow.substring(0, checkRow.lastIndexOf(","));
+    	
+    	if(checkRow == ""){
+    		alert("숨길 게시물을 선택해 주세요");
+    		return false;
+    	}
+    	
+    	console.log("### checkRow => {"+checkRow+"}");
+    	
+    	if(confirm("게시물을 숨김 처리 하겠습니까?"))
+    		location.href = "dHide.ad?checkRow=" + checkRow + "&page=" + page;
+    }
+
+
+
+
+/* 파일용량체크 */
+function checkSize(input) {
+    if (input.files && input.files[0].size > (10 * 1024 * 1024)) {
+        alert("이미지 크기가 10mb 를 넘습니다.");
+        input.value = null;
+    }
+}
+
+//좌표값 미지정시 alert창
 function check() {
   if(formname.mapX.value == "") {
     alert("발견장소를 클릭해 주세요.");

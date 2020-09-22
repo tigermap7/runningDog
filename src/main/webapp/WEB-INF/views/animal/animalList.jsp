@@ -68,7 +68,7 @@
                         <div class="animalList">
                             <ul class="grid">
                                 <li class="grid-sizer"></li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
+                                <li class="grid-item chooseIcon" onclick="location='aViewPage.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">분양가능</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
@@ -82,7 +82,7 @@
                                         <span>등록일 : 2020.08.22</span>
                                     </p>
                                 </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
+                                <li class="grid-item chooseIcon" onclick="location='aViewPage.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">분양가능</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
@@ -96,7 +96,7 @@
                                         <span>등록일 : 2020.08.22</span>
                                     </p>
                                 </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
+                                <li class="grid-item chooseIcon" onclick="location='aViewPage.do'">
                                     <div>
                                         <a href="#none" class="chooseIcon">분양가능</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
@@ -299,14 +299,36 @@
                         <!-- 페이징 -->
                         <dl class="list-paging">
                             <dd>
-                                <a href="#none"><i class="xi-angle-left"></i></a>
-                                <a href="#none" class="active">1</a>
-                                <a href="#none">2</a>
-                                <a href="#none">3</a>
-                                <a href="#none">4</a>
-                                <a href="#none">5</a>
-                                <a href="#none"><i class="xi-angle-right"></i></a>
-                            </dd>
+								<c:if test="${pageVO.pageNo >0 }">
+									<c:if test="${pageVO.startPageNo >5 }">
+										<c:url var = "dl1" value="alistPage.do">
+											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
+										</c:url>
+										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
+									</c:if>
+									<c:forEach var="i" begin="${pageVO.startPageNo}"
+										end="${ pageVO.endPageNo }" step="1">
+										<c:url var = "dl2" value="alistPage.do">
+												<c:param name="pageNo" value="${ i }"/>
+											</c:url>
+										<c:choose>
+											<c:when test="${i eq pageVO.pageNo }">
+												<a href="${dl2}" class="active">${ i }</a>
+											</c:when>
+											<c:otherwise>
+												<a href="${dl2}" class="">${ i }</a>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
+										<c:url var = "dl3" value= "alistPage.do">
+											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
+										</c:url>
+										<a href="${dl3 }"><i
+											class="xi-angle-right"></i></a>
+									</c:if>
+								</c:if>
+							</dd>
                         </dl>
                         <!-- //페이징 -->
                     </div>

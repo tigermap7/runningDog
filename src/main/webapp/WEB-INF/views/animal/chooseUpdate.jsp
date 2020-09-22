@@ -96,7 +96,7 @@
                                     <tr>
                                         <td>썸네일 *</td>
                                         <td><input type="file" name="upfile" title="" accept="image/jpeg,image/png,image/jpeg,image/bmp" 
-                                        onchange='chk_file_type(this)' /></td>
+                                         onchange='chk_file_type(this);checkSize(this);' /></td>
                                     </tr>
                                     <tr>
                                         <td>발견날짜 *</td>
@@ -302,7 +302,7 @@
                             <input type="submit" class="btn btn-success" value="수정하기">
                         </div>
                         </form>
-                        <!-- 글쓰기 끝 -->
+                        <!-- 수정하기 끝 -->
                     </div>
                 </div>
             </div>

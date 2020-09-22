@@ -109,9 +109,9 @@ public class PageVO {
 	        return totalCount;
 	    }
 
-	    public void setTotalCount(int totalCount) {
+	    public void setTotalCount(int totalCount,int pageSet) {
 	        this.totalCount = totalCount;
-	        this.makePaging();
+	        this.makePaging(pageSet);
 	    }
 	 
 	    public String getSearchFiled() {
@@ -132,12 +132,12 @@ public class PageVO {
 
 
 
-	    private void makePaging() {
+	    private void makePaging(int pageSet) {
 	  
 	        // 기본 값 설정
 	        if (this.totalCount == 0) return;
 	        if (this.pageNo == 0) this.setPageNo(1);   //기본 페이지 번호
-	        if (this.pageSize == 0) this.setPageSize(15); //기본 페이지 리스트 사이즈
+	        if (this.pageSize == 0) this.setPageSize(pageSet); //기본 페이지 리스트 사이즈
 	        if (this.pageBlock == 0 ) this.setPageBlock(5); //기본 페이지 네비[블록] 사이즈
 	       
 	        //--[첫 페이지], [마지막 페이지] 계산

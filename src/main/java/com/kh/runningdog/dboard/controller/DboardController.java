@@ -4,12 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +39,7 @@ public class DboardController {
 
 	@RequestMapping("dinsertPage.do")
 	public String moveDinsertPage() {
-		return "animal/chooseWrite";
+		return "animal/chooseAdminWrite";
 	}
 	
 	@RequestMapping(value = "dinsert.do", method = RequestMethod.POST)
@@ -52,7 +50,8 @@ public class DboardController {
 		String viewImage = file.getOriginalFilename();
 		dboard.setviewImage(viewImage);
 		dboard.setdContent(dboard.getdContent().replace("\r\n", "<br>"));
-		Image img = null;
+		Image viewImg = null;
+		Image listImg = null;
 		// viewImage 가 null아니거나 viewImage크기가 0 이 아니라면
 		// viewImage가 공백이 들어온다면 byte 크기가 0이기때문에 byte로 비교
 		if (!(viewImage == null || viewImage.getBytes().length == 0)) {
@@ -76,15 +75,20 @@ public class DboardController {
 				while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
 					fout.write(buffer, 0, buffer.length);
 				}
-				img = ImageLoader.fromFile(listPath);
+				viewImg = ImageLoader.fromFile(viewPath);
+				listImg = ImageLoader.fromFile(listPath);
+				//리사이징할 이미지의 폭이 주어진 값 보다 작을 경우 에러가 나기 때문에
+				//리사이징할 이미지의 크기가 작을경우 그 폭을 유지하며 리사이징 처리 하기 위해 Width값 강제 적용
+				int viewWidth = (viewImg.getWidth() > 800)? 800 : viewImg.getWidth();
+				int listWidth = (listImg.getWidth() > 300)? 300 : listImg.getWidth();
 
 				// 너비 300으로 리사이징 처리 화질은 최대한 보정
-				img.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
-
+				// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
+				viewImg.getResizedToWidth(viewWidth).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
+				listImg.getResizedToWidth(listWidth).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-
 			dboard.setviewImage(viewRename);
 			dboard.setlistImage(listRename);
 		}
@@ -100,8 +104,9 @@ public class DboardController {
 		return url;
 	}
 
-	@RequestMapping(value = "dboardList.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard) {
+	@RequestMapping("dboardList.do")
+	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard){
+
 
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
@@ -110,8 +115,11 @@ public class DboardController {
 		logger.info("SearchFiled : " + dboard.getSearchFiled());
 		logger.info("SearchValue : " + dboard.getSearchValue());
 		int totalCount = dboardService.selectListCount(dboard); // 게시물 총갯수를 구한다
-
-		dboard.setTotalCount(totalCount); // 페이징 처리를 위한 setter 호출
+		
+		
+		//게시물 총횟수랑 첫 페이지에 몇개의 리스트를 보여줄지 체크,
+		//pageVO에 makePaing 메소드에 페이지리스트 갯수를 넣어줌
+		dboard.setTotalCount(totalCount,12); // 페이징 처리를 위한 setter 호출
 
 		model.addAttribute("pageVO", dboard);
 		logger.info("PageSize // 한 페이지에 보여줄 게시글 수 : " + dboard.getPageSize());
@@ -127,7 +135,8 @@ public class DboardController {
 		logger.info("totalCount // 게시 글 전체 수 : " + totalCount);
 
 		ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
-
+		
+		
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("totalCount", totalCount);
@@ -145,10 +154,22 @@ public class DboardController {
 	}
 
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum,Model model) {
+	public String selectOne(@RequestParam("dNum") int dNum,Model model,HttpServletRequest request) {
+		
+		
 		Dboard dboard = dboardService.selectOne(dNum);
 		logger.info("dboard View게시글 번호" + dNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		
+		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		
+		model.addAttribute("dLocal", dboard.getdLocal());
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("searchFiled", dboard.getSearchFiled());
+		model.addAttribute("searchValue", dboard.getSearchValue());
 		String url = "";
 		if (dboard != null) {
 			model.addAttribute("dboard", dboard);
@@ -191,8 +212,9 @@ public class DboardController {
 		if (file != null && file.getBytes().length > 0) {
 			String viewImage = file.getOriginalFilename();
 			dboard.setviewImage(viewImage);
-
-			Image img = null;
+			
+			Image viewImg = null;
+			Image listImg = null;
 			// viewImage 가 null아니거나 viewImage크기가 0 이 아니라면
 			// viewImage가 공백이 들어온다면 byte 크기가 0이기때문에 byte로 비교
 			if (!(viewImage == null || viewImage.getBytes().length == 0)) {
@@ -220,10 +242,17 @@ public class DboardController {
 					while ((data = fin.read(buffer, 0, buffer.length)) != -1) {
 						fout.write(buffer, 0, buffer.length);
 					}
-					img = ImageLoader.fromFile(listPath);
+					viewImg = ImageLoader.fromFile(viewPath);
+					listImg = ImageLoader.fromFile(listPath);
+					//리사이징할 이미지의 폭이 주어진 값 보다 작을 경우 에러가 나기 때문에
+					//리사이징할 이미지의 크기가 작을경우 그 폭을 유지하며 리사이징 처리 하기 위해 Width값 강제 적용
+					int viewWidth = (viewImg.getWidth() > 800)? 800 : viewImg.getWidth();
+					int listWidth = (listImg.getWidth() > 300)? 300 : listImg.getWidth();
 
 					// 너비 300으로 리사이징 처리 화질은 최대한 보정
-					img.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
+					// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
+					viewImg.getResizedToWidth(viewWidth).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
+					listImg.getResizedToWidth(listWidth).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
 
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
@@ -237,8 +266,11 @@ public class DboardController {
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url = "";
 		if (dboardService.updateDboard(dboard) > 0) {
-			model.addAttribute("dNum", dboard.getdNum());
-			url = "redirect:/dboardView.do";
+			//업데이트 후 detail 페이지 이동시 정보 전부 보여주게 하기 위함
+			Dboard dboardView =dboardService.selectOne(dboard.getdNum());
+			model.addAttribute("dboard",dboardView);
+
+			url = "animal/chooseView";
 		} else {
 			model.addAttribute("msg", "게시글 수정 실패 다시 확인해 주세요");
 			model.addAttribute("url", "dboardView.do");
@@ -267,25 +299,91 @@ public class DboardController {
 		return url;
 	}
 	
-	@RequestMapping("dUpSuccess.do")
-	public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
-								Dboard dboard,Model model) {
-		dboard.setdSuccess(dSuccess);
-		logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
-		int result = dboardService.updateDboardSuc(dboard);
+    @RequestMapping("dUpSuccess.do")
+    public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
+                                Dboard dboard,Model model) {
+        dboard.setdSuccess(dSuccess);
+        logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
+        int result = dboardService.updateDboardSuc(dboard);
+        
+        
+        String url="";
+        if (result > 0) {
+            model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
+            model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
+            url = "common/errorDboard";
+        } else {
+            model.addAttribute("dNum", dboard.getdNum());
+            model.addAttribute("msg", "분양 여부 업데이트 실패");
+            model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
+            url = "common/errorDboard";
+        }
+        return url;
+    }
+	
+	@RequestMapping("dboardnext.do")
+	public String dboardNext(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+		//다음글 번호조회
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
 		
 		
-		String url="";
-		if (result > 0) {
-			model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
-			model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
-			url = "common/errorDboard";
+		int dboardNextNum = dboardService.selectNext(dboard);
+		//다음글번호를 받고 다음글로 조회
+		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
+		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		
+		model.addAttribute("dLocal", dboard.getdLocal());
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("searchFiled", dboard.getSearchFiled());
+		model.addAttribute("searchValue",dboard.getSearchValue());
+		
+		
+		String url = "";
+		if (dboard.getdNum() != dboardNextNum) {
+			model.addAttribute("dboard", dboardNext);
+			url = "animal/chooseView";
 		} else {
-			model.addAttribute("dNum", dboard.getdNum());
-			model.addAttribute("msg", "분양 여부 업데이트 실패");
-			model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
+			model.addAttribute("dboard",dboard);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "javascript:history.back()");
 			url = "common/errorDboard";
 		}
 		return url;
 	}
+	
+	@RequestMapping("dboardprev.do")
+	public String dboardPrev(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+		dboard.setSearchFiled(request.getParameter("searchFiled"));
+		dboard.setSearchValue(request.getParameter("searchValue"));
+		dboard.setdCategory(request.getParameter("dCategory"));
+		dboard.setdLocal(request.getParameter("dLocal"));
+		
+		//이전 번호조회
+		int dboardPrevNum = dboardService.selectPrev(dboard);
+		//이전글번호를 받고 다음글로 조회
+		Dboard dboardPrev = dboardService.selectOne(dboardPrevNum);
+		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		
+		model.addAttribute("dLocal", dboard.getdLocal());
+		model.addAttribute("dCategory", dboard.getdCategory());
+		model.addAttribute("searchFiled", dboard.getSearchFiled());
+		model.addAttribute("searchValue",dboard.getSearchValue());
+		
+		String url = "";
+		if ( dboard.getdNum() != dboardPrevNum) {
+			model.addAttribute("dboard", dboardPrev);
+			url = "animal/chooseView";
+		} else {
+			model.addAttribute("dboard",dboard);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "javascript:history.back()");
+			url = "common/errorDboard";
+		}
+		return url;
+	}
+	
+	
 }

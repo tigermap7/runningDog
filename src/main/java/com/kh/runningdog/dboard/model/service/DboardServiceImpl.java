@@ -52,4 +52,39 @@ public class DboardServiceImpl implements DboardService{
 	public int updateDboardSuc(Dboard dboard) {
 		return dboardDao.updateDboardSuc(dboard);
 	}
+
+	@Override
+	public int selectNext(Dboard dboard) {
+		return dboardDao.selectNext(dboard);
+	}
+
+	@Override
+	public int selectPrev(Dboard dboard) {
+		return dboardDao.selectPrev(dboard);
+	}
+
+	@Override
+	public int selectAdminCount(Dboard dboard) {
+		return dboardDao.selectAdminCount(dboard);
+	}
+
+	@Override
+	public ArrayList<Dboard> selectAdminList(Dboard dboard) {
+		return dboardDao.selectAdminList(dboard);
+	}
+
+	@Override
+	public int selectAdminNext(Dboard dboard) {
+		return dboardDao.selectAdminNext(dboard);
+	}
+	
+	@Override
+	public int selectAdminPrev(Dboard dboard) {
+		return dboardDao.selectAdminPrev(dboard);
+	}
+
+	@Override
+	public int updateAdminHide(String[] checkRow) {
+		return dboardDao.updateAdminHide(checkRow);
+	}
 }

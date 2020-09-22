@@ -60,7 +60,7 @@ public class Image {
     /**
      * @return Width of the image in pixels
      */
-    public static int getWidth() {
+    public int getWidth() {
         return img.getWidth();
     }
 

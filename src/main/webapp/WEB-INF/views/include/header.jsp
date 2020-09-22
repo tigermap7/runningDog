@@ -75,11 +75,11 @@
         <ul class="gnb clearfix">
             <li class="menuBtn"><a href="#none">전체</a></li>
             <li>
-                <a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a>
+                <a href="alistPage.do">유기동물정보</a>
                 <div class="dep2Wrap">
                     <ul class="dep2">
-                        <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
-                        <li><a href="${ pageContext.servletContext.contextPath }/dboardList.do">유기동물 주인찾기</a></li>
+                        <li><a href="alistPage.do">유기동물정보</a></li>
+                        <li><a href="dboardList.do">유기동물 주인찾기</a></li>
                     </ul>
                 </div>
             
@@ -117,8 +117,8 @@
                 <div><a href="#none">전체카테고리</a></div>
                 <ul class="depth2">
                     <li><a href="aboutView.do">사이트소개</a></li>
-                    <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
-                    <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
+                    <li><a href="alistPage.do">유기동물정보</a></li>
+                    <li><a href="dboardList.do">유기동물 주인찾기</a></li>
                     <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
                     <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
                     <li><a href="nlist.do">공지사항</a></li>
@@ -163,8 +163,8 @@
     </dl>
     <ul class="mHeader_menu collapse" id="navbarSupportedContent">
         <li><a href="main.do"><i class="xi-home-o"></i> 홈으로</a></li>
-        <li><a href="/runningdog/views/animal/animalList.jsp">유기동물정보</a></li>
-        <li><a href="/runningdog/views/animal/chooseList.jsp">유기동물 주인찾기</a></li>
+        <li><a href="alistPage.do">유기동물정보</a></li>
+        <li><a href="dboardList.do">유기동물 주인찾기</a></li>
         <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
         <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
         <li><a href="slist.do">후원하기</a></li>
