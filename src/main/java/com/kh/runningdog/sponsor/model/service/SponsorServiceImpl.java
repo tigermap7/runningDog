@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.runningdog.sponsor.model.dao.SponsorDao;
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
 import com.kh.runningdog.sponsor.model.vo.SponsorImage;
+import com.kh.runningdog.sponsor.model.vo.SponsorList;
 
 @Service("sponsorService")
 public class SponsorServiceImpl implements SponsorService{
@@ -79,6 +80,21 @@ public class SponsorServiceImpl implements SponsorService{
 	@Override
 	public int deleteSponsorImage(ArrayList<String> mlist, int sNum) {
 		return sponsorDao.deleteSponsorImage(mlist, sNum);
+	}
+
+	@Override
+	public int insertSponsorList(SponsorList slist) {
+		return sponsorDao.insertSponsorList(slist);
+	}
+
+	@Override
+	public int updateSponsorCash(Sponsor sponsor) {
+		return sponsorDao.updateSponsorCash(sponsor);
+	}
+
+	@Override
+	public SponsorList selectSponsorListOne(String date) {
+		return sponsorDao.selectSponsorListOne(date);
 	}
 	
 	

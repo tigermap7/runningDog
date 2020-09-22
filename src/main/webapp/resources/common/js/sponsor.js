@@ -97,7 +97,21 @@ function sendFile(file, el) {
 function addCommas(x) {
 	x = x.replace(/[^0-9]/g,'');
 	x = x.replace(/,/g,'');
-	$("#amt").val(x.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+	var pay = $("#amt").val(x.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+}
+
+//후원금액
+function payOption(ele) {
+	var ele = $(ele);
+	var pay = $('#amt');
+	
+	if(ele.val() == "") {
+		pay.attr('readonly', false);
+		pay.val('');
+	}else {
+		pay.attr('readonly', true);
+		pay.val(ele.val());
+	}
 }
 
 //썸머노트 내용 빈칸 확인
@@ -147,17 +161,19 @@ $(function(){
 	});
 });	
 
+//썸머노트때문에 리셋추가
 function Refresh() {
 	$('#summernote').summernote('reset');
 	window.location.reload();
 }
 
+//파일삭제되면 파일첨부칸 열림
 $(document).ready(function() {
 	$('#showSelect').hide();
 });
 
+//ajax로 파일삭제
 function showFileSelect(snum) {
-	console.log(snum);
 	$.ajax({
 		data: {snum},
 		type: "post",
@@ -165,15 +181,18 @@ function showFileSelect(snum) {
 		success: function(){
 			console.log("파일 삭제 성공");
 			
-			var editor = document.getElementById("editor");
-			var inof = document.getElementById("of");
-			var inrf = document.getElementById("rf");
+//			var editor = document.getElementById("editor");
+//			var inof = document.getElementById("of");
+//			var inrf = document.getElementById("rf");
+//			
+//			editor.removeChild(inof);
+//			editor.removeChild(inrf);
+//			
+//			editor.addChild('<input type="hidden" value="null" name="sRename">');
+//			editor.addChild('<input type="hidden" value="null" name="sOriginal">');
 			
-			editor.removeChild(inof);
-			editor.removeChild(inrf);
-			
-			editor.addChild('<input type="hidden" value="null" name="sRename">');
-			editor.addChild('<input type="hidden" value="null" name="sOriginal">');
+			$("input[name=sOriginal]").attr("value", "null");
+			$("input[name=sOriginal]").attr("value", "null");
 		},
 		error : function(reqest, status, errorData){
 			console.log("error code : " + request.status
@@ -189,6 +208,84 @@ function showFileSelect(snum) {
 	
 }
 
+//기부금 영수증
+$(function(){
+	$('#spnum').hide();
+	$("#yes").on("click", function(){
+		$("#spnum").show();
+		$('#no').removeClass('active');
+		$('#yes').addClass('active');
+	});
+	$("#no").on("click", function(){
+		$("#spnum").hide();
+		$('#yes').removeClass('active');
+		$('#no').addClass('active');
+	});
+});
+
+//개인 or 사업자
+$(function(){
+	$("#per").on("click", function(){
+		$('#peer').removeClass('active');
+		$('#per').addClass('active');
+	});
+	$("#peer").on("click", function(){
+		$('#per').removeClass('active');
+		$('#peer').addClass('active');
+	});
+});
+
+//이메일 & 전화 수신 동의 여부 & 결제방법
+$(function(){
+	$("input[name=spEch]").is(":checked").each(function(){
+		$("input[name=spEch]").attr("value", $(this).attr("id"));
+	});
+});
+
+//주민번호 유효성 검사
+function aaa() {
+	var jumins3 = $("#jumin1").val() + $("#jumin2").val();
+	
+	var fmt = RegExp(/^\d{6}[1234]\d{6}$/);
+	var buf = new Array(13);
+	
+	if(!fmt.test(jumins3)) {
+		alert("주민등록번호 형식에 맞게 입력해주세요");
+		$("#jumin1").focus();
+		return false;
+	}
+	
+	for(var i=0; i<buf.length; i++) {
+		buf[i] = parseInt(jumins3.charAt(i));
+	}
+	
+	var multipliers = [2,3,4,5,6,7,8,9,2,3,4,5];
+	var sum = 0;
+	
+	for(var i=0; i<12; i++) {
+		sum += (buf[i] *= multipliers[i]);
+	}
+	
+	if((11 - (sum % 11)) % 10 != buf[12]) {
+		alert("잘못된 주민등록번호입니다.");
+		return false;
+	}else {
+		$("#re").attr("value", "y");
+		$("input[name=spSnumber]").attr("value", $("#jumin1").val() +"-"+ $("#jumin2").val());
+		alert("올바른 주민등록번호입니다.");
+		return false;
+	}	
+}
+
+$(function(){
+	$("#sub").on("click", function(){
+		if($("#jumin2").val() != "" && $("#re").val() == "n") {
+			alert("주민등록번호 확인을 눌러주세요.");
+			$("re").focus();
+			return false;
+		}
+	});
+});
 
 
 

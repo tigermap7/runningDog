@@ -80,6 +80,12 @@
 		where s_num = #{ sNum }
 	</update>
 	
+	<update id="updateSponsorCash" parameterType="Sponsor">
+		update sponsor
+		set s_current = (select s_current from sponsor where s_num = #{ sNum }) + #{ sCurrent }
+		where s_num = #{ sNum }
+	</update>
+	
 	<delete id="deleteSponsor">
 		delete from sponsor where s_num in
 		<foreach item="arr" collection="array" open="(" close=")" separator=",">
@@ -88,4 +94,26 @@
 	</delete>
 	
 	
+	
+	<resultMap id="resultSponsorList" type="SponsorList">
+		<id property="spDate" column="sp_date" />
+		<result property="spName" column="sp_name" />
+		<result property="spEmail" column="sp_email" />
+		<result property="spPhone" column="sp_phone" />
+		<result property="spsnumber" column="sp_snumber" />
+		<result property="spCash" column="sp_cash" />
+		<result property="spEch" column="sp_ech" />
+		<result property="spPch" column="sp_pch" />
+		<result property="spWay" column="sp_way" />
+		<result property="sNum" column="s_num" />
+	</resultMap>
+	
+	<insert id="insertSponsorList" parameterType="SponsorList">
+		insert into sponsorlist
+		values (#{ spDate }, #{ spName }, #{ spEmail }, #{ spPhone }, #{ spSnumber }, #{ spCash }, #{ spEch }, #{ spPch }, #{ spWay }, #{ sNum })
+	</insert>
+	
+	<select id="selectSponsorListOne" parameterType="String" resultType="SponsorList">
+		select sp_cash, sp_way from sponsorlist where sp_date = #{ spdate }
+	</select>
 </mapper>

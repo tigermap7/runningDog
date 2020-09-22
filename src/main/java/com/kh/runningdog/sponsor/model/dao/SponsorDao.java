@@ -8,9 +8,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.runningdog.sponsor.model.vo.ContentImage;
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
 import com.kh.runningdog.sponsor.model.vo.SponsorImage;
+import com.kh.runningdog.sponsor.model.vo.SponsorList;
 import com.kh.runningdog.sponsor.model.vo.SponsorPage;
 
 @Repository("sponsorDao")
@@ -87,6 +87,18 @@ public class SponsorDao {
 		key.put("mlist", mlist);
 		key.put("snum", sNum);
 		return session.delete("sponsorImageMapper.deleteSponsorImage", key);
+	}
+
+	public int insertSponsorList(SponsorList slist) {
+		return session.insert("sponsorMapper.insertSponsorList", slist);
+	}
+
+	public int updateSponsorCash(Sponsor sponsor) {
+		return session.update("sponsorMapper.updateSponsorCash", sponsor);
+	}
+
+	public SponsorList selectSponsorListOne(String date) {
+		return session.selectOne("sponsorMapper.selectSponsorListOne", date);
 	}
 	
 	

@@ -91,7 +91,11 @@
                                     </p>
                                     <span class="sponsorBtn">
                                         <a href="${ sdt }">자세히보기</a>
-                                        <a href="spay.do">후원하기</a>
+                                        	<c:url var="spd" value="spay.do">
+                                        		<c:param value="${ s.sNum }" name="sNum"/>
+                                        		<c:param value="${ s.sTitle }" name="title"/>
+                                        	</c:url>
+                                        <a href="${ spd }">후원하기</a>
                                     </span>
                                 </li>
                             </c:forEach>

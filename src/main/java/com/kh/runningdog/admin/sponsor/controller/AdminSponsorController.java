@@ -122,7 +122,7 @@ public class AdminSponsorController {
 		sponsorService.updateSponsor(sponsor);
 	}
 
-	@RequestMapping("supdate.ad")
+	@RequestMapping(value="supdate.ad", method=RequestMethod.POST)
 	public String sUpdate(Sponsor sponsor, HttpServletRequest request, @RequestParam(name = "upfile", required = false) MultipartFile upfile) {
 		int sNum = sponsor.getsNum();
 		sponsor.setsAmount(Integer.parseInt(request.getParameter("amount").replaceAll(",", "")));
