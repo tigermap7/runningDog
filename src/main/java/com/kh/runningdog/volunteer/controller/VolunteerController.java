@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.DuplicateFormatFlagsException;
@@ -15,14 +16,18 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -97,25 +102,26 @@ public class VolunteerController {
 	}
 	//상세보기 페이지 출력
 	@RequestMapping(value = "vdetail.do")
-	public String selectVolunteer(@RequestParam("volno") int volno, HttpServletRequest request, Model model) {
+	public String selectVolunteer(@RequestParam("volno") int volno, HttpServletRequest request, Model model, Vreply vreply) {
 		
 		int currentPage = 1;
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
 		//댓글 갯수 조회
-		int listCountVreply = volunteerService.getListCountVreply(volno);
+		//int listCountVreply = volunteerService.getListCountVreply(volno);
 		
 		//댓글리스트
-		ArrayList<Vreply> vrlist = volunteerService.selectVreplyList(volno);
+		//ArrayList<Vreply> vrlist = volunteerService.selectVreplyList(volno);
 			
 		Volunteer volunteer = volunteerService.selectVolunteer(volno);
 		
 		if(volunteer != null) {
 			request.setAttribute("volunteer", volunteer);
 			request.setAttribute("currentPage", currentPage);
-			request.setAttribute("listCountVreply", listCountVreply);
-			request.setAttribute("vrlist", vrlist);
+			//request.setAttribute("listCountVreply", listCountVreply);
+			//request.setAttribute("vrlist", vrlist);
+			model.addAttribute("vreply", vreply);
 			return "protect/serviceView";
 		}else {
 			model.addAttribute("message", volno + "번 글 상세보기 실패!");
@@ -312,8 +318,7 @@ public class VolunteerController {
 	      }
 	      
 	      return returnView;
-	   }
-	  
+	   } 
 	//글삭제하기
 	@RequestMapping(value="vdelete.do") 
 	public String deleteVolunteer(HttpServletRequest request, Volunteer volunteer, Model model) {
@@ -336,6 +341,7 @@ public class VolunteerController {
 		}
 		
 	}
+	//이전글
 	@RequestMapping("vpre.do")
 	public String selectVpre(HttpServletRequest request, Model model,
 			   				@RequestParam(value = "volno") int volno) {
@@ -354,7 +360,7 @@ public class VolunteerController {
 	      
 	      return returnView;
 	}
-	
+	//다음글
 	@RequestMapping("vnext.do")
 	public String selectVnext(HttpServletRequest request, Model model,
 			   				@RequestParam(value = "volno") int volno) {
@@ -375,67 +381,49 @@ public class VolunteerController {
 	}
 	
 //-------------------------댓글등록,수정,삭제-------------------------------------------------
-	@RequestMapping(value = "vrinsert.do", method = RequestMethod.POST)
-	public String insertVreply(Vreply vreply, HttpSession session, 
-			@RequestParam(value = "vreply_content") String vreply_content, 
-			@RequestParam(value = "nickname") String nickname, 
-			@RequestParam(value = "volno") int volno) {
+	
+
+	/*@ResponseBody
+	@RequestMapping(value = "vreplylist.do")
+	public String SelectVreplyList(@RequestParam("volno") int volno, HttpServletRequest request, ModelAndView mv) throws Exception{
 		
-		if(session.getAttribute("nickname") != null) {
-			vreply.setNickname(nickname);
+		//댓글 갯수 조회
+		int listCountVreply = volunteerService.getListCountVreply(volno);
+		
+		//댓글리스트
+		ArrayList<Vreply> vrlist = volunteerService.selectVreplyList(volno);
+		
+		JSONObject sendJSON = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		for(Vreply vreply : vrlist) {
+			JSONObject job = new JSONObject();
+			job.put("vreply_no", vreply.getVreply_no());
+			job.put("volno", vreply.getVolno());
+			job.put("nickname",  URLEncoder.encode(vreply.getNickname(), "utf-8"));
+			job.put("vreply_content", URLEncoder.encode(vreply.getVreply_content(), "utf-8"));
+			job.put("vreply_level", vreply.getVreply_level());
+			job.put("parant_reply", vreply.getParant_reply());
+			job.put("vreply_date", vreply.getVreply_date().toString());
+			
+			jarr.add(job);
+		}	//for each
+		
+		
+		sendJSON.put("list", jarr);
+		
+		/*if(vreply != null) {
+			request.setAttribute("listCountVreply", listCountVreply);
+			request.setAttribute("vrlist", vrlist);
+			
+			mv.addObject("vreply", vreply);
+			mv.setViewName("protect/serviceView");  
+		}else {
+			mv.addObject("message", "댓글 리스트보기 실패!");
+			mv.setViewName("common/error");
 		}
+		request.setAttribute("listCountVreply", listCountVreply);
 		
-		vreply.setVreply_content(vreply_content);
-		vreply.setVolno(volno);
-		
-		volunteerService.insertVreply(vreply);
-		
-		return "forward:/vdetail.do";
-		
-	}
-	
-	@RequestMapping(value = "vrupdate.do" , method = RequestMethod.POST)
-	public String updateVreply(@RequestParam(value = "vreply_no") int vreply_no, 
-							   @RequestParam(value = "vreply_content") String vreply_content, 
-							   @RequestParam(value = "nickname")String nickname,
-					           @RequestParam(value="volno")int volno, Vreply vreply) throws Exception{
-		vreply.setVreply_no(vreply_no);
-		vreply.setVreply_content(vreply_content);
-		vreply.setNickname(nickname);
-		
-		logger.info("vreply  :" + vreply);
-		
-		volunteerService.updateVreply(vreply);
-		
-		return "forward:/vdetail.do";
-	}
-	
-	 @RequestMapping("movevrupdate.do") 
-	 public ModelAndView moveUpdateVreply(HttpServletRequest request,
-			   @RequestParam(value = "vreply_no") int vreply_no, 
-			   @RequestParam(value = "vreply_content") String vreply_content, 
-			   @RequestParam(value = "nickname")String nickname,
-	           @RequestParam(value="volno")int volno, Vreply vreply, ModelAndView mv) {
-		 
-		 volunteerService.selectVreply(vreply_no);
-		 
-		 request.setAttribute("vreply_no", vreply_no);
-		 request.setAttribute("vreply_content", vreply_content);
-		 request.setAttribute("nickname", nickname);
-		 request.setAttribute("volno", volno);
-		 
-		 mv.setViewName("protect/serviceView");
-		 return mv;
-	  }
-	
-	
-	@RequestMapping(value = "vrdelete.do")
-	public String deleteVreply (@RequestParam(value="vreply_no") int vreply_no, Vreply vreply, 
-								@RequestParam(value="volno") int volno) throws Exception{
-        
-	volunteerService.deleteVreply(vreply_no);
-	
-	return "forward:/vdetail.do";
-	}
-	
+		return sendJSON.toJSONString();
+	}*/
 }

@@ -236,10 +236,6 @@
                                                 <th>봉사기간</th>
                                                 <td colspan="3">${volunteer.volterm1 }~${volunteer.volterm2}</td>
                                             </tr>
-                                            <!-- <tr>
-                                                <th>홈페이지</th>
-                                                <td colspan="3"><a href="https://www.naver.com" target="_blink">https://www.naver.com</a></td>
-                                            </tr> -->
                                         </tbody>
                                     </table>
                                 </dd>
@@ -276,81 +272,28 @@
                             <button class="prevBtn" onclick="javascript:location.href='${vnext}'">다음<i class="xi-angle-right-min"></i></button>
                         </div>
                         <!-- 버튼 끝 --> 
-<script type="text/javascript">
-function UpdateOpen()
-$(function() {
-	$(document).on('click', ".subcmt_btn", function() {
-		$(this).siblings(".Subcmt").toggle(200);
-	});
-	$(document).on('click', ".Subcmt_update_btn", function() {
-		$(this).siblings(".Subcmt_update").toggle(200);
-	});
-	$(document).on('click', ".Cmt_update_btn", function() {
-		$(".Cmt_update").css("display", "block" );
-		$(this).siblings(".Cmt_update").toggle(200);
-	});
-	
-	//댓글 수정버튼
-	//$("#btn_reply_Update").click(function(){
-		
-			/* $("#vrup").css("display", "block") */
-			//수정하는데 필요한 정보들, 댓글 번호, 글 내용, 작성자 아이디, 게시글 번호를 변수에 저장한다.
-	     //   var vreply_no = $("#vreply_no").val();
-	     //   var vreply_content = $("textarea#vreply_content").text();
-	     //   var nickname = $("#nickname").val();
-	     //   var volno = $("#volno").val();
-	        
-	        
-	        //페이지 관련 값들과 댓글 수정에 필요한 값들을 url로 전송한다.
-	   //     document.vrup.action="vrupdate.do?vreply_no="+vreply_no+"&vreply_content="+encodeURI(vreply_content)+"&nickname="+encodeURI(nickname)+"&volno="+volno;
-	   //    document.vrup.submit(); 
-	//});
-}); 
-</script>           
+                        
+         			 <!-- 댓글등록폼 -->
                         <div class="cmt_wrap" id="listReply">
-                        <!-- 댓글등록폼 -->
-                            <form action="vrinsert.do" method="post">
+                            <form name="vreply" id="vreply" role="vreply"> <!-- action="vrinsert.do" -->
                                 <fieldset>
                                     <div class="cmt_form">
-                                        <h4 class="cmt_head">전체 ${listCountVreply}개</h4>
+                                        <h4 class="cmt_head" id="totalcount"></h4>
                                         <div class="cmt_body">
-        <textarea name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+        <textarea id="vreply_content" name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
                                             <div class="cmt_ok">
                                             <input type="hidden" name="volno" value="${ volunteer.volno}">
-                                            <c:if test="${!empty sessionScope.loginMember}">
                                             <input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">
-                                            </c:if>
-                                            <input type="submit" value="등록"></div>
+                                            <input type="button" id="btn_vreplyInsert" value="등록"></div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </form>
-                      <ul class="cmt_con">
-                         <c:forEach var="vr" items="${vrlist}">
-                                <li>
-                                    <dl>
-                                        <dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd><h4>${ vr.nickname }</h4></dd>
-                                        <dt class="cmt_date">${ vr.vreply_date }</dt>
-                                    </dl>
-                                    <p>${ vr.vreply_content }</p>
-                                    <div class="cmt_conBtn">
-                                        <button id="vreply">댓글</button>
-                                      <c:if test="${sessionScope.loginMember.nickname eq vr.nickname }">
-                                     	  <c:url var="vrdel" value="vrdelete.do">
-                           				 		<c:param name="volno" value="${vr.volno}"/>
-                           				 		<c:param name="vreply_no" value="${vr.vreply_no}"/>
-                          				  </c:url>
-                                        <button onclick="javascript:location.href='${vrdel}'">삭제</button>
-                                    	    <c:url var="vrup" value="movevrupdate.do">
-                            					<c:param name="volno" value="${vr.volno}"/>
-                            					<c:param name="vreply_content" value="${vr.vreply_content}"/>
-                            					<c:param name="vreply_no" value="${vr.vreply_no}"/>
-                            					<c:param name="nickname" value="${vr.nickname}"/>
-                           					</c:url>
-                                        <button class="Cmt_update_btn">수정</button> <%-- onclick="javascript:location.href='${vrup}'" --%>
-                                	  </c:if>
-                                    </div>
+                           </div>
+                            <!-- 댓글리스트 보기 -->
+                      <ul id="VreplyList" class="cmt_con">
+                      </ul>
+                         
                                     <!-- <div class="Subcmt_form">
                                         <form action="vrupdate.do" method="post">
                                             <fieldset>
@@ -363,36 +306,154 @@ $(function() {
                                             </fieldset>
                                         </form>
                                     </div> -->
-                                </li>
-                                <!-- 대댓글 -->
-                                <c:if test="${sessionScope.loginMember.nickname eq vr.nickname }">
-                          <div class="Cmt_update" style="display:none;">
-                            <form id="vrup" method="post"> <!-- action="vrupdate.do" -->
-                                <fieldset>
-                                    <div class="cmt_form" >
-                                        <div class="cmt_body">
-        <textarea name="vreply_content" value="${vr.vreply_content }" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">${vr.vreply_content }</textarea>
-                                            <div class="cmt_ok">
-                                            <input type="hidden" name="vreply_no" value="${vr.vreply_no }">
-                                            <input type="hidden" name="volno" value="${vr.volno}">
-                                            <c:if test="${!empty sessionScope.loginMember}">
-                                            <input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">
-                                            </c:if>
-                                            <input type="submit" value="수정"></div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </form>
-                          </div> 
-                         </c:if>
-                              </c:forEach>
-                            </ul>
-                       </div>
+                      
                    </div>   
                 </div>
             </div>
             <!-- 컨텐츠 끝 -->
+<script type="text/javascript">
+$(document).ready(function(){
+	showReplyList();
+});
+function showReplyList(){
+	var paramData = {"volno" : "${ volunteer.volno}"};
+	$.ajax({
+        type: "get",
+        url: "vreplylist.do",
+        data: paramData,
+        dataType: "json",
+        success: function(result) {
+        	console.log("success : " + result);
+			console.log("댓글 나오기")
+			
+			var totalcount = 0;
+			var htmls = "";
+			
+		
+			$(result).each(function(){
+				htmls +='<li id="vreply_no'+this.vreply_no+'">'+
+							'<dl>'+
+							'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
+							'<dd><h4>'+ this.nickname +'</h4></dd>'+
+							'<dt class="cmt_date">' + this.vreply_date +'</dt>'+
+							' </dl>'+
+							'<p>'+ this.vreply_content +'</p>'+
+							'<div class="cmt_conBtn">'+
+							'<button id="vreply">댓글</button>'+
+							'<c:if test="${sessionScope.loginMember.nickname eq vr.nickname }">'+
+							'<button class="Cmt_delete_ctn" onclick="fn_DeleteVreply(' + this.vreply_no + ')">삭제</button>'+
+							'<button class="Cmt_update_btn" onclick="fn_UpdateVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\' )">수정</button>'+
+							' </c:if>'+
+							'</div>'+
+							'</li>'	
+							
+							totalcount = totalcount + 1
+			}); //for in
+			
+			$("#totalcount").text('전체' + totalcount + '개');
+			$('#VreplyList').empty();
+			$('#VreplyList').html(htmls);
+			
+        },	  // Ajax success end
+        error : function(jqXHR, textstatus, errorthrown) {
+				console.log("error : " + jqXHR + ", " + textstatus
+						+ ", " + errorthrown);
+		}
+	});	// Ajax end
+}
 
+//댓글저장
+$(document).on('click', '#btn_vreplyInsert', function(){
+	var VreplyContent = $('#vreply_content').val();
+	console.log(VreplyContent+"VreplyContent");
+	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', "volno" : ${ volunteer.volno} });
+	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
+	$.ajax({
+		url : 'vrinsert.do',
+		data : paramData,
+		headers : headers,
+		type : 'post',
+		dataType : 'text',
+		success : function(result){
+			
+			$('#vreply_content').val();
+			$('#nickname').val();
+			showReplyList();
+		},
+		error : function(jqXHR, textstatus, errorthrown) {
+			console.log("error : " + jqXHR + ", " + textstatus
+					+ ", " + errorthrown);
+		}
+	});
+
+});
+
+//댓글수정폼
+function fn_UpdateVreply(vreply_no, nickname, vreply_content){
+	var htmls = "";
+	htmls +='<div class="cmt_wrap" id="vreply_no'+vreply_no+'">'+
+				'<form name="vreply" id="vreply" role="vreply">'+
+				'<fieldset>'+
+				'<div class="cmt_form">'+
+				'<h4 class="cmt_head" id="totalcount"></h4>'+
+				'<div class="cmt_body">'+
+				'<textarea id="vreply_content" name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;">'+vreply_content+'</textarea>'+
+				'<div class="cmt_ok">'+
+				'<input type="hidden" name="volno" value="${ volunteer.volno}">'+
+				'<input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">'+
+				'<button class="Cmt_update_btn" onclick="updateVreply(' + vreply_no + ', \'' + nickname + '\')">저장</div>'+
+				'<button class="Cmt_update_btn" onclick="showReplyList();">취소</div>'+
+				'</div>'+
+				'</div>'+
+				'</fieldset>'+
+				'</form>'+
+				'</div>'
+				$('#vreply_no'+vreply_no).replaceWith(htmls);
+				$('#vreply_no'+vreply_no+'#editContent').focus();
+}
+//댓글수정내용저장
+function updateVreply(vreply_no, nickname){
+	var editContent = $('#editContent').val();
+	var paramData = JSON.stringify({"vreply_content" : editContent, "vreply_no" : vreply_no});
+	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
+	
+	$.ajax({
+		url : "vrupdate.do",
+		headers : headers,
+		type : 'POST',
+		dataType :'text',
+		success : function(result){
+			console.log(result);
+			showReplyList();
+		},
+		error : function(jqXHR, textstatus, errorthrown) {
+			console.log("error : " + jqXHR + ", " + textstatus
+					+ ", " + errorthrown);
+		} 
+		
+	});
+}
+function fn_DeleteVreply( vreply_no ){
+	var paramData = { "vreply_no" : vreply_no };
+	
+	$.ajax({
+		url : "vrdelete.do",
+		data : paramData,
+		type : 'POST',
+		dataType :'text',
+		success : function(result){
+			console.log(result);
+			showReplyList();
+		},
+		error : function(jqXHR, textstatus, errorthrown) {
+			console.log("error : " + jqXHR + ", " + textstatus
+					+ ", " + errorthrown);
+		} 
+	});
+}
+
+
+</script> 
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
 	</body>

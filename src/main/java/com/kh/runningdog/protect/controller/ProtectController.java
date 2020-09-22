@@ -32,19 +32,11 @@ public class ProtectController {
 		NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
 		System.out.println("nlList"+nlList);
 		Node nValue = (Node) nlList.item(0);
+		System.out.println("nValue"+nValue);
 		if (nValue == null)
 			return null;
 		return nValue.getNodeValue();
 	}
-	private static String getTagValueDetail(String tag, Element eElement) {
-		NodeList nlList1 = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-		System.out.println("nlList1"+nlList1);
-		Node nValue = nlList1.item(0);
-		if (nValue == null)
-			return null;
-		return nValue.getNodeValue();
-	}
-
 	//리스트페이징처리
 	@RequestMapping("movePlist.do")
 	public ModelAndView movePlist(HttpServletRequest request, ModelAndView mv) {
@@ -101,6 +93,7 @@ public class ProtectController {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(url);
+			System.out.println("doc"+ doc);
 
 			// root tag
 			doc.getDocumentElement().normalize();
@@ -168,16 +161,24 @@ public class ProtectController {
 		return "protect/protectView";
 	}
 
+	private static String getTagValueDetail(String tag, Element eElement) {
+		NodeList nlList = eElement.getElementsByTagName(tag);
+		System.out.println("nlList1"+nlList.getLength());
+		Node nValue =(Node) nlList.item(0);
+		System.out.println("nValue"+nValue.getNodeValue());
+//		if (nValue == null)
+//			return null;
+		return nValue.getNodeValue();
+	}
+
 	// 상세보기
 	@ResponseBody
 	@RequestMapping(value = "pdetail.do")
 	public String SelectProtect(String[] args, HttpServletResponse response, HttpServletRequest request) throws IOException {
 
-		
 		String careNm = request.getParameter("careNm");
 		System.out.println("careNm"+careNm);
 		
-
 		// 보낼 JSONObject 객체 생성
 		JSONObject sendJSON = new JSONObject();
 		JSONArray jarr = new JSONArray();
@@ -188,16 +189,18 @@ public class ProtectController {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(url);
+			
+			System.out.println("doc" +doc);
 
 			// root tag
 			doc.getDocumentElement().normalize();
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			// 파싱할 tag
-			NodeList nList1 = doc.getElementsByTagName("items");
-			System.out.println("파싱할 리스트 수 : " + nList1.getLength());
+			Node nNode = doc.getElementsByTagName("items").item(0);
+			System.out.println("파싱할 리스트 수 : "+nNode);
 
-				Node nNode = nList1.item(0);
+				//Node nNode = nList.item(0);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
 					// JSONArray에 담을 JSONOBject 객체 생성
