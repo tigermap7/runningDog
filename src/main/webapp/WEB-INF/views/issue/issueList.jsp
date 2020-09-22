@@ -37,13 +37,28 @@
                         <!--서브 정렬 끝-->
                         
                         <div class="sort-area">  
-                            <h4>전체 150개의 오늘의 이슈</h4>
+                            <h4>Top ${ page.listCount }개의 오늘의 이슈</h4>
                             <div>
                                 <div>
                                 <form action="" name="">
-                                    <a class="active" href="#none">인기순</a>
-                                    <a href="#none">발행순</a>
+                                
+                                <c:if test="${ order eq 'order'}">
+                                    <a class="active" href="#none" onclick="moveSearch('order')">발행순</a>
+                                    <a href="#none" onclick="moveSearch('view')">인기순</a>
+                                </c:if>
+                                <c:if test="${ order eq 'view'}">
+                                    <a href="#none" onclick="moveSearch('order')">발행순</a>
+                                    <a class="active" href="#none" onclick="moveSearch('view')">인기순</a>
+                                </c:if>
+                                
                                 </form>
+                                
+                                <script>
+	                                function moveSearch(order){
+	                                	location.href="cissuelist.do?order=" + order;
+	                                } 
+                                </script>
+                                
                                 </div>
                             </div>
                         </div>
@@ -52,262 +67,38 @@
                         <div class="issueList">
                             <ul class="grid">
                                 <li class="grid-sizer"></li>
-                                <li class="grid-item" onclick="location='cissuedetail.do'">
+                                
+                                <!-- 이슈 리스트 출력 -->
+                                <c:forEach items="${ requestScope.list }" var="c">
+                              		<c:url var="cdeurl" value="cissuedetail.do">
+	                                	<c:param name="partnerName" value="${ c.partnerName }" />
+	                                	<c:param name="partnerImg" value="${ c.partnerImg }" />
+	                                	<c:param name="thumbnail" value="${ c.thumbnail }" />
+	                                	<c:param name="link" value="${ c.link }" />
+                                	</c:url>
+                                <li class="grid-item" onclick="location='${ cdeurl }'">
                                     <div>
                                         <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews01.jpg">
+                                        <img src="${ c.thumbnail }">
                                     </div>
                                     <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
+                                        <dt><img src="${ c.partnerImg }"></dt>
                                         <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
+                                            <h3>${ c.title }</h3>
                                             <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
+						                                                        작성자 : ${ c.partnerName }<br/>
+						                     <c:if test="${ order eq 'order'}">
+							                                                작성일 : ${ c.date }
+						                     </c:if>
+						                     <c:if test="${ order eq 'view'}">
+						                                                         조회수 : <fmt:formatNumber value="${ c.readcount }" groupingUsed="true"/>
+						                     </c:if>						                     
                                             </p>
                                         </dd>
                                     </dl>
                                 </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews02.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg01.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg03.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg04.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg03.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg04.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews02.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg01.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews02.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg01.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg03.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg04.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg03.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg04.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
-                                <li class="grid-item" onclick="location='issueView.jsp'">
-                                    <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews02.jpg">
-                                    </div>
-                                    <dl>
-                                        <dt><img src="/runningdog/resources/images/test/animalImg01.jpg"></dt>
-                                        <dd>
-                                            <h3>강아지가 아령을? 덤벨 들고 운동하는 강아지.</h3>
-                                            <p>
-                                                작성자 : koreadognews<br/>
-                                                조회수 : 102
-                                            </p>
-                                        </dd>
-                                    </dl>
-                                </li>
+                                </c:forEach>
+                                
                             </ul>
                         </div>
                         <!-- 리스트 끝 -->
@@ -315,13 +106,35 @@
                         <!-- 페이징 -->
                         <dl class="list-paging">
                             <dd>
-                                <a href="#none"><i class="xi-angle-left"></i></a>
-                                <a href="#none" class="active">1</a>
-                                <a href="#none">2</a>
-                                <a href="#none">3</a>
-                                <a href="#none">4</a>
-                                <a href="#none">5</a>
-                                <a href="#none"><i class="xi-angle-right"></i></a>
+	                            <!-- 이전 그룹 페이지 이동 -->
+								<c:if test="${ (page.currentPage - 5) lt page.startPage and (page.currentPage - 5) ge 1 }">
+									<c:url var="npurl1" value="cissuelist.do">
+										<c:param name="page" value="${ page.startPage - 5 }" />
+									</c:url>
+									<a href="${ npurl1 }"><i class="xi-angle-left"></i></a>
+								</c:if>
+                                
+								<!-- 현재 페이지가 속한 페이지그룹의 숫자 출력 처리  -->
+								<c:forEach var="p" begin="${ page.startPage }" end="${ page.endPage }" step="1">
+									<c:if test="${ p eq page.currentPage }">
+										<a href="#none" class="active">${ p }</a>
+									</c:if>
+									<c:if test="${ p ne page.currentPage }">
+										<c:url var="npurl2" value="cissuelist.do">
+											<c:param name="page" value="${ p }" />
+										</c:url>
+										<a href="${ npurl2 }">${ p }</a>
+									</c:if>
+								</c:forEach>
+								
+	                            <!-- 다음 그룹 페이지 이동 -->
+								<c:if test="${ (page.currentPage + 5) gt page.endPage and page.endPage lt page.maxPage }">
+									<c:url var="npurl3" value="cissuelist.do">
+										<c:param name="page" value="${ page.startPage + 5 }" />
+									</c:url>
+									<a href="${ npurl3 }"><i class="xi-angle-right"></i></a>
+								</c:if>
+							
                             </dd>
                         </dl>
                         <!-- //페이징 -->
