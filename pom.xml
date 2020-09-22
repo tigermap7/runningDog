@@ -293,6 +293,20 @@
 		    <version>1.5</version>
 		</dependency>
 		
+		<!-- Python연동을 위한 jython -->
+		<!-- https://mvnrepository.com/artifact/org.python/jython-standalone -->
+<!--   		<dependency>
+		    <groupId>org.python</groupId>
+		    <artifactId>jython-standalone</artifactId>
+		    <version>2.7.1</version>
+		</dependency> -->
+		<dependency>
+		    <groupId>org.python</groupId>
+		    <artifactId>jython-standalone</artifactId>
+		    <version>2.7.2</version>
+		</dependency>
+		  
+		
 	</dependencies>
     <build>
         <plugins>
