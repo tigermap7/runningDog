@@ -23,7 +23,7 @@
                        <div>
                             <ul class="navi">
                                 <li><a href="main.do">홈</a></li>
-                                <li class="xi-angle-right"><a href="/runningdog/vlist.do">자원봉사모집</a></li>
+                                <li class="xi-angle-right"><a href="vlist.do">자원봉사모집</a></li>
                             </ul>
                         </div>
                         <h2><span>자원봉사모집</span></h2>
@@ -36,20 +36,30 @@
                     <!-- 좌측메뉴 -->
                     <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
-
+<script type="text/javascript">
+//검색 분류 선택 확인
+$(function(){
+   $("[name='sel']").on("click", function(){
+      if($("select[name='type'] option:selected").val().length == 0) {
+         alert("분류를 선택해주세요");
+         return false;
+      }
+   });
+});
+</script>
                     <div class="subContent">
                         <!--서브 검색-->                
                         <div class="search_wrap">
                             <form action="vlist.do" name="">
                             <select name="type">
-                                <option value="none" class="fontColor-dark" selected disabled >전체</option>
+                                <option value="" class="fontColor-dark" selected disabled >전체</option>
                                 <option value="address" class="fontColor-dark">지역</option>
                                 <option value="name" class="fontColor-dark">센터명</option>
                                 <option value="term" class="fontColor-dark">기간(월)</option>
                             </select>
                             <div class="search-box">
                                 <input type="text" name="keyword" placeholder="원하시는 키워드를 검색해주세요.">
-                                <button onclick="#none" class="xi-search"></button>
+                                 <button type="submit" name="sel" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
@@ -80,15 +90,25 @@
                                   	 		<c:param name="volno" value="${v.volno}"/>
                                   	 		<c:param name="page" value="${currentPage}"/>
                                   		</c:url>
+                                  		<c:if test="${ v.volche eq 'Y' }">
                                     <tr class="serviceOn" onclick="location.href='${vd}'">
+                                    	</c:if>
+                                    	<c:if test="${ v.volche ne 'Y' }">
+                                    <tr class="serviceOut" onclick="location.href='${vd}'">
+                                        </c:if>
                                         <td class="img">
                                            <c:if test="${ v.volche eq 'Y' }">  
                                               <span>모집중</span>
                                            </c:if>
-                                           <c:if test="${ v.volche eq 'N' }">
+                                           <c:if test="${ v.volche ne 'Y' }">
                                           	  <span>마감</span>
                                            </c:if>
+                                           <c:if test="${ empty v.volre1 }">
                                             <img src="/runningdog/resources/images/test/animalNews04.jpg">
+                                           </c:if>
+                                           <c:if test="${ !empty v.volre1 }">
+                                            <img src="/runningdog/resources/vfiles/${v.volre1 }">
+                                           </c:if>
                                         </td>
                                         <td>
                                             <h3>${ v.voltitle }</h3>
@@ -97,9 +117,9 @@
                                                 <li><span>센터명 : </span>${v.volname}</li>
                                                  <li><span>모집기간 :</span> 상시모집 /
                                                 	<c:if test="${ v.volche eq'Y'}">
-                                                			상시모집</li>
+                                                			모집중</li>
                                                		</c:if>
-                                               		<c:if test="${ v.volche eq'N'}">
+                                               		<c:if test="${ v.volche ne'Y'}">
                                                				모집완료</li>
                                                		</c:if>
                                                		<c:if test="${!empty v.volterm1 }">
@@ -186,6 +206,14 @@
                             </dd>
                         </dl>
                         </c:if>
+                        <c:if test="${listCount < 0 and listCount eq 0}">
+                        <tr class="list-no">
+							<td colspan="7">
+								<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
+								<h1>목록이 없습니다.</h1>
+							</td>
+						</tr>
+                    </c:if>
                         <!-- //페이징 -->
                     </div>
                 </div>

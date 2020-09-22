@@ -17,7 +17,7 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
+                                <li><a href="main.do">홈</a></li>
                                 <li class="xi-angle-right"><a href="#none">보호센터 정보</a></li>
                             </ul>
                         </div>
@@ -29,7 +29,7 @@
                 
                 <div class="subContent_wrap">
                     <!-- 좌측메뉴 -->
-                    <c:import url="/views/include/leftMenu.jsp"/>
+                    <c:import url="/WEB-INF/views/include/leftMenu.jsp"/>
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
@@ -91,7 +91,7 @@
                                 <dd>
                                     <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6324.481505654264!2d127.00051190256856!3d37.572948171699984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca325b4d9b81b%3A0xba2de96c741b670a!2z7ISc7Jq47Yq567OE7IucIOyiheuhnOq1rCDsooXroZw1LjbqsIDrj5k!5e0!3m2!1sko!2skr!4v1598454835067!5m2!1sko!2skr" width="100%" height="281.3rem" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>
                                     <h3 class="mt30">센터정보</h3>
-                                    <table class="serviceInfo">
+                                    <table id="pdetail" class="serviceInfo">
                                        <colgroup>
                                            <col width="15%">
                                            <col width="35%">
@@ -99,30 +99,7 @@
                                            <col width="35%">
                                        </colgroup>
                                         <tbody>
-                                            <tr>
-                                                <th>보호센터</th>
-                                                <td colspan="3">서울유기동물입양센터</td>
-                                            </tr>
-                                            <tr>
-                                                <th>동물보호센터유형</th>
-                                                <td>법인</td>
-                                                <th>연락처</th>
-                                                <td>02-980-7717</td>
-                                            </tr>
-                                            <tr>
-                                                <th>운영방식</th>
-                                                <td>직영</td>
-                                                <th>운영시간</th>
-                                                <td>09:00 ~ 18:00 (평일)</td>
-                                            </tr>
-                                            <tr>
-                                                <th>지역</th>
-                                                <td colspan="3">서울특별시 중랑구 용마산로139나길 83</td>
-                                            </tr>
-                                            <tr>
-                                                <th>홈페이지</th>
-                                                <td colspan="3"><a href="https://www.naver.com" target="_blink">https://www.naver.com</a></td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </dd>
@@ -147,5 +124,62 @@
 
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
+		
+				<!-- ajax로 JSON객체 가져오기 -->
+<script type="text/javascript">
+
+
+$(function(){
+	var careNm = '${careNm}';/* '<c:out value="${careNm}"/>' */
+	console.log(careNm)
+	$.ajax({
+		url : "pdetail.do",
+		type : "get",
+		data : { careNm : careNm }, //보내는 값
+		dataType: "json", //받는 값
+		success : function(data){
+			console.log("success:성공");
+			var jsonStr = JSON.stringify(data);
+			var json = JSON.parse(jsonStr);
+			var totalcount = (json.list).length;
+			var values = "";
+			console.log((json.list).length);
+			for(var i in json.list){
+				values += 
+					"<tr>"
+            		    +"<th>동물보호센터명</th>"
+            		    +"<td colspan='3'>"+decodeURIComponent(json.list[i].careNm).replace(/\+/gi, "  ")+"</td>"
+            		    +"</tr>"
+            		    +"<tr>"
+            		    +"<th>동물보호센터유형</th>"
+            		    +"<td>" + decodeURIComponent(json.list[i].divisionNm).replace(/\+/gi, "  ") + "</td>"
+            		    +"<th>연락처</th>"
+            		    +"<td>" + json.list[i].careTel + "</td>"
+            		    +"</tr>"
+            		    +"<tr>"
+            		    +"<th>운영방식</th>"
+            		    +"<td>" + decodeURIComponent(json.list[i].divisionNm).replace(/\+/gi, "  ") + "</td>"
+            		   // +"<th>운영시간</th>"
+            		   // +"<td> " + json.list[i].weekOprStime +"~"+json.list[i].weekOprEtime + " (평일)</td>"
+            		    +"</tr>"
+            		    +"<tr>"
+            		    +"<th>도로명 주소</th>"
+            		    +"<td colspan='3'>"+decodeURIComponent(json.list[i].careAddr).replace(/\+/gi, "  ")+"</td>"
+            		   + "</tr>"
+					} //for in
+            
+   
+            $('#pdetail > tbody').html(values); 
+            },
+            error : function(jqXHR, textstatus, errorthrown) {
+               console.log("error : " + jqXHR + ", " + textstatus
+                     + ", " + errorthrown); 
+			
+		}
+	});//ajax
+	
+});//document.ready
+
+</script> 
 	</body>
 </html>
