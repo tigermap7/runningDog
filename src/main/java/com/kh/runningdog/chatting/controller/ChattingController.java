@@ -160,7 +160,10 @@ public class ChattingController {
 	@ResponseBody
 	public String totalUnreadCount(HttpSession session) {
 		Member member = (Member) session.getAttribute("loginMember");
-		int uniqueNum = member.getUniqueNum();
+		int uniqueNum = 0;
+		if (member != null) {
+			uniqueNum = member.getUniqueNum();
+		}
 		
 		int count = messageService.selectTotalUnreadCount(uniqueNum);
 		
