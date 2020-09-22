@@ -72,6 +72,22 @@
 	
 	
 	
+	
+	<!-- 간편로그인, 회원가입, 소셜마이페이지 -->
+	<select id="selectFacebookLogin" parameterType="Member" resultMap="resultMember">
+		select * from member where user_id = #{userId}
+	</select>
+	
+	<select id="insertFacabookMember" parameterType="Member">
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, null, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, 'facebook', DEFAULT, DEFAULT)
+	</select>
+	
+	<update id="updateSocialMyinfo" parameterType="Member">
+		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile} where user_id = #{userId}
+	</update>
+	
+	
+	
 	<!-- 공용 -->
 	<select id="selectNicknameCheck" parameterType="Member" resultMap="resultMember">
 		select * from member where nickname = #{nickname}

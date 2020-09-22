@@ -26,6 +26,14 @@ public interface MemberService {
 	int updatemyinfo(Member member);
 	int deleteMember(String userId);
 	
+	//간편로그인, 회원가입, 소셜마이페이지
+	Member selectFacebookLogin(Member member);
+	int insertFacabookMember(Member member);
+	int updateSocialMyinfo(Member member);
+	
+	
+	
+	
 	//공용
 	int insertMember(Member member);
 	int updateMember(Member member);

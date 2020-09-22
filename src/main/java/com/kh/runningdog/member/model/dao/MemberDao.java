@@ -72,6 +72,19 @@ public class MemberDao {
 	}
 
 
+	//간편로그인, 회원가입, 소셜마이페이지
+	public Member selectFacebookLogin(Member member) {
+		return session.selectOne("memberMapper.selectFacebookLogin", member);
+	}
+
+	public int insertFacabookMember(Member member) {
+		return session.insert("memberMapper.insertFacabookMember", member);
+	}
+	public int updateSocialMyinfo(Member member) {
+		return session.update("memberMapper.updateSocialMyinfo", member);
+	}
+
+
 	
 	
 	//공용
@@ -154,6 +167,10 @@ public class MemberDao {
 	public int selectNicknameCount(Member member) {
 		return session.selectOne("memberMapper.selectNicknameCount", member);
 	}
+
+
+
+
 
 
 

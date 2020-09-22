@@ -69,6 +69,23 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
+	//간편로그인, 회원가입, 소셜마이페이지
+	@Override
+	public Member selectFacebookLogin(Member member) {
+		return memberDao.selectFacebookLogin(member);
+	}
+
+	@Override
+	public int insertFacabookMember(Member member) {
+		return memberDao.insertFacabookMember(member);
+	}
+
+	@Override
+	public int updateSocialMyinfo(Member member) {
+		return memberDao.updateSocialMyinfo(member);
+	}
+
+	
 	
 	
 	//공용
