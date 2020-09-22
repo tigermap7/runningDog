@@ -62,6 +62,7 @@
                                     </div>
                                 </dt>
                             </dl>
+                            
                             <div class="chattingView" id="chatdata">
                                 <div>
                                     <h3><i class="xi-comment-o"></i> 채팅안내</h3>
@@ -102,6 +103,7 @@
 	</body>
 	
 <script type="text/javascript">
+	$("#chatdata").scrollTop($("#chatdata")[0].scrollHeight);
 	//websocket을 지정한 URL로 연결
 	var sock= new SockJS("<c:url value='/echo'/>");
 	//websocket 서버에서 메시지를 보내면 자동으로 실행된다.
@@ -115,6 +117,7 @@
 	    });
 	});
 	
+	// 메세지 enter로 전송
 	$(function() {
 		 $('textarea').on('keydown', function(event) {
 		     if (event.keyCode == 13){
@@ -185,6 +188,7 @@
 					
 					$("#chatdata").append(printHTML);
 				}
+				$("#chatdata").scrollTop($("#chatdata")[0].scrollHeight);
 			}
 				console.log('chatting data: ' + data);
 			break;
