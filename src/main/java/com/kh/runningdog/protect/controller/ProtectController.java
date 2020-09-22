@@ -30,6 +30,7 @@ public class ProtectController {
 	// tag값의 정보를 가져오는 메소드
 	private static String getTagValue(String tag, Element eElement) {
 		NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
+		System.out.println("nlList"+nlList);
 		Node nValue = (Node) nlList.item(0);
 		if (nValue == null)
 			return null;
@@ -37,7 +38,8 @@ public class ProtectController {
 	}
 	private static String getTagValueDetail(String tag, Element eElement) {
 		NodeList nlList1 = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-		Node nValue = (Node) nlList1.item(0);
+		System.out.println("nlList1"+nlList1);
+		Node nValue = nlList1.item(0);
 		if (nValue == null)
 			return null;
 		return nValue.getNodeValue();
@@ -110,6 +112,8 @@ public class ProtectController {
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 				Node nNode = nList.item(temp);
+				//System.out.println("temp"+temp);
+				//System.out.println("nNode"+nNode);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 					Element eElement = (Element) nNode;
@@ -128,29 +132,14 @@ public class ProtectController {
 					// JSONArray에 JSONObject 담기
 					jarr.add(job);
 
-					/*
-					 * System.out.println("######################");
-					 * System.out.println(eElement.getTextContent());
-					 * System.out.println("도로명 주소  : " + getTagValue("careAddr", eElement));
-					 * System.out.println("센터이름  : " + getTagValue("careNm", eElement));
-					 * System.out.println("전화번호 : " + getTagValue("careTel", eElement));
-					 * System.out.println("동물보호센터유형  : " + getTagValue("divisionNm", eElement));
-					 * 
-					 * System.out.println("소재지번주소  : " + getTagValue("jibunAddr", eElement));
+					/* System.out.println("소재지번주소  : " + getTagValue("jibunAddr", eElement));
 					 * System.out.println("위도 :" + getTagValue("lat", eElement));
 					 * System.out.println("경도 :" + getTagValue("lng", eElement));
 					 * System.out.println("관리기관명  : " + getTagValue("orgNm", eElement));
 					 */
 
-					/*
-					 * System.out.println("평일운영종료시각  : " + getTagValue("weekOprEtime", eElement));
+					/* System.out.println("평일운영종료시각  : " + getTagValue("weekOprEtime", eElement));
 					 * System.out.println("평일운영시작시각 :" + getTagValue("weekOprStime", eElement));
-					 * System.out.println("주말분양종료시각  : " + getTagValue("weekendCellEtime",
-					 * eElement)); System.out.println("주말분양시작시각  : " +
-					 * getTagValue("weekendCellStime", eElement)); System.out.println("주말운영종료시각 : "
-					 * + getTagValue("weekendOprEtime", eElement));
-					 * System.out.println("주말운영시작시각  : " + getTagValue("weekendOprStime",
-					 * eElement));
 					 */
 
 				} // for end
@@ -166,14 +155,6 @@ public class ProtectController {
 		sendJSON.put("list", jarr);
 
 		return sendJSON.toJSONString();
-
-		/*
-		 * System.out.println("json 배열 :" +jarr); System.out.println("Json객체생성 :" +
-		 * sendJSON); response.setContentType("application/json; charset=utf-8");
-		 * PrintWriter out = response.getWriter(); out.write(sendJSON.toJSONString());
-		 * out.flush(); out.close();
-		 */
-
 	} // main end
 	
 	//뷰페이지로 이동 처리용 메소드 ------------
@@ -216,15 +197,11 @@ public class ProtectController {
 			NodeList nList1 = doc.getElementsByTagName("items");
 			System.out.println("파싱할 리스트 수 : " + nList1.getLength());
 
-			for (int temp = 0; temp < nList1.getLength(); temp++) {
-				Node nNode = nList1.item(temp);
+				Node nNode = nList1.item(0);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
 					Element eElement = (Element) nNode;
-
 					// JSONArray에 담을 JSONOBject 객체 생성
 					JSONObject job = new JSONObject();
-
 					// JSONObject에 값 담기
 					// job.put("값이름", 값); ==> 값은 무조건 스트링이어야함
 					job.put("careAddr", URLEncoder.encode(getTagValueDetail("careAddr", eElement), "utf-8")); // 도로명 주소 :
@@ -242,10 +219,6 @@ public class ProtectController {
 					/*
 					 * System.out.println("######################");
 					 * System.out.println(eElement.getTextContent());
-					 * System.out.println("도로명 주소  : " + getTagValue("careAddr", eElement));
-					 * System.out.println("센터이름  : " + getTagValue("careNm", eElement));
-					 * System.out.println("전화번호 : " + getTagValue("careTel", eElement));
-					 * System.out.println("동물보호센터유형  : " + getTagValue("divisionNm", eElement));
 					 * 
 					 * System.out.println("소재지번주소  : " + getTagValue("jibunAddr", eElement));
 					 * System.out.println("위도 :" + getTagValue("lat", eElement));
@@ -253,18 +226,7 @@ public class ProtectController {
 					 * System.out.println("관리기관명  : " + getTagValue("orgNm", eElement));
 					 */
 
-					/*
-					 * System.out.println("평일운영종료시각  : " + getTagValue("weekOprEtime", eElement));
-					 * System.out.println("평일운영시작시각 :" + getTagValue("weekOprStime", eElement));
-					 * System.out.println("주말분양종료시각  : " + getTagValue("weekendCellEtime",
-					 * eElement)); System.out.println("주말분양시작시각  : " +
-					 * getTagValue("weekendCellStime", eElement)); System.out.println("주말운영종료시각 : "
-					 * + getTagValue("weekendOprEtime", eElement));
-					 * System.out.println("주말운영시작시각  : " + getTagValue("weekendOprStime",
-					 * eElement));
-					 */
-
-				} // for end
+				//} // for end
 			} // if end
 
 		} catch (Exception e) {
