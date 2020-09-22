@@ -169,7 +169,9 @@
 			nickname = receivedMessage.data.nickname; //현재 메세지를 보낸 사람의 세션 등록//
 			message = receivedMessage.data.message; //현재 메세지를 저장//
 			roomno = receivedMessage.data.roomno;
-			
+			if (message=="") {
+				break;
+			}
 			//나와 상대방이 보낸 메세지를 구분하여 영역을 나눈다.//
 			if (roomno == ${roomNo}) {
 				
