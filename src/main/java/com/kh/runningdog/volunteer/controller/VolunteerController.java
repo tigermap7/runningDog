@@ -1,5 +1,6 @@
 package com.kh.runningdog.volunteer.controller;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.runningdog.common.ImageUtil.Image;
+import com.kh.runningdog.common.ImageUtil.ImageLoader;
 import com.kh.runningdog.volunteer.model.service.VolunteerService;
 import com.kh.runningdog.volunteer.model.vo.Volunteer;
 import com.kh.runningdog.volunteer.model.vo.Vreply;
@@ -93,8 +97,8 @@ public class VolunteerController {
 	}
 	//상세보기 페이지 출력
 	@RequestMapping(value = "vdetail.do")
-	public String selectVolunteer(HttpServletRequest request, Model model) {
-		int volno = Integer.parseInt(request.getParameter("volno"));
+	public String selectVolunteer(@RequestParam("volno") int volno, HttpServletRequest request, Model model) {
+		
 		int currentPage = 1;
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
@@ -104,15 +108,7 @@ public class VolunteerController {
 		
 		//댓글리스트
 		ArrayList<Vreply> vrlist = volunteerService.selectVreplyList(volno);
-		
-		/*
-		 * Map<String, Object> map = new HashMap<>();//리스트의 값을 저장하기 위해 map객체를 생성 그안에
-		 * 리스트를 저장
-		 * 
-		 * map.put("vrlist", vrlist);//뷰에 전달할 데이터
-		 * 
-		 * mv.addObject("map", map);//뷰에 전달할 데이터저장
-		 */		
+			
 		Volunteer volunteer = volunteerService.selectVolunteer(volno);
 		
 		if(volunteer != null) {
@@ -134,6 +130,10 @@ public class VolunteerController {
 		      String returnView = null;
 		      int i = 1;
 		      
+		      volunteer.setVolcontent(volunteer.getVolcontent().replace("\r\n", "<br>"));
+		      Image img = null;
+		      
+		      
 		      String savePath = request.getSession().getServletContext().getRealPath("resources/vfiles"); //파일 저장할 폴더 위치
 		      
 		      for(String key : fileMap.keySet()) {
@@ -142,9 +142,15 @@ public class VolunteerController {
 		         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		         String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
 		         renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
+		         String resizePath = savePath + "\\" + renamefilename;
 		         
 		         try {
 		            fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+		            img = ImageLoader.fromFile(resizePath);
+		            
+		            // 너비 300으로 리사이징 처리 화질은 최대한 보정
+					img.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(resizePath), 0.95f);
+		            
 		         } catch (Exception e) {
 		            e.printStackTrace();
 		         }
@@ -161,7 +167,7 @@ public class VolunteerController {
 		            i++;
 		         }
 		      }
-		      
+		      //return은 한번만 하기위해~ return
 		      if(volunteerService.insertVolunteer(volunteer) > 0) {
 		         returnView = "redirect:/vlist.do";
 		      } else {
@@ -196,39 +202,112 @@ public class VolunteerController {
 	      logger.info("vupdate.do run...");
 	      String returnView = null;
 	      int i = 1;
+	      Image img = null;
 	      
 	      String savePath = request.getSession().getServletContext().getRealPath("resources/vfiles"); //파일 저장할 폴더 위치
 	      
-	      for(String key : fileMap.keySet()) {
-	         if(fileMap.get(key).getOriginalFilename() != "") {
-	         String originalFilename = fileMap.get(key).getOriginalFilename();
-	         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-	         String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); //현재시간
-	         renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); //확장자명
-	         
-	         try {
-	            fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
-	         } catch (Exception e) {
-	            e.printStackTrace();
-	         }
-	            switch (i) {
-	            case 1 : volunteer.setVolor1(originalFilename);
-	                     volunteer.setVolre1(renamefilename); break;
-	            case 2 : volunteer.setVolor2(originalFilename);
-              		 volunteer.setVolre2(renamefilename); break;
-	            case 3 : volunteer.setVolor3(originalFilename);
-              		 volunteer.setVolre3(renamefilename); break;
-	            case 4 : volunteer.setVolor4(originalFilename);
-	            		 volunteer.setVolre4(renamefilename); break;
-	         }
-	            i++;
-	         }
-	      }
+	      
+		  String deleteFilename1 = request.getParameter("deleteFilename1");
+		  String deleteFilename2 = request.getParameter("deleteFilename2");
+		  String deleteFilename3 = request.getParameter("deleteFilename3");
+		  String deleteFilename4 = request.getParameter("deleteFilename4");
+	      
+		//삭제할 파일이 넘겨져왔을 때 삭제하기
+			if(!(deleteFilename1 == null || deleteFilename1.length() == 0)) {
+				new File(savePath + "\\" + volunteer.getVolre1()).delete();
+				volunteer.setVolor1(null);
+				volunteer.setVolre1(null);
+			}
+			if(!(deleteFilename2 == null || deleteFilename2.length() == 0)) {
+				new File(savePath + "\\" + volunteer.getVolre2()).delete();
+				volunteer.setVolor2(null);
+				volunteer.setVolre2(null);
+			}
+			if(!(deleteFilename3 == null || deleteFilename3.length() == 0)) {
+				new File(savePath + "\\" + volunteer.getVolre3()).delete();
+				volunteer.setVolor3(null);
+				volunteer.setVolre3(null);
+			}
+			if(!(deleteFilename4 == null || deleteFilename4.length() == 0)) {
+				new File(savePath + "\\" + volunteer.getVolre4()).delete();
+				volunteer.setVolor4(null);
+				volunteer.setVolre4(null);
+			}
+			//새로 첨부된 파일 있을 경우 파일 추가하기
+		for (String key : fileMap.keySet()) {
+			if (fileMap.get(key).getOriginalFilename() != "") {
+				String originalFilename = fileMap.get(key).getOriginalFilename();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+				String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); // 현재시간
+				renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // 확장자명
+				String resizePath = savePath + "\\" + renamefilename;
+
+				try {
+					fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+					img = ImageLoader.fromFile(resizePath);
+		            
+		            // 너비 300으로 리사이징 처리 화질은 최대한 보정
+					img.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(resizePath), 0.95f);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				switch (i) {
+				case 1:
+					if (volunteer.getVolor1().length() == 0) { // 1번 파일이 없을 때
+						volunteer.setVolor1(originalFilename);
+						volunteer.setVolre1(renamefilename);
+					} else { // 1번파일이 있을 때
+						if (volunteer.getVolor2().length() == 0) { // 2번파일이 없을 때
+							volunteer.setVolor2(originalFilename);
+							volunteer.setVolre2(renamefilename);
+						} else {
+							if (volunteer.getVolor3().length() == 0) { // 3번파일이 없을 때
+								volunteer.setVolor3(originalFilename);
+								volunteer.setVolre3(renamefilename);
+							} else {
+								volunteer.setVolor4(originalFilename);
+								volunteer.setVolre4(renamefilename);
+							}
+						}
+					}
+					break;
+				case 2:
+					if (volunteer.getVolor2().length() == 0) { // 2번파일이 없을 때
+						volunteer.setVolor2(originalFilename);
+						volunteer.setVolre2(renamefilename);
+					} else {
+						if (volunteer.getVolor3().length() == 0) { // 3번파일이 없을 때
+							volunteer.setVolor3(originalFilename);
+							volunteer.setVolre3(renamefilename);
+						} else {
+							volunteer.setVolor4(originalFilename);
+							volunteer.setVolre4(renamefilename);
+						}
+					}
+					break;
+				case 3:
+					if (volunteer.getVolor3().length() == 0) { // 3번파일이 없을 때
+						volunteer.setVolor3(originalFilename);
+						volunteer.setVolre3(renamefilename);
+					} else {
+						volunteer.setVolor4(originalFilename);
+						volunteer.setVolre4(renamefilename);
+					}
+					break;
+				case 4:
+					volunteer.setVolor4(originalFilename);
+					volunteer.setVolre4(renamefilename);
+					break;
+				}
+
+				i++;
+			} // if문
+		} // for문
 	      
 	      if(volunteerService.updateVolunteer(volunteer) > 0) {
 	         returnView = "redirect:/vlist.do";
 	      } else {
-	         request.setAttribute("message", "새 글 수정 처리 실패");
+	         request.setAttribute("message", volunteer.getVolno() + "번 글 수정 처리 실패");
 	         returnView = "common/error";
 	      }
 	      
@@ -257,7 +336,45 @@ public class VolunteerController {
 		}
 		
 	}
+	@RequestMapping("vpre.do")
+	public String selectVpre(HttpServletRequest request, Model model,
+			   				@RequestParam(value = "volno") int volno) {
+		
+		int vpre = volunteerService.selectVolunteerPre(volno);
+		
+		String returnView = null;
+		
+		if( vpre > 0 ) {
+			model.addAttribute("volno", vpre);
+	         returnView = "redirect:/vdetail.do";
+	      } else {
+	         request.setAttribute("message", "글이 존재하지않습니다.");
+	         returnView = "common/error";
+	      }
+	      
+	      return returnView;
+	}
 	
+	@RequestMapping("vnext.do")
+	public String selectVnext(HttpServletRequest request, Model model,
+			   				@RequestParam(value = "volno") int volno) {
+		
+		int vnext = volunteerService.selectVolunteerNext(volno);
+		
+		String returnView = null;
+		
+		if( vnext > 0 ) {
+			model.addAttribute("volno", vnext);
+	         returnView = "redirect:/vdetail.do";
+	      } else {
+	         request.setAttribute("message", "글이 존재하지않습니다.");
+	         returnView = "common/error";
+	      }
+	      
+	      return returnView;
+	}
+	
+//-------------------------댓글등록,수정,삭제-------------------------------------------------
 	@RequestMapping(value = "vrinsert.do", method = RequestMethod.POST)
 	public String insertVreply(Vreply vreply, HttpSession session, 
 			@RequestParam(value = "vreply_content") String vreply_content, 
@@ -277,7 +394,7 @@ public class VolunteerController {
 		
 	}
 	
-	@RequestMapping(value = "vrupdate.do")
+	@RequestMapping(value = "vrupdate.do" , method = RequestMethod.POST)
 	public String updateVreply(@RequestParam(value = "vreply_no") int vreply_no, 
 							   @RequestParam(value = "vreply_content") String vreply_content, 
 							   @RequestParam(value = "nickname")String nickname,
@@ -293,6 +410,25 @@ public class VolunteerController {
 		return "forward:/vdetail.do";
 	}
 	
+	 @RequestMapping("movevrupdate.do") 
+	 public ModelAndView moveUpdateVreply(HttpServletRequest request,
+			   @RequestParam(value = "vreply_no") int vreply_no, 
+			   @RequestParam(value = "vreply_content") String vreply_content, 
+			   @RequestParam(value = "nickname")String nickname,
+	           @RequestParam(value="volno")int volno, Vreply vreply, ModelAndView mv) {
+		 
+		 volunteerService.selectVreply(vreply_no);
+		 
+		 request.setAttribute("vreply_no", vreply_no);
+		 request.setAttribute("vreply_content", vreply_content);
+		 request.setAttribute("nickname", nickname);
+		 request.setAttribute("volno", volno);
+		 
+		 mv.setViewName("protect/serviceView");
+		 return mv;
+	  }
+	
+	
 	@RequestMapping(value = "vrdelete.do")
 	public String deleteVreply (@RequestParam(value="vreply_no") int vreply_no, Vreply vreply, 
 								@RequestParam(value="volno") int volno) throws Exception{
@@ -301,4 +437,5 @@ public class VolunteerController {
 	
 	return "forward:/vdetail.do";
 	}
+	
 }
