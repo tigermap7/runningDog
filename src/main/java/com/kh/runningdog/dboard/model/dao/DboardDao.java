@@ -87,4 +87,9 @@ public class DboardDao {
 		return session.selectOne("dboardMapper.selectAdminPrev", dboard);
 	}
 
+
+	public int updateAdminHide(String[] checkRow) {
+		return session.update("dboardMapper.updateAdminHide", checkRow);
+	}
+
 }

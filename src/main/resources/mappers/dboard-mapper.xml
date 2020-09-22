@@ -266,4 +266,20 @@
 		</if>
 		WHERE D_NUM = #{ dNum }	
 	</update>
+	
+	<!-- 게시물 표시 여부가 n이면 y를 y면 n을 대입 -->
+	<update id="updateAdminHide" parameterType="Dboard">
+		UPDATE DBOARD SET
+		D_CHECK =
+			CASE WHEN D_CHECK = 'n' THEN 'y'
+				ELSE 'n'
+			END
+		WHERE D_NUM IN
+		<foreach item="arr" collection= "array" open="(" close=")" separator=",">
+			#{arr}
+		</foreach>
+	</update>
+	
+	
+	
 </mapper>

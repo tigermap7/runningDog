@@ -6,6 +6,7 @@
 <html>
 <head>
     <c:import url="../include/admin_head.jsp"/>
+
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
     <div id="wrap">
@@ -55,7 +56,7 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th>선택</th>
+							<th><input type="checkbox" name="checkHideAll" id="checkHideAll" onclick="checkHideAll();"></th>
 							<th>번호</th>
 							<th>분류</th>
 							<th>썸네일</th>
@@ -84,7 +85,8 @@
 									<c:param name="searchValue" value="${ searchValue }" />
 									<c:param name="dCategory" value="${ dCategory }"/>
 								</c:url>
-								<td class="checkBox" on><input type="checkbox" name="" id="" value=""></td>
+								<td class="checkBox">
+								<input type="checkbox" name="checkHide" id="" value="${ d.dNum }"></td>
 								<td class="number" onclick="location='${ dboardView }'">${ listNo }</td>
 								<td class="kinds" onclick="location='${ dboardView }'">
 								<c:if test="${d.dSuccess eq 'n'}">
@@ -96,7 +98,7 @@
 								</c:if>
 
 								<td class="thumbnail" onclick="location='${ dboardView }'"><img src="/runningdog/resources/dboard/dboardImage/${d.listImage }"></td>
-								<td class="title" onclick="location='${ dboardView }'">${ d.dTitle }</td>
+								<td class="title" onclick="location='${ dboardView }'">${ d.dCheck eq 'n' ? '[숨김]' : "[표시중]" }${ d.dTitle }</td>
 								<td class="name" onclick="location='${ dboardView }'">${ d.dWriter }/${ d.uniqueNum }</td>
 								<td class="date" onclick="location='${ dboardView }'">${ d.dDate }</td>
 								<c:set var="listNo" value="${listNo -1 }" /></tr>
@@ -114,12 +116,12 @@
 						</c:if>
 					</tbody>
 				</table>
-				<p class="warning_text"> *삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p>
+				<p class="warning_text"> *게시물 표시 여부 업데이트 입니다.</p>
                 <!-- //게시판 -->
 
                 <!-- 버튼 -->
                 <div class="list-btn">
-                    <button type="button" id="" class="btn-left chkBtn"><i class="xi-cut"></i> 선택삭제</button>
+                    <button type="button" id="" class="btn-left chkBtn" onclick="dboardHide(${ pageVO.pageNo })"><i class="xi-cut"></i> 표시업데이트</button>
                     <button type="button" id="" class="btn-right writeBtn" onclick="location='dinsertPage.ad'"><i class="xi-pen-o"></i> 글작성</button>
                 </div>
                 <!-- //버튼 -->

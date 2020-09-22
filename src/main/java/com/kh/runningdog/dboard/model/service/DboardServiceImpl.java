@@ -82,4 +82,9 @@ public class DboardServiceImpl implements DboardService{
 	public int selectAdminPrev(Dboard dboard) {
 		return dboardDao.selectAdminPrev(dboard);
 	}
+
+	@Override
+	public int updateAdminHide(String[] checkRow) {
+		return dboardDao.updateAdminHide(checkRow);
+	}
 }

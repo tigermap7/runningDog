@@ -357,4 +357,28 @@ public class AdminDboardController {
     }
 	
 	
+	@RequestMapping("dHide.ad")
+	public String updateDboardHide(@RequestParam("page") int page, Dboard dboard, 
+			HttpServletRequest request, Model model, @RequestParam(value="checkRow", required=false) String checkRow) {
+		//게시물을 삭제 하지 않고 표시 여부에 업데이트 하여
+		//3개월 후 프로시저 등록 후 스케줄러 이용하여 게시물 삭제
+		logger.info("어드민 게시물 숨기기 체크"+checkRow + "page 값 : " + page);
+		
+		
+		int result = dboardService.updateAdminHide(checkRow.split(","));
+		
+		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		String url ="";
+		if (result > 0) {
+			model.addAttribute("msg", "게시물 표시 업데이트 완료");
+			model.addAttribute("url", "dboardList.ad?pageNo=" + page);
+			url = "common/errorDboard";
+		} else {
+			model.addAttribute("msg", "게시물 표시 업데이트 실패");
+			model.addAttribute("url", "dboardList.ad?pageNo=" + page);
+			url = "common/errorDboard";
+		}
+		return url;
+	}
+	
 }

@@ -1,18 +1,32 @@
 
-//댓글
 
+    function checkHideAll(){
+    	if($("input[name=checkHideAll]").is(":checked")){
+    		$("input[name=checkHide]").prop("checked", true);
+    	}else{
+    		$("input[name=checkHide]").prop("checked", false);
+    	}
+    }
+			
+    function dboardHide(page){
+    	var page = page;
+    	var checkRow = "";
+    	$("input[name='checkHide']:checked").each(function(){
+    		checkRow = checkRow + $(this).val()+",";
+    	});
+    	checkRow = checkRow.substring(0, checkRow.lastIndexOf(","));
+    	
+    	if(checkRow == ""){
+    		alert("숨길 게시물을 선택해 주세요");
+    		return false;
+    	}
+    	
+    	console.log("### checkRow => {"+checkRow+"}");
+    	
+    	if(confirm("게시물을 숨김 처리 하겠습니까?"))
+    		location.href = "dHide.ad?checkRow=" + checkRow + "&page=" + page;
+    }
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 
 
 
