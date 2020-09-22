@@ -9,7 +9,7 @@ public class Dboard extends PageVO implements java.io.Serializable{
 	private String userId; //유저Email
 	private int uniqueNum; //유저번호
 	private String dWriter; //유저닉네임
-	private String dTitle; //글 제목
+	private String dTitle; //글 제목pub
 	private String dContent; //글 상세설명
 	private String dFindDate; //발견날짜
 	private String dFindLocal; //발견장소

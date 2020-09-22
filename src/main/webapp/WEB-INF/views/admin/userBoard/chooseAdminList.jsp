@@ -93,8 +93,7 @@
 										<span class="protect">보호중</span></td>
 								</c:if>
 								<c:if test="${d.dSuccess eq 'y'}">
-									<span class="complete">인계완료</span>
-									</td>
+									<span class="complete">인계완료</span></td>
 								</c:if>
 
 								<td class="thumbnail" onclick="location='${ dboardView }'"><img src="/runningdog/resources/dboard/dboardImage/${d.listImage }"></td>
