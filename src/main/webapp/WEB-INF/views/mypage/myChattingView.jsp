@@ -143,7 +143,9 @@
 				time: new Date().getTime()
 			}
 		}
-	  	sock.send(JSON.stringify(message));
+		if (message.data.message != "") {
+		  	sock.send(JSON.stringify(message));
+		}
 		$("#message").val('');
 	}
 	            
