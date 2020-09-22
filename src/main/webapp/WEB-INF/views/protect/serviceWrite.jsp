@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">자원봉사모집</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="/runningdog/vlist.do">자원봉사모집</a></li>
                             </ul>
                         </div>
                         <h2><span>자원봉사모집</span></h2>
@@ -48,7 +48,7 @@
                                 <tbody>
                                     <tr>
                                         <td>제목</td>
-                                        <td><input type="text" name="voltitle" title="" class="form-control w100p" placeholder="제목 입력" required/></td>
+                                        <td><input type="text" name="voltitle" id="voltitle" class="form-control w100p" placeholder="제목 입력(필수입력)" required/></td>
                                     </tr>
                                     <tr>
                                         <td>첨부파일</td>
@@ -61,19 +61,19 @@
                                     </tr>
                                     <tr>
                                         <td>담당자</td>
-                                        <td><input type="text" name="volwriter" title="" class="form-control w50p" placeholder="담당자 입력" required/></td>
+                                        <td><input type="text" name="volwriter" id="volwriter" class="form-control w50p" placeholder="담당자 입력(필수입력/수정불가)" required/></td>
                                     </tr>
                                     <tr>
                                         <td>연락처</td>
-                                        <td><input type="tel" name="voltel" title="" class="form-control w50p" placeholder="'-'포함 입력" required/></td>
+                                        <td><input type="tel" name="voltel" id="" class="form-control w50p" placeholder="'-'포함 입력" required/></td>
                                     </tr>
                                     <tr>
                                         <td>센터명</td>
-                                        <td><input type="text" name="volname" title="" class="form-control w50p" placeholder="센터명 입력" required/></td>
+                                        <td><input type="text" name="volname" id="volname" class="form-control w50p" placeholder="센터명 입력(필수입력/수정불가)" required/></td>
                                     </tr>
                                     <tr>
                                         <td>지역</td>
-                                        <td><input type="text" name="voladdress" title="" class="form-control w100p" placeholder="지역 입력" required/></td>
+                                        <td><input type="text" name="voladdress" id="voladdress" class="form-control w100p" placeholder="지역 입력(필수입력 /수정불가)" required/></td>
                                     </tr>
                                     <tr>
                                         <td>모집</td>
@@ -93,7 +93,7 @@
                                     </tr> -->
                                     <tr>
                                         <td>내용</td>
-                                        <td><textarea name="volcontent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                                        <td><textarea name="volcontent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" placeholder="내용 상세히 입력(필수입력)" required/></textarea></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -102,7 +102,7 @@
                         <div class="write-btn">
                             <input type="button" class="btn btn-list" onclick="location.href='vlist.do'" value="목록으로">
                             <input type="reset" class="btn btn-cancel" value="취소하기">
-                            <input type="submit" class="btn btn-success" value="작성하기">
+                            <input type="submit" class="btn btn-success" id="btn" value="작성하기">
                         </div>
                         </form>
                         <!-- 글쓰기 끝 -->
@@ -113,5 +113,9 @@
 
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
+		<script type="text/javascript">
+		
+
+		</script>
 	</body>
 </html>

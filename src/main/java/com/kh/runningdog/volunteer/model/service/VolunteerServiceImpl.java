@@ -70,6 +70,26 @@ public class VolunteerServiceImpl implements VolunteerService{
 		return volunteerDao.deleteVreply(vreply_no);
 	}
 
+	@Override
+	public int selectVolunteerPre(int volno) {
+		return volunteerDao.selectVolunteerPre(volno);
+	}
+
+	@Override
+	public int selectVolunteerNext(int volno) {
+		return volunteerDao.selectVolunteerNext(volno);
+	}
+
+	@Override
+	public int deleteVolunteerAdmin(String[] checkRow) {
+		return volunteerDao.deleteVolunteerAdmin(checkRow);
+	}
+
+	@Override
+	public Vreply selectVreply(int vreply_no) {
+		return volunteerDao.selectVreply(vreply_no);
+	}
+
 	
 	
 	

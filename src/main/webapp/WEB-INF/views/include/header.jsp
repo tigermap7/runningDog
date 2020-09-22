@@ -85,10 +85,10 @@
             
             </li>
             <li>
-                <a href="/runningdog/views/protect/protectList.jsp">보호센터 정보</a>
+                <a href="/runningdog/movePlist.do">보호센터 정보</a>
                 <div class="dep2Wrap">
                     <ul class="dep2">
-                        <li><a href="${ pageContext.servletContext.contextPath }/moveProject.do">보호센터정보</a></li>
+                        <li><a href="/runningdog/movePlist.do">보호센터정보</a></li>
                         <li><a href="/runningdog/vlist.do">자원봉사모집</a></li>
                     </ul>
                 </div>
@@ -119,8 +119,9 @@
                     <li><a href="aboutView.do">사이트소개</a></li>
                     <li><a href="alistPage.do">유기동물정보</a></li>
                     <li><a href="dboardList.do">유기동물 주인찾기</a></li>
-                    <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
                     <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
+                    <li><a href="movePlist.do">보호센터정보</a></li>
+                    <li><a href="vlist.do">자원봉사모집</a></li>
                     <li><a href="nlist.do">공지사항</a></li>
                 </ul>
             </li>
@@ -165,8 +166,8 @@
         <li><a href="main.do"><i class="xi-home-o"></i> 홈으로</a></li>
         <li><a href="alistPage.do">유기동물정보</a></li>
         <li><a href="dboardList.do">유기동물 주인찾기</a></li>
-        <li><a href="/runningdog/views/protect/protectList.jsp">보호센터정보</a></li>
-        <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
+        <li><a href="movePlist.do">보호센터정보</a></li>
+        <li><a href="vlist.do">자원봉사모집</a></li>
         <li><a href="slist.do">후원하기</a></li>
         <li><a href="cknowlist.do">반려동물상식</a></li>
         <li><a href="cissuelist.do">오늘의 이슈</a></li>

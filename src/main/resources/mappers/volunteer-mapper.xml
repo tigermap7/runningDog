@@ -47,7 +47,7 @@
 	<select id="selectList" parameterType="com.kh.runningdog.volunteer.model.vo.VolunteerPage" resultMap="resultVolunteer">
 			 
 			select * from (select rownum rnum, volno, voltitle, volwriter, volcontent, voldate, 
-											voltel, volterm1, volterm2, volname, volor1, volre1, volor2, volre2 volor3, volre3, voladdress,volche  
+											voltel, volterm1, volterm2, volname, volor1, volre1, volor2, volre2, volor3, volre3, volor4, volre4, voladdress,volche  
 								 from(select *  from  volunteer 
 								 <if test="type == 'address'">
 								 	where voladdress like '%' || #{keyword} || '%'
@@ -56,8 +56,8 @@
 								 	where volname like '%' || #{keyword} || '%'
 								 </if>
 								 <if test="type == 'term' ">
-								 	where volterm1 like '%' || #{keyword} || '%'
-								 	or volterm2 like '%' || #{keyword} || '%'
+								 	where substr(volterm1, 6, 2) like '%' || #{keyword} || '%'
+								 	or substr(volterm2, 6, 2) like '%' || #{keyword} || '%'
 								 </if>
 								 
 								 		 order by volno desc)) 
@@ -68,13 +68,22 @@
 	<select id="selectVolunteer"  parameterType="_int"  resultMap="resultVolunteer">
 			select * from volunteer where volno = #{ volno }
 	</select>
-	<!-- <select id="selectVolunteerPreNext" >
-			select * form volunteer
+	<select id="selectVolunteerPre" parameterType="_int" resultType="_int">
+			<![CDATA[ 
+			select max(volno)
+			from volunteer
+			where volno < #{ volno }]]>
 	
-	</select> -->
+	</select>
+	<select id="selectVolunteerNext" parameterType="_int" resultType="_int">
+			<![CDATA[
+			select min(volno)
+			from volunteer
+			where volno > #{ volno } ]]>
+	</select>
 	<insert id="insertVolunteer" parameterType="Volunteer">
 			insert into volunteer 
-			values ((select max(volno) + 1 from volunteer), 
+			values (volunteer_seq.nextval, 
 								  #{voltitle}, #{volwriter}, #{volcontent}, sysdate,
 								  #{voltel}, #{volterm1},  #{volterm2}, #{volname}, #{volor1}, #{volre1},
 								  #{volor2}, #{volre2}, #{volor3}, #{volre3}, #{volor4}, #{volre4}, #{voladdress}, default)			    
@@ -103,22 +112,33 @@
 			delete from volunteer
 				   where volno = #{ volno }
 	</delete>
-	
+	<delete id="deleteVolunteerAdmin">
+			delete from volunteer
+				   where volno in 
+				  	 <foreach item="arr" collection="array" open="(" close=")" separator=",">
+					${ arr }
+					</foreach>
+	</delete>
 	<select id="getListCountVreply" resultType="_int">
 			select count(*) from vreply where volno = #{ volno }
 	</select>
 	<select id="selectVreplylist"  parameterType="_int"  resultMap="resultVreply">
-			select vreply_no, volno, nickname, vreply_date, vreply_content
+			select vreply_no, volno, nickname, vreply_date, vreply_content, parant_reply, vreply_level
 			from vreply
 			where volno = #{ volno }
 			order by vreply_no desc
+	</select>
+	<select id="selectVreply"  parameterType="_int"  resultMap="resultVreply">
+			select * from vreply
+			where vreply_no = #{ vreply_no }
+			and volno = #{ volno }
 	</select>
 	<insert id="insertVreply" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
 			insert into vreply(vreply_no, volno, nickname, vreply_date, vreply_content ) 
 			values (vreply_seq.nextval, #{volno}, #{nickname}, sysdate, #{vreply_content})			    
 	</insert>
 	<update id="updateVreply">
-		update vreply set vreply_content = #{vreply_content}
+		update vreply set vreply_content = #{vreply_content}, vreply_date = sysdate
 					  where vreply_no = #{vreply_no}
 	</update>
 	<!-- <insert id="insertVreply1" parameterType="Board">

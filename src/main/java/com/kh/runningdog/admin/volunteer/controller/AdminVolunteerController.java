@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.volunteer.model.service.VolunteerService;
@@ -92,11 +93,12 @@ public class AdminVolunteerController {
 		//글삭제하기(관리자용)
 		@RequestMapping(value="vdelete.ad") 
 		public String deleteVolunteerAdmin(HttpServletRequest request, Volunteer volunteer, Model model) {
-			int volno = Integer.parseInt(request.getParameter("volno"));
 			
-			volunteer.setVolno(volno);
+			String[] checkRow = null;
+			checkRow = request.getParameter("checkRow").split(",");
+
 			
-			if(volunteerService.deleteVolunteer(volunteer) > 0) {
+			if(volunteerService.deleteVolunteerAdmin(checkRow) > 0) {
 				for (int i = 1; i < 5; i++) {
 					String renameFileName = request.getParameter("rfile"+ i);
 					if(renameFileName != null) {
@@ -106,10 +108,48 @@ public class AdminVolunteerController {
 			}
 				return "redirect:/vlist.ad";
 			}else {
-				model.addAttribute("message", volno + "번 글 삭제 실패!");
+				model.addAttribute("message", "글 삭제 실패!");
 				return  "common/error";
 			}
 			
+		}
+		//이전글(관리자용)
+		@RequestMapping("vpre.ad")
+		public String selectVpre(HttpServletRequest request, Model model,
+				   				@RequestParam(value = "volno") int volno) {
+			
+			int vpre = volunteerService.selectVolunteerPre(volno);
+			
+			String returnView = null;
+			
+			if( vpre > 0 ) {
+				model.addAttribute("volno", vpre);
+		         returnView = "redirect:/vdetail.ad";
+		      } else {
+		         request.setAttribute("message", "글이 존재하지않습니다.");
+		         returnView = "common/error";
+		      }
+		      
+		      return returnView;
+		}
+		//다음글(관리자용)
+		@RequestMapping("vnext.ad")
+		public String selectVnext(HttpServletRequest request, Model model,
+				   				@RequestParam(value = "volno") int volno) {
+			
+			int vnext = volunteerService.selectVolunteerNext(volno);
+			
+			String returnView = null;
+			
+			if( vnext > 0 ) {
+				model.addAttribute("volno", vnext);
+		         returnView = "redirect:/vdetail.ad";
+		      } else {
+		         request.setAttribute("message", "글이 존재하지않습니다.");
+		         returnView = "common/error";
+		      }
+		      
+		      return returnView;
 		}
 	
 
