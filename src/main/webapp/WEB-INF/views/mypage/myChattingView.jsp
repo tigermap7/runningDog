@@ -114,7 +114,20 @@
 	        sendMessage();
 	    });
 	});
-	        
+	
+	$(function() {
+		 $('textarea').on('keydown', function(event) {
+		     if (event.keyCode == 13){
+		         if (!event.shiftKey){
+		            event.preventDefault();
+		            var button=document.getElementById('sendBtn');
+					button.click();
+		         }
+		     }
+		});
+		 
+	});
+	
 	function sendMessage(){      
 		//websocket으로 메시지를 보내겠다.
 		const message = {
