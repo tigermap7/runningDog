@@ -5,7 +5,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -73,14 +75,52 @@ public class NoticeController {
 	
 	//공지사항 상세 페이지 이동, 출력
 	@RequestMapping(value="ndetail.do")
-	public ModelAndView selectNoticeDetail(HttpServletRequest request, ModelAndView mv, NoticePage noticePage) {
+	public ModelAndView selectNoticeDetail(HttpServletRequest request, HttpServletResponse response, ModelAndView mv, NoticePage noticePage) {
 		logger.info("ndetail.do run...");
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 		
 		Notice notice = noticeService.selectNoticeOne(noticeNo);
 		
+		Cookie[] cookies = request.getCookies();
+		
+		Cookie viewCookie = null;
+		
+		// 쿠키가 있을 경우 이름 만들기
+        if (cookies != null && cookies.length > 0) 
+        {
+            for (int i = 0; i < cookies.length; i++)
+            {
+                // Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
+                if (cookies[i].getName().equals("cookie" + noticeNo))
+                { 
+                    System.out.println("처음 쿠키가 생성한 뒤 들어옴.");
+                    viewCookie = cookies[i];
+                }
+            }
+        }
+		
 		if(notice != null) {
-			noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
+			
+            // 만일 viewCookie가 null일 경우 쿠키를 생성해서 조회수 증가 로직을 처리함.
+            if (viewCookie == null) {    
+                System.out.println("cookie 없음");	
+                
+             // 쿠키 생성(이름, 값)
+                Cookie newCookie = new Cookie("cookie"+noticeNo, "|" + noticeNo + "|");
+                                
+                // 쿠키 추가
+                response.addCookie(newCookie);
+ 
+                // 쿠키를 추가 시키고 조회수 증가시킴
+                noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
+            } else {
+            	System.out.println("cookie 있음");
+                
+                // 쿠키 값 받아옴
+                String value = viewCookie.getValue();
+                System.out.println("cookie 값 : " + value);
+            }
+			
 			noticePage.setNoticeNo(noticeNo);	//이전, 다음글 번호 조회할 때 객체 하나로 보내야해서 추가
 			
 			Integer preNo = noticeService.selectNoticePre(noticePage); //이전글 번호 조회, int는 null값을 못 받아서 integer사용

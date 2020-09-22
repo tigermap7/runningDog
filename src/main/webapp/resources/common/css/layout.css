@@ -19,19 +19,23 @@
     overflow: hidden;
     background-color:#fff;
 }
-#header .util_wrap div {
+#header .util_wrap > div {
     position:relative;
     width: 1300px;
     height: inherit;
     margin: 0 auto;
     z-index:99;
 }
-#header .util_wrap div ul.sosBell {
+#header .util_wrap > div div {
+    float:left;
+    width:70%;
+}
+#header .util_wrap > div div ul.sosBell {
     float:left;
     height: inherit;
 }
-#header .util_wrap div ul.sosBell li {
-    float:left;
+#header .util_wrap > div div ul.sosBell li {
+    /* float:left; */
     line-height:3.125rem;
     height: inherit;
     cursor: pointer;
@@ -39,7 +43,7 @@
     color:#333;
     font-weight: 500;
 }
-#header .util_wrap div ul.sosBell li i {
+#header .util_wrap > div div ul.sosBell li i {
     position: relative;
     top:-0.125rem;
     font-size: 1.5rem;
@@ -47,18 +51,18 @@
     line-height:3.125rem;
     vertical-align: middle;
 }
-#header .util_wrap div ul.sosBell span {
+#header .util_wrap > div div ul.sosBell span {
     margin: 0 0.625rem 0 0.3125rem;
     color:#ff92a8;
 }
-#header .util_wrap div ul.util {
+#header .util_wrap > div ul.util {
     float:right;
 }
-#header .util_wrap div ul.util li {
+#header .util_wrap > div ul.util li {
     float: left;
     margin-left: 0.3125rem;
 }
-#header .util_wrap div ul.util li a {
+#header .util_wrap > div ul.util li a {
     display: block;
     font-size: 0.875rem;
     line-height: 3.125rem;

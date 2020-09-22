@@ -89,6 +89,18 @@ public class AdminMemberController {
 		return "admin/etc/etcView";
 	}
 	
+	// 나의 채팅에서 유저검색
+//	@RequestMapping("searchChatUser.do")
+//	public String searchChatUser(Member member, Model model) {
+//		ArrayList<Member> list = memberService.selectNicknameCheckList(member);
+//		int userCount = memberService.selectNicknameCount(member);
+//		
+//		if (list != null) {
+//			model.addAttribute("list", list);
+//		}
+//		model.addAttribute("usercount", userCount);
+//		return "mypage/findUser";
+//	}
 	
 /**************** admin controller end ******************/
 	
