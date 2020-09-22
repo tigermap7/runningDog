@@ -415,6 +415,10 @@
 .main_animalNews > ul {
     font-size: 0;
 }
+#main_content .main_animalNews > ul {
+	height:auto !important;
+	text-align: center;
+}
 .main_animalNews > ul li.grid-sizer {
     display: none;
 }
@@ -425,7 +429,8 @@
 }
 .main_animalNews > ul li.grid-item {
     position: relative;
-    float: left;
+    /*float: left;*/
+    display: inline-block;
     text-align: left;
     width: 23%;
     padding: 0.625rem 1%;

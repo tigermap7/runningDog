@@ -6,9 +6,54 @@
     <!-- 상단메뉴 -->
     <div class="util_wrap">
         <div>
-            <ul class="sosBell">
-                <li onclick="location='#none'"><i class="xi-lightbulb-o"></i><span>[서울시 강북구 미아동]</span>흰색 포메리안을 강아지를 찾습니다.</li>
-            </ul>
+        
+    		<div class="notice_roll" id="roll_list">
+	            <ul class="sosBell">
+	            </ul>
+	        </div>
+	        
+	        <script src="/runningdog/resources/common/js/jquery.vticker.min.js"></script>  
+	        <script type="text/javascript">
+	        /* 공지사항 알림표시, 최신에 올라온거 출력 ajax */
+ 	        $(function() {
+	        	$.ajax({
+	        		url : "nstate.do",
+	        		type : "post",
+	        		dataType : "json",
+	        		success : function(data){
+	        			var jsonStr = JSON.stringify(data);
+	        			var json = JSON.parse(jsonStr);
+	        			
+	        			var values = "";
+	        			for(var i in json.list) {
+	        				values += '<li onclick="moveNoticeDetail(' + json.list[i].no + ');">' + 
+	        					'<i class="xi-lightbulb-o"></i><span>[' + decodeURIComponent(json.list[i].state) + ']</span>' + 
+	        					decodeURIComponent(json.list[i].title).replace(/\+/gi, " ") + '</li>';
+	        			}
+	        			$(".sosBell").html(values); console.log(values);
+	        			
+	        			/* 롤러처리 */
+	        		    $('#roll_list').vTicker('init', {
+	        		    	speed: 1200, 
+	        		        pause: 3000,
+	        		        showItems: 1
+	        		     });
+	        			
+	        		},
+	        		error : function(jqXHR, textstatus, errorthrown) {
+	        			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+	        		}
+	        	});
+	        }); 
+	        
+ 	        /* 공지사항 상세페이지 이동 */
+			function moveNoticeDetail(noticeNo){
+				location.href = "ndetail.do?noticeNo=" + noticeNo;
+			}
+	       		
+	        </script> 
+            
+            
             <ul class="util">
             	<c:if test="${ !empty sessionScope.loginMember and loginMember.userId eq 'admin@runningdog.com' }">
                 <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
