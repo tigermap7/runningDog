@@ -137,7 +137,7 @@
 			type: 'message',
 			data: {
 				sender: '${sessionScope.loginMember.getNickname()}',
-				message: $("#message").val(),
+				message: ($("#message").val()).replace("\n", "<br>"),
 				roomno: ${roomNo},
 				receiverNo: ${receiverNo},
 				time: new Date().getTime()
