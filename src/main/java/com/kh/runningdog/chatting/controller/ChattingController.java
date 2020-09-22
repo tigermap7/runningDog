@@ -92,7 +92,7 @@ public class ChattingController {
 		
 		String receiver = URLEncoder.encode(name, "UTF-8");
 		if (exstRoomno != 0) {
-			url = "redirect:moveChattingView.do?roomNo=" + exstRoomno + "&receiver=" + receiver;
+			url = "redirect:moveChattingView.do?roomNo=" + exstRoomno + "&receiver=" + receiver + "&receiverNo=" + uniqueNum;
 		} else {
 			int result = chatroomService.insertStartChat(startChat);
 			if (result > 0) {
