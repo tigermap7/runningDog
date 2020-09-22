@@ -37,12 +37,36 @@
                         <!--서브 정렬 끝-->
                         
                         <div class="sort-area">  
-                            <h4>전체 150개의 영상/이슈</h4>
+                            <h4>전체 ${ page.listCount }개의 상식</h4>
                             <div>
                                 <div>
+                                
                                 <form action="" name="">
-                                    <a class="active" href="#none">최신순</a>
+                                
+                                <c:if test="${ animal eq 'dog' }">
+                                    <a class="active" href="#none" onclick="moveSearch('dog')">강아지</a>
+                                    <a href="#none" onclick="moveSearch('cat')">고양이</a>
+                                    <a href="#none" onclick="moveSearch('other')">기타</a>
+                                </c:if>
+                                <c:if test="${ animal eq 'cat' }">
+                                    <a href="#none" onclick="moveSearch('dog')">강아지</a>
+                                    <a class="active" href="#none" onclick="moveSearch('cat')">고양이</a>
+                                    <a href="#none" onclick="moveSearch('other')">기타</a>
+                                </c:if>
+                                <c:if test="${ animal eq 'other' }">
+                                    <a href="#none" onclick="moveSearch('dog')">강아지</a>
+                                    <a href="#none" onclick="moveSearch('cat')">고양이</a>
+                                    <a class="active" href="#none" onclick="moveSearch('other')">기타</a>
+                                </c:if>
+                                
                                 </form>
+                                
+                                <script>
+	                                function moveSearch(animal){
+	                                	location.href="cknowlist.do?animal=" + animal;
+	                                } 
+                                </script>
+                                
                                 </div>
                             </div>
                         </div>
@@ -56,134 +80,75 @@
                                     <col width="20%">
                                 </colgroup>
                                 <tbody>
-                                    <tr onclick="location.href='cknowdetail.do';">
-                                        <td class="number">10</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">9</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">8</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">7</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">6</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">5</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">4</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">3</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">2</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
-                                    <tr onclick="location.href='knowledgeView.jsp';">
-                                        <td class="number">1</td>
-                                        <td class="title">
-                                            <h2><span>상식</span>유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</h2>
-                                            <ul>
-                                                <li>2020.08.28</li>
-                                                <li>102</li>
-                                            </ul>
-                                        </td>
-                                        <td class="writerUser">작성인 : 유기견센터</td>
-                                    </tr>
+                                
+                                	<!-- 상식 리스트 출력 -->
+	                                <c:forEach items="${ requestScope.list }" var="c">
+	                                	
+	                                	<!-- 상세페이지 이동 -->
+		                                <c:url var="cdeurl" value="cknowdetail.do">
+		                                	<c:param name="title" value="${ c.title }" />
+		                                	<c:param name="link" value="${ c.link }" />
+		                                	<c:param name="readcount" value="${ c.readcount }" />
+		                                </c:url>
+	                                    <tr onclick="location.href='${ cdeurl }'">
+	                                        <td class="number">${ c.no }</td>
+	                                        <td class="title">
+	                                            <h2><span>상식</span>${ c.title }</h2>
+	                                            <ul>
+	                                                <!-- <li>2020.08.28</li> -->
+	                                                <li>조회수 : ${ c.readcount }</li>
+	                                            </ul>
+	                                        </td>
+	                                        <td class="writerUser">작성자 : 유기견센터</td>
+	                                    </tr>
+	                                </c:forEach>
+                                    
                                 </tbody>
                             </table>
                         </div>
                         <!-- 리스트 끝 -->
                     
-                        <!-- 페이징 -->
-                        <dl class="list-paging">
-                            <dd>
-                                <a href="#none"><i class="xi-angle-left"></i></a>
-                                <a href="#none" class="active">1</a>
-                                <a href="#none">2</a>
-                                <a href="#none">3</a>
-                                <a href="#none">4</a>
-                                <a href="#none">5</a>
-                                <a href="#none"><i class="xi-angle-right"></i></a>
-                            </dd>
-                        </dl>
-                        <!-- //페이징 -->
+					<!-- 페이징 -->
+					<dl class="list-paging">
+						<dd>
+							<!-- 이전 그룹 페이지 이동 -->
+							<c:if test="${ (page.currentPage - 5) lt page.startPage and (page.currentPage - 5) ge 1 }">
+								<c:url var="npurl1" value="cknowlist.do">
+									<c:param name="page" value="${ page.startPage - 5 }" />
+								</c:url>
+								<a href="${ npurl1 }"><i class="xi-angle-left"></i></a>
+							</c:if>
+							<%-- <c:if test="${ !((page.currentPage - 5) lt page.startPage and (page.currentPage - 5) >= 1) }">
+								 	<a href="#none"><i class="xi-angle-left"></i></a>
+								</c:if> --%>
+
+							<!-- 현재 페이지가 속한 페이지그룹의 숫자 출력 처리  -->
+							<c:forEach var="p" begin="${ page.startPage }" end="${ page.endPage }" step="1">
+								<c:if test="${ p eq page.currentPage }">
+									<a href="#none" class="active">${ p }</a>
+								</c:if>
+								<c:if test="${ p ne page.currentPage }">
+									<c:url var="npurl2" value="cknowlist.do">
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<a href="${ npurl2 }">${ p }</a>
+								</c:if>
+							</c:forEach>
+
+							<!-- 다음 그룹 페이지 이동 -->
+							<c:if test="${ (page.currentPage + 5) gt page.endPage and page.endPage lt page.maxPage }">
+								<c:url var="npurl3" value="cknowlist.do">
+									<c:param name="page" value="${ page.startPage + 5 }" />
+
+								</c:url>
+								<a href="${ npurl3 }"><i class="xi-angle-right"></i></a>
+							</c:if>
+							<%-- <c:if test="${ !((page.currentPage + 5) > page.endPage and page.endPage < page.maxPage) }">
+									<a href="#none"><i class="xi-angle-right"></i></a>
+								</c:if> --%>
+						</dd>
+					</dl>
+					<!-- //페이징 -->
                     </div>
                 </div>
             </div>
