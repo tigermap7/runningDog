@@ -56,7 +56,7 @@ public class AdminNoticeController {
 		noticeSearch.setKeyword(keyword);
 		
 		int listCount = noticeService.selectNoticeListCount(noticeSearch);	//목록 갯수
-		int limit = 12;
+		int limit = 10;
 		
 		NoticePage noticePage = new NoticePage(currentPage, listCount, limit); //현재 페이지와 총 갯수 보내서, startPage, endpage등.. 값 만들기
 
