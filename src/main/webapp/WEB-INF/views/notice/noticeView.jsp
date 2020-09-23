@@ -131,7 +131,9 @@
 						<button class="listBtn" onclick="location.href='${nlisturl}'">
 							<i class="xi-rotate-left"></i> 목록
 						</button>
-
+						
+						<!-- 관리자일때만 삭제, 수정버튼 나오기 -->
+						<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y' }">
 						<!-- 삭제 -->
 						<c:url var="ndelurl" value="ndelete.do">
 							<c:param name="noticeNo" value="${ notice.noticeNo }" />
@@ -150,7 +152,8 @@
 						<button class="modifiedBtn" onclick="location.href='${nupviewurl}'">
 							<i class="xi-pen-o"></i> 수정
 						</button>
-
+						</c:if>
+						
 						<!-- 다음글 -->
 						<c:url var="nnext" value="ndetail.do">
 							<c:param name="noticeNo" value="${ nextNo }" />
