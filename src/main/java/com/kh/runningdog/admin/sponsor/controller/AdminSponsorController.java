@@ -86,7 +86,8 @@ public class AdminSponsorController {
 	@RequestMapping("asdetial.ad")
 	public ModelAndView moveAdminSponsorDetail(ModelAndView mv, @RequestParam() int page, @RequestParam() int sNum) {
 		Sponsor sponsor = sponsorService.selectOne(sNum);
-
+		sponsor.setsContent(sponsorService.selectContent(sNum));
+		
 		if(sponsor != null) {
 			mv.addObject("page", page);
 			mv.addObject("sponsor", sponsor);
@@ -98,9 +99,10 @@ public class AdminSponsorController {
 	@RequestMapping("asupview.ad")
 	public ModelAndView moveSponsorUpdateView(ModelAndView mv, Sponsor sponsor, HttpServletResponse response, @RequestParam() int page) {
 		sponsor = sponsorService.selectOne(sponsor.getsNum());
+		sponsor.setsContent(sponsorService.selectContent(sponsor.getsNum()).replaceAll("'", "\\\\'"));
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		String amount = formatter.format(sponsor.getsAmount());
-
+		logger.info("sContent : " + sponsor.getsContent());
 		mv.addObject("page", page);
 		mv.addObject("amount", amount);
 		mv.addObject("sponsor", sponsor);
@@ -124,7 +126,7 @@ public class AdminSponsorController {
 
 	@RequestMapping(value="supdate.ad", method=RequestMethod.POST)
 	public String sUpdate(Sponsor sponsor, HttpServletRequest request, @RequestParam(name = "upfile", required = false) MultipartFile upfile) {
-		int sNum = sponsor.getsNum();
+		int sNum = sponsor.getsNum();logger.info(Integer.toString(sNum));
 		sponsor.setsAmount(Integer.parseInt(request.getParameter("amount").replaceAll(",", "")));
 
 		if(!upfile.getOriginalFilename().equals("")) {
@@ -155,25 +157,23 @@ public class AdminSponsorController {
 			//테이블에 저장되어 있는 내용 이미지 파일명
 			ArrayList<SponsorImage> keepImg = sponsorService.selectImageList(new String[]{Integer.toString(sNum)});
 			ArrayList<String> ilist = new ArrayList<>();
-			for(SponsorImage i : keepImg) {
+			for(SponsorImage i : keepImg) {logger.info("테이블 : " + i);
 				ilist.add(i.getSiName());
 			}
 			//sContent 내용에 존재하는 이미지 파일명 읽어 저장
 			ArrayList<String> clist = new ArrayList<>();
 			Pattern pattern = Pattern.compile("t/(.*?)\"");
 			Matcher matcher = pattern.matcher(sponsor.getsContent());
-			while(matcher.find()) {
+			while(matcher.find()) {logger.info("sContent : " + matcher.group(1));
 				clist.add(matcher.group(1));
 			}
 
-			if(ilist.size() == 0 || clist.size() == 0 && ilist.size() != clist.size()) {
-				if(ilist.size() == 0)
-					sponsorService.insertSContentImage(clist, sNum);
-				else if(clist.size() == 0) {
-					sponsorService.deleteSponsorImage(ilist, sNum);
-					for(String s : ilist) {
-						new File(savePath(request) + "/summernoteContent" + "\\" + s).delete();
-					}
+			if(ilist.size() == 0 && (ilist.size() != clist.size()))
+				sponsorService.insertSContentImage(clist, sNum);
+			else if(clist.size() == 0 && (ilist.size() != clist.size())) {
+				sponsorService.deleteSponsorImage(ilist, sNum);
+				for(String s : ilist) {
+					new File(savePath(request) + "/summernoteContent" + "\\" + s).delete();
 				}
 			}
 			else if(!ilist.containsAll(clist) || !clist.contains(ilist)) {
@@ -299,7 +299,6 @@ public class AdminSponsorController {
 		int result = sponsorService.insertSponsor(sponsor);
 		int sNum = sponsorService.selectSNum();
 
-		String view = "";
 		if(result > 0) {
 			//스케쥴러를 이용하기 위해 컨텐츠 이미지 테이블에 저장
 			ArrayList<String> clist = new ArrayList<>();
@@ -309,10 +308,10 @@ public class AdminSponsorController {
 			while(matcher.find()) {
 				clist.add(matcher.group(1));
 			}
-			if(sponsorService.insertSContentImage(clist, sNum) > 0)
-				view = "redirect:asdetial.ad?sNum=" + sNum + "&page=1";
+			if(clist.size() > 0)
+				sponsorService.insertSContentImage(clist, sNum);
 		}
-		return view;
+		return "redirect:asdetial.ad?sNum=" + sNum + "&page=1";
 	}
 
 	// 썸머노트 이미지 업로드 메서드
@@ -348,7 +347,7 @@ public class AdminSponsorController {
 	//스케쥴러
 	@Scheduled(cron = "0 0 14 * * 6") //매주 금요일 오후 2시
 	public void checkContentFile() {
-		System.out.println("스케줄링 테스트");
+		logger.info("스케줄링 테스트");
 		String cFolder = "C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\sponsor\\summernoteContent";
 
 		ArrayList<SponsorImage> list = sponsorService.selectImageList();

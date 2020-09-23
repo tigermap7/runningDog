@@ -9,7 +9,7 @@
 		<result property="sId" column="s_id" />
 		<result property="sTitle" column="s_title" />
 		<result property="sSummary" column="s_summary" />
-		<result property="sContent" column="s_content" />
+		<result property="sContent" column="s_content"/>
 		<result property="sCount" column="s_count" />
 		<result property="sDate" column="s_date" />
 		<result property="sAmount" column="s_amount" />
@@ -21,6 +21,10 @@
 	<resultMap id="resultThumb" type="Sponsor">
 		<result property="sOriginal" column="s_Original" />
 		<result property="sRename" column="s_Rename" />
+	</resultMap>
+	
+	<resultMap type="hashMap" id="resultContent">
+		<result property="content" column="s_content" jdbcType="CLOB" javaType="java.lang.String"/>
 	</resultMap>
 	
 	<select id="selectList" resultType="Sponsor" parameterType="com.kh.runningdog.sponsor.model.vo.SponsorPage">
@@ -35,6 +39,10 @@
 	
 	<select id="selectOne" parameterType="int" resultType="Sponsor">
 		select * from sponsor where s_num = #{ snum }
+	</select>
+	
+	<select id="selectContent" parameterType="int" resultMap="resultContent">
+		select s_content from sponsor where s_num = #{ snum }
 	</select>
 	
 	<select id="selectListCount" resultType="_int">
