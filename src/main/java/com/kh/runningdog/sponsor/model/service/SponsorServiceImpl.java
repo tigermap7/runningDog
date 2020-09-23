@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.runningdog.sponsor.model.dao.SponsorDao;
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
+import com.kh.runningdog.sponsor.model.vo.SponsorContent;
 import com.kh.runningdog.sponsor.model.vo.SponsorImage;
 import com.kh.runningdog.sponsor.model.vo.SponsorList;
 
@@ -95,6 +96,11 @@ public class SponsorServiceImpl implements SponsorService{
 	@Override
 	public SponsorList selectSponsorListOne(String date) {
 		return sponsorDao.selectSponsorListOne(date);
+	}
+
+	@Override
+	public String selectContent(int sNum) {
+		return sponsorDao.selectContent(sNum);
 	}
 	
 	

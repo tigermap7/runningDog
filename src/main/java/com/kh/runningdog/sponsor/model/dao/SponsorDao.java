@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
+import com.kh.runningdog.sponsor.model.vo.SponsorContent;
 import com.kh.runningdog.sponsor.model.vo.SponsorImage;
 import com.kh.runningdog.sponsor.model.vo.SponsorList;
 import com.kh.runningdog.sponsor.model.vo.SponsorPage;
@@ -99,6 +100,13 @@ public class SponsorDao {
 
 	public SponsorList selectSponsorListOne(String date) {
 		return session.selectOne("sponsorMapper.selectSponsorListOne", date);
+	}
+
+	public String selectContent(int sNum) {
+		HashMap<String, Object> li = session.selectOne("sponsorMapper.selectContent", sNum);
+		String l = (String)li.get("content");
+		System.out.println(l);
+		return l;
 	}
 	
 	

@@ -36,7 +36,7 @@
                         <br><br><br><br><br>
                         	<p align="center" style="font-size:30px;">후원해 주셔서 감사합니다.</p>
                         <br><br><br>
-                        <form action="" method="post">
+                        
                         <table class="sPaymentInfo">
                             <colgroup>
                                 <col width="20%">
@@ -66,7 +66,6 @@
                         <div class="sPayment_Btn">
                             <a type="button" href='slist.do' style="width:80px;">확인</button>
                         </div>
-                        </form>
                         <!-- 상세 끝 -->                        
                     </div>
                 </div>

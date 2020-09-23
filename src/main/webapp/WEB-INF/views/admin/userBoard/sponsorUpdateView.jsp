@@ -8,7 +8,6 @@
     <c:import url="../include/admin_head.jsp"/>
     <script type="text/javascript">
     	var content = '${ sponsor.sContent }';
-    	
     	$(function(){
     		$('#summernote').summernote(content);
     		// and set code

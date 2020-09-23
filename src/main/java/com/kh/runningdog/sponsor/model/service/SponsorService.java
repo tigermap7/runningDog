@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.runningdog.sponsor.model.vo.Sponsor;
+import com.kh.runningdog.sponsor.model.vo.SponsorContent;
 import com.kh.runningdog.sponsor.model.vo.SponsorImage;
 import com.kh.runningdog.sponsor.model.vo.SponsorList;
 
@@ -18,6 +19,7 @@ public interface SponsorService {
 	public abstract ArrayList<Sponsor> selectSearch(HashMap<String, String> key);
 	int updateSponsor(Sponsor sponsor);
 	public abstract int updateSponsorCash(Sponsor sponsor);
+	public abstract String selectContent(int sNum);
 	
 	//sponsorImage
 	int insertSContentImage(ArrayList<String> clist, int sNum);
