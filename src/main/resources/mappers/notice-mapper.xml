@@ -125,6 +125,7 @@
 			from notice 
 			where notice_state is not null
 			or notice_date > (select to_char(add_months(sysdate -1, -1), 'yyyy/mm/dd') from dual)
+			order by notice_state nulls last, notice_date desc
 		]]>
 	</select>
 
