@@ -111,8 +111,7 @@
 		                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
 							} // for in
 						} else {
-							values += "<tr class='list-no'><td colspan='10'><p><img src='/runningdog/resources/images/btnIcn/icn_big_listNo.png' alt='' title='' /></p>"
-	                        		+ "<h1>참여한 채팅이 없습니다.</h1></td></tr>"
+							values = "현재 참여한 채팅방이 없습니다";
 						}
 						$("#chatList").html(values);
 					},
