@@ -8,28 +8,38 @@
 	<c:import url="/WEB-INF/views/include/head.jsp"/>
 	<!-- Load the JS SDK asynchronously -->
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v8.0&appId=1200941690288936&autoLogAppEvents=1" nonce="T57R8Bl1"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<script src="resources/common/js/facebookLogin.js"></script>
 	<script type="text/javascript">
-  Kakao.Auth.createLoginButton({
-    container: '#kakao-login-btn',
-    success: function(authObj) {
-      Kakao.API.request({
-        url: '/v2/user/me',
-        success: function(res) {
-          alert(JSON.stringify(res))
-        },
-        fail: function(error) {
-          alert(
-            'login success, but failed to request user information: ' +
-              JSON.stringify(error)
-          )
-        },
-      })
-    },
-    fail: function(err) {
-      alert('failed to login: ' + JSON.stringify(err))
-    },
-  })
+
+	componentDidMount(){
+		Kakao.init('30a4b3e3e223c1a9da5e2de7977c3569');
+	}
+	
+	/* function loginWithKakao(){
+		console.log("loginWithKakao 실행중");
+		kakao.init('30a4b3e3e223c1a9da5e2de7977c3569');
+		
+		Kakao.Auth.createLoginButton({
+			container: '#kakao-login-btn',
+			success: function(authObj) {
+		    Kakao.API.request({
+				url: '/v2/user/me',
+				success: function(res) {
+		        alert(JSON.stringify(res))
+				},
+				fail: function(error) {
+					alert('login success, but failed to request user information: ' + JSON.stringify(error))
+					},
+				})
+			},
+			fail: function(err) {
+			    alert('failed to login: ' + JSON.stringify(err))
+			    alert('failed to login: ' + JSON.stringify(err))
+			},
+		})
+	} */
+	
 </script>
 </head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
