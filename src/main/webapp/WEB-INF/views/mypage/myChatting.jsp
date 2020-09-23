@@ -103,7 +103,7 @@
 								values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + chatUpdate.roomNo 
 										+ "&receiver=" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") 
 										+ "&receiverNo=" + chatUpdate.receiverNo + "'\">"
-		                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
+		                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/memberImg/" + chatUpdate.profile + "\"></td>"
 		                            	+ "<td class=\"title\">"
 		                                + "<h2>" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") + "<span>" + chatUpdate.lastdate + "일 마지막 응답</span></h2>"
 		                                + "<p>" + decodeURIComponent(chatUpdate.lastmessage).replace(/\+/gi, " ") + "</p></td>";

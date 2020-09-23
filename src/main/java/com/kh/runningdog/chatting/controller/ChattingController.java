@@ -21,6 +21,7 @@ import com.kh.runningdog.chatting.model.service.MessageService;
 import com.kh.runningdog.chatting.model.vo.Chatroom;
 import com.kh.runningdog.chatting.model.vo.Message;
 import com.kh.runningdog.chatting.model.vo.StartChat;
+import com.kh.runningdog.member.model.service.MemberService;
 import com.kh.runningdog.member.model.vo.Member;
 
 @Controller
@@ -29,6 +30,8 @@ public class ChattingController {
 	private ChatroomService chatroomService;
 	@Autowired
 	private MessageService messageService;
+	@Autowired
+	private MemberService memberService;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -106,7 +109,6 @@ public class ChattingController {
 		}
 		
 		return url;
-		// TODO: 이미 채팅방이 있다면 추가안하고 존재하는 채팅방으로 이동
 	}
 	
 	@RequestMapping("deleteChat.do")
@@ -120,7 +122,6 @@ public class ChattingController {
 	public String chatList(HttpSession session) throws UnsupportedEncodingException {
 		logger.info("chatList.do run...");
 		Member member = (Member) session.getAttribute("loginMember");
-		int uniqueNum = member.getUniqueNum();
 		Chatroom chatRoom = new Chatroom();
 		chatRoom.setMemberNo(member.getUniqueNum());
 
@@ -149,6 +150,7 @@ public class ChattingController {
 				job.put("lastdate", room.getLastDate().toString());
 				job.put("lastmessage", URLEncoder.encode((room.getLastMessage() == null ? "" : room.getLastMessage()), "utf-8"));
 				job.put("unread", unread);
+				job.put("profile", memberService.selectRenameProfile(room.getMemberNo()));
 				jarr.add(job);
 			}
 		}

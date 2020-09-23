@@ -108,6 +108,10 @@
 		WHERE UNIQUE_NUM = #{uniqueNum}
 	</insert>
 	
+	<select id="selectRenameProfile" parameterType="_int" resultType="string">
+		select RENAME_PROFILE FROM MEMBER WHERE UNIQUE_NUM = #{unique_num}
+	</select>
+	
 	
 	
 	<!-- 관리자 -->

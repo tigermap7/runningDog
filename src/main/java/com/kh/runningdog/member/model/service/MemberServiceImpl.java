@@ -183,8 +183,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectNicknameCount(member);
 	}
 
-
-
-
+	@Override
+	public String selectRenameProfile(int memberNo) {
+		return memberDao.selectRenameProfile(memberNo);
+	}
 
 }

@@ -60,12 +60,12 @@
                             	<c:if test="${ !empty list }">
 	                            	<c:forEach var="user" items="${ list }">
 		                                <tr onclick="location='startChat.do?receiver=${user.getNickname()}&receiverNo=${user.getUniqueNum()}'">
-		                                    <td class="img"><img src="/runningdog/resources/images/common/userBg.png"></td>
+		                                    <td class="img"><img src="/runningdog/resources/images/memberImg/${user.getRenameProfile()}"></td>
 		                                    <td class="title">
 		                                        <h2>${ user.nickname }</h2>
 		                                        <!-- <p>안녕하세요. 유기동물 공고보고 연락드렸습니다. 강아지를 지금 보러갈까 하는데 괜찮을까요?</p> -->
 		                                    </td>
-		                                    <td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
+		                                    <td class="img"></td>
 		                                </tr>
 	                            	</c:forEach>
                             	</c:if>

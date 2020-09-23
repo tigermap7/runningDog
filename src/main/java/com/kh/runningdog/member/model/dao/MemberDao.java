@@ -167,6 +167,12 @@ public class MemberDao {
 	public int selectNicknameCount(Member member) {
 		return session.selectOne("memberMapper.selectNicknameCount", member);
 	}
+	public String selectRenameProfile(int memberNo) {
+		return session.selectOne("memberMapper.selectRenameProfile", memberNo);
+	}
+
+
+	
 
 
 
