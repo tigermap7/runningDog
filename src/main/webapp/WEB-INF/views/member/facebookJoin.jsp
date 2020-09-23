@@ -42,7 +42,7 @@
                             </div>
                             <div>
                                 <span><i class="xi-user-o"></i></span>
-                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임" value="${ param.name }" readonly/></span>
+                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임"/></span>
                             </div>
                             <p id="nicknameWarning">
                                 <span></span>
@@ -58,7 +58,7 @@
                                 <label><input type="checkbox" name="" id="chkY"/> 서비스의 <a href="#none" class="con1">이용약관</a>과 <a href="#none" class="con2">개인정보처리방침</a>에 동의합니다.</label>
                             </p>
 
-                            <input id="facebookJoinAction" class="join_btn" type="button" name="" value="회원가입">
+                            <input id="facebookJoinAction" class="facebookJoinAction join_btn" type="button" name="" value="회원가입">
                         </div>
                         <div class="privacyCke_con">
                             <c:import url="/WEB-INF/views/include/termsCon.jsp"/>

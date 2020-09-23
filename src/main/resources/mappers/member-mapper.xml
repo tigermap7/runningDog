@@ -67,7 +67,7 @@
 	</update>
 	
 	<delete id="deleteMember" parameterType="Member">
-		delete member where user_id = #{userId}
+		delete member where UNIQUE_NUM = #{uniqueNum}
 	</delete>
 	
 	

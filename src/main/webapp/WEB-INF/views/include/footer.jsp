@@ -22,7 +22,6 @@
         <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
         <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
         <li><a href="moveChatting.do">나의 채팅</a></li>
-        <li><a href="/WEB-INF/views/mypage/myComment.jsp">나의 댓글</a></li>
         <li><a href="logout.do">로그아웃</a></li>
 	    </c:if>
     </ul>
@@ -44,9 +43,9 @@
 <div id="footer">
     <dl>
         <dt>
-            <a href="/WEB-INF/views/etc/terms.jsp">이용약관</a>
-            <a href="/WEB-INF/views/etc/privacy.jsp">개인정보처리방침</a>
-            <a href="/WEB-INF/views/etc/email.jsp">이메일무단수집거부</a>
+            <a href="terms.do">이용약관</a>
+            <a href="privacy.do">개인정보처리방침</a>
+            <a href="email.do">이메일무단수집거부</a>
         </dt>
         <dd>
         	지금 달려갈 개 | 서울특별시 중구 남대문로 120 대일빌딩 2F, 3F | 대표자 : 공유 | 개인정보 담당자 : 강동원 | 고객센터 : 1577-7777<br/>

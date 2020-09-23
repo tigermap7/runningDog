@@ -20,7 +20,7 @@
         </ul>
         </c:if>
         <c:if test="${ empty sessionScope.loginMember}">
-        <h3>로그인되어 있지 않은 상태입니다.</h3>
+        <h3>로그인이 필요합니다.</h3>
         <ul>
             <li>회원번호<b> #000</b></li>
             <li><button type="button" onclick="location.href='login.do'">로그인</button></li>

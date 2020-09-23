@@ -100,7 +100,7 @@
 								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/common/userBg.png"/>${ member.nickname }</td>
 								</c:if>        
 								<c:if test="${ member.renameProfile ne null }">
-								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${savePath}${member.renameProfile}"/>${ member.nickname }</td>
+								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${member.renameProfile}"/>${ member.nickname }</td>
 								</c:if>
 								<td class="phone" onclick="location='${ memberView }'">${ member.phone }</td>
 								<td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.joinDate }"/></td>
