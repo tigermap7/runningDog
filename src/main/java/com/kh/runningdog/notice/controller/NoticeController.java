@@ -79,8 +79,7 @@ public class NoticeController {
 		logger.info("ndetail.do run...");
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 		
-		Notice notice = noticeService.selectNoticeOne(noticeNo);
-		
+		//조회수 중복방지를 위한 쿠키생성
 		Cookie[] cookies = request.getCookies();
 		
 		Cookie viewCookie = null;
@@ -98,28 +97,31 @@ public class NoticeController {
                 }
             }
         }
-		
-		if(notice != null) {
 			
-            // 만일 viewCookie가 null일 경우 쿠키를 생성해서 조회수 증가 로직을 처리함.
-            if (viewCookie == null) {    
-                System.out.println("cookie 없음");	
-                
-             // 쿠키 생성(이름, 값)
-                Cookie newCookie = new Cookie("cookie"+noticeNo, "|" + noticeNo + "|");
-                                
-                // 쿠키 추가
+        // 만일 viewCookie가 null일 경우 쿠키를 생성해서 조회수 증가 로직을 처리함.
+        if (viewCookie == null) {    
+            System.out.println("cookie 없음");	
+            
+         // 쿠키 생성(이름, 값)
+            Cookie newCookie = new Cookie("cookie"+noticeNo, "|" + noticeNo + "|");
+                            
+            // 쿠키 추가
                 response.addCookie(newCookie);
  
                 // 쿠키를 추가 시키고 조회수 증가시킴
-                noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
-            } else {
-            	System.out.println("cookie 있음");
-                
-                // 쿠키 값 받아옴
-                String value = viewCookie.getValue();
-                System.out.println("cookie 값 : " + value);
-            }
+            noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
+        } else {
+        	System.out.println("cookie 있음");
+            
+            // 쿠키 값 받아옴
+            String value = viewCookie.getValue();
+            System.out.println("cookie 값 : " + value);
+        }
+        
+        //상세보기 조회
+        Notice notice = noticeService.selectNoticeOne(noticeNo);
+            
+        if(notice != null) { //조회 성공시
 			
 			noticePage.setNoticeNo(noticeNo);	//이전, 다음글 번호 조회할 때 객체 하나로 보내야해서 추가
 			
@@ -133,7 +135,7 @@ public class NoticeController {
 			mv.addObject("notice", notice);
 			mv.addObject("noticePage", noticePage);
 			mv.setViewName("notice/noticeView");
-		} else {
+		} else { //조회 실패시
 			mv.addObject("message", "공지사항 상세페이지 이동 실패");
 			mv.setViewName("common/error");
 		}
