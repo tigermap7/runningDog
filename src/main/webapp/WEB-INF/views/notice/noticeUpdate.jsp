@@ -130,7 +130,7 @@
 	<script type="text/javascript">
 	   /* 라디오버튼 동적 체크하기 */
 	  	$("input[id='state']").on('click',function(){
-	  		
+	  		console.log("버튼클릭함" + $('#state').val());
 	  		if($('#state').val() == 'checked'){
 	  			console.log("체크되어있음");
 	  			$('#state').prop('checked', false);
@@ -140,7 +140,6 @@
 	  			$('#state').prop('checked', true);
 	  			$('#state').val("checked");
 	  		}
-	  		console.log("버튼클릭함" + $('#state').val());
 	  	});
 	  	
 	  	/* 첨부파일 선택창 숨기기 */

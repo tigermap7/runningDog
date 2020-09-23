@@ -53,7 +53,7 @@
 								<tbody>
 									<tr>
 										<td>알림</td>
-										<td><label><input type="radio" name="noticeState" value="checked" />필수여부</label></td>
+										<td><label><input type="radio" name="noticeState" id="state" value="checked" />필수여부</label></td>
 									</tr>
 									<tr>
 										<td>제목</td>
@@ -90,18 +90,18 @@
 
 					<script type="text/javascript">
                         /* 라디오버튼 동적 체크하기 */
-                       	$("input[id='state']").on('click',function(){
-                       		console.log("버튼클릭함");
-                       		if($('#state').val() == 'checked'){
-                       			console.log("체크되어있음");
-                       			$('#state').prop('checked', false);
-                       			$('#state').val("unchecked");
-                       		} else {
-                       			console.log("체크안되어있음");
-                       			$('#state').prop('checked', true);
-                       			$('#state').val("checked");
-                       		}
-                       	});
+					  	$("input[id='state']").on('click',function(){
+					  		console.log("버튼클릭함" + $('#state').val());
+					  		if($('#state').val() == 'checked'){
+					  			console.log("체크되어있음");
+					  			$('#state').prop('checked', false);
+					  			$('#state').val("unchecked");
+					  		} else {
+					  			console.log("체크안되어있음");
+					  			$('#state').prop('checked', true);
+					  			$('#state').val("checked");
+					  		}
+					  	});
                         </script>
 
 				</div>
