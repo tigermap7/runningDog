@@ -34,5 +34,7 @@ public interface DboardService {
 	int selectAdminPrev(Dboard dboard);
 
 	int updateAdminHide(String[] checkRow);
+
+	void updateReadCount(int dNum);
 	
 }

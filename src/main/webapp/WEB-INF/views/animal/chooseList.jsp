@@ -68,7 +68,6 @@
                                 <div>
                                 <c:url var = "dCate" value= "dboardList.do">
 									<c:param name="dLocal" value="${ dLocal }"/>
-									<c:param name="dLocal" value="${ dLocal }"/>
                                  	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
 									<c:param name="dCategory" value="${ d.dCategory }"/>

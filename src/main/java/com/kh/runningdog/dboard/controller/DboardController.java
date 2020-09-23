@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,13 +156,46 @@ public class DboardController {
 	}
 
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum,Model model,HttpServletRequest request) {
-		
-		
-		Dboard dboard = dboardService.selectOne(dNum);
+	public String selectOne(@RequestParam("dNum") int dNum,Model model,HttpServletRequest request,HttpServletResponse response) {
+				
 		logger.info("dboard View게시글 번호" + dNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
+		Cookie[] cookies =request.getCookies();
+		
+		Cookie viewCookie = null;
+		
+		//cookies가 null이 아닐경우 이름 만들기
+		if(cookies != null && cookies.length > 0) {
+			for (int i = 0; i < cookies.length; i++) {
+			// Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
+				if(cookies[i].getName().equals("cookie" + dNum)) {
+					logger.info("처음 쿠키가 생성한 뒤에 들어옴.");
+					viewCookie = cookies[i];
+				}
+			}
+		}
+		
+		// 만일 viewCookie 가 null 일 경우 쿠키를 생성해서 조회수 증가 처리함
+		if (viewCookie == null) {
+			logger.info("cookie 없음");
+
+			// 쿠키 생성(이름 , 값)
+
+			Cookie newCookie = new Cookie("cookie" + dNum, "|" + dNum + "|");
+			// 쿠키추가
+			response.addCookie(newCookie);
+			// 쿠키를 추가 시키고 조회수 증가처리
+			dboardService.updateReadCount(dNum); // 조회수 1 증가
+		} else {
+			logger.info("cookie 있음");
+			// 쿠키값을 받아옴
+			String value = viewCookie.getValue();
+			logger.info("cookie 값 : " + value);
+		}
+		
+		//조회수 처리 후 게시물에 대한 정보 불러오기
+		Dboard dboard = dboardService.selectOne(dNum);
 		dboard.setdCategory(request.getParameter("dCategory"));
 		dboard.setdLocal(request.getParameter("dLocal"));
 		dboard.setSearchFiled(request.getParameter("searchFiled"));

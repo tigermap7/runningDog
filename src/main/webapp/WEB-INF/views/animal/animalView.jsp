@@ -39,7 +39,7 @@
                             <p class="topText">*「동물보호법」 제17조, 시행령7조 및 동법 시행규칙 제20조에 따라 유기·유실동물을 보호하고 있는 경우에는 소유자 등이 보호조치 사실을 알 수 있도록 7일 동안 공고하여야 합니다.</p>
                             <dl>
                                 <dt>
-                                    <div class="viewImg"><img src="/runningdog/resources/images/test/animalImg01.jpg"></div>
+                                    <div class="viewImg"><img src="${ animal.popfile }" id="imgControll" onclick="fnImgPop(this.src)"></div>
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"></i> 메일보내기</a> -->
                                     <a class="linkBtn" href="tel:010-3387-7583"><i class="xi-call"></i> 전화하기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
@@ -56,27 +56,32 @@
                                         <tbody>
                                             <tr>
                                                 <th>공고번호</th>
-                                                <td>서울-종로-2020-02497</td>
+                                                <td>${ animal.noticeNo }</td>
                                                 <th>견종</th>
-                                                <td>[강아지] 푸들</td>
+                                                <td>${ animal.kindCd }</td>
                                             </tr>
                                             <tr>
                                                 <th>색상</th>
-                                                <td>흰색/회색</td>
+                                                <td>${ animal.colorCd }</td>
                                                 <th>나이/체중</th>
-                                                <td>2세 / 2.7(kg)</td>
+                                                <td>${ animal.age } / ${ animal.weight }</td>
                                             </tr>
                                             <tr>
                                                 <th>성별</th>
-                                                <td>수컷</td>
+                                                <td>${ animal.sexCd }</td>
                                                 <th>중성화 여부</th>
-                                                <td>아니오</td>
+                                                <td>${ animal.neuterYn }</td>
                                             </tr>
                                             <tr>
                                                 <th>특징/성향</th>
-                                                <td>온순하고 착함</td>
+                                                <td>${ animal.processState }</td>
                                                 <th>공고기한</th>
-                                                <td>2020.08.25 ~ 2020.10.24</td>
+                                                <td><fmt:parseDate var="animalDate" value="${animal.noticeSdt}" pattern="yyyyMMdd"/>
+                                                	<fmt:formatDate value="${animalDate}" pattern="yyyy-MM-dd"/>
+
+                                                 ~ <br><fmt:parseDate var="animalDate2" value="${animal.noticeEdt}" pattern="yyyyMMdd"/>
+                                                	<fmt:formatDate value="${animalDate2}" pattern="yyyy-MM-dd"/>
+                                                	</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -92,37 +97,81 @@
                                         <tbody>
                                             <tr>
                                                 <th>보호센터</th>
-                                                <td>'따뜻한 집'</td>
+                                                <td>${ animal.careNm }</td>
                                                 <th>연락처</th>
-                                                <td>02-980-7717</td>
+                                                <td>${ animal.careTel }</td>
                                             </tr>
                                             <tr>
                                                 <th>지역</th>
-                                                <td colspan="3">서울시 종로구 종로5.6가동</td>
+                                                <td colspan="3">${ animal.careAddr }</td>
                                             </tr>
                                             <tr>
                                                 <th>관할기관</th>
-                                                <td>서울시 종로구</td>
-                                                <th>담당자</th>
-                                                <td>-</td>
+                                                <td>${ animal.orgNm }</td>
+                                                <th>조회수</th>
+                                                <td>${ animal.aCount }</td>
                                             </tr>
                                             <tr>
                                                 <th>연락처</th>
-                                                <td>055-876-5542</td>
+                                                <td>${ animal.officetel }</td>
                                                 <th>특이사항</th>
-                                                <td>-</td>
+                                                <td>${ animal.specialMark }</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </dd>
                             </dl>
-                            <div class="mapAPI">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6324.481505654264!2d127.00051190256856!3d37.572948171699984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca325b4d9b81b%3A0xba2de96c741b670a!2z7ISc7Jq47Yq567OE7IucIOyiheuhnOq1rCDsooXroZw1LjbqsIDrj5k!5e0!3m2!1sko!2skr!4v1598454835067!5m2!1sko!2skr" width="100%" height="281.3rem" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                            </div>
+                            <div class="map_wrap">
+									<div class="hAddr">
+										<div id="map"
+											style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
+										</div>
+									</div>
+								</div> <script type="text/javascript"
+									src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
+								<script>
+								var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+							    mapOption = {
+							        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+							        level: 8 // 지도의 확대 레벨
+							    };  
+
+							// 지도를 생성합니다    
+							var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+							// 주소-좌표 변환 객체를 생성합니다
+							var geocoder = new kakao.maps.services.Geocoder();
+
+							// 주소로 좌표를 검색합니다
+							geocoder.addressSearch('${ animal.careAddr }', function(result, status) {
+
+							    // 정상적으로 검색이 완료됐으면 
+							     if (status === kakao.maps.services.Status.OK) {
+
+							        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+							        // 결과값으로 받은 위치를 마커로 표시합니다
+							        var marker = new kakao.maps.Marker({
+							            map: map,
+							            position: coords
+							        });
+
+							        // 인포윈도우로 장소에 대한 설명을 표시합니다
+							        var infowindow = new kakao.maps.InfoWindow({
+							            content: '<div style="width:150px;text-align:center;padding:6px 0;">' +"센터위치<br>${ animal.careAddr }</div>"
+							        });
+							        infowindow.open(map, marker);
+
+							        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+							        map.setCenter(coords);
+							    } 
+							});    
+							</script>
                             
                             <div class="textCon">
                                 상기 동물을 분실하신 소유주께서는 보호센터로 문의하시어 동물을 찾아가시기 바라며, 동물보호 법 제17조의 규정에 따른 공고가 있는 날부터 10일이 경과하여도 소유자 등을 알 수 없는 경우에는 유실물법 제12조 및 민법 제253조의 규정에 불구하고 해당 시,군,구 자치구가 그 동물의 소유권을 취득하게 됩니다.<br/>
-                                2020년 08월 25일
+                                2020년 08월 25일<br>
+                                공공 데이터 제공 : 농림축산식품부 농림축산검역본부 
                             </div>
 
                                 

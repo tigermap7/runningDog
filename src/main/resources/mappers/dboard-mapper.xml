@@ -280,6 +280,11 @@
 		</foreach>
 	</update>
 	
+	<update id="updateReadCount" parameterType="_int">
+		UPDATE DBOARD SET
+		D_COUNT = D_COUNT + 1
+		WHERE D_NUM = #{ dNum }
 	
+	</update>
 	
 </mapper>

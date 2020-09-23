@@ -52,12 +52,12 @@
                         <!--서브 검색 끝-->
                         
                         <div class="sort-area">  
-                            <h4>전체 150마리 '작은 천사'</h4>
+                            <h4>전체 ${ totalCount }마리 '작은 천사'</h4>
                             <div>
                                 <div>
                                 <form action="" name="">
                                     <a class="active" href="#none">전체</a>
-                                    <a href="#none">강아지</a>
+                                    <a href="insertAnimal.do">강아지</a>
                                     <a href="#none">고양이</a>
                                 </form>
                                 </div>
@@ -68,230 +68,27 @@
                         <div class="animalList">
                             <ul class="grid">
                                 <li class="grid-sizer"></li>
-                                <li class="grid-item chooseIcon" onclick="location='aViewPage.do'">
+                                <c:forEach items="${ requestScope.animalList}" var="a">
+                                	<c:url var="animalView" value="animalView.do">
+                                		<c:param name="pageNo" value="${ pageVO.pageNo}"/>
+                                		<c:param name="desertionNo" value="${ a.desertionNo }"/>
+                                	</c:url>
+                                
+                                <li class="grid-item chooseIcon" onclick="location='${ animalView }'">
                                     <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
+                                       <!--  <a href="#none" class="chooseIcon">분양가능</a> -->
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
+                                        <img src="${ a.popfile }">
                                     </div>
-                                    <h3>[강아지] 푸들</h3>
+                                    <h3>${ a.kindCd }</h3>
                                     <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
+                                        나이 : ${ a.age }<br/>
+                                        보호센터 : ${ a.careNm }<br/>
+                                        지역 : ${ a.careAddr }
+                                        <span>공고시작일 : ${a.noticeSdt }</span>
                                     </p>
                                 </li>
-                                <li class="grid-item chooseIcon" onclick="location='aViewPage.do'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <h3>[강아지] 말티즈</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='aViewPage.do'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg03.jpg">
-                                    </div>
-                                    <h3>[강아지] 말티즈</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <h3>[강아지] 푸들</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews03.jpg">
-                                    </div>
-                                    <h3>[강아지] 푸들</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews02.jpg">
-                                    </div>
-                                    <h3>[강아지] 말티즈</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                                    </div>
-                                    <h3>[강아지] 말티즈</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                    </div>
-                                    <h3>[강아지] 푸들</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg01.jpg">
-                                    </div>
-                                    <h3>[강아지] 푸들</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalNews01.jpg">
-                                    </div>
-                                    <h3>[강아지] 말티즈</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg03.jpg">
-                                    </div>
-                                    <h3>[강아지] 말티즈</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item chooseIcon" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="chooseIcon">분양가능</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg04.jpg">
-                                    </div>
-                                    <h3>[강아지] 푸들</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item close" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="closeIcon">분양완료</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg01.jpg">
-                                    </div>
-                                    <h3>[강아지] 푸들</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item close" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="closeIcon">분양완료</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg02.jpg">
-                                    </div>
-                                    <h3>[강아지] 말티즈</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item close" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="closeIcon">분양완료</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg03.jpg">
-                                    </div>
-                                    <h3>[강아지] 말티즈</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
-                                <li class="grid-item close" onclick="location='animalView.jsp'">
-                                    <div>
-                                        <a href="#none" class="closeIcon">분양완료</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/images/test/animalImg04.jpg">
-                                    </div>
-                                    <h3>[강아지] 푸들</h3>
-                                    <p>
-                                        나이 : 2세<br/>
-                                        보호센터 : '따뜻한 집'<br/>
-                                        지역 : 서울시 종로구 종로5. 6가동
-                                        <span>등록일 : 2020.08.22</span>
-                                    </p>
-                                </li>
+                               </c:forEach>
                             </ul>
                         </div>
                         <!-- 리스트 끝 -->
@@ -301,14 +98,14 @@
                             <dd>
 								<c:if test="${pageVO.pageNo >0 }">
 									<c:if test="${pageVO.startPageNo >5 }">
-										<c:url var = "dl1" value="alistPage.do">
+										<c:url var = "dl1" value="animalList.do">
 											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
 										</c:url>
 										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
 									<c:forEach var="i" begin="${pageVO.startPageNo}"
 										end="${ pageVO.endPageNo }" step="1">
-										<c:url var = "dl2" value="alistPage.do">
+										<c:url var = "dl2" value="animalList.do">
 												<c:param name="pageNo" value="${ i }"/>
 											</c:url>
 										<c:choose>
@@ -321,7 +118,7 @@
 										</c:choose>
 									</c:forEach>
 									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
-										<c:url var = "dl3" value= "alistPage.do">
+										<c:url var = "dl3" value= "animalList.do">
 											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
 										</c:url>
 										<a href="${dl3 }"><i

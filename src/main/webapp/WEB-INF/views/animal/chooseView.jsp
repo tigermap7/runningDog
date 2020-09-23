@@ -107,6 +107,7 @@ $(function() {
                                             <tr>
                                                 <th>특이사항</th>
                                                 <td colspan="3">${ dboard.dPoint }</td>
+                                               
                                             </tr>
                                         </tbody>
                                     </table>
@@ -136,11 +137,13 @@ $(function() {
                                             </tr>
                                             <tr>
                                                 <th>지역</th>
-                                                <td colspan="3">
+                                                <td colspan="1">
                                                 <c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }" />
 												<c:forEach var="lo" items="${local }" varStatus="l">
 													<c:if test="${l.count== (dboard.dLocal+1) }"> ${lo }</c:if>
 												</c:forEach></td>
+												<th>조회수</th>
+												<td colspan="1">${ dboard.dCount }</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -150,9 +153,9 @@ $(function() {
                             <div class="viewContent">
                             ${ dboard.dContent }
                             </div>
-						<tr>
+					
 							<td>발견 장소</td>
-							<td>
+						
 								<div class="map_wrap">
 									<div class="hAddr">
 										<div id="map"

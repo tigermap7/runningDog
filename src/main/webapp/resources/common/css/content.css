@@ -377,7 +377,10 @@
 .animalList > ul li > div {
     position: relative;
     width: 100%;
+    OVERFLOW: hidden;
     margin-bottom: 0.625rem;
+    MAX-HEIGHT: 300PX;
+    border-radius: 0.625rem;
 }
 .animalList > ul li > div a.chooseIcon {
     position: absolute;
@@ -429,7 +432,7 @@
 }
 .animalList > ul li > div img {
     width: 100%;
-    border-radius: 0.625rem;
+    /*border-radius: 0.625rem;*/
 }
 .animalList > ul li > h3 {
     font-size: 1.125rem;
@@ -489,16 +492,18 @@
 }
 .animalView dl dt {
     float: left;
-    width: 42%;
+    max-width: 42%;
     text-align: center;
 }
 .animalView dl dt div.viewImg {
-    width: 100%;
+	width: 100%;
     margin-bottom: 1.25rem;
+    max-height: 500px;
+    border-radius: 0.625rem;
+    overflow: hidden;
 }
 .animalView dl dt div.viewImg img {
     max-width: 100%;
-    border-radius: 0.625rem;
 }
 .animalView dl dt a.linkBtn {
     font-size: 0.875rem;
