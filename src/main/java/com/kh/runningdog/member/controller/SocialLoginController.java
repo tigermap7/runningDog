@@ -58,8 +58,14 @@ public class SocialLoginController {
 		
         System.out.println("userId : " + userId);
         System.out.println("profileImage : " + profileImage);
+        if(loginMember == null) {
+            System.out.println("먼저 가야함");
+        	url = "notKakaoId";
+        	logger.info("url : " + url);
+        }
 		
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
+			System.out.println("이후 가야함");
 
 			loginMember.setRenameProfile(profileImage);
 			loginMember.setLoginType("kakao");
