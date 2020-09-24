@@ -48,7 +48,7 @@
                         <!--서브 검색 끝-->
 
                         <div class="sort-area">  
-                            <h4>전체 ${listcount}개의 채팅</h4>
+                            <h4 id="listCount"></h4>
                         </div>
                         <table class="chattingList">
                             <colgroup>
@@ -115,6 +115,7 @@
 			                        + "<h1>참여한 채팅이 없습니다.</h1></td></tr>";
 						}
 						$("#chatList").html(values);
+						$("#listCount").html("전체 " + json.list.length +"개의 채팅");
 					},
 					error : function(jqXHR, textstatus, errorthrown) {
 						console.log("error : " + jqXHR + ", " + textstatus + ", "
