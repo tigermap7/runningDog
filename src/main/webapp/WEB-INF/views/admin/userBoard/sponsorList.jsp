@@ -42,7 +42,7 @@
                             </select>
                         <div>
                             <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
-                            <button name="seld" type="submit" class="top-search"><i class="xi-search"></i></button>
+                            <button id="seld" type="" class="top-search"><i class="xi-search"></i></button>
                         </div>
                     </div>
                     </form>
@@ -55,6 +55,8 @@
                         <col width="8%">
                         <col width="8%">
                         <col width="*">
+                        <col width="8%">
+                        <col width="8%">
                         <col width="10%">
                         <col width="10%">
                     </colgroup>
@@ -65,13 +67,15 @@
                             <th>분류</th>
                             <th>썸네일</th>
                             <th>제목</th>
+                            <th>목표금액</th>
+                            <th>모집금액</th>
                             <th>작성자</th>
                             <th>등록일</th>
                         </tr>
                         <tr>
                         </tr>
                         <tr class="hr">
-                            <th colspan="8"></th>
+                            <th colspan="9"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,6 +97,8 @@
 			                        </c:if>
 			                        <td class="thumbnail" onclick="location='${ sdt }'"><img src="resources\\sponsor\\thumbnail/${ s.sRename }"></td>
 			                        <td class="title" onclick="location='${ sdt }'">${ s.sTitle }</td>
+			                        <td class="name" onclick="location='${ sdt }'">${ s.sAmount }</td>
+			                        <td class="name" onclick="location='${ sdt }'">${ s.sCurrent }</td>
 			                        <td class="name" onclick="location='${ sdt }'">${ s.sId }</td>
 			                        <td class="date" onclick="location='${ sdt }'"><fmt:formatDate value="${ s.sDate }" pattern="yyyy.MM.dd"/></td>
 		                        </tr>
@@ -121,6 +127,8 @@
 
                 <!-- 페이징 -->
                 <c:if test="${ totalPage eq 1 }"><br><br></c:if>
+                	<!-- 검색x 페이징 -->
+                <c:if test="${ empty selected }">
                 <c:if test="${ totalPage ne 1 }">
 					<dl class="list-paging">
 						<dd>
@@ -158,7 +166,54 @@
 							</c:if>
 						</dd>
 					</dl>
-				</c:if>
+				</c:if></c:if>
+				
+				<!-- 검색 페이징 -->
+				<c:if test="${ !empty selected }">
+				<c:if test="${ totalPage ne 1 }">
+					<dl class="list-paging">
+						<dd>
+							<c:if test="${ page > 1 }">
+								<c:url var="ss1" value="ssearch.ad">
+									<c:param name="page" value="1" />
+									<c:param name="selected" value="${ selected }" />
+									<c:param name="keyword" value="${ keyword }" />
+								</c:url>
+								<a href="${ ss1 }"><i class="xi-angle-left"></i></a>
+							</c:if>
+							<c:if test="${ page eq 1 }">
+								<a><i class="xi-angle-left"></i></a>
+							</c:if>
+
+							<c:forEach var="p" begin="${ startPage }" end="${ endPage }"
+								step="1">
+								<c:if test="${ page eq p }">
+									<a class="active">${ p }</a>
+								</c:if>
+								<c:if test="${ page ne p }">
+									<c:url var="ss2" value="ssearch.ad">
+										<c:param value="${ p }" name="page" />
+										<c:param name="selected" value="${ selected }" />
+										<c:param name="keyword" value="${ keyword }" />
+									</c:url>
+									<a href="${ ss2 }">${ p }</a>
+								</c:if>
+							</c:forEach>
+
+							<c:if test="${ page < totalPage }">
+								<c:url var="ss3" value="ssearch.ad">
+									<c:param name="page" value="${ totalPage }" />
+									<c:param name="selected" value="${ selected }" />
+									<c:param name="keyword" value="${ keyword }" />
+								</c:url>
+								<a href="${ ss3 }"><i class="xi-angle-right"></i></a>
+							</c:if>
+							<c:if test="${ page eq totalPage }">
+								<a><i class="xi-angle-right"></i></a>
+							</c:if>
+						</dd>
+					</dl>
+				</c:if></c:if>
                 <!-- //페이징 -->
 
             </div>

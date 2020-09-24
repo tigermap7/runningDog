@@ -37,6 +37,7 @@
             	<input type="hidden" value="${ sponsor.sNum }" name="sNum">
             	<input type="hidden" value="${ sponsor.sOriginal }" name="sOriginal" id="of">
             	<input type="hidden" value="${ sponsor.sRename }" name="sRename" id="rf">
+            	<input type="hidden" value="${ sponsor.sChk }" name="sChk">
             <div class="write-area">
             
                 <h2>후원하기 수정</h2>

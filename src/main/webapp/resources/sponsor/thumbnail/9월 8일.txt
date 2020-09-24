@@ -1,0 +1,43 @@
+자바 엔터프라이즈 == 자바 ee == 자바 웹어플리케이션?
+
+전자정부프레임워크는 스프링을 변형?응용?시킨것
+
+if(returnObj instanceof Member) {
+			Member member = (Member)returnObj;
+			logger.info(new Date() + "$" + member.getUserid() 
+						+ "$님이 접속하셨습니다.");
+		}
+
+파일에 저장하는 로거 이용하면 분석도 가능
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@
         <script>
           //아임포트
           $(function(){
+        	  console.log("dd");
         	  IMP.init("imp88351393");
         	  IMP.request_pay({
         		  pg: "html5_inicis",

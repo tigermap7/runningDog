@@ -11,6 +11,11 @@
 <html lang="ko">
 	<head>
 		<c:import url="/WEB-INF/views/include/head.jsp"/>
+		<style type="text/css">
+			.sort-area a {
+				text-decoration:none;
+			}
+		</style>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -48,7 +53,7 @@
                             </select>
                             <div class="search-box">
                                 <input type="text" name="keyword" placeholder="검색어를 검색해주세요." required>
-                                <button name="seld" onclick="#none" type="submit" class="xi-search"></button>
+                                <button id='seld' onclick="#none" type="submit" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
@@ -60,9 +65,26 @@
                                 <!-- <a href="sponsorWrite.jsp" class="writeBtn">글쓰기</a> -->
                                 <div>
                                 <form action="" name="">
-                                    <a class="active" href="slist.do">전체</a>
-                                    <a href="#none">후원중</a>
-                                    <a href="#none">후원완료</a>
+                                	<c:if test="${ flag eq 1 }">
+                                		<a class="active" href="slist.do">전체</a>
+                                		<a href="prog.do">후원중</a>
+                                		<a href="comple.do">후원완료</a>
+                                	</c:if>
+                                    
+                                    <c:if test="${ flag eq 2 }">
+                                		<a href="slist.do">전체</a>
+                                		<a class="active" href="prog.do">후원중</a>
+                                		<a href="comple.do">후원완료</a>
+                                	</c:if>
+                                	
+                                	<c:if test="${ flag eq 3 }">
+                                		<a href="slist.do">전체</a>
+                                		<a href="prog.do">후원중</a>
+                                		<a class="active" href="comple.do">후원완료</a>
+                                	</c:if>
+                                    
+                                    	
+                                    
                                 </form>
                                 </div>
                             </div>
@@ -71,7 +93,7 @@
 						
 					<!--리스트-->
                         <div class="sponsorList">
-                            <ul>
+                            <ul id="hid">
                             <c:forEach var="s" items="${ list }" varStatus="status">
                                 <li>
                                     <div>
@@ -80,7 +102,10 @@
                                     		<c:param name="page" value="${ page }" />
                                     	</c:url>
                                     	<c:if test="${ s.sAmount > s.sCurrent }">
-                                        <a href="${ sdt }" class="chooseIcon">후원중</a>
+                                        	<a href="${ sdt }" class="chooseIcon">후원중</a>
+                                        </c:if>
+                                        <c:if test="${ s.sAmount <= s.sCurrent }">
+                                        	<a href="${ sdt }" class="chooseIcon" style="background-color:#555; border-color:#555;">후원완료</a>
                                         </c:if>
                                         <a data-id="${ s.sNum }" data-title="${ s.sTitle }" data-summary="${ s.sSummary }" 
                                         	data-toggle="popover" class="urlIcon xi-share-alt-o"></a>
@@ -110,7 +135,8 @@
                         </div>
                         <!-- 리스트 끝 -->
                     
-                        <!-- 페이징 -->
+                        <!-- 검색 x 페이징 -->
+                      <c:if test="${ empty selected && flag eq 1 }">
                         <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
                         <c:if test="${ totalPage ne 1 }">
                         <dl class="list-paging">
@@ -149,6 +175,144 @@
                             </dd>
                         </dl>
                         </c:if>
+                      </c:if>
+                        
+                        
+                        <!-- 검색 페이징 -->
+                      <c:if test="${ !empty selected }">  
+                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
+                        <c:if test="${ totalPage ne 1 }">
+                        <dl class="list-paging">
+                            <dd>
+                            	<c:if test="${ page > 1 }">
+                            		<c:url var="ss1" value="ssearch.do">
+                            			<c:param name="page" value="1"/>
+                            			<c:param name="selected" value="${ selected }"/>
+                            			<c:param name="keyword" value="${ keyword }"/>
+                            		</c:url>
+                                	<a href="${ ss1 }"><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq 1 }">
+                                	<a><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                
+                                <c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+                                	<c:if test="${ page eq p }">
+                                		<a class="active">${ p }</a>
+                                	</c:if>
+                                	<c:if test="${ page ne p }">
+                                		<c:url var="ss2" value="ssearch.do">
+                                			<c:param value="${ p }" name="page"/>
+                                			<c:param name="selected" value="${ selected }"/>
+                            				<c:param name="keyword" value="${ keyword }"/>
+                                		</c:url>
+                                		<a href="${ ss2 }">${ p }</a>
+                                	</c:if>
+								</c:forEach>
+								
+								<c:if test="${ page < totalPage }">
+									<c:url var="ss3" value="ssearch.do">
+										<c:param name="page" value="${ totalPage }"/>
+										<c:param name="selected" value="${ selected }"/>
+                            			<c:param name="keyword" value="${ keyword }"/>
+									</c:url>
+                                	<a href="${ ss3 }"><i class="xi-angle-right"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq totalPage }">
+                                	<a><i class="xi-angle-right"></i></a>
+                                </c:if>
+                            </dd>
+                        </dl>
+                        </c:if>
+                      </c:if>
+                      
+                        
+                        <!-- 후원중 페이징 -->
+                      <c:if test="${ flag eq 2 }">  
+                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
+                        <c:if test="${ totalPage ne 1 }">
+                        <dl class="list-paging">
+                            <dd>
+                            	<c:if test="${ page > 1 }">
+                            		<c:url var="pr1" value="prog.do">
+                            			<c:param name="page" value="1"/>
+                            		</c:url>
+                                	<a href="${ pr1 }"><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq 1 }">
+                                	<a><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                
+                                <c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+                                	<c:if test="${ page eq p }">
+                                		<a class="active">${ p }</a>
+                                	</c:if>
+                                	<c:if test="${ page ne p }">
+                                		<c:url var="pr2" value="prog.do">
+                                			<c:param value="${ p }" name="page"/>
+                                		</c:url>
+                                		<a href="${ pr2 }">${ p }</a>
+                                	</c:if>
+								</c:forEach>
+								
+								<c:if test="${ page < totalPage }">
+									<c:url var="pr3" value="prog.do">
+										<c:param name="page" value="${ totalPage }"/>
+									</c:url>
+                                	<a href="${ pr3 }"><i class="xi-angle-right"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq totalPage }">
+                                	<a><i class="xi-angle-right"></i></a>
+                                </c:if>
+                            </dd>
+                        </dl>
+                        </c:if>
+                      </c:if>
+                        
+                        
+                        <!-- 후원완료 페이징 -->
+                      <c:if test="${ flag eq 3 }">  
+                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
+                        <c:if test="${ totalPage ne 1 }">
+                        <dl class="list-paging">
+                            <dd>
+                            	<c:if test="${ page > 1 }">
+                            		<c:url var="cm1" value="comple.do">
+                            			<c:param name="page" value="1"/>
+                            		</c:url>
+                                	<a href="${ cm1 }"><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq 1 }">
+                                	<a><i class="xi-angle-left"></i></a>
+                                </c:if>
+                                
+                                <c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+                                	<c:if test="${ page eq p }">
+                                		<a class="active">${ p }</a>
+                                	</c:if>
+                                	<c:if test="${ page ne p }">
+                                		<c:url var="cm2" value="comple.do">
+                                			<c:param value="${ p }" name="page"/>
+                                		</c:url>
+                                		<a href="${ cm2 }">${ p }</a>
+                                	</c:if>
+								</c:forEach>
+								
+								<c:if test="${ page < totalPage }">
+									<c:url var="cm3" value="comple.do">
+										<c:param name="page" value="${ totalPage }"/>
+									</c:url>
+                                	<a href="${ cm3 }"><i class="xi-angle-right"></i></a>
+                                </c:if>
+                                <c:if test="${ page eq totalPage }">
+                                	<a><i class="xi-angle-right"></i></a>
+                                </c:if>
+                            </dd>
+                        </dl>
+                        </c:if>
+                      </c:if>
+                      
+                      
                     </div>
                 </div>
             </div>

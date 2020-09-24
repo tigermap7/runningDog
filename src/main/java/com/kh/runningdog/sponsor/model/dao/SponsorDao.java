@@ -74,7 +74,11 @@ public class SponsorDao {
 		return session.delete("sponsorMapper.deleteSponsor", checkRow);
 	}
 
-	public ArrayList<Sponsor> selectSearch(HashMap<String, String> key) {
+	public ArrayList<Sponsor> selectSearch(HashMap<String, Object> key, int currentPage, int countList) {
+		int startRow = (currentPage - 1) * countList + 1;
+		int endRow = startRow + countList - 1;
+		key.put("startRow", startRow);
+		key.put("endRow", endRow);
 		List<Sponsor> list = session.selectList("sponsorMapper.selectSearch", key);
 		return (ArrayList<Sponsor>) list;
 	}
@@ -108,7 +112,50 @@ public class SponsorDao {
 		System.out.println(l);
 		return l;
 	}
+
+	public void updateSponsorReadCount(int sNum) {
+		session.update("sponsorMapper.updateSponsorReadCount", sNum);
+	}
+
+	public Integer selectSponsorPre(int sNum) {
+		return session.selectOne("sponsorMapper.selectSponsorPre", sNum);
+	}
+
+	public Integer selectSponsorNext(int sNum) {
+		return session.selectOne("sponsorMapper.selectSponsorNext", sNum);
+	}
+
+	public ArrayList<Sponsor> selectProgress(int currentPage, int countList) {
+		int startRow = (currentPage - 1) * countList + 1;
+		int endRow = startRow + countList - 1;
+		SponsorPage sPage = new SponsorPage(startRow, endRow);
+		List<Sponsor> list = session.selectList("sponsorMapper.selectProgress", sPage);
+		return (ArrayList<Sponsor>)list;
+	}
 	
+	public ArrayList<Sponsor> selectComple(int currentPage, int countList) {
+		int startRow = (currentPage - 1) * countList + 1;
+		int endRow = startRow + countList - 1;
+		SponsorPage sPage = new SponsorPage(startRow, endRow);
+		List<Sponsor> list = session.selectList("sponsorMapper.selectComple", sPage);
+		return (ArrayList<Sponsor>)list;
+	}
+
+	public int selectListCount(String flag) {
+		int result = 0;
+		if(flag.equals("p"))
+		 result = session.selectOne("sponsorMapper.selectListCountP");
+		else result = session.selectOne("sponsorMapper.selectListCountC");
+		return result;
+	}
+
+	public int selectListCount(HashMap<String, Object> key) {
+		return session.selectOne("sponsorMapper.selectListCountSelect", key);
+	}
+
+	public void updateSponsorComplete(int sNum) {
+		session.update("sponsorMapper.updateComplete", sNum);
+	}
 	
 	
 	

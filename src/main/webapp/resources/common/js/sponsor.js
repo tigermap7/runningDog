@@ -49,8 +49,8 @@ function CopyUrlToClipboard(num) {
 }
 
 function snsGo(e, id, title, summary) {
-	//var url = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
-//	var url = "http://127.0.0.1:9392/runningdog/";
+	var url = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
+
 	//$("meta[property='og\\:title']").attr("content", title );
     //$("meta[property='og\\:url']").attr("content", url );                    
     //$("meta[property='og\\:description']").attr("content", summary );
@@ -66,7 +66,7 @@ function snsGo(e, id, title, summary) {
 	
 	switch(e) {
 	case 1 : break; //네이버
-	case 2 : break; //카카오톡
+	case 2 : Kakao.Link.sendScrap({requestUrl: url,}); break; //카카오톡
 	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break;
 	case 4 : loc = 'http://www.twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break; //트위터
 	}
@@ -133,6 +133,18 @@ function checkAll(){
 	}
 }
 
+/* 개별 선택 체크시 전체삭제 체크가 풀어지는거 */
+$("input[name=checkDel]").on("click", function(){
+	if($("input[name=checkAll]:checked")) {
+		$("input[name=checkAll]").prop("checked", false);
+	}
+	/* 개별 선택 체크가 모두 체크됬을 경우 전체 삭제 체크 되게 하기 */
+	if($("input[name=checkDel]:checked").length == $("input[name=checkDel]").length){
+		$("input[name=checkAll]").prop("checked", true);
+	}
+});
+
+//삭제
 function deleteAction(page){
 	var page = page;
 	var checkRow = "";
@@ -152,10 +164,27 @@ function deleteAction(page){
 		location.href = "sdelete.ad?checkRow=" + checkRow + "&page=" + page;
 }
 
+//분류 없으면 알림
 $(function(){
-	$("[name='seld']").on("click", function(){
+	$("#seld").on("click", function(){
 		if($("select[name='selected'] option:selected").val().length == 0) {
 			alert("분류를 선택해주세요");
+			return false;
+		}
+	//공백만 입력하고 검색할 때
+	var keyword = $.trim($("input[name=keyword]").val());
+		if(keyword == "") {
+			alert("공백만 입력은 할 수 없습니다.");
+			return false;
+		}
+	});
+});	
+
+//썸네일 알림
+$(function(){
+	$("#cucu").on("click", function(){
+		if($("input[name='upfile']").val().length == 0) {
+			alert("썸네일을 선택해주세요");
 			return false;
 		}
 	});
@@ -180,16 +209,6 @@ function showFileSelect(snum) {
 		url: 'sfileDel.ad',
 		success: function(){
 			console.log("파일 삭제 성공");
-			
-//			var editor = document.getElementById("editor");
-//			var inof = document.getElementById("of");
-//			var inrf = document.getElementById("rf");
-//			
-//			editor.removeChild(inof);
-//			editor.removeChild(inrf);
-//			
-//			editor.addChild('<input type="hidden" value="null" name="sRename">');
-//			editor.addChild('<input type="hidden" value="null" name="sOriginal">');
 			
 			$("input[name=sOriginal]").attr("value", "null");
 			$("input[name=sOriginal]").attr("value", "null");
