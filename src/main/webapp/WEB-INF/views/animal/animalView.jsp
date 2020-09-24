@@ -68,7 +68,7 @@
                                             </tr>
                                             <tr>
                                                 <th>성별</th>
-                                                <td>${ animal.sexCd }</td>
+                                                <td>${ animal.sexCd eq 'F'? "여/女" : "남/男" }</td>
                                                 <th>중성화 여부</th>
                                                 <td>${ animal.neuterYn }</td>
                                             </tr>
@@ -179,10 +179,26 @@
                         <!-- 상세 끝 -->
                     
                         <!-- 버튼 -->
+                        
+                        <c:url var = "alistMove" value= "animalList.do">
+							<c:param name="pageNo" value="${ animal.pageNo }"/>
+						</c:url>
+						<c:url var="animalNext" value="animalNext.do">
+							<c:param name="desertionNo" value="${ animal.desertionNo }"/>
+                            <c:param name="searchFiled" value="${ searchFiled }" />
+							<c:param name="searchValue" value="${ searchValue }" />
+						</c:url>
+						<c:url var="animalPrev" value="animalPrev.do">
+							<c:param name="desertionNo" value="${ animal.desertionNo }"/>
+                            <c:param name="searchFiled" value="${ searchFiled }" />
+							<c:param name="searchValue" value="${ searchValue }" />
+						</c:url>
+                        
+                        
                         <div class="viewBtn-wrap">
-                            <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                            <button class="listBtn"><i class="xi-rotate-left"></i> 목록</button>
-                            <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
+                            <button class="nextBtn" onclick="location='${ animalPrev }'" ><i class="xi-angle-left-min"></i> 이전</button>
+                            <button class="listBtn" onclick="location='${ alistMove }'" ><i class="xi-rotate-left"></i> 목록</button>
+                            <button class="prevBtn" onclick="location='${ animalNext }'" >다음 <i class="xi-angle-right-min"></i></button>
                         </div>
                         <!-- 버튼 끝 -->
                     </div>

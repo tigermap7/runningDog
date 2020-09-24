@@ -12,7 +12,11 @@ public interface AnimalService {
 	
 	Animal selectOne(String desertionNo);
 
-	int selectListCount();
+	int selectListCount(Animal animal);
 
 	void updateReadCount(String desertionNo);
+
+	String selectNext(Animal animal);
+
+	String selectPrev(Animal animal);
 }

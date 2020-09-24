@@ -70,7 +70,7 @@
         });
     });
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 function updateTotalUnread() {
 	var myChatList = ${sessionScope.myChatList};
 	console.log(myChatList);
@@ -99,4 +99,4 @@ function updateTotalUnread() {
 	});
 };
 setTimeout(updateTotalUnread, 10);
-</script>
+</script> -->

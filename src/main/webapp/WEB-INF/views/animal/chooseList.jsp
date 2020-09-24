@@ -44,7 +44,7 @@
                       	 <div class="search_wrap" id ="search">
                             <input type="hidden" name="dCategory" value="${ dCategory }">
                             <input type="hidden" name="dLocal" value="${ dLocal }">
-                            <select name="searchFiled" id="searchS">
+                            <select name="searchFiled" id="searchS">t
                             <!-- 삼항연산자로 selected 여부 구분 -->
                                 <option value="d_title" class="fontColor-dark" ${pageVO.searchFiled eq"d_title"?"selected":""}>제목</option>
                                 <option value="d_writer" class="fontColor-dark" ${pageVO.searchFiled eq"d_writer"?"selected":""}>임시보호자</option>
@@ -70,21 +70,20 @@
 									<c:param name="dLocal" value="${ dLocal }"/>
                                  	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
-									<c:param name="dCategory" value="${ d.dCategory }"/>
 								</c:url>
 								
                                 <form action="" name="dCategory">
                                     <a ${dCategory eq "d"?'class="active"' : "" }href="${dCate}&dCategory=d">강아지</a>
                                     <a ${dCategory eq "c"?'class="active"' : "" }href="${dCate}&dCategory=c">고양이</a>
                                     <a ${dCategory eq "e"?'class="active"' : "" }href="${dCate}&dCategory=e">기타</a>
-                                    <a ${empty dCategory ?'class="active"' : "" }href="${dCate}">전체</a>
+                                    <a ${empty dCategory ?'class="active"' : "" }href="dboardList.do">전체</a>
                                     
                                  </form>
                                 </div>
 	                            <form action="dboardList.do" name="dLocal" class="location">
 	                            <input type="hidden" name="dCategory" value="${ dCategory }">
 									<select name="dLocal" class="LocationSelect"   onchange=this.form.submit()>
-	                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체보기</option>
+	                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체지역</option>
 	                                    <option value="0" ${ dLocal eq"0"?"selected" :"" }>서울시</option>
 	                                    <option value="1" ${ dLocal eq"1"?"selected" :"" }>인천시</option>
 	                                    <option value="2" ${ dLocal eq"2"?"selected" :"" }>대전시</option>
@@ -190,7 +189,7 @@
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
 											<c:param name="dLocal" value="${ dLocal }"/>
-											<c:param name="dCategory" value="${ d.dCategory }"/>
+											<c:param name="dCategory" value="${ dCategory }"/>
 										</c:url>
 										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
@@ -201,7 +200,7 @@
 												<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 												<c:param name="searchValue" value="${pageVO.searchValue }"/>
 												<c:param name="dLocal" value="${ dLocal }"/>
-												<c:param name="dCategory" value="${ d.dCategory }"/>
+												<c:param name="dCategory" value="${ dCategory }"/>
 											</c:url>
 										<c:choose>
 											<c:when test="${i eq pageVO.pageNo }">
@@ -219,7 +218,7 @@
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
 											<c:param name="dLocal" value="${ dLocal }"/>
-											<c:param name="dCategory" value="${ d.dCategory }"/>
+											<c:param name="dCategory" value="${ dCategory }"/>
 										</c:url>
 										<a href="${dl3 }"><i
 											class="xi-angle-right"></i></a>

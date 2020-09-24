@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -11,6 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.runningdog.common.ImageUtil.Image;
@@ -41,7 +45,7 @@ public class DboardController {
 
 	@RequestMapping("dinsertPage.do")
 	public String moveDinsertPage() {
-		return "animal/chooseAdminWrite";
+		return "animal/chooseWrite";
 	}
 	
 	@RequestMapping(value = "dinsert.do", method = RequestMethod.POST)
@@ -154,7 +158,36 @@ public class DboardController {
 		}
 		return url;
 	}
-
+	
+	@RequestMapping(value="dboardNew4.do" , method = RequestMethod.POST)
+	@ResponseBody
+	public String selectDboardNew4(HttpServletResponse response) throws IOException{
+		ArrayList<Dboard> list = dboardService.selectNew4();
+		
+		JSONObject sendJson = new JSONObject();
+		
+		JSONArray jarr = new JSONArray();
+		
+		for(Dboard dboard : list) {
+			JSONObject job = new JSONObject();
+			job.put("dNum", dboard.getdNum());
+			job.put("dWriter", URLEncoder.encode(dboard.getdWriter(), "utf-8"));
+			job.put("dTitle", URLEncoder.encode(dboard.getdTitle(),"utf-8"));
+			job.put("dFindDate", dboard.getdFindDate());
+			job.put("dFindLocal",URLEncoder.encode(dboard.getdFindLocal(),"utf-8"));
+			job.put("dDate", dboard.getdDate());
+			job.put("listImage", dboard.getlistImage());
+		
+			jarr.add(job);
+		}
+		//전송용 객체에 배열 저장
+		sendJson.put("list", jarr);
+		
+		
+		return sendJson.toJSONString();
+		
+	}
+	
 	@RequestMapping("dboardView.do")
 	public String selectOne(@RequestParam("dNum") int dNum,Model model,HttpServletRequest request,HttpServletResponse response) {
 				
@@ -205,7 +238,9 @@ public class DboardController {
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("searchFiled", dboard.getSearchFiled());
 		model.addAttribute("searchValue", dboard.getSearchValue());
+		logger.info(msg);
 		String url = "";
+		
 		if (dboard != null) {
 			model.addAttribute("dboard", dboard);
 			url = "animal/chooseView";
@@ -357,7 +392,7 @@ public class DboardController {
     }
 	
 	@RequestMapping("dboardnext.do")
-	public String dboardNext(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+	public String dboardNext(HttpServletRequest request,Model model, Dboard dboard) {
 		//다음글 번호조회
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
@@ -390,7 +425,7 @@ public class DboardController {
 	}
 	
 	@RequestMapping("dboardprev.do")
-	public String dboardPrev(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+	public String dboardPrev(HttpServletRequest request,Model model, Dboard dboard) {
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
 		dboard.setdCategory(request.getParameter("dCategory"));

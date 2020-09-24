@@ -32,26 +32,6 @@
 		<result column="desertion_no" property="desertionNo"/>
 	</resultMap>
 	
-	<resultMap type="Dboard" id="resultNew4">
-		<result column="d_num" property="dNum" />
-		<result column="d_title" property="dTitle" />
-		<result column="d_count" property="dCount" />
-	</resultMap>
-	
-	
-	<select id="selectNew4" resultMap="resultNew4">
-		
-		SELECT * 
-		FROM (SELECT ROWNUM RNUM, BOARD_NUM, BOARD_TITLE, BOARD_READCOUNT  
-			  FROM(SELECT * 
-					FROM BOARD 
-					WHERE BOARD_LEVEL = 0 
-					ORDER BY BOARD_READCOUNT DESC)) 
-		<![CDATA[ 
-		WHERE RNUM >=1 AND RNUM <=4
-		]]>
-	</select>
-	
 	
 	
 	<select id="selectList" parameterType="Animal" resultMap="resultAnimal">
@@ -61,6 +41,9 @@
 					 NOTICE_SDT, OFFICETEL, ORG_NM, POPFILE, PROCESS_STATE, SEX_CD, SPECIAL_MARK, WEIGHT, A_COUNT
 			  FROM (SELECT *
 			  		FROM ANIMAL WHERE 1=1
+			  		<if test="searchFiled != null and searchFiled != ''">
+					AND ${searchFiled} LIKE '%' || #{searchValue} || '%'	
+					</if>
 					ORDER BY TO_NUMBER(DESERTION_NO) DESC))
 		WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}
 	</select>
@@ -69,6 +52,9 @@
 		SELECT COUNT(*)
 		FROM ANIMAL
 		WHERE 1=1
+		<if test="searchFiled != null and searchFiled != ''">
+			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'	
+		</if>
 	</select>
 	
 	
@@ -76,7 +62,30 @@
 		SELECT *
 		FROM ANIMAL
 		WHERE DESERTION_NO = #{ desertionNo }
+	</select>
 	
+	<select id="selectNext" parameterType="Animal" resultType="string">
+		SELECT NVL(MIN(DESERTION_NO),#{desertionNo})
+		FROM ANIMAL
+		WHERE 1=1
+		<if test="searchFiled != null and searchFiled !=''">
+			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'
+		</if>
+		<![CDATA[
+		AND DESERTION_NO > #{ desertionNo }
+		]]>
+	</select>
+	
+	<select id="selectPrev" parameterType="Animal" resultType="string">
+		SELECT NVL(MIN(DESERTION_NO),#{desertionNo})
+		FROM ANIMAL
+		WHERE 1=1
+		<if test="searchFiled != null and searchFiled !=''">
+			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'
+		</if>
+		<![CDATA[
+		AND DESERTION_NO > #{ desertionNo }
+		]]>
 	</select>
 	
 	<insert id="insertAnimal" parameterType="Animal">

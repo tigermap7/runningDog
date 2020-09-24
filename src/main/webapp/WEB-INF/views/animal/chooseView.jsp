@@ -91,8 +91,7 @@ $(function() {
                                             <tr>
                                                 <th>성별</th>
                                                 <td>
-                                                ${ dboard.dGender eq "m"?"남/男" : "" }
-                                                ${ dboard.dGender eq "f"?"여/女" : "" }
+                                                ${ dboard.dGender eq "m"?"남/男" : "여/女" }
 												</td>
                                                 <th>분양 여부</th>
                                                 <td>

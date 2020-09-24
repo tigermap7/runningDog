@@ -31,14 +31,24 @@ public class AnimalServiceImpl implements AnimalService {
 
 
 	@Override
-	public int selectListCount() {
-		return animalDao.selectListCount();
+	public int selectListCount(Animal animal) {
+		return animalDao.selectListCount(animal);
 	}
 
 	@Override
 	public void updateReadCount(String desertionNo) {
 		animalDao.updateReadCount(desertionNo);
 		
+	}
+
+	@Override
+	public String selectNext(Animal animal) {
+		return animalDao.selectNext(animal);
+	}
+
+	@Override
+	public String selectPrev(Animal animal) {
+		return animalDao.selectPrev(animal);
 	}
 	
 }

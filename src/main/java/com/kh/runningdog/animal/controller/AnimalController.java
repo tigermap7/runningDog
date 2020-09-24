@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -59,12 +60,14 @@ public class AnimalController {
 
 	@RequestMapping("animalList.do")
 	public String moveAlistPage(HttpServletRequest request, Model model, @ModelAttribute("Animal") Animal animal) {
-
 		
-		int totalCount = animalService.selectListCount();
+		animal.setSearchFiled(request.getParameter("searchFiled"));
+		animal.setSearchValue(request.getParameter("searchValue"));
+		
+		int totalCount = animalService.selectListCount(animal);
 		
 		
-		animal.setTotalCount(1000,12); // 페이징 처리를 위한 setter 호출
+		animal.setTotalCount(totalCount,12); // 페이징 처리를 위한 setter 호출
 		
 		
 		logger.info("PageSize // 한 페이지에 보여줄 게시글 수 : " + animal.getPageSize());
@@ -81,7 +84,6 @@ public class AnimalController {
 		
 		
 		ArrayList<Animal> animalList = animalService.selectList(animal);
-		
 		
 		model.addAttribute("pageVO" , animal);
 		model.addAttribute("animalList" , animalList);
@@ -109,55 +111,113 @@ public class AnimalController {
 		
 		Cookie viewCookie = null;
 		
-		//cookies가 null이 아닐경우 이름 만들기
-				if(cookies != null && cookies.length > 0) {
-					for (int i = 0; i < cookies.length; i++) {
-					// Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
-						if(cookies[i].getName().equals("cookie" + desertionNo)) {
-							logger.info("처음 쿠키가 생성한 뒤에 들어옴.");
-							viewCookie = cookies[i];
-						}
-					}
+		// cookies가 null이 아닐경우 이름 만들기
+		if (cookies != null && cookies.length > 0) {
+			for (int i = 0; i < cookies.length; i++) {
+				// Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌
+				if (cookies[i].getName().equals("cookie" + desertionNo)) {
+					logger.info("처음 쿠키가 생성한 뒤에 들어옴.");
+					viewCookie = cookies[i];
 				}
+			}
+		}
 				
-				// 만일 viewCookie 가 null 일 경우 쿠키를 생성해서 조회수 증가 처리함
-				if (viewCookie == null) {
-					logger.info("cookie 없음");
+		// 만일 viewCookie 가 null 일 경우 쿠키를 생성해서 조회수 증가 처리함
+		if (viewCookie == null) {
+			logger.info("cookie 없음");
 
-					// 쿠키 생성(이름 , 값)
+			// 쿠키 생성(이름 , 값)
 
-					Cookie newCookie = new Cookie("cookie" + desertionNo, "|" + desertionNo + "|");
-					// 쿠키추가
-					response.addCookie(newCookie);
-					// 쿠키를 추가 시키고 조회수 증가처리
-					animalService.updateReadCount(desertionNo); // 조회수 1 증가
-				} else {
-					logger.info("cookie 있음");
-					// 쿠키값을 받아옴
-					String value = viewCookie.getValue();
-					logger.info("cookie 값 : " + value);
-				}
-				
-				//조회수 처리 후 게시물에 대한 정보 불러 오기
-				
-				Animal animal = animalService.selectOne(desertionNo);
-				
-				String url = "";
-				
-				if(animal != null) {
-					model.addAttribute("animal", animal);
-					url = "animal/animalView";
-				}else {
-					model.addAttribute("msg" , "게시글 보기 실패");
-					model.addAttribute("url" , "animalList.do");
-					url = "common/errorDboard";
-				}
+			Cookie newCookie = new Cookie("cookie" + desertionNo, "|" + desertionNo + "|");
+			// 쿠키추가
+			response.addCookie(newCookie);
+			// 쿠키를 추가 시키고 조회수 증가처리
+			animalService.updateReadCount(desertionNo); // 조회수 1 증가
+		} else {
+			logger.info("cookie 있음");
+			// 쿠키값을 받아옴
+			String value = viewCookie.getValue();
+			logger.info("cookie 값 : " + value);
+		}
+
+		// 조회수 처리 후 게시물에 대한 정보 불러 오기
+
+		Animal animal = animalService.selectOne(desertionNo);
+		animal.setSearchFiled(request.getParameter("searchFiled"));
+		animal.setSearchValue(request.getParameter("searchValue"));
+		
+		model.addAttribute("searchFiled", animal.getSearchFiled());
+		model.addAttribute("searchValue", animal.getSearchValue());
+		
+		String url = "";
+
+		if (animal != null) {
+			model.addAttribute("animal", animal);
+			url = "animal/animalView";
+		} else {
+			model.addAttribute("msg", "게시글 보기 실패");
+			model.addAttribute("url", "animalList.do");
+			url = "common/errorDboard";
+		}
+		return url;
+	}
+	
+	@RequestMapping("animalNext.do")
+	public String animalNext(HttpServletRequest request, Model model, Animal animal) {
+		
+		animal.setSearchFiled(request.getParameter("searchFiled"));
+		animal.setSearchValue(request.getParameter("searchValue"));
+		
+		String animalNextNum = animalService.selectNext(animal);
+		
+		Animal animalNext = animalService.selectOne(animalNextNum);
+		
+		model.addAttribute("searchFiled" , animal.getSearchFiled());
+		model.addAttribute("searchValue", animal.getSearchValue());
+		
+		String url="";
+		if( !(animal.getDesertionNo().equals(animalNextNum))) {
+			model.addAttribute("animal", animalNext);
+			url = "animal/animalView";
+		}else {
+			model.addAttribute("animal" , animal);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "javascript:history.back()");
+			url = "common/errorDboard";
+		}
+		
 		return url;
 	}
 	
 	
+	@RequestMapping("animalPrev.do")
+	public String animalPrev(HttpServletRequest request, Model model, Animal animal) {
+		
+		animal.setSearchFiled(request.getParameter("searchFiled"));
+		animal.setSearchValue(request.getParameter("searchValue"));
+		
+		String animalPrevNum = animalService.selectPrev(animal);
+		
+		Animal animalPrev = animalService.selectOne(animalPrevNum);
+		
+		model.addAttribute("searchFiled" , animal.getSearchFiled());
+		model.addAttribute("searchValue", animal.getSearchValue());
+		
+		String url="";
+		if( !(animal.getDesertionNo().equals(animalPrevNum))) {
+			model.addAttribute("animal", animalPrev);
+			url = "animal/animalView";
+		}else {
+			model.addAttribute("animal" , animal);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "javascript:history.back()");
+			url = "common/errorDboard";
+		}
+		
+		return url;
+	}
 	
-	   
+	
 	   public void animalInsert(HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
 
 	      Date today = new Date();        
@@ -171,7 +231,6 @@ public class AnimalController {
 	      logger.info("오늘날짜 : " + toDay + "한달 전 날짜 " + beforeMonth);
 	      System.out.println(toDay + beforeMonth);
 
-	      JSONObject sendJSON = new JSONObject();
 	      JSONArray jarr = new JSONArray();
 
 	      try {
@@ -285,8 +344,6 @@ public class AnimalController {
 
 		Node nValue = (Node) nlList.item(0);
 
-//		      if (nValue == null)
-//		         return null;
 		return nValue.getNodeValue();
 	}
 

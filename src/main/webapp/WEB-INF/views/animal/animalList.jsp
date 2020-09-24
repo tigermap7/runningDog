@@ -35,17 +35,15 @@
                     <div class="subContent">
                         <!--서브 검색-->                
                         <div class="search_wrap">
-                            <form action="" name="">
-                            <select>
-                                <option value="" class="fontColor-dark">전체</option>
-                                <option value="" class="fontColor-dark">유기동물축종</option>
-                                <option value="" class="fontColor-dark">나이</option>
-                                <option value="" class="fontColor-dark">지역</option>
-                                <option value="" class="fontColor-dark">보호센터</option>
+                            <form action="animalList.do" name="">
+                            <select name="searchFiled" id = "searchS">
+                                <option value="kind_cd" class="fontColor-dark" ${ pageVO.searchFiled eq "kindCd" ? "selected":"" }>견종</option>
+                                <option value="care_addr" class="fontColor-dark" ${ pageVO.searchFiled eq "careAddr" ? "selected" : ""}>지역</option>
+                                <option value="care_nm" class="fontColor-dark"${ pageVO.searchFiled eq "careNm" ? "selected" : "" }>보호센터</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" placeholder="작은 천사들을 검색해주세요.">
-                                <button onclick="#none" class="xi-search"></button>
+                                <input type="text" id="searchI" name="searchValue" value="${ pageVO.searchValue }" placeholder="작은 천사들을 검색해주세요.">
+                                <button type="submit" value="SEARCH" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
@@ -55,10 +53,10 @@
                             <h4>전체 ${ totalCount }마리 '작은 천사'</h4>
                             <div>
                                 <div>
-                                <form action="" name="">
+                                <!-- <form action="" name="">
                                     <a class="active" href="#none">전체</a>
                                     <a href="insertAnimal.do">강아지</a>
-                                    <a href="#none">고양이</a>
+                                    <a href="#none">고양이</a> -->
                                 </form>
                                 </div>
                             </div>
@@ -72,6 +70,8 @@
                                 	<c:url var="animalView" value="animalView.do">
                                 		<c:param name="pageNo" value="${ pageVO.pageNo}"/>
                                 		<c:param name="desertionNo" value="${ a.desertionNo }"/>
+                                		<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
+                                		<c:param name="searchValue" value="${ pageVO.searchValue }"/>
                                 	</c:url>
                                 
                                 <li class="grid-item chooseIcon" onclick="location='${ animalView }'">
@@ -85,7 +85,9 @@
                                         나이 : ${ a.age }<br/>
                                         보호센터 : ${ a.careNm }<br/>
                                         지역 : ${ a.careAddr }
-                                        <span>공고시작일 : ${a.noticeSdt }</span>
+                                        <span>공고시작일 : <fmt:parseDate var="animalDate" value="${a.noticeSdt}" pattern="yyyyMMdd"/>
+                                                			<fmt:formatDate value="${animalDate}" pattern="yyyy-MM-dd"/>
+                                                	</span>
                                     </p>
                                 </li>
                                </c:forEach>

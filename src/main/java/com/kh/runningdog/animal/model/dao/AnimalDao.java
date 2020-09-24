@@ -35,13 +35,21 @@ public class AnimalDao {
 		return session.selectOne("animalMapper.selectOne", desertionNo);
 	}
 
-	public int selectListCount() {
-		return session.selectOne("animalMapper.selectListCount");
+	public int selectListCount(Animal animal) {
+		return session.selectOne("animalMapper.selectListCount", animal);
 	}
 
 	public void updateReadCount(String desertionNo) {
 		session.update("animalMapper.updateReadCount",desertionNo);
 		
+	}
+
+	public String selectNext(Animal animal) {
+		return session.selectOne("animalMapper.selectNext", animal);
+	}
+
+	public String selectPrev(Animal animal) {
+		return session.selectOne("animalMapper.selectPrev", animal);
 	}
 
 }
