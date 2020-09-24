@@ -345,14 +345,18 @@
 }
 .leftMenu_wrap .leftProfile {
     text-align: center;
+    overflow: hidden;
 }
 .leftMenu_wrap .leftProfile > div {
-    padding: 2.5rem 2.5rem 1.563rem;
+	margin: 2.5rem auto 1.563rem;
+    height: 180px;
+    width: 180px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid #ccc;
 }
 .leftMenu_wrap .leftProfile > div img {
     width: 100%;
-    border-radius: 50%;
-    border: 2px solid #ccc;
 }
 .leftMenu_wrap .leftProfile h3 {
     font-size: 1.25rem;

@@ -39,6 +39,6 @@ function testAPI() { // Testing Graph API after login.  See statusChangeCallback
 	FB.api('/me?fields=id,name,email', function(response) {
 		console.log('Successful login for: ' + response.name);
 		document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-		location.href = "facebookLogin.do?name=" + response.name + "&email=" + response.email
+		location.href = "facebookLogin.do?email=" + response.email
 	});
 }

@@ -66,7 +66,7 @@
             	<c:if test="${ empty sessionScope.loginMember }">
                 <li><a class="hover_line01" href="login.do">로그인</a></li>
                 <li><a class="hover_line01" href="join.do">회원가입</a></li>
-            	</c:if>
+                </c:if>
             </ul>
         </div>
     </div>

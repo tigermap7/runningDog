@@ -375,6 +375,7 @@
 }
 .InfoModify_table tbody tr td.profilImage {
 	line-height: 30px;
+	word-break: break-all;
 }
 .InfoModify_table tbody tr td.profilImage label {
     margin-left: 1rem;

@@ -140,7 +140,9 @@
                                         <td class="profilImage">
                                        	 	<c:if test="${ !empty loginMember.originProfile }">
 											${ loginMember.originProfile } &nbsp;
+											<c:if test="${ loginMember.loginType ne 'kakao' }">
 											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+											</c:if>
 											</c:if>
 											<c:if test="${ empty loginMember.originProfile }">
 											<input type="file" name="profilImage" title="프로필 사진"/>

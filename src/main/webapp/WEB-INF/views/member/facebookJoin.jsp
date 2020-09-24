@@ -32,12 +32,17 @@
                         <div class="loginInfo">
                             <div>
                                 <span><i class="xi-mail-o"></i></span>
-                                <span><input type="email" name="userId" title="아이디(이메일)" id="userIdChk" class="w100p" placeholder="아이디(이메일)" value="${ param.email }" readonly/></span>
+                                <span><input type="email" name="userId" title="아이디(이메일)" id="userIdChk" class="w100p" placeholder="아이디(이메일)" value="${ param.email }${ param.id }" readonly/></span>
                             </div>
                             <div>
                                 <span><i class="xi-profile-o"></i></span>
                                 <span>
+                            		<c:if test="${param.profile_image eq null}">
 	                                <input type="file" name="profilImage" title="프로필 사진" class="w100p"/>
+                            		</c:if>
+                            		<c:if test="${param.profile_image ne null}">
+									${param.profile_image}
+                            		</c:if>
                                 </span>
                             </div>
                             <div>
