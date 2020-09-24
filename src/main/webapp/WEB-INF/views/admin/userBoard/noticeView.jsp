@@ -82,7 +82,7 @@
 				</c:if>
 
 				<div class="view-ctn" style="white-space: pre">
-					<c:out value="${ notice.noticeContent }" />
+					<pre style="background-color: rgba(255, 0, 0, 0);"><c:out value="${ notice.noticeContent }" /></pre>
 				</div>
 
 				<!-- 버튼 -->
