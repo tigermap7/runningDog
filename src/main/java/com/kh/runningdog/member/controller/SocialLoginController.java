@@ -44,45 +44,41 @@ public class SocialLoginController {
 	
 	// 카카오 로그인 컨트롤러
 	@RequestMapping("kakaoLogin.do")
-	public String kakaoLogin(Member member, Model model, @RequestParam("id") String userId, @RequestParam("profile_image") String profileImage, HttpSession session, HttpServletResponse response, SessionStatus status) throws IOException {
+	public String kakaoLogin(Member member, Model model, @RequestParam("id") String userId, @RequestParam("profileImage") String profileImage, HttpSession session, HttpServletResponse response, SessionStatus status) throws IOException {
 
 		logger.info("kakaoLogin run...");
 
-		
 		member.setUserId(userId);
 		Member loginMember = memberService.selectFacebookLogin(member);
 
-        System.out.println("userId : " + userId);
-        System.out.println("profileImage : " + profileImage);
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		
 		String url = null;
+		
+        System.out.println("userId : " + userId);
+        System.out.println("profileImage : " + profileImage);
 		
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
 
 			loginMember.setRenameProfile(profileImage);
 			loginMember.setLoginType("kakao");
+			
 			if(memberService.updatemyinfo(loginMember) > 0) {
-				logger.info("loginMember : " + loginMember);
-				logger.info("로그인 성공");
-				
 				session.setAttribute("loginMember", loginMember);
 				status.setComplete(); // 요청성공, 200 전송
 				url = "main/main";
 			}
 		}else if(loginMember != null && loginMember.getLoginLimit().equals("Y")) {
 			logger.info("로그인 제한된 계정");
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
             out.println("<script>alert('로그인이 제한된 계정입니다.\\n관리자에게 문의주세요.'); history.go(-1);</script>");
             out.flush();
 		}else{
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
             out.println("<script>alert('간편로그인을 하기 위해선 회원가입이 필요합니다.');</script>");
             out.flush();
 			model.addAttribute("userId", userId);
 			model.addAttribute("profileImage", profileImage);
-	        return "member/facebookJoin";
+	        return "member/socialJoin";
 		}
 		logger.info("url : " +url);
 		return url;
@@ -127,7 +123,7 @@ public class SocialLoginController {
             out.println("<script>alert('간편로그인을 하기 위해선 회원가입이 필요합니다.');</script>");
             out.flush();
 			model.addAttribute("userId", userId);
-	        return "member/facebookJoin";
+	        return "member/socialJoin";
 		}
 		return url;
 	}

@@ -11,46 +11,7 @@
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v8.0&appId=1200941690288936&autoLogAppEvents=1" nonce="T57R8Bl1"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="resources/common/js/facebookLogin.js"></script>
-<script>
-function kakaoLogout() {
-
-   		console.log('카카오 인증 액세스 토큰이 존재합니다.', Kakao.Auth.getAccessToken())
-	
-     			console.log('로그아웃 되었습니다', Kakao.Auth.getAccessToken());
-	console.log('로그아웃 실행 중.')
-	if (Kakao.Auth.getAccessToken()) {
-   		console.log('카카오 인증 액세스 토큰이 존재합니다.', Kakao.Auth.getAccessToken())
-   		Kakao.Auth.logout(() => {
-     			console.log('로그아웃 되었습니다', Kakao.Auth.getAccessToken());
-     			this.setState({
-       		isLogin: false
-     		})        
-   		});
-	}
-}
-
-		Kakao.init('9a77ae46974a9beb61d8452f66900b46');
-	function loginWithKakao() {		
-		//Kakao.Auth.setAccessToken(USER_ACCESS_TOKEN);
-		
-	    // 로그인 성공시, API를 호출합니다.
-	    Kakao.API.request({
-			url: '/v2/user/me',
-			success: function(res) {
-		        console.log(JSON.stringify(res.kaccount_email));
-		        console.log(JSON.stringify(res.id));
-		        console.log(JSON.stringify(res.properties.profile_image));
-		        console.log(JSON.stringify(res.properties.nickname));
-		        location.href="kakaoLogin.do?id=" + res.id + "&profile_image=" + res.properties.profile_image;
-			},
-			fail: function(error) {
-				alert('사용자 토큰 만료. 다시 발급받으세요.');
-				//alert(JSON.stringify(error));
-			}
-		});
-	    
-	}
-</script>
+<script src="resources/common/js/kakaoLogin.js"></script>
 
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
@@ -101,6 +62,7 @@ function kakaoLogout() {
 							<li onclick="location='#none'" class="nLogin"><span><i class="xi-naver"></i></span>네이버 로그인</li>
 							<li id="status" scope="public_profile,email" onclick="javascript:facebookLogin();" class="fLogin"><span><i class="xi-facebook"></i></span>페이스북 로그인</li>
 							<li onclick="javascript:kakaoLogout()"><a class="hover_line01" href="#none">로그아웃</a></li>
+							<li onclick="javascript:unlinkApp()"><a class="hover_line01" href="#none">연결끊기</a></li>
             			</ul>
 					</div>
 				</form>

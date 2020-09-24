@@ -63,7 +63,7 @@
 	</update>
 	
 	<update id="updatemyinfo" parameterType="Member">
-		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile}, login_type = #{loginType} where user_id = #{userId}
+		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile}, last_access_date = #{lastAccessDate}, login_type = #{loginType} where user_id = #{userId}
 	</update>
 	
 	<delete id="deleteMember" parameterType="Member">

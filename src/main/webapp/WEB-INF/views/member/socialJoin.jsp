@@ -37,11 +37,11 @@
                             <div>
                                 <span><i class="xi-profile-o"></i></span>
                                 <span>
-                            		<c:if test="${param.profile_image eq null}">
+                            		<c:if test="${param.profileImage eq null}">
 	                                <input type="file" name="profilImage" title="프로필 사진" class="w100p"/>
                             		</c:if>
-                            		<c:if test="${param.profile_image ne null}">
-									${param.profile_image}
+                            		<c:if test="${param.profileImage ne null}">
+									카카오톡 프로필 사진을 사용합니다.
                             		</c:if>
                                 </span>
                             </div>
