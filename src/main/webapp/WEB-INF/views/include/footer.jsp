@@ -94,9 +94,9 @@ function updateTotalUnread() {
 					+ errorthrown);
 		},
 		complete: function() {
-		      setTimeout(updateTotalUnread, 60000);
+		      setTimeout(updateTotalUnread, 30000);
 	    }
 	});
 };
-setTimeout(updateTotalUnread, 10);
+setTimeout(updateTotalUnread, 1000);
 </script>
