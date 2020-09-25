@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,68 +28,77 @@ public class AdminVolunteerController {
 	
 	//자원봉사게시판 전체목록 출력(관리자용)
 		@RequestMapping("vlist.ad")
-		public ModelAndView selectListVolunteerAdmin(HttpServletRequest request, ModelAndView mv) {
-			int currentPage = 1;
-			if(request.getParameter("page") != null) {
-				currentPage = Integer.parseInt(request.getParameter("page"));
-			}
-			//한페이지당 출력할 목록 갯수 지정
-			int limit = 6;
-			//전체 목록 갯수 조회
-			int listCount = volunteerService.getListCount();
+		public String selectListVolunteerAdmin(HttpServletRequest request, Model model, @ModelAttribute("Volunteer") Volunteer volunteer) {
+			volunteer.setSearchFiled(request.getParameter("searchFiled"));
+			volunteer.setSearchValue(request.getParameter("searchValue"));
+			volunteer.setVolche(request.getParameter("volche"));
+			logger.info("SearchFiled : " + volunteer.getSearchFiled());
+			logger.info("SearchValue : " + volunteer.getSearchValue());
+			logger.info("SearchValue : " + request.getParameter("volche"));
+			int totalCount = volunteerService.selectListCount(volunteer); // 게시물 총갯수를 구한다
 			
-			//검색기능
-			String type = request.getParameter("type");
-			String keyword = request.getParameter("keyword");
-			//현재페이지에 출력할 게시글 목록 조회
-			ArrayList<Volunteer> list = volunteerService.selectList(currentPage, limit, keyword, type);
 			
-			// 뷰에 출력될 총 페이지 수 계산 : 게시글이 1개이면 1페이지임
-			int maxPage = (int) ((double) listCount / limit + 0.9);
-			// 현재 페이지가 속한 그룹의 시작 페이지 수 지정
-			// 예 : currentPage 가 35이면 페이지그룹이 10일 때 시작페이지는 31이 됨
-			int startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
-			int endPage = startPage + limit - 1;
-			if (maxPage < endPage) {
-				endPage = maxPage;
+			//게시물 총횟수랑 첫 페이지에 몇개의 리스트를 보여줄지 체크,
+			//pageVO에 makePaing 메소드에 페이지리스트 갯수를 넣어줌
+			volunteer.setTotalCount(totalCount,6); // 페이징 처리를 위한 setter 호출
+
+			model.addAttribute("pageVO", volunteer);
+			logger.info("PageSize // 한 페이지에 보여줄 게시글 수 : " + volunteer.getPageSize());
+			logger.info("PageNo // 페이지 번호 : " + volunteer.getPageNo());
+			logger.info("StartRowNo //조회 시작 row 번호 : " + volunteer.getStartRowNo());
+			logger.info("EndRowNo //조회 마지막 now 번호 : " + volunteer.getEndRowNo());
+			logger.info("FirstPageNo // 첫 번째 페이지 번호 : " + volunteer.getFirstPageNo());
+			logger.info("FinalPageNo // 마지막 페이지 번호 : " + volunteer.getFinalPageNo());
+			logger.info("PrevPageNo // 이전 페이지 번호 : " + volunteer.getPrevPageNo());
+			logger.info("NextPageNo // 다음 페이지 번호 : " + volunteer.getNextPageNo());
+			logger.info("StartPageNo // 시작 페이지 (페이징 네비 기준) : " + volunteer.getStartPageNo());
+			logger.info("EndPageNo // 끝 페이지 (페이징 네비 기준) : " + volunteer.getEndPageNo());
+			logger.info("totalCount // 게시 글 전체 수 : " + totalCount);
+
+			ArrayList<Volunteer> Vlist = volunteerService.selectList(volunteer);
+			
+			model.addAttribute("volche", volunteer.getVolche());
+			model.addAttribute("totalCount", totalCount);
+			model.addAttribute("Vlist", Vlist);
+			// 리턴은 한번 하기 위해 url 값 받고 리턴
+			String url = " ";
+			if (totalCount > 0) {
+				url = "admin/userBoard/serviceList";
+			} else {
+				model.addAttribute("msg", "검색 결과가 존재 하지 않습니다");
+				model.addAttribute("url", "vlist.ad");
+				url = "common/errorDboard";
 			}
-			// 뷰 지정해서 내보내기
-			 if (list.size() > 0) {
-				request.setAttribute("list", list);
-				request.setAttribute("currentPage", currentPage);
-				request.setAttribute("maxPage", maxPage);
-				request.setAttribute("startPage", startPage);
-				request.setAttribute("endPage", endPage);
-				request.setAttribute("listCount", listCount);
-						
-				mv.addObject("list", list);
-				mv.setViewName("admin/userBoard/serviceList");
-			 }
-			 else {
-				 mv.addObject("message", currentPage + "페이지에 대한 목록 조회 실패!");
-				 mv.setViewName("common/error");
-			 }
-			return mv;
+			
+			return url;
 		}
 		//상세보기 페이지 출력(관리자용)
 		@RequestMapping(value = "vdetail.ad")
-		public String detailVolunteerAdmin(HttpServletRequest request, Model model) {
-			int volno = Integer.parseInt(request.getParameter("volno"));
-			int currentPage = 1;
-			if(request.getParameter("page") != null) {
-				currentPage = Integer.parseInt(request.getParameter("page"));
-			}
-			
+		public String detailVolunteerAdmin(HttpServletRequest request, Model model, @RequestParam("volno") int volno) {
 			Volunteer volunteer = volunteerService.selectVolunteer(volno);
 			
+			volunteer.setSearchFiled(request.getParameter("searchFiled"));
+			volunteer.setSearchValue(request.getParameter("searchValue"));
+			volunteer.setVolche(request.getParameter("volche"));
+			
+			
+			model.addAttribute("volche", volunteer.getVolche());
+			model.addAttribute("searchFiled", volunteer.getSearchFiled());
+			model.addAttribute("searchValue", volunteer.getSearchValue());
+			
+			String url = "";
 			if(volunteer != null) {
 				request.setAttribute("volunteer", volunteer);
-				request.setAttribute("currentPage", currentPage);
-				return "admin/userBoard/serviceView";
+				//request.setAttribute("listCountVreply", listCountVreply);
+				//request.setAttribute("vrlist", vrlist);
+				//request.setAttribute("vreply", vreply);
+				url =  "admin/userBoard/serviceView";
 			}else {
-				model.addAttribute("message", volno + "번 글 상세보기 실패!");
-				return  "common/error";
+				model.addAttribute("msg", "게시글을 볼 수 없습니다.");
+				model.addAttribute("url", "vlist.do");
+				url = "common/errorDboard";
 			}
+			return url;
 		}
 		//글삭제하기(관리자용)
 		@RequestMapping(value="vdelete.ad") 
@@ -97,7 +107,7 @@ public class AdminVolunteerController {
 			String[] checkRow = null;
 			checkRow = request.getParameter("checkRow").split(",");
 
-			
+			String url = "";
 			if(volunteerService.deleteVolunteerAdmin(checkRow) > 0) {
 				for (int i = 1; i < 5; i++) {
 					String renameFileName = request.getParameter("rfile"+ i);
@@ -106,50 +116,75 @@ public class AdminVolunteerController {
 						new File(savePath + "\\" + renameFileName).delete();
 				}
 			}
-				return "redirect:/vlist.ad";
+				url = "redirect:/vlist.ad";
 			}else {
 				model.addAttribute("message", "글 삭제 실패!");
-				return  "common/error";
+				model.addAttribute("msg", "해당글은 삭제되지않으므로 관리자에게 문의바랍니다.");
+				model.addAttribute("url", "javascript:history.back()");
+				url =  "common/errorDboard";
 			}
-			
+			return url;
 		}
 		//이전글(관리자용)
 		@RequestMapping("vpre.ad")
-		public String selectVpre(HttpServletRequest request, Model model,
-				   				@RequestParam(value = "volno") int volno) {
-			
-			int vpre = volunteerService.selectVolunteerPre(volno);
-			
-			String returnView = null;
-			
-			if( vpre > 0 ) {
-				model.addAttribute("volno", vpre);
-		         returnView = "redirect:/vdetail.ad";
-		      } else {
-		         request.setAttribute("message", "글이 존재하지않습니다.");
-		         returnView = "common/error";
-		      }
-		      
-		      return returnView;
+		public String selectVpreAdmin(HttpServletRequest request, Model model, @ModelAttribute("Volunteer") Volunteer volunteer) {
+			//다음글 번호조회
+			volunteer.setSearchFiled(request.getParameter("searchFiled"));
+			volunteer.setSearchValue(request.getParameter("searchValue"));
+			volunteer.setVolche(request.getParameter("volche"));
+					
+			int vboardPreNum = volunteerService.selectVolunteerPre(volunteer);
+			//다음글번호를 받고 다음글로 조회
+			Volunteer vboardPre = volunteerService.selectVolunteer(vboardPreNum);
+					
+			// 리턴은 한번 하기 위해 url 값 받고 리턴
+							
+			model.addAttribute("volche", volunteer.getVolche());
+			model.addAttribute("searchFiled", volunteer.getSearchFiled());
+			model.addAttribute("searchValue",volunteer.getSearchValue());
+					
+			String url = "";
+			if (volunteer.getVolno() != vboardPreNum) {
+				model.addAttribute("volunteer", vboardPre);
+			url = "admin/userBoard/serviceView";
+		 } else {
+			model.addAttribute("volunteer",volunteer);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "javascript:history.back()");
+			url = "common/errorDboard";
+		}
+			return url;
 		}
 		//다음글(관리자용)
 		@RequestMapping("vnext.ad")
-		public String selectVnext(HttpServletRequest request, Model model,
-				   				@RequestParam(value = "volno") int volno) {
+		public String selectVnextAdmin(HttpServletRequest request, Model model, @ModelAttribute("Volunteer") Volunteer volunteer) {
 			
-			int vnext = volunteerService.selectVolunteerNext(volno);
+			//다음글 번호조회
+			volunteer.setSearchFiled(request.getParameter("searchFiled"));
+			volunteer.setSearchValue(request.getParameter("searchValue"));
+			volunteer.setVolche(request.getParameter("volche"));
 			
-			String returnView = null;
+			int vboardNextNum = volunteerService.selectVolunteerNext(volunteer);
+			//다음글번호를 받고 다음글로 조회
+			Volunteer vboardNext = volunteerService.selectVolunteer(vboardNextNum);
 			
-			if( vnext > 0 ) {
-				model.addAttribute("volno", vnext);
-		         returnView = "redirect:/vdetail.ad";
-		      } else {
-		         request.setAttribute("message", "글이 존재하지않습니다.");
-		         returnView = "common/error";
-		      }
-		      
-		      return returnView;
+			// 리턴은 한번 하기 위해 url 값 받고 리턴
+					
+			model.addAttribute("volche", volunteer.getVolche());
+			model.addAttribute("searchFiled", volunteer.getSearchFiled());
+			model.addAttribute("searchValue",volunteer.getSearchValue());
+			
+			String url = "";
+			if (volunteer.getVolno() != vboardNextNum) {
+				model.addAttribute("volunteer", vboardNext);
+				url = "admin/userBoard/serviceView";
+			} else {
+				model.addAttribute("volunteer",volunteer);
+				model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+				model.addAttribute("url", "javascript:history.back()");
+				url = "common/errorDboard";
+			}
+			return url;
 		}
 	
 

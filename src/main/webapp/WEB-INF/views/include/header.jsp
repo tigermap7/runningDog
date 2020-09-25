@@ -120,7 +120,6 @@
                     <li><a href="alistPage.do">유기동물정보</a></li>
                     <li><a href="dboardList.do">유기동물 주인찾기</a></li>
                     <li><a href="movePlist.do">보호센터정보</a></li>
-                    <li><a href="/runningdog/moveListVolunteer.do">자원봉사모집</a></li>
                     <li><a href="vlist.do">자원봉사모집</a></li>
                     <li><a href="nlist.do">공지사항</a></li>
                 </ul>

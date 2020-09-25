@@ -183,7 +183,9 @@
                         <div class="viewBtn-wrap">
                             <c:url var="vpread" value="vpre.ad">
                             	<c:param name="volno" value="${volunteer.volno}"/>
-                            	<c:param name="page" value="${currentPage}"/>
+                            	<c:param name="searchFiled" value="${ searchFiled }" />
+								<c:param name="searchValue" value="${ searchValue }" />
+								<c:param name="volche" value="${ volunteer.volche }"/>
                             </c:url>
                             <button class="nextBtn" onclick="javascript:location.href='${vpread}'"><i class="xi-angle-left-min"></i>이전</button>
                             <button class="listBtn" onclick="location.href='vlist.ad'"><i class="xi-rotate-left"></i>목록</button>
@@ -193,7 +195,9 @@
                             <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
                             <c:url var="vnextad" value="vnext.ad">
                             	<c:param name="volno" value="${volunteer.volno}"/>
-                            	<c:param name="page" value="${currentPage}"/>
+                            	<c:param name="searchFiled" value="${ searchFiled }" />
+								<c:param name="searchValue" value="${ searchValue }" />
+								<c:param name="volche" value="${ volunteer.volche }"/>
                             </c:url>
                             <button class="prevBtn" onclick="javascript:location.href='${vnextad}'"></i></button>
                         </div>
