@@ -138,14 +138,26 @@
                                     <tr>
                                         <td>프로필 사진</td>
                                         <td class="profilImage">
-                                       	 	<c:if test="${ !empty loginMember.originProfile }">
+                                       	 	<c:if test="${ loginMember.loginType eq null }">
+											<c:if test="${ !empty loginMember.originProfile  }">
 											${ loginMember.originProfile } &nbsp;
+											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+											</c:if>
+											<c:if test="${ empty loginMember.originProfile  }">
+											<input type="file" name="profilImage" title="프로필 사진"/>
+											</c:if>
+											</c:if>
+											
+                                       	 	<c:if test="${ loginMember.loginType ne null }">
+											<c:if test="${ !empty loginMember.renameProfile  }">
+											${ loginMember.renameProfile } &nbsp;
 											<c:if test="${ loginMember.loginType ne 'kakao' }">
 											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
 											</c:if>
 											</c:if>
-											<c:if test="${ empty loginMember.originProfile }">
+											<c:if test="${ empty loginMember.renameProfile }">
 											<input type="file" name="profilImage" title="프로필 사진"/>
+											</c:if>
 											</c:if>
                                         </td>
                                     </tr>

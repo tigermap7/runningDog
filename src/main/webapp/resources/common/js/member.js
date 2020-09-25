@@ -169,8 +169,7 @@ $(function () {
     
    
     
-
-	//아이디(이메일) 찾기 ajax
+  //아이디(이메일) 찾기 ajax
 	$('.idFindBtn').click(function() {
 		
 	    var phone = $('#phoneChk').val().trim();
@@ -264,8 +263,8 @@ $(function () {
 				success : function(data) {
             		if(data == "myinfoOk") {
         				alert("나의 프로필 정보가 변경되었습니다.");
-	                	window.location.href = 'mypage.do';
 	                	location.reload();
+	                	window.location.href = 'mypage.do?userId='+userId;
 	                } else if(data == "notNickname") {
 	        			$('#nicknameWarning span').html('이미 존재하는 닉네임 입니다.');
 	                	nickname.focus();
@@ -392,7 +391,7 @@ $(function () {
     
     
     
-    //페이스북 회원가입 ajax
+    // 소셜 회원가입 ajax
     $('.facebookJoinAction').click(function() {
 	    var nickname = $('#nicknameChk').val().trim();
 	    var phone = $('#phoneChk').val().trim();
@@ -463,7 +462,7 @@ $(function () {
             		if(data == "myinfoOk") {
         				alert("나의 프로필 정보가 변경되었습니다.");
 	    				location.reload();
-	                	window.location.href = 'mypage.do';
+	                	window.location.href = 'mypage.do?userId='+userId;
 	                } else if(data == "notNickname") {
 	                	console.log('안녕하세요.');
 	        			$('#socialNicknameWarning span').html('이미 존재하는 닉네임 입니다.');

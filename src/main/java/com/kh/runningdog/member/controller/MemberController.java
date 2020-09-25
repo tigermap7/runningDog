@@ -85,9 +85,11 @@ public class MemberController {
 	}
 	
 	//세션 만료로 인한 자동로그아웃
-	public void logoutMethod(HttpSession session, HttpServletResponse response) throws IOException {
+	public void logoutMethod(HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		//세션 이용해서 로그아웃 처리
-		if(session == null) {
+		session=request.getSession(false); //이미 세션이 있다면 그 세션을 돌려주고, 세션이 없으면 null을 돌려준다.
+		
+		if(session != null) {
 			session.invalidate();
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
@@ -136,17 +138,13 @@ public class MemberController {
 		return url;
 	}
 	
-	
-	
-	
-	
 
 	//로그아웃컨트롤러	
 	@RequestMapping("logout.do")
 	public String logoutMethod(HttpSession session, HttpServletRequest request) {
 		logger.info("logout run...");
 		
-		session = request.getSession(false);
+		session = request.getSession(true); //이미 세션이 있다면 그 세션을 돌려주고, 세션이 없으면 null을 돌려준다.
 		
 		//세션 로그아웃 처리
 		if(session != null) {
@@ -262,71 +260,67 @@ public class MemberController {
 	
 	
 	//아이디(이메일) 찾기 컨트롤러
-	@RequestMapping(value="idFindAction.do", method=RequestMethod.POST)
-	@ResponseBody
-	public String idFindMethod(Member member, HttpServletResponse response, HttpSession session, SessionStatus status) throws IOException {
-		logger.info("idFindAction run...");
-		
-		Member phoneChk = memberService.selectPhoneCheck(member);
-		String url = null;
-				
-		if(phoneChk != null) {
-			String selectId = phoneChk.getUserId();
+		@RequestMapping(value="idFindAction.do", method=RequestMethod.POST)
+		@ResponseBody
+		public String idFindMethod(Member member, HttpServletResponse response, HttpSession session, SessionStatus status) throws IOException {
+			logger.info("idFindAction run...");
 			
-			if(phoneChk.getUserId() != null) {
-				session.setAttribute("selectId", selectId);
-				status.setComplete();
-				url = "selectId";
-			}
-		} else {
-			url = "notSelectId";
-		}
-		return url;
-	}
-	
-	
-	//비밀번호 찾기 컨트롤러
-	@RequestMapping(value="pwdFindAction.do", method=RequestMethod.POST)
-	@ResponseBody
-	public String pwdFindMethod(Member member, HttpServletResponse response, HttpSession session) throws IOException {
-		logger.info("pwdFindAction run...");
-		
-		Member userIdPhoneChk = memberService.selectUserIdPhoneCheck(member);
-		
-		
-		String url = null;
-		
-		if(userIdPhoneChk != null) {
-			if(userIdPhoneChk.getLoginType() == null){
-				String keyCode = FindUtil.createKey();
-				session.setAttribute("keyCode", keyCode);
-				
-				String subject = "'지금 달려갈 개' 임시 비밀번호 전송";
-				
-				String msg = "";
-				msg += "<div style='float: left; text-align:center; font-weight:700; border: 2px solid #ff92a8; color:#ff92a8; font-size:14px; padding:80px 50px; margin:50px 0; font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', '돋움', sans-serif !important;'>";
-				msg += "<h1 style='margin: 0 0 10px;'><img src='http://127.0.0.1:9392/runningdog/resources/images/common/logo_over.png'></h1>";
-				msg += "<h3 style=' margin-bottom:5px;'>안녕하세요. " + userIdPhoneChk.getNickname() + " 님.</h3>";
-				msg += "<p>";
-				msg += "지금 달려갈게 로그인 임시 비밀번호는 <b style='color:#333'>" + keyCode + "</b> 입니다.<br/>";
-				msg += "로그인 후 꼭 마이페이지 프로필변경에서 비밀번호를 변경하시기 바랍니다.</p></div>";
-				
-				MailUtil.sendMail(member.getUserId(), subject, msg);
-
-				//member.setUserPwd(keyCode);
-				member.setUserPwd(bcryptoPasswordEncoder.encode(keyCode));
-
-				if(memberService.updateMemberPwd(member) > 0) {
-					url = "selectIdPhoneChk";
+			Member phoneChk = memberService.selectPhoneCheck(member);
+			String url = null;
+					
+			if(phoneChk != null) {
+				if(phoneChk.getUserId() != null) {
+					session.setAttribute("selectId", phoneChk.getUserId());
+					url = "selectId";
 				}
 			} else {
-				url = "socialUser";
-			}			
-		} else {
-			url = "notSelectIdPhoneChk";
+				url = "notSelectId";
+			}
+			return url;
 		}
-		return url;
-	}
+		
+		
+		//비밀번호 찾기 컨트롤러
+		@RequestMapping(value="pwdFindAction.do", method=RequestMethod.POST)
+		@ResponseBody
+		public String pwdFindMethod(Member member, HttpServletResponse response, HttpSession session) throws IOException {
+			logger.info("pwdFindAction run...");
+			
+			Member userIdPhoneChk = memberService.selectUserIdPhoneCheck(member);
+			
+			String url = null;
+			
+			if(userIdPhoneChk != null) {
+				if(userIdPhoneChk.getLoginType() == null){
+					String keyCode = FindUtil.createKey();
+					session.setAttribute("keyCode", keyCode);
+					
+					String subject = "'지금 달려갈 개' 임시 비밀번호 전송";
+					
+					String msg = "";
+					msg += "<div style='float: left; text-align:center; font-weight:700; border: 2px solid #ff92a8; color:#ff92a8; font-size:14px; padding:80px 50px; margin:50px 0; font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', '돋움', sans-serif !important;'>";
+					msg += "<h1 style='margin: 0 0 10px;'><img src='http://127.0.0.1:9392/runningdog/resources/images/common/logo_over.png'></h1>";
+					msg += "<h3 style=' margin-bottom:5px;'>안녕하세요. " + userIdPhoneChk.getNickname() + " 님.</h3>";
+					msg += "<p>";
+					msg += "지금 달려갈게 로그인 임시 비밀번호는 <b style='color:#333'>" + keyCode + "</b> 입니다.<br/>";
+					msg += "로그인 후 꼭 마이페이지 프로필변경에서 비밀번호를 변경하시기 바랍니다.</p></div>";
+					
+					MailUtil.sendMail(member.getUserId(), subject, msg);
+
+					//member.setUserPwd(keyCode);
+					member.setUserPwd(bcryptoPasswordEncoder.encode(keyCode));
+
+					if(memberService.updateMemberPwd(member) > 0) {
+						url = "selectIdPhoneChk";
+					}
+				} else {
+					url = "socialUser";
+				}			
+			} else {
+				url = "notSelectIdPhoneChk";
+			}
+			return url;
+		}
 	
 	
 	

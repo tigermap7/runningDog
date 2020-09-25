@@ -28,8 +28,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.runningdog.member.model.service.MemberService;
 import com.kh.runningdog.member.model.vo.Member;
+import com.kh.runningdog.member.model.vo.NaverLoginBO;
 
 import sun.net.www.http.HttpClient;
 
@@ -40,7 +42,14 @@ public class SocialLoginController {
 	@Autowired
 	private MemberService memberService;
 	
-
+    /* NaverLoginBO */
+    private NaverLoginBO naverLoginBO;
+    private String apiResult = null;
+    
+    @Autowired
+    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+        this.naverLoginBO = naverLoginBO;
+    }
 	
 	// 카카오 로그인 컨트롤러
 	@RequestMapping("kakaoLogin.do")
@@ -84,40 +93,39 @@ public class SocialLoginController {
 	
 	
 	// 네이버 로그인 컨트롤러
-	@RequestMapping("naverLogin.do")
+	@RequestMapping(value="naverLogin.do", method={ RequestMethod.GET, RequestMethod.POST })
 	public String naverLogin(Member member, Model model,HttpSession session, HttpServletResponse response, SessionStatus status) throws IOException {
 
 		logger.info("naverLogin run...");
 
-		Member loginMember = memberService.selectFacebookLogin(member);
-
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		
-		String url = null;
-		
-        if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
-			System.out.println("이후 가야함");
-
-			loginMember.setLoginType("naver");
-			
-			if(memberService.updatemyinfo(loginMember) > 0) {
-				session.setAttribute("loginMember", loginMember);
-				status.setComplete(); // 요청성공, 200 전송
-				url = "main/main";
-			}
-		}else if(loginMember != null && loginMember.getLoginLimit().equals("Y")) {
-			logger.info("로그인 제한된 계정");
-            out.println("<script>alert('로그인이 제한된 계정입니다.\\n관리자에게 문의주세요.'); history.go(-1);</script>");
-            out.flush();
-		}else{
-            out.println("<script>alert('간편로그인을 하기 위해선 회원가입이 필요합니다.');</script>");
-            out.flush();
-	        return "member/socialJoin";
-		}
-		logger.info("url : " +url);
-		return url;
-	}
+	    /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+        
+        //https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
+        //redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
+        System.out.println("네이버:" + naverAuthUrl);
+        
+        //네이버 
+        model.addAttribute("url", naverAuthUrl);
+ 
+        /* 생성한 인증 URL을 View로 전달 */
+        return "member/login";
+    }
+ 
+    //네이버 로그인 성공시 callback호출 메소드
+    @RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
+    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+            throws IOException {
+        System.out.println("여기는 callback");
+        OAuth2AccessToken oauthToken;
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        //로그인 사용자 정보를 읽어온다.
+        apiResult = naverLoginBO.getUserProfile(oauthToken);
+        model.addAttribute("result", apiResult);
+ 
+        /* 네이버 로그인 성공 페이지 View 호출 */
+        return "naverSuccess";
+    }
 	
 	
 	
@@ -336,7 +344,7 @@ public class SocialLoginController {
 				member.setRenameProfile(renameProfile);
 			}
 	
-			if(memberService.updatemyinfo(member) > 0) {
+			if(memberService.updateSocialMyinfo(member) > 0) {
 				session.setAttribute("loginMember", memberService.selectLogin(member));
 				url = "myinfoOk";
 			}

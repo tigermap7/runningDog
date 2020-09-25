@@ -32,6 +32,7 @@
 <script src="/runningdog/resources/common/js/kakaoLogin.js"></script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v8.0&appId=1200941690288936&autoLogAppEvents=1" nonce="T57R8Bl1"></script>
 <script src="resources/common/js/facebookLogin.js"></script>
+<script src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 <script src="resources/common/js/naveridlogin_js_sdk_2.0.0.js"></script>
 <script src="resources/common/js/naverLogin.js"></script>
 <!-- 소셜로그인 API 끝 -->
