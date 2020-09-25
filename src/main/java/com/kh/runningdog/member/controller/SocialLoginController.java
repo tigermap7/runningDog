@@ -56,15 +56,7 @@ public class SocialLoginController {
 		
 		String url = null;
 		
-        System.out.println("userId : " + userId);
-        System.out.println("profileImage : " + profileImage);
-        if(loginMember == null) {
-            System.out.println("먼저 가야함");
-        	url = "notKakaoId";
-        	logger.info("url : " + url);
-        }
-		
-		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
+        if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
 			System.out.println("이후 가야함");
 
 			loginMember.setRenameProfile(profileImage);
@@ -91,7 +83,41 @@ public class SocialLoginController {
 	}
 	
 	
-	
+	// 네이버 로그인 컨트롤러
+	@RequestMapping("naverLogin.do")
+	public String naverLogin(Member member, Model model,HttpSession session, HttpServletResponse response, SessionStatus status) throws IOException {
+
+		logger.info("naverLogin run...");
+
+		Member loginMember = memberService.selectFacebookLogin(member);
+
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		String url = null;
+		
+        if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
+			System.out.println("이후 가야함");
+
+			loginMember.setLoginType("naver");
+			
+			if(memberService.updatemyinfo(loginMember) > 0) {
+				session.setAttribute("loginMember", loginMember);
+				status.setComplete(); // 요청성공, 200 전송
+				url = "main/main";
+			}
+		}else if(loginMember != null && loginMember.getLoginLimit().equals("Y")) {
+			logger.info("로그인 제한된 계정");
+            out.println("<script>alert('로그인이 제한된 계정입니다.\\n관리자에게 문의주세요.'); history.go(-1);</script>");
+            out.flush();
+		}else{
+            out.println("<script>alert('간편로그인을 하기 위해선 회원가입이 필요합니다.');</script>");
+            out.flush();
+	        return "member/socialJoin";
+		}
+		logger.info("url : " +url);
+		return url;
+	}
 	
 	
 	
@@ -137,7 +163,7 @@ public class SocialLoginController {
 	
 	
 	
-	//페이스북 회원가입 컨트롤러
+	//소셜 회원가입 컨트롤러
 	@RequestMapping(value="facebookJoinAction.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String facebookJoinMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
@@ -229,7 +255,7 @@ public class SocialLoginController {
 	//소셜로그인 나의프로필 변경 컨트롤러
 	@RequestMapping(value="socialMyinfoAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String socialMyinfoMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
+	public String socialMyinfoMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
 		logger.info("myinfoAction run...");
 		logger.info("member : " + member);
 		Member loginMember = memberService.selectLogin(member);
@@ -311,7 +337,7 @@ public class SocialLoginController {
 			}
 	
 			if(memberService.updatemyinfo(member) > 0) {
-				model.addAttribute("member", member);
+				session.setAttribute("loginMember", memberService.selectLogin(member));
 				url = "myinfoOk";
 			}
 				

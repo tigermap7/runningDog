@@ -8,10 +8,7 @@
 <head>
 <c:import url="/WEB-INF/views/include/head.jsp" />
 <!-- Load the JS SDK asynchronously -->
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v8.0&appId=1200941690288936&autoLogAppEvents=1" nonce="T57R8Bl1"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script src="resources/common/js/facebookLogin.js"></script>
-<script src="resources/common/js/kakaoLogin.js"></script>
+
 
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
@@ -58,14 +55,64 @@
 						<a href="join.do" class="join_btn">회원가입</a>
 
 						<ul class="snsLogin">
-							<li onclick="javascript:loginWithKakao()" class="kLogin"><span><i class="xi-kickstarter"></i></span>카카오 로그인</li>
-							<li onclick="location='#none'" class="nLogin"><span><i class="xi-naver"></i></span>네이버 로그인</li>
+							<li class="kLogin" onclick="javascript:loginWithKakao()"><span><i class="xi-kickstarter"></i></span>카카오 로그인</li>
+							<li id="naverIdLogin" class="nLogin"><span><i class="xi-naver"></i></span>네이버 로그인</li>
 							<li id="status" scope="public_profile,email" onclick="javascript:facebookLogin();" class="fLogin"><span><i class="xi-facebook"></i></span>페이스북 로그인</li>
-							<li onclick="javascript:kakaoLogout()"><a class="hover_line01" href="#none">로그아웃</a></li>
-							<li onclick="javascript:unlinkApp()"><a class="hover_line01" href="#none">연결끊기</a></li>
             			</ul>
 					</div>
 				</form>
+				<script>
+				var naverLogin = new naver.LoginWithNaverId({
+					clientId: "BH_kSon1igZkUqwElBdD",
+					callbackUrl: "http://localhost:9392/runningdog/naverLogin.do",
+					isPopup: true, /* 팝업을 통한 연동처리 여부 */
+					loginButton: {color: "green", type: 3, height: 60}
+					/* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */
+					}
+				);
+					
+				/* 설정정보를 초기화하고 연동을 준비 */
+				naverLogin.init();
+				
+				/* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) */
+				window.addEventListener('load', function () {
+					naverLogin.getLoginStatus(function (status) {
+						if (status) {
+								/* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */
+							var email = naverLogin.user.getEmail();
+							var nickname = naverLogin.user.getNickName();
+							var profileImage = naverLogin.user.getProfileImage();
+							
+							if( email == undefined || email == null) {
+								alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
+								naverLogin.reprompt();
+								return;
+							} else if( nickname == undefined || nickname == null) {
+								alert("별명 필수정보입니다. 정보제공을 동의해주세요.");
+								naverLogin.reprompt();
+								return;
+							} else if( profileImage == undefined || profileImage == null) {
+								alert("프로필사진은 필수정보입니다. 정보제공을 동의해주세요.");
+								naverLogin.reprompt();
+								return;
+							}
+					
+							console.log("email : " + email);
+							console.log("nickname : " + nickname);
+							console.log("profileImage : " + profileImage);
+							console.log("status : " + status);
+						
+							console.log("확인2");
+							//location.href="naverLogin.do?id=" + email + "&nickname=" + nickname + "&profileImage=" + profileImage;
+							window.opener.location.replace("naverLogin.do?id=" + email + "&nickname=" + nickname + "&profileImage=" + profileImage);
+
+						} else {
+							console.log("callback 처리에 실패하였습니다.");
+						}
+					});
+				});
+
+				</script>
 			</div>
 			<!-- 로그인 끝 -->
 		</div>

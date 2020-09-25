@@ -41,13 +41,13 @@
 	                                <input type="file" name="profilImage" title="프로필 사진" class="w100p"/>
                             		</c:if>
                             		<c:if test="${param.profileImage ne null}">
-									카카오톡 프로필 사진을 사용합니다.
+									간편로그인 계정의 이미지 사용
                             		</c:if>
                                 </span>
                             </div>
                             <div>
                                 <span><i class="xi-user-o"></i></span>
-                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임"/></span>
+                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임" value="${ param.nickname }"/></span>
                             </div>
                             <p id="nicknameWarning">
                                 <span></span>

@@ -170,7 +170,7 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <button type="button" class="socialMemberLeaveBtn">탈퇴하기</button>
+                                            <button onclick="unlinkApp()" type="button" class="socialMemberLeaveBtn api-btn">탈퇴하기</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -181,7 +181,6 @@
                                 <input type="button" class="btn btn-success socialMyinfoBtn" value="수정하기">
                             </div>
                             </c:if>
-            
                         </div>
                     </div>
                 </div>
