@@ -8,15 +8,17 @@ public class Vreply implements java.io.Serializable{
 	private int vreply_no;
 	private int volno;
 	private String nickname;
-	private java.sql.Date vreply_date;
+	private String vreply_date;
 	private String vreply_content;
 	private int parant_reply;
 	private int vreply_level;
 	
 	public Vreply() {}
 	
-	public Vreply(int vreply_no, int volno, String nickname, Date vreply_date, String vreply_content, int parant_reply,
-			int vreply_level) {
+	
+
+	public Vreply(int vreply_no, int volno, String nickname, String vreply_date, String vreply_content,
+			int parant_reply, int vreply_level) {
 		super();
 		this.vreply_no = vreply_no;
 		this.volno = volno;
@@ -26,6 +28,7 @@ public class Vreply implements java.io.Serializable{
 		this.parant_reply = parant_reply;
 		this.vreply_level = vreply_level;
 	}
+
 
 	public int getVreply_no() {
 		return vreply_no;
@@ -51,11 +54,12 @@ public class Vreply implements java.io.Serializable{
 		this.nickname = nickname;
 	}
 
-	public java.sql.Date getVreply_date() {
+
+	public String getVreply_date() {
 		return vreply_date;
 	}
 
-	public void setVreply_date(java.sql.Date vreply_date) {
+	public void setVreply_date(String vreply_date) {
 		this.vreply_date = vreply_date;
 	}
 
@@ -87,15 +91,15 @@ public class Vreply implements java.io.Serializable{
 		return serialVersionUID;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Vreply [vreply_no=" + vreply_no + ", volno=" + volno + ", nickname=" + nickname + ", vreply_date="
 				+ vreply_date + ", vreply_content=" + vreply_content + ", parant_reply=" + parant_reply
 				+ ", vreply_level=" + vreply_level + "]";
 	}
-	
-	
-	
+
 	
 
 }
