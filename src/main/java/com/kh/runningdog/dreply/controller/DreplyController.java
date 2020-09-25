@@ -77,7 +77,7 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		dreply.setDreNum(dreNum);
 		dreply.setdNum(dNum);
 		
-		model.addAttribute("dNum", dNum);
+		//model.addAttribute("dNum", dNum);
 		
 		String url = "";
 		if (dreplyService.updateDreplyDel(dreply) > 0) {
@@ -99,7 +99,7 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		
 		dreply.setDreNum(dreNum);
 		dreply.setdNum(dNum);
-		model.addAttribute("dNum", dNum);
+		//model.addAttribute("dNum", dNum);
 		
 		String url = "";
 		if (dreplyService.updateDreply(dreply) > 0) {
@@ -121,7 +121,7 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		
 		
 		dreply.setdNum(dNum);
-		model.addAttribute("dNum", dNum);
+		//model.addAttribute("dNum", dNum);
 		
 		String url = "";
 		if (dreplyService.insertDreplyLevel(dreply) > 0) {
