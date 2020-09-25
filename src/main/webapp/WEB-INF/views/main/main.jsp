@@ -137,7 +137,7 @@
                 <div class="main_banner">
                     <ul>
                         <li>
-                            <a href="#none" class="xi-plus-circle-o"></a>
+                            <a href="movePlist.do" class="xi-plus-circle-o"></a>
                             <h2>보호센터 정보 <i class="xi-maker-drop"></i></h2>
                             <p>필요한 편의시설의 정보를 한눈에!</p>
                         </li>
@@ -204,7 +204,7 @@
                 <div class="main_banner2">
                     <ul>
                         <li>
-                            <a href="#none" class="xi-plus-circle-o"></a>
+                            <a href="vlist.do" class="xi-plus-circle-o"></a>
                             <h2>자원봉사모집 <i class="xi-note-o"></i></h2>
                             <p>
                                 함께하는 여러분의 따뜻한<br/>손길이 모여 큰 힘이 됩니다.
