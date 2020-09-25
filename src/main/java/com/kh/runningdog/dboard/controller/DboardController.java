@@ -243,17 +243,17 @@ public class DboardController {
 		ArrayList<Dreply> dreplyList = dreplyService.selectList(dNum); //댓글 리스트 
 		
 		
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
-		dboard.setSearchFiled(request.getParameter("searchFiled"));
-		dboard.setSearchValue(request.getParameter("searchValue"));
+		//dboard.setdCategory(request.getParameter("dCategory"));
+		//dboard.setdLocal(request.getParameter("dLocal"));
+		//dboard.setSearchFiled(request.getParameter("searchFiled"));
+		//dboard.setSearchValue(request.getParameter("searchValue"));
 		
 		model.addAttribute("dreplyCount" , dreplyCount);
 		model.addAttribute("dreplyList", dreplyList);
-		model.addAttribute("dLocal", dboard.getdLocal());
-		model.addAttribute("dCategory", dboard.getdCategory());
-		model.addAttribute("searchFiled", dboard.getSearchFiled());
-		model.addAttribute("searchValue", dboard.getSearchValue());
+		//model.addAttribute("dLocal", dboard.getdLocal());
+		//model.addAttribute("dCategory", dboard.getdCategory());
+		//model.addAttribute("searchFiled", dboard.getSearchFiled());
+		//model.addAttribute("searchValue", dboard.getSearchValue());
 		
 		String url = "";
 		
@@ -387,15 +387,13 @@ public class DboardController {
     @RequestMapping("dUpSuccess.do")
     public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
                                 Dboard dboard,Model model) {
-    	//분양여부를 불러와서 y이면 n을 n이면 y 를 반환하게 함
+    	//분양여
         dboard.setdSuccess(dSuccess);
         logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
     
         
         String url="";
         if (dboardService.updateDboardSuc(dboard) > 0) {
-        	
-        	logger.info("분양여부 값 체크 " + dboard);
             model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
             model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
             url = "common/errorDboard";

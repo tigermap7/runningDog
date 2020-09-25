@@ -82,9 +82,10 @@ $(function() {
                                             <tr>
                                                 <th>반려 동물 종류</th>
                                                 
-                                                <td>${ dCategory eq "d" ? "강아지" : "" }
-                                                	${ dCategory eq "c" ? "고양이" : "" }
-                                                	${ dCategory eq "e" ? "기  타" : "" }
+                                                <td>
+                                                ${ dboard.dCategory eq "d" ? "강아지" : "" }
+                                                ${ dboard.dCategory eq "c" ? "고양이" : "" }
+                                                ${ dboard.dCategory eq "e" ? "기  타" : "" }
                                                 </td>
                                                 <th>발견날짜</th>
                                                 <td>${ dboard.dFindDate }</td>
@@ -92,12 +93,12 @@ $(function() {
                                             <tr>
                                                 <th>성별</th>
                                                 <td>
-                                                ${ dboard.dGender eq "m"?"남/男" : "여/女" }
+                                                ${ dboard.dGender eq "m" ? "남/男" : "여/女" }
 												</td>
                                                 <th>분양 여부</th>
                                                 <td>
-                                                ${ dboard.dSuccess eq "y"? "새로운 가족을 찾았어요" : ""}
-                                                ${ dboard.dSuccess eq "n"? "가족을 기다리고 있어요" : ""}
+                                                ${ dboard.dSuccess eq "y" ? "새로운 가족을 찾았어요" : ""}
+                                                ${ dboard.dSuccess eq "n" ? "가족을 기다리고 있어요" : ""}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -223,17 +224,17 @@ $(function() {
 						</c:url>
 						<c:url var="dboardNext" value="dboardnext.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dLocal }"/>
-                            <c:param name="searchFiled" value="${ searchFiled }" />
-							<c:param name="searchValue" value="${ searchValue }" />
-							<c:param name="dCategory" value="${ dCategory }"/>
+							<c:param name="dLocal" value="${ dboard.dLocal }"/>
+                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
+							<c:param name="searchValue" value="${ dboard.searchValue }" />
+							<c:param name="dCategory" value="${ dboard.dCategory }"/>
 						</c:url>
 						<c:url var="dboardPrev" value="dboardprev.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dLocal }"/>
-                            <c:param name="searchFiled" value="${ searchFiled }" />
-							<c:param name="searchValue" value="${ searchValue }" />
-							<c:param name="dCategory" value="${ dCategory }"/>
+							<c:param name="dLocal" value="${ dboard.dLocal }"/>
+                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
+							<c:param name="searchValue" value="${ dboard.searchValue }" />
+							<c:param name="dCategory" value="${ dboard.dCategory }"/>
 						</c:url>
                         <div class="viewBtn-wrap">
                             <button class="nextBtn" onclick="location='${ dboardPrev }'"><i class="xi-angle-left-min"></i> 이전</button>
