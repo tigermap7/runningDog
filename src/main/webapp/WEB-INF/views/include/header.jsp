@@ -6,11 +6,6 @@
     <!-- 상단메뉴 -->
     <div class="util_wrap">
         <div>
-        
-    		<div class="notice_roll" id="roll_list">
-	            <ul class="sosBell">
-	            </ul>
-	        </div>
 	        
 	        <script src="/runningdog/resources/common/js/jquery.vticker.min.js"></script>  
 	        <script type="text/javascript">
@@ -21,6 +16,7 @@
 	        		type : "post",
 	        		dataType : "json",
 	        		success : function(data){
+	        			console.log("headerNoticeList success : " + data)
 	        			var jsonStr = JSON.stringify(data);
 	        			var json = JSON.parse(jsonStr);
 	        			
@@ -30,11 +26,11 @@
 	        					'<i class="xi-lightbulb-o"></i><span>[' + decodeURIComponent(json.list[i].state) + ']</span>' + 
 	        					decodeURIComponent(json.list[i].title).replace(/\+/gi, " ") + '</li>';
 	        			}
-	        			$(".sosBell").html(values); console.log(values);
+	        			$(".sosBell").html(values);
 	        			
 	        			/* 롤러처리 */
 	        		    $('#roll_list').vTicker('init', {
-	        		    	speed: 1200, 
+	        		    	speed: 1300, 
 	        		        pause: 3000,
 	        		        showItems: 1
 	        		     });
@@ -46,12 +42,13 @@
 	        	});
 	        }); 
 	        
- 	        /* 공지사항 상세페이지 이동 */
-			function moveNoticeDetail(noticeNo){
-				location.href = "ndetail.do?noticeNo=" + noticeNo;
-			}
-	       		
 	        </script> 
+	        
+	        <!-- 공지사항 알림, 최신 출력 -->
+	        <div class="notice_roll" id="roll_list">
+	            <ul class="sosBell">
+	            </ul>
+	        </div>
             
             
             <ul class="util">
