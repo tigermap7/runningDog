@@ -41,7 +41,7 @@
 						<tbody>
 							<tr>
 								<td>알림</td>
-								<td><label><input type="radio" name="noticeState" value="checked">필수여부</label></td>
+								<td><label><input type="radio" name="noticeState" id="state" value="checked">필수여부</label></td>
 							</tr>
 							<tr>
 								<td>제목</td>
@@ -49,7 +49,7 @@
 							</tr>
 							<tr>
 								<td>작성자</td>
-								<td><input type="text" name="noticeWriter" class="form-control w100p" readonly value="관리자"></td>
+								<td><input type="text" name="noticeWriter" class="form-control w100p" readonly value="${ sessionScope.loginMember.nickname }"></td>
 							</tr>
 							<tr>
 								<td>내용</td>
@@ -77,21 +77,5 @@
 		</div>
 		<c:import url="/WEB-INF/views/admin/include/admin_footer.jsp" />
 	</div>
-
-	<script type="text/javascript">
-		/* 라디오버튼 동적 체크하기 */
-		$("input[id='state']").on('click', function() {
-			console.log("버튼클릭함");
-			if ($('#state').val() == 'checked') {
-				console.log("체크되어있음");
-				$('#state').prop('checked', false);
-				$('#state').val("unchecked");
-			} else {
-				console.log("체크안되어있음");
-				$('#state').prop('checked', true);
-				$('#state').val("checked");
-			}
-		});
-	</script>
 </body>
 </html>

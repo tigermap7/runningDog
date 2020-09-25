@@ -96,10 +96,10 @@
 						<c:param name="keyword" value="${ noticePage.keyword }" />
 					</c:url>
 					<c:if test="${ preNo ne 0 }">
-						<button class="nextBtn" onclick="movePreDetail()"><i class="xi-angle-left-min"></i> 이전</button>
+						<button class="nextBtn" onclick="moveNoticePreDetail('${ preNo }', '${ npre }')"><i class="xi-angle-left-min"></i> 이전</button>
 					</c:if>
 					<c:if test="${ preNo eq 0 }">
-						<button class="nextBtn offBtn" onclick="movePreDetail()"><i class="xi-angle-left-min"></i> 이전</button>
+						<button class="nextBtn offBtn" onclick="moveNoticePreDetail('${ preNo }', '${ npre }')"><i class="xi-angle-left-min"></i> 이전</button>
 					</c:if>
 
 					<!-- 목록 -->
@@ -139,10 +139,10 @@
 						<c:param name="keyword" value="${ noticePage.keyword }" />
 					</c:url>
 					<c:if test="${ nextNo ne 0 }">
-						<button class="prevBtn" onclick="moveNextDetail()">다음 <i class="xi-angle-right-min"></i></button>
+						<button class="prevBtn" onclick="moveNoticeNextDetail('${ nextNo }', '${ nnext }')">다음 <i class="xi-angle-right-min"></i></button>
 					</c:if>
 					<c:if test="${ nextNo eq 0 }">
-						<button class="prevBtn offBtn" onclick="moveNextDetail()">다음 <i class="xi-angle-right-min"></i> </button>
+						<button class="prevBtn offBtn" onclick="moveNoticeNextDetail('${ nextNo }', '${ nnext }')">다음 <i class="xi-angle-right-min"></i> </button>
 					</c:if>
 
 				</div>
@@ -151,27 +151,5 @@
 		</div>
 		<c:import url="/WEB-INF/views/admin/include/admin_footer.jsp" />
 	</div>
-
-	<script type="text/javascript">
-    <!-- 이전글, 다음글 이동 -->
-        function movePreDetail(){
-        	var nPre = ${ preNo }
-            if(nPre == 0){
-            	alert("이전글이 없습니다.");
-            } else {
-				location.href='${npre}';
-            }
-        }
-             
-        function moveNextDetail(){
-        	var nNext = ${ nextNo }
-        	if(nNext == 0){
-        		alert("다음글 없습니다.");
-        	} else {
-				location.href='${nnext}';
-        	}
-        }
-        </script>
-
 </body>
 </html>
