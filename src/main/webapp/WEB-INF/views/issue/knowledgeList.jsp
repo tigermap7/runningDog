@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">반려동물 상식</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href=cknowlist.do>반려동물 상식</a></li>
                             </ul>
                         </div>
                         <h2><span>반려동물 상식</span></h2>
@@ -33,8 +33,21 @@
                     <!-- 좌측메뉴 끝 -->
 
                     <div class="subContent">
-                        <!--서브 정렬-->       
-                        <!--서브 정렬 끝-->
+                        <!--서브 검색-->                
+                        <div class="search_wrap">
+                            <form action="cknowlist.do">
+                            <select name="searchKnow">
+                            	<option value="subject" class="fontColor-dark" ${ page.search eq 'subject' ? 'selected' : '' }>제목</option>
+                            	<option value="comment" class="fontColor-dark" ${ page.search eq 'comment' ? 'selected' : '' }>내용</option>
+                            </select>
+                            <div class="search-box">
+                                <input type="text" name="keyword" placeholder="검색어를 검색해주세요." value="${ page.keyword }" required >
+                                <input type="hidden" name="animal" value="${ animal }">
+                                <button type="submit" class="xi-search"></button>
+                            </div>
+                            </form>
+                        </div>
+                        <!--서브 검색 끝-->
                         
                         <div class="sort-area">  
                             <h4>전체 ${ page.listCount }개의 상식</h4>
@@ -42,30 +55,22 @@
                                 <div>
                                 
                                 <form action="" name="">
-                                
                                 <c:if test="${ animal eq 'dog' }">
-                                    <a class="active" href="#none" onclick="moveSearch('dog')">강아지</a>
-                                    <a href="#none" onclick="moveSearch('cat')">고양이</a>
-                                    <a href="#none" onclick="moveSearch('other')">기타</a>
+                                    <a class="active" href="#none" onclick="moveSearchKnow('dog')">강아지</a>
+                                    <a href="#none" onclick="moveSearchKnow('cat')">고양이</a>
+                                    <a href="#none" onclick="moveSearchKnow('other')">기타</a>
                                 </c:if>
                                 <c:if test="${ animal eq 'cat' }">
-                                    <a href="#none" onclick="moveSearch('dog')">강아지</a>
-                                    <a class="active" href="#none" onclick="moveSearch('cat')">고양이</a>
-                                    <a href="#none" onclick="moveSearch('other')">기타</a>
+                                    <a href="#none" onclick="moveSearchKnow('dog')">강아지</a>
+                                    <a class="active" href="#none" onclick="moveSearchKnow('cat')">고양이</a>
+                                    <a href="#none" onclick="moveSearchKnow('other')">기타</a>
                                 </c:if>
                                 <c:if test="${ animal eq 'other' }">
-                                    <a href="#none" onclick="moveSearch('dog')">강아지</a>
-                                    <a href="#none" onclick="moveSearch('cat')">고양이</a>
-                                    <a class="active" href="#none" onclick="moveSearch('other')">기타</a>
+                                    <a href="#none" onclick="moveSearchKnow('dog')">강아지</a>
+                                    <a href="#none" onclick="moveSearchKnow('cat')">고양이</a>
+                                    <a class="active" href="#none" onclick="moveSearchKnow('other')">기타</a>
                                 </c:if>
-                                
                                 </form>
-                                
-                                <script>
-	                                function moveSearch(animal){
-	                                	location.href="cknowlist.do?animal=" + animal;
-	                                } 
-                                </script>
                                 
                                 </div>
                             </div>
@@ -102,6 +107,20 @@
 	                                        <td class="writerUser">작성자 : 유기견센터</td>
 	                                    </tr>
 	                                </c:forEach>
+	                                
+	                            	 <!-- 목록이 없을 때 -->
+									<c:if test="${ page.listCount eq 0 }">
+										<tr>
+											<td colspan="3">
+												<div class="list-no">
+													<p>
+														<img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" />
+													</p>
+													<h1>목록이 없습니다.</h1>
+												</div>
+											</td>
+										</tr>
+									</c:if>
                                     
                                 </tbody>
                             </table>
@@ -115,6 +134,10 @@
 							<c:if test="${ (page.currentPage - 5) lt page.startPage and (page.currentPage - 5) ge 1 }">
 								<c:url var="npurl1" value="cknowlist.do">
 									<c:param name="page" value="${ page.startPage - 5 }" />
+									<!-- 검색값 유지 -->
+									<c:param name="animal" value="${ animal }" />
+									<c:param name="searchKnow" value="${ page.search }" />
+									<c:param name="keyword" value="${ page.keyword }" />
 								</c:url>
 								<a href="${ npurl1 }"><i class="xi-angle-left"></i></a>
 							</c:if>
@@ -130,6 +153,10 @@
 								<c:if test="${ p ne page.currentPage }">
 									<c:url var="npurl2" value="cknowlist.do">
 										<c:param name="page" value="${ p }" />
+										<!-- 검색값 유지 -->
+										<c:param name="animal" value="${ animal }" />
+										<c:param name="searchKnow" value="${ page.search }" />
+										<c:param name="keyword" value="${ page.keyword }" />
 									</c:url>
 									<a href="${ npurl2 }">${ p }</a>
 								</c:if>
@@ -139,7 +166,10 @@
 							<c:if test="${ (page.currentPage + 5) gt page.endPage and page.endPage lt page.maxPage }">
 								<c:url var="npurl3" value="cknowlist.do">
 									<c:param name="page" value="${ page.startPage + 5 }" />
-
+									<!-- 검색값 유지 -->
+									<c:param name="animal" value="${ animal }" />
+									<c:param name="searchKnow" value="${ page.search }" />
+									<c:param name="keyword" value="${ page.keyword }" />
 								</c:url>
 								<a href="${ npurl3 }"><i class="xi-angle-right"></i></a>
 							</c:if>
