@@ -35,10 +35,6 @@
 				<c:import url="/WEB-INF/views/include/leftMenu.jsp" />
 				<!-- 좌측메뉴 끝 -->
 
-				<script type="text/javascript">
-                
-                    </script>
-
 				<div class="subContent">
 					<!--상세-->
 					<form name="formname" method="post" enctype="multipart/form-data" action="nupdate.ad" id="noticeUpdateForm" class="form-inline">
@@ -72,7 +68,7 @@
 									</tr>
 									<tr>
 										<td>작성자</td>
-										<td><input type="text" name="noticeWriter" class="form-control w100p" readonly value="관리자"></td>
+										<td><input type="text" name="noticeWriter" class="form-control w100p" readonly value="${ sessionScope.loginMember.nickname }"></td>
 									</tr>
 									<tr>
 										<td>내용</td>
@@ -126,74 +122,5 @@
 
 		<c:import url="/WEB-INF/views/include/footer.jsp" />
 	</div>
-
-	<script type="text/javascript">
-	   /* 라디오버튼 동적 체크하기 */
-	  	$("input[id='state']").on('click',function(){
-	  		console.log("버튼클릭함" + $('#state').val());
-	  		if($('#state').val() == 'checked'){
-	  			console.log("체크되어있음");
-	  			$('#state').prop('checked', false);
-	  			$('#state').val("unchecked");
-	  		} else {
-	  			console.log("체크안되어있음");
-	  			$('#state').prop('checked', true);
-	  			$('#state').val("checked");
-	  		}
-	  	});
-	  	
-	  	/* 첨부파일 선택창 숨기기 */
-	  	$(document).ready(function(){
-	  		$('#showSelect1').hide();
-	  		$('#showSelect2').hide();
-	  		$('#showSelect3').hide();
-	  	});
-	  	
-	  	/* 파일 삭제 누르면 첨부파일 선택창 나오게 하기 */
-	  	function showFileSelect1(){
-	  		var files = document.getElementById("files");
-	  		var originalFile = document.getElementById("original1");
-	  		files.removeChild(originalFile);
-	  		$('#showSelect1').show();
-	  	}
-	  	function showFileSelect2(){
-	  		var files = document.getElementById("files");
-	  		var originalFile = document.getElementById("original2");
-	  		files.removeChild(originalFile);
-	  		$('#showSelect2').show();
-	  	}
-	  	function showFileSelect3(){
-	  		var files = document.getElementById("files");
-	  		var originalFile = document.getElementById("original3");
-	  		files.removeChild(originalFile);
-	  		$('#showSelect3').show();
-	  	}
-	  	
-	  	/* 삭제버튼 눌렀을때 original파일 이름 보내기 */
-	  	function deletefile1(){
-	  		var deleteFilename = '<c:out value="${notice.noticeOriginalFilename1}"/>';
-	  		var tag ="<input type='hidden' name='deleteFilename1' value='" + deleteFilename + "'>";
-	  		$("#inHere").append(tag);
-	  		console.log("1번 파일삭제" + deleteFilename + tag);
-	  	}
-	  	function deletefile2(){
-	  		var deleteFilename = '<c:out value="${notice.noticeOriginalFilename2}"/>';
-	  		var tag ="<input type='hidden' name='deleteFilename2' value='" + deleteFilename + "'>";
-	  		$("#inHere").append(tag);
-	  		console.log("2번 파일삭제" + deleteFilename + tag);
-	  	}
-	  	function deletefile3(){
-	  		var deleteFilename = '<c:out value="${notice.noticeOriginalFilename3}"/>';
-	  		var tag ="<input type='hidden' name='deleteFilename3' value='" + deleteFilename + "'>";
-	  		$("#inHere").append(tag);
-	  		console.log("3번 파일삭제" + deleteFilename + tag);
-	  	}
-	  	
-	  	/* 수정 최소하기 버튼 눌리면 새로고침하기 */
-	  	function Refresh(){
-	  		window.location.reload();
-	  	}
-	   </script>
-
 </body>
 </html>
