@@ -8,6 +8,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,31 +18,51 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.contents.IssueCrawling;
 import com.kh.runningdog.contents.KnowledgeCrawling;
+import com.kh.runningdog.contents.model.service.IssueService;
 import com.kh.runningdog.contents.model.vo.Issue;
 import com.kh.runningdog.contents.model.vo.Knowledge;
+import com.kh.runningdog.notice.model.service.NoticeService;
 import com.kh.runningdog.notice.model.vo.NoticePage;
 
 @Controller
 public class ContentsController {
 	private static final Logger logger = LoggerFactory.getLogger(ContentsController.class);
 	
-
+	@Autowired
+	private IssueService issueService;
+	
 	//상식 목록페이지 이동, 출력
 	@RequestMapping(value="cknowlist.do")
-	public ModelAndView contentsKnowledgeList(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView contentsKnowledgeListPage(ModelAndView mv, HttpServletRequest request) {
 		logger.info("cknowlist.do run...");
+		
+		String search = "subject";
+		String keyword = "";
+		//검색값 받기
+		if(request.getParameter("searchKnow") != null) {
+			search = request.getParameter("searchKnow");
+		}
+		if(request.getParameter("searchKnow") != null) {
+			keyword = request.getParameter("keyword");
+		}
+		 
+		//키워드 있을경우 앞뒤 공백제거
+		if(!(keyword == null || keyword == "")) {	
+			keyword.replaceAll("\\p{Z}", ""); //사이 공백
+			keyword = keyword.replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");  //앞뒤 공백 제거
+		}
 		
 		int currentPage = 1; //기본 페이지
 		if(request.getParameter("page") != null) {
 			currentPage = Integer.parseInt(request.getParameter("page"));
 		}
-		int limit = 10;
+		int limit = 27;
 		
-		String animal = "dog";
+		String animal = "dog"; //기본 분류 dog
 		if(request.getParameter("animal") != null) {
 			animal = request.getParameter("animal");
 		}
-		JSONObject jobj = KnowledgeCrawling.knowledgeList(animal);
+		JSONObject jobj = KnowledgeCrawling.knowledgeList(animal, currentPage, search, keyword);
 		
 		ArrayList<Knowledge> list = new ArrayList<Knowledge>();
 		
@@ -48,36 +70,30 @@ public class ContentsController {
 		
 		NoticePage page = new NoticePage(currentPage, listCount, limit); //현재 페이지와 총 갯수 보내서, startPage, endpage등.. 값 만들기
 		
-		String url = jobj.get("url").toString();
+		//검색값 page객체에 넣기
+		page.setSearch(search);
+		page.setKeyword(keyword);
 		
 		JSONArray jarr = new JSONArray();
 		jarr = (JSONArray)jobj.get("list");
-		
-		int start = page.getStartRow();
-		int end = page.getEndRow();
-		
-		//마지막 페이징일 경우 for문 end값 수정
-		if(page.getEndPage() == page.getCurrentPage()) {
-			double a = (double)page.getListCount() / (double)page.getLimit() * page.getLimit();
-			int b = page.getListCount() / page.getLimit() * page.getLimit();
-			int c =  (int)a - b -1;
-			end = page.getStartRow() + c;
-		}
-		
-		//jsonArray => ArrayList<Knowledge>로 변환 (컨트롤 더 쉽게하려고)
-		for(int i = start - 1; i < end; i++) {
-			
-			JSONObject job = (JSONObject)jarr.get(i);
-			
-			Knowledge knowledge = new Knowledge();
-			
-			knowledge.setAnimal(animal);
-			knowledge.setNo(job.get("no").toString());
-			knowledge.setReadcount(job.get("readcount").toString());
-			knowledge.setTitle(job.get("title").toString());
-			knowledge.setLink(job.get("link").toString());
-			
-			list.add(knowledge);
+
+		//목록이 있을 경우
+		if(jarr != null) {
+			//jsonArray => ArrayList<Knowledge>로 변환 (컨트롤 더 쉽게하려고)
+			for(int i = 0; i < jarr.size(); i++) {
+				
+				JSONObject job = (JSONObject)jarr.get(i);
+				
+				Knowledge knowledge = new Knowledge();
+				
+				knowledge.setAnimal(animal);
+				knowledge.setNo(job.get("no").toString());
+				knowledge.setReadcount(job.get("readcount").toString());
+				knowledge.setTitle(job.get("title").toString());
+				knowledge.setLink(job.get("link").toString());
+				
+				list.add(knowledge);
+			}
 		}
 		
 		mv.addObject("animal", animal);
@@ -86,6 +102,7 @@ public class ContentsController {
 		mv.setViewName("issue/knowledgeList");
 		return mv;
 	}
+	
 	
 	//상식 상세페이지 이동, 출력
 	@RequestMapping(value="cknowdetail.do")
@@ -105,7 +122,7 @@ public class ContentsController {
 		return mv;
 	}
 	
-	
+
 	//이슈 목록페이지 이동, 출력
 	@RequestMapping(value="cissuelist.do")
 	public ModelAndView contentsIssueList(ModelAndView mv, HttpServletRequest request) {
@@ -124,74 +141,36 @@ public class ContentsController {
 			order = request.getParameter("order");
 		}
 		
-		JSONObject jobj = new JSONObject();
-		if( order.equals("order")) { // 정렬 발행순 일때
-			jobj = IssueCrawling.issueListLatest();
-		} else { // 정렬 인기순 일때
-			jobj = IssueCrawling.issueListPopular();
-		}
-		
-		ArrayList<Issue> list = new ArrayList<Issue>();
-		
-		int listCount = Integer.parseInt(jobj.get("totalCount").toString());
+		int listCount = 100;
 		
 		NoticePage page = new NoticePage(currentPage, listCount, limit); //현재 페이지와 총 갯수 보내서, startPage, endpage등.. 값 만들기
 		
-		JSONArray jarr = new JSONArray();
-		jarr = (JSONArray)jobj.get("list");
+		page.setSearch(order);
 		
-		int start = page.getStartRow();
-		int end = page.getEndRow();
-		
-		//마지막 페이징일 경우 for문 end값 수정
-		if(page.getEndPage() == page.getCurrentPage()) {
-			double a = (double)page.getListCount() / (double)page.getLimit() * page.getLimit();
-			int b = page.getListCount() / page.getLimit() * page.getLimit();
-			int c =  (int)a - b -1;
-			end = page.getStartRow() + c;
-		}
-		
-		//jsonArray => ArrayList<Knowledge>로 변환 (컨트롤 더 쉽게하려고)
-		for(int i = start - 1; i < end; i++) {
-			
-			JSONObject job = (JSONObject)jarr.get(i);
-			
-			Issue issue = new Issue();
-			
-			issue.setPartnerName(job.get("partnerName").toString());
-			issue.setPartnerImg(job.get("partnerImg").toString());
-			issue.setTitle(job.get("title").toString());
-			issue.setThumbnail(job.get("thumbnail").toString());
-			issue.setLink(job.get("link").toString());
-			
-			if( order.equals("order")) { // 정렬 발행순 일때, 작성일 등록
-				issue.setDate(job.get("date").toString());
-			} else { // 정렬 인기순 일때, 조회수 등록
-				issue.setReadcount(Integer.parseInt(job.get("readcount").toString()));
-			}
-			
-			list.add(issue);
-		}
+		ArrayList<Issue> list = issueService.selectIssueList(page);
 		
 		mv.addObject("page", page);
-		mv.addObject("order", order);
 		mv.addObject("list", list);
 		mv.setViewName("issue/issueList");
 		return mv;
 	}
 	
+	
 	//이슈 상세페이지 이동, 출력
 	@RequestMapping(value="cissuedetail.do")
-	public ModelAndView contentsIssueDetail(ModelAndView mv, Issue issue) {
+	public ModelAndView contentsIssueDetail(ModelAndView mv, @RequestParam("link") String link) {
 		logger.info("cissuedetail.do run...");
 
-		String link = issue.getLink();
 		JSONObject jobj = IssueCrawling.issueDetail(link);
 
-		issue.setDate(jobj.get("date").toString());
-		issue.setReadcount(Integer.parseInt(jobj.get("readcount").toString()));
-		issue.setTitle(jobj.get("title").toString());
-		issue.setLink(jobj.get("url").toString());
+		Issue issue = new Issue();
+		issue.setPartnerName(jobj.get("partnerName").toString());
+		issue.setPartnerImg(jobj.get("partnerImg").toString());
+		issue.setIssueThumbnail(jobj.get("thumbnail").toString());
+		issue.setIssueTitle(jobj.get("title").toString());
+		issue.setIssueDate(jobj.get("date").toString());
+		issue.setIssueReadcount(Integer.parseInt(jobj.get("readcount").toString()));
+		issue.setIssueLink(jobj.get("url").toString());
 		issue.setContent(jobj.get("content").toString());
 		
 		mv.addObject("issue", issue);
@@ -201,11 +180,99 @@ public class ContentsController {
 	
 	
 	//메인페이지에 필수, new 공지사항 출력하기
-	@RequestMapping(value="mainIssueList.do", produces="application/text; charset=UTF-8")
 	@ResponseBody
+	@RequestMapping(value="mainIssueList.do", produces="application/text; charset=UTF-8")
 	public String selectNoticeState() {
 		logger.info("mainIssueList.do run...");
-		JSONObject jobj = IssueCrawling.mainIssueList();
-		return jobj.toJSONString();
+		
+		ArrayList<Issue> list = issueService.selectMainIssueList();
+		
+		JSONObject sendjobj = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		for(Issue issue : list) {
+			JSONObject jobj = new JSONObject();
+			
+			jobj.put("link", issue.getIssueLink());
+			jobj.put("partnerName", issue.getPartnerName());
+			jobj.put("partnerImg", issue.getPartnerImg());
+			jobj.put("thumbnail", issue.getIssueThumbnail());
+			jobj.put("title", issue.getIssueTitle());
+			jobj.put("date", issue.getIssueDate());
+			
+			jarr.add(jobj);
+			
+		}
+		
+		sendjobj.put("list", jarr);
+		
+		return sendjobj.toJSONString();
 	}
+	
+	
+	//이슈 목록 DB에 저장
+//	@Scheduled(cron = "0 0 02 * * * ") //매일 새벽 2시에 실행
+//	@Scheduled(cron = "0 0 12 * * * ") //매일 오전 12시에 실행
+//	@Scheduled(fixedDelay=60000 * 60) //1분 * 60 = 1시간마다 실행
+    public void testScheduler(){
+        logger.info(("이슈 크롤링 데이터 저장 중.."));
+        
+        //기존에 DB삭제하기
+        issueService.deleteIssue();
+        
+        //최신순 크롤링정보 저장하기
+        ArrayList<Issue> listLatest = new ArrayList<Issue>();
+        
+        JSONObject jobjLatest = IssueCrawling.issueListLatest();
+		JSONArray jarrLatest = new JSONArray();
+		jarrLatest = (JSONArray)jobjLatest.get("list");
+
+		//jsonArray => ArrayList<Knowledge>로 변환 (컨트롤 더 쉽게하려고)
+		for(int i = 0; i < jarrLatest.size(); i++) {
+			
+			JSONObject job = (JSONObject)jarrLatest.get(i);
+			
+			Issue issue = new Issue();
+			
+			issue.setPartnerName(job.get("partnerName").toString());
+			issue.setPartnerImg(job.get("partnerImg").toString());
+			issue.setIssueTitle(job.get("title").toString());
+			issue.setIssueThumbnail(job.get("thumbnail").toString());
+			issue.setIssueLink(job.get("link").toString());
+			issue.setIssueDate(job.get("date").toString());
+			
+			listLatest.add(issue);
+		}
+		
+		issueService.insertIssueLatest(listLatest);
+		
+		//인기순 크롤링정보 저장하기
+		ArrayList<Issue> listPopular = new ArrayList<Issue>();
+		
+		JSONObject jobjPopular = IssueCrawling.issueListPopular();
+		JSONArray jarrPopular = new JSONArray();
+		jarrPopular = (JSONArray)jobjPopular.get("list");
+
+		//jsonArray => ArrayList<Knowledge>로 변환 (컨트롤 더 쉽게하려고)
+		for(int i = 0; i < jarrPopular.size(); i++) {
+			
+			JSONObject job = (JSONObject)jarrPopular.get(i);
+			
+			Issue issue = new Issue();
+			
+			issue.setPartnerName(job.get("partnerName").toString());
+			issue.setPartnerImg(job.get("partnerImg").toString());
+			issue.setIssueTitle(job.get("title").toString());
+			issue.setIssueThumbnail(job.get("thumbnail").toString());
+			issue.setIssueLink(job.get("link").toString());
+			issue.setIssueReadcount(Integer.parseInt(job.get("readcount").toString()));
+			
+			listPopular.add(issue);
+		}
+		
+		issueService.insertIssuePopular(listPopular);
+		
+        logger.info(("이슈 크롤링 데이터 저장 끝.."));
+	}
+
 }
