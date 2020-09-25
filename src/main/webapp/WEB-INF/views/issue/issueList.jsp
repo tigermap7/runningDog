@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">오늘의 이슈</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="cissuelist.do">오늘의 이슈</a></li>
                             </ul>
                         </div>
                         <h2><span>오늘의 이슈</span></h2>
@@ -40,24 +40,17 @@
                             <h4>Top ${ page.listCount }개의 오늘의 이슈</h4>
                             <div>
                                 <div>
+                                
                                 <form action="" name="">
-                                
-                                <c:if test="${ order eq 'order'}">
-                                    <a class="active" href="#none" onclick="moveSearch('order')">발행순</a>
-                                    <a href="#none" onclick="moveSearch('view')">인기순</a>
+                                <c:if test="${ page.search eq 'order'}">
+                                    <a class="active" href="#none" onclick="moveSearchIssue('order')">발행순</a>
+                                    <a href="#none" onclick="moveSearchIssue('view')">인기순</a>
                                 </c:if>
-                                <c:if test="${ order eq 'view'}">
-                                    <a href="#none" onclick="moveSearch('order')">발행순</a>
-                                    <a class="active" href="#none" onclick="moveSearch('view')">인기순</a>
+                                <c:if test="${ page.search eq 'view'}">
+                                    <a href="#none" onclick="moveSearchIssue('order')">발행순</a>
+                                    <a class="active" href="#none" onclick="moveSearchIssue('view')">인기순</a>
                                 </c:if>
-                                
                                 </form>
-                                
-                                <script>
-	                                function moveSearch(order){
-	                                	location.href="cissuelist.do?order=" + order;
-	                                } 
-                                </script>
                                 
                                 </div>
                             </div>
@@ -71,27 +64,24 @@
                                 <!-- 이슈 리스트 출력 -->
                                 <c:forEach items="${ requestScope.list }" var="c">
                               		<c:url var="cdeurl" value="cissuedetail.do">
-	                                	<c:param name="partnerName" value="${ c.partnerName }" />
-	                                	<c:param name="partnerImg" value="${ c.partnerImg }" />
-	                                	<c:param name="thumbnail" value="${ c.thumbnail }" />
-	                                	<c:param name="link" value="${ c.link }" />
+	                                	<c:param name="link" value="${ c.issueLink }" />
                                 	</c:url>
                                 <li class="grid-item" onclick="location='${ cdeurl }'">
                                     <div>
                                         <a href="#none" class="xi-share-alt-o"></a>
-                                        <img src="${ c.thumbnail }">
+                                        <img src="${ c.issueThumbnail }">
                                     </div>
                                     <dl>
                                         <dt><img src="${ c.partnerImg }"></dt>
                                         <dd>
-                                            <h3>${ c.title }</h3>
+                                            <h3>${ c.issueTitle }</h3>
                                             <p>
 						                                                        작성자 : ${ c.partnerName }<br/>
-						                     <c:if test="${ order eq 'order'}">
-							                                                작성일 : ${ c.date }
+						                     <c:if test="${ page.search eq 'order'}">
+							                                                작성일 : ${ c.issueDate }
 						                     </c:if>
-						                     <c:if test="${ order eq 'view'}">
-						                                                         조회수 : <fmt:formatNumber value="${ c.readcount }" groupingUsed="true"/>
+						                     <c:if test="${ page.search eq 'view'}">
+						                                                         조회수 : <fmt:formatNumber value="${ c.issueReadcount }" groupingUsed="true"/>
 						                     </c:if>						                     
                                             </p>
                                         </dd>
@@ -110,6 +100,7 @@
 								<c:if test="${ (page.currentPage - 5) lt page.startPage and (page.currentPage - 5) ge 1 }">
 									<c:url var="npurl1" value="cissuelist.do">
 										<c:param name="page" value="${ page.startPage - 5 }" />
+										<c:param name="order" value="${ page.search }"/>
 									</c:url>
 									<a href="${ npurl1 }"><i class="xi-angle-left"></i></a>
 								</c:if>
@@ -122,6 +113,7 @@
 									<c:if test="${ p ne page.currentPage }">
 										<c:url var="npurl2" value="cissuelist.do">
 											<c:param name="page" value="${ p }" />
+											<c:param name="order" value="${ page.search }"/>
 										</c:url>
 										<a href="${ npurl2 }">${ p }</a>
 									</c:if>
@@ -131,6 +123,7 @@
 								<c:if test="${ (page.currentPage + 5) gt page.endPage and page.endPage lt page.maxPage }">
 									<c:url var="npurl3" value="cissuelist.do">
 										<c:param name="page" value="${ page.startPage + 5 }" />
+										<c:param name="order" value="${ page.search }"/>
 									</c:url>
 									<a href="${ npurl3 }"><i class="xi-angle-right"></i></a>
 								</c:if>

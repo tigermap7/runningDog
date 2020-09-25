@@ -39,8 +39,8 @@
                             <p class="topText">'지금 달려갈 개'의 오늘의 이슈 게시물의 저작권은 1boon 사이트에서 활동하고 있는 원작자에게 있습니다.</p>
                             <dl>
                                 <dt>
-                                    <div class="viewImg"><img src="${ issue.thumbnail }"></div>
-                                    <a class="linkBtn" href="${ issue.link }" target="_blank"><i class="xi-share"></i>원글보기</a>
+                                    <div class="viewImg"><img src="${ issue.issueThumbnail }"></div>
+                                    <a class="linkBtn" href="${ issue.issueLink }" target="_blank"><i class="xi-share"></i>원글보기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </dt>
                                 <dd>
@@ -48,8 +48,8 @@
                                         <img src="${ issue.partnerImg }">
                                         <h4>${ issue.partnerName }</h4>
                                     </div>
-                                    <h2>${ issue.title }</h2>
-                                    <p>조회수 : <fmt:formatNumber value="${ issue.readcount }" groupingUsed="true"/> · ${ issue.date }</p>
+                                    <h2>${ issue.issueTitle }</h2>
+                                    <p>조회수 : <fmt:formatNumber value="${ issue.issueReadcount }" groupingUsed="true"/> · ${ issue.issueDate }</p>
                                 </dd>
                             </dl>
                             
