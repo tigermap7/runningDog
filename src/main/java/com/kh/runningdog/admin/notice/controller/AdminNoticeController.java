@@ -82,7 +82,7 @@ public class AdminNoticeController {
 		Notice notice = noticeService.selectNoticeOne(noticeNo);
 		
 		if(notice != null) {
-			noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
+			//noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
 			noticePage.setNoticeNo(noticeNo);	//이전, 다음글 번호 조회할 때 객체 하나로 보내야해서 추가
 			
 			Integer preNo = noticeService.selectNoticePre(noticePage); //이전글 번호 조회, int는 null값을 못 받아서 integer사용
@@ -190,7 +190,6 @@ public class AdminNoticeController {
 		int i = 1;
 		
 		String getReturnView = request.getParameter("returnView");
-		System.out.println(getReturnView);
 		String deleteFilename1 = request.getParameter("deleteFilename1");
 		String deleteFilename2 = request.getParameter("deleteFilename2");
 		String deleteFilename3 = request.getParameter("deleteFilename3");
