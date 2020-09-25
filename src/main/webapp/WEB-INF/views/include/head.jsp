@@ -24,8 +24,10 @@
 <script src="resources/common/js/swiper.min.js"></script>
 <!-- <script src="resources/common/js/summernote-ko-KR.js"></script> -->
 <script src="resources/common/js/member.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="resources/common/js/sponsor.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 
 <!--티스토리 불펌금지-->
 
