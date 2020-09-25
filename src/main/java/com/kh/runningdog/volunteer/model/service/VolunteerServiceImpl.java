@@ -16,13 +16,13 @@ public class VolunteerServiceImpl implements VolunteerService{
 	private VolunteerDao volunteerDao;
 
 	@Override
-	public int getListCount() {
-		return volunteerDao.getListCount();
+	public int selectListCount(Volunteer volunteer) {
+		return volunteerDao.selectListCount(volunteer);
 	}
 
 	@Override
-	public ArrayList<Volunteer> selectList(int currentPage, int limit, String keyword, String type) {
-		return volunteerDao.selectList(currentPage, limit, keyword, type);
+	public ArrayList<Volunteer> selectList(Volunteer volunteer) {
+		return volunteerDao.selectList(volunteer);
 	}
 
 	@Override
@@ -71,13 +71,13 @@ public class VolunteerServiceImpl implements VolunteerService{
 	}
 
 	@Override
-	public int selectVolunteerPre(int volno) {
-		return volunteerDao.selectVolunteerPre(volno);
+	public int selectVolunteerPre(Volunteer volunteer) {
+		return volunteerDao.selectVolunteerPre(volunteer);
 	}
 
 	@Override
-	public int selectVolunteerNext(int volno) {
-		return volunteerDao.selectVolunteerNext(volno);
+	public int selectVolunteerNext(Volunteer volunteer) {
+		return volunteerDao.selectVolunteerNext(volunteer);
 	}
 
 	@Override
@@ -88,6 +88,11 @@ public class VolunteerServiceImpl implements VolunteerService{
 	@Override
 	public Vreply selectVreply(int vreply_no) {
 		return volunteerDao.selectVreply(vreply_no);
+	}
+
+	@Override
+	public int insertVreplyLevel(Vreply vreply) {
+		return volunteerDao.insertVreplyLevel(vreply);
 	}
 
 	

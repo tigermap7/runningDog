@@ -19,17 +19,12 @@ public class VolunteerDao {
 	private SqlSessionTemplate session;
 	public VolunteerDao() {}
 	
-	public int getListCount() {
-		return session.selectOne("volunteerMapper.getListCount");
+	public int selectListCount(Volunteer volunteer) {
+		return session.selectOne("volunteerMapper.selectListCount", volunteer );
 	}
 	
-	public ArrayList<Volunteer> selectList (int currentPage, int limit, String keyword, String type){
-		int startRow = (currentPage -1)* limit +1;
-		int endRow = startRow + limit -1;
-		
-		VolunteerPage vpage = new VolunteerPage(startRow, endRow, keyword, type);
-
-		List<Volunteer> list = session.selectList("volunteerMapper.selectList", vpage);
+	public ArrayList<Volunteer> selectList (Volunteer volunteer){
+		List<Volunteer> list = session.selectList("volunteerMapper.selectList", volunteer);
 		return (ArrayList<Volunteer>)list;
 	}
 	
@@ -68,16 +63,20 @@ public class VolunteerDao {
 		return session.selectOne("volunteerMapper.getListCountVreply", volno);
 	}
 
-	public int selectVolunteerPre(int volno) {
-		return session.selectOne("volunteerMapper.selectVolunteerPre", volno);
+	public int selectVolunteerPre(Volunteer volunteer) {
+		return session.selectOne("volunteerMapper.selectVolunteerPre", volunteer);
 	}
 
-	public int selectVolunteerNext(int volno) {
-		return session.selectOne("volunteerMapper.selectVolunteerNext", volno);
+	public int selectVolunteerNext(Volunteer volunteer) {
+		return session.selectOne("volunteerMapper.selectVolunteerNext", volunteer);
 	}
 
 	public Vreply selectVreply(int vreply_no) {
 		return session.selectOne("volunteerMapper.selectVreply", vreply_no);
+	}
+
+	public int insertVreplyLevel(Vreply vreply) {
+		return session.insert("volunteerMapper.insertVreplyLevel", vreply);
 	}
 
 }
