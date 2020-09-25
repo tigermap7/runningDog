@@ -369,11 +369,10 @@ public class DboardController {
 	public String updateDboardHide(@RequestParam("dNum") int dNum, Dboard dboard,Model model) {
 		//게시물을 삭제 하지 않고 표시 여부에 업데이트 하여
 		//3개월 후 프로시저 등록 후 스케줄러 이용하여 게시물 삭제
-		int result = dboardService.updateDboardHide(dboard);
-		
+		 
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url ="";
-		if (result > 0) {
+		if (dboardService.updateDboardHide(dboard) > 0) {
 			model.addAttribute("msg", "게시물을 삭제 했습니다.");
 			model.addAttribute("url", "dboardList.do");
 			url = "common/errorDboard";
@@ -388,13 +387,15 @@ public class DboardController {
     @RequestMapping("dUpSuccess.do")
     public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
                                 Dboard dboard,Model model) {
+    	//분양여부를 불러와서 y이면 n을 n이면 y 를 반환하게 함
         dboard.setdSuccess(dSuccess);
         logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
-        int result = dboardService.updateDboardSuc(dboard);
-        
+    
         
         String url="";
-        if (result > 0) {
+        if (dboardService.updateDboardSuc(dboard) > 0) {
+        	
+        	logger.info("분양여부 값 체크 " + dboard);
             model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
             model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
             url = "common/errorDboard";

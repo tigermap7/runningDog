@@ -81,9 +81,10 @@ $(function() {
                                         <tbody>
                                             <tr>
                                                 <th>반려 동물 종류</th>
-                                                <td>${ dboard.dCategory eq "d"?"강아지": "" }
-                                                	${ dboard.dCategory eq "c"?"고양이": "" }
-                                                	${ dboard.dCategory eq "e"?"기  타": "" }
+                                                
+                                                <td>${ dCategory eq "d" ? "강아지" : "" }
+                                                	${ dCategory eq "c" ? "고양이" : "" }
+                                                	${ dCategory eq "e" ? "기  타" : "" }
                                                 </td>
                                                 <th>발견날짜</th>
                                                 <td>${ dboard.dFindDate }</td>
@@ -247,23 +248,89 @@ $(function() {
                         
                         <!-- 댓글 시작 -->
                           <div class="cmt_wrap">
-                            <form name = "dreplyS"action="" method="post">
+                            <form name = ""action="insertDreply.do" method="post">
                             <input type="hidden" id= "dNum" name="dNum" value="${dboard.dNum }">
                             <input type="hidden" id="dreWriter" name="dreWriter" value="${loginMember.nickname }">
                             <input type="hidden" id= "uniqueNum" name="uniqueNum" value="${loginMember.uniqueNum }">
                                 <fieldset>
                                     <div class="cmt_form">
-                                        <h4 class="cmt_head">댓글 77</h4>
+                                        <h4 class="cmt_head">댓글 ${ dreplyCount }</h4>
                                         <div class="cmt_body">
-        <textarea name="dreContent" id = "dreContent" onfocus="this.value='';"></textarea>
-                                            <div class="cmt_ok"><input type="button" value="등록" onclick="DreplySubmit(${result.code})"></div>
+        								<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" id = "dreContent" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+                                            <div class="cmt_ok">
+                                            	<input type="submit" value="등록" >
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </form>
                             <ul class="cmt_con" id="dreply">
-                            </ul>
- <script type="text/javascript">
+							<c:forEach items="${ requestScope.dreplyList }" var="d">
+							<!--  대댓글일 경우 대댓글 창 색상 다르게함 -->
+								<li ${ d.dreLevel eq 2? "style='background-color: #E6E6E6;'" : "" }>
+								<dl>
+									<dt class="img">
+										<img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}">
+									</dt>
+										<dd>
+											<h4>${ d.dreWriter }/#${ d.uniqueNum }</h4>
+										</dd>
+										<dt class="cmt_date">${ d.dreMdate }</dt>
+									</dl>
+									<p>${ d.dreContent }</p>
+									<div class="cmt_conBtn">
+										<c:if test="${ d.dreLevel eq 1 and d.dreDelete eq 'n'}">
+										<button class="Subcmt_btn">대댓글</button>
+										</c:if>
+										<c:if test="${ sessionScope.loginMember.uniqueNum == d.uniqueNum and d.dreDelete eq 'n'}">
+										<button onclick="location.href='updateDreplyDel.do?dreNum=${d.dreNum}&dNum=${d.dNum}'" style="float: right;">삭제</button>
+										<button class="Cmt_update_btn" style="float: right; margin-right: 10px;">수정</button>
+										</c:if>
+										<br>
+										<br>
+										<div class="Cmt_update" style="display: none;">
+											<form name="updateDreply" action="updateDreply.do" method="post">
+												<input type="hidden" name="dreNum" id="dreNumUp" value="${ d.dreNum }">
+												<input type="hidden" name="dNum" value="${ d.dNum }">
+												<input type="hidden" name="dreParents" value="${ d.dreParents }">
+												<fieldset>
+													<div class="cmt_form">
+														<div class="cmt_body">
+															<textarea name="dreContent"
+																style="resize: none; width: 100%; min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
+															<div class="cmt_ok">
+																<input type="submit" class="updateDreply" value="수정">
+															</div>
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										<div style="display: none" class="Subcmt" id="commentReply">
+											<form action="insertDreplyLevel.do" method="post">
+												<input type="hidden" name="dreNum" id="dreNum" value="${ d.dreNum }"> 
+												<input type="hidden" name="dNum" id="dNum" value="${ d.dNum }"> 
+												<input type="hidden" name="dreWriter" id="dreWriter" value="${loginMember.nickname}"> 
+												<input type="hidden" name="uniqueNum" id="uniqueNum" value="${loginMember.uniqueNum}">
+												<fieldset>
+													<div class="cmt_form">
+														<div class="cmt_body">
+															<textarea name="dreContent" id="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
+																onfocus="this.value='';">비방글은 작성할 수 없습니다.</textarea>
+															<div class="cmt_ok">
+																<input type="submit"  value="등록">
+															</div>
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div></li>
+							</c:forEach>
+
+
+
+						</ul>
+<!--  <script type="text/javascript">
                       $(function(){
                     	  getCommentList()
                       });
@@ -444,7 +511,7 @@ function Dreplydelete(dreNum) {
 	});
 }
 
-</script>
+</script> -->
 
                     </div>
                 </div>

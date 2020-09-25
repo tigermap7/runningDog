@@ -11,7 +11,7 @@ public class Dreply implements java.io.Serializable{
 	private String dreDate;
 	private String dreMdate;
 	private int dreParents;
-	private int dreGroup;
+	private int dreLevel;
 	private int uniqueNum;
 	private String dreDelete;
 	
@@ -20,7 +20,7 @@ public class Dreply implements java.io.Serializable{
 
 
 	public Dreply(int dreNum, int dNum, String dreWriter, String dreContent, String dreDate, String dreMdate,
-			int dreParents, int dreGroup, int uniqueNum, String dreDelete) {
+			int dreParents, int dreLevel, int uniqueNum, String dreDelete) {
 		super();
 		this.dreNum = dreNum;
 		this.dNum = dNum;
@@ -29,7 +29,7 @@ public class Dreply implements java.io.Serializable{
 		this.dreDate = dreDate;
 		this.dreMdate = dreMdate;
 		this.dreParents = dreParents;
-		this.dreGroup = dreGroup;
+		this.dreLevel = dreLevel;
 		this.uniqueNum = uniqueNum;
 		this.dreDelete = dreDelete;
 	}
@@ -39,29 +39,36 @@ public class Dreply implements java.io.Serializable{
 		return dreNum;
 	}
 
+
 	public void setDreNum(int dreNum) {
 		this.dreNum = dreNum;
 	}
+
 
 	public int getdNum() {
 		return dNum;
 	}
 
+
 	public void setdNum(int dNum) {
 		this.dNum = dNum;
 	}
+
 
 	public String getDreWriter() {
 		return dreWriter;
 	}
 
+
 	public void setDreWriter(String dreWriter) {
 		this.dreWriter = dreWriter;
 	}
 
+
 	public String getDreContent() {
 		return dreContent;
 	}
+
 
 	public void setDreContent(String dreContent) {
 		this.dreContent = dreContent;
@@ -92,24 +99,26 @@ public class Dreply implements java.io.Serializable{
 		return dreParents;
 	}
 
+
 	public void setDreParents(int dreParents) {
 		this.dreParents = dreParents;
 	}
 
 
-	public int getDreGroup() {
-		return dreGroup;
+	public int getDreLevel() {
+		return dreLevel;
 	}
 
 
-	public void setDreGroup(int dreGroup) {
-		this.dreGroup = dreGroup;
+	public void setDreLevel(int dreLevel) {
+		this.dreLevel = dreLevel;
 	}
 
 
 	public int getUniqueNum() {
 		return uniqueNum;
 	}
+
 
 	public void setUniqueNum(int uniqueNum) {
 		this.uniqueNum = uniqueNum;
@@ -134,12 +143,7 @@ public class Dreply implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Dreply [dreNum=" + dreNum + ", dNum=" + dNum + ", dreWriter=" + dreWriter + ", dreContent=" + dreContent
-				+ ", dreDate=" + dreDate + ", dreMdate=" + dreMdate + ", dreParents=" + dreParents + ", dreGroup="
-				+ dreGroup + ", uniqueNum=" + uniqueNum + ", dreDelete=" + dreDelete + "]";
+				+ ", dreDate=" + dreDate + ", dreMdate=" + dreMdate + ", dreParents=" + dreParents + ", dreLevel="
+				+ dreLevel + ", uniqueNum=" + uniqueNum + ", dreDelete=" + dreDelete + "]";
 	}
-
-
-	
-	
-	
 }
