@@ -30,6 +30,8 @@ import com.kh.runningdog.common.ImageUtil.Image;
 import com.kh.runningdog.common.ImageUtil.ImageLoader;
 import com.kh.runningdog.dboard.model.service.DboardService;
 import com.kh.runningdog.dboard.model.vo.Dboard;
+import com.kh.runningdog.dreply.model.service.DreplyService;
+import com.kh.runningdog.dreply.model.vo.Dreply;
 
 @Controller
 public class DboardController {
@@ -37,6 +39,12 @@ public class DboardController {
 	
 	@Autowired
 	private DboardService dboardService;
+	
+	
+	//게시물 보기할시에 댓글리스트를 불러오기 위함
+	@Autowired
+	private DreplyService dreplyService;
+	
 	
 //	@RequestMapping("dlistPage.do")
 //	public String moveDlistPage() {
@@ -140,13 +148,15 @@ public class DboardController {
 		logger.info("EndPageNo // 끝 페이지 (페이징 네비 기준) : " + dboard.getEndPageNo());
 		logger.info("totalCount // 게시 글 전체 수 : " + totalCount);
 
-		ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
+		ArrayList<Dboard> dboardList = dboardService.selectList(dboard); 
 		
 		
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("dboardList", dboardList);
+		
+		
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url = "";
 		if (totalCount > 0) {
@@ -189,7 +199,7 @@ public class DboardController {
 	}
 	
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum,Model model,HttpServletRequest request,HttpServletResponse response) {
+	public String selectOne(@RequestParam("dNum") int dNum, Dreply dreply, Model model,HttpServletRequest request,HttpServletResponse response) {
 				
 		logger.info("dboard View게시글 번호" + dNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
@@ -228,17 +238,23 @@ public class DboardController {
 		}
 		
 		//조회수 처리 후 게시물에 대한 정보 불러오기
-		Dboard dboard = dboardService.selectOne(dNum);
+		Dboard dboard = dboardService.selectOne(dNum); //게시물 하나의 정보를 가져옴
+		int dreplyCount = dreplyService.seletListCount(dNum); // 게시물의 댓글 갯수를 구한다
+		ArrayList<Dreply> dreplyList = dreplyService.selectList(dNum); //댓글 리스트 
+		
+		
 		dboard.setdCategory(request.getParameter("dCategory"));
 		dboard.setdLocal(request.getParameter("dLocal"));
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
 		
+		model.addAttribute("dreplyCount" , dreplyCount);
+		model.addAttribute("dreplyList", dreplyList);
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("searchFiled", dboard.getSearchFiled());
 		model.addAttribute("searchValue", dboard.getSearchValue());
-		logger.info(msg);
+		
 		String url = "";
 		
 		if (dboard != null) {

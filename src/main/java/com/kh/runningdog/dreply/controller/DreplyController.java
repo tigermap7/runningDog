@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,91 +31,70 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 	@Autowired
 	private DreplyService dreplyService;
 	
-	
-	@RequestMapping(value="dreplyList.do", method =RequestMethod.POST)
-	@ResponseBody
-	public String selectDreplyList (HttpServletResponse response, @RequestParam(name ="dNum") int dNum,Dreply dreply) throws IOException {
-		
-		logger.info("댓글 리스트 : "+dreply + "게시물번호 : " +dNum);
-		
-		dreply.setdNum(dNum);
-		ArrayList<Dreply> list = dreplyService.selectList(dNum);
-		
-		JSONObject sendJSON = new JSONObject();
-		JSONArray jarr = new JSONArray();
-		
-		for (Dreply dre : list) {
-			JSONObject job = new JSONObject();
-			
-			job.put("dreNum", dre.getDreNum());
-			job.put("dNum", dre.getdNum());
-			job.put("dreWriter", URLEncoder.encode(dre.getDreWriter(),"utf-8"));
-			job.put("dreContent", URLEncoder.encode(dre.getDreContent(),"utf-8"));
-			job.put("dreDate", dre.getDreDate());
-			job.put("dreMdate", dre.getDreMdate());
-			job.put("dreParents", dre.getDreParents());
-			job.put("uniqueNum", dre.getUniqueNum());
-			job.put("dreDelete", dre.getDreDelete());
-			
-			jarr.add(job);
-		}
-		response.setContentType("text/html; charset=utf-8");
-		sendJSON.put("list", jarr);
-		
-		return sendJSON.toJSONString();
-		
-	}
+
 	
 	@RequestMapping(value="insertDreply.do", method= RequestMethod.POST)
-	public void insertDreply (Dreply dreply, @RequestParam(value="dNum") int dNum, HttpServletResponse response,HttpServletRequest request) throws IOException {
+	public String insertDreply (Dreply dreply, @RequestParam(value="dNum") int dNum, Model model) {
 		logger.info("리플 insert 값 : ", dreply + "게시글 번호 : " + dNum);
-		
-		response.setContentType("text/html; charset=utf-8");
-		
 		logger.info("댓글 insert dreply 값 :"+dreply);
+		
 		dreply.setdNum(dNum);
-		dreply.setDreParents(dNum);
-		int result = dreplyService.insertDreply(dreply);
 		
-		response.setContentType("text/html; charset=utf-8");
-		
-		PrintWriter out = response.getWriter();
-		out.append(Integer.toString(result));	//result = 0  입력 X, 1 = 입력 O
-		out.flush();
-		out.close();
+		String url = "";
+		if (dreplyService.insertDreply(dreply) > 0) {
+			model.addAttribute("msg", "댓글을 등록 했습니다.");
+			model.addAttribute("url", "dboardList.do");
+			url = "common/errorDboard";
+		}else {
+			model.addAttribute("msg", "댓글 등록에 실패 했습니다.");
+			model.addAttribute("url", "dboardList.do)");
+			url = "common/errorDboard";
+		}
+		return url;
 	}
 	
-	@RequestMapping(value="updateDreply.do", method=RequestMethod.POST)
-	public void updateDreply (Dreply dreply, @RequestParam(value="dreNum") int dreNum, HttpServletResponse response,
-							@RequestParam(value="dreParents") int dreParents) throws IOException {
+	@RequestMapping("updateDreply.do")
+	public String updateDreply (Dreply dreply, @RequestParam(value="dreNum") int dreNum,Model model,
+							@RequestParam(value="dreParents") int dreParents) {
 		logger.info("댓글 update 값 : "+ dreply + "게시글 번호 : " + dreNum);
 		
-		response.setContentType("text/html; charset=utf-8");
-
 		
-		dreply.setdNum(dreNum);
-		int result = dreplyService.updateDreply(dreply);
-		response.setContentType("text/html; charset=utf-8");
+		dreply.setDreNum(dreNum);
+		dreply.setDreParents(dreParents);
 		
-		PrintWriter out = response.getWriter();
-		out.append(Integer.toString(result));	//result = 0  입력 X, 1 = 입력 O
-		out.flush();
-		out.close();
+		String url = "";
+		if (dreplyService.updateDreply(dreply) > 0) {
+			model.addAttribute("msg", "댓글수정 완료.");
+			model.addAttribute("url", "dboardList.do");
+			url = "common/errorDboard";
+		}else {
+			model.addAttribute("msg", "댓글 수정 실패.");
+			model.addAttribute("url", "dboardList.do)");
+			url = "common/errorDboard";
+		}
+		return url;
 	}
 	
 	
 	@RequestMapping(value="updateDreplyDel.do", method=RequestMethod.POST)
-	public void  updateDreplyDel (Dreply dreply, HttpServletRequest reqeust,HttpServletResponse response,
-							@RequestParam(value="dreNum") int dreNum,@RequestParam(value="dNum") int dNum) throws IOException {
+	public String updateDreplyDel (Dreply dreply, Model model,@RequestParam(value="dreNum") int dreNum,
+									@RequestParam(value="dNum") int dNum)  {
 		logger.info("삭제할 댓글 번호 : " + dreNum);
+		
 		dreply.setDreNum(dreNum);
-		int result =dreplyService.updateDreplyDel(dreply);
+		dreply.setdNum(dNum);
 		
-		
-		PrintWriter out = response.getWriter();
-		out.append(Integer.toString(result));	//result = 0  입력 X, 1 = 입력 O
-		out.flush();
-		out.close();
+		String url = "";
+		if (dreplyService.updateDreplyDel(dreply) > 0) {
+			model.addAttribute("msg", "댓글을 삭제 했습니다.");
+			model.addAttribute("url", "dboardList.do");
+			url = "common/errorDboard";
+		}else {
+			model.addAttribute("msg", "댓글 삭제 실패.");
+			model.addAttribute("url", "dboardList.do)");
+			url = "common/errorDboard";
+		}
+		return url;
 	}
 	
 	

@@ -53,11 +53,11 @@
                             <h4>전체 ${ totalCount }마리 '작은 천사'</h4>
                             <div>
                                 <div>
-                                <!-- <form action="" name="">
+                                 <!-- <form action="" name="">
                                     <a class="active" href="#none">전체</a>
                                     <a href="insertAnimal.do">강아지</a>
-                                    <a href="#none">고양이</a> -->
-                                </form>
+                                    <a href="#none">고양이</a> 
+                                </form> -->
                                 </div>
                             </div>
                         </div>

@@ -217,7 +217,7 @@ public class AnimalController {
 		return url;
 	}
 	
-	
+		@RequestMapping("insertAnimal.do")
 	   public void animalInsert(HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
 
 	      Date today = new Date();        
@@ -239,7 +239,7 @@ public class AnimalController {
 	         String url = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?"
 	               + "serviceKey=O47ZzSBjhdMfvVC0tEcZdGSVGD6teeNcyNNtI0sbA4%2BwpXc%2BDy3Y0OYfDAT9S0gajYoe7yZJ%2Fnq4tcDXQxkksw%3D%3D"
 	               + "&bgnde="+beforeMonth+"&endde="+toDay
-	               + "&upkind=417000&kind=&upr_cd=&org_cd=&care_reg_no=&state=notice&pageNo=1&numOfRows=20&neuter_yn=&";
+	               + "&upkind=417000&kind=&upr_cd=&org_cd=&care_reg_no=&state=notice&pageNo=1&numOfRows=200&neuter_yn=&";
 	         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	         Document doc = dBuilder.parse(url);

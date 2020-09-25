@@ -19,14 +19,14 @@
 	</resultMap>
 	
 	
-	<select id="selectListCount" parameterType="Dreply" resultType="int">
+	<select id="selectListCount" parameterType="_int" resultType="int">
 		SELECT COUNT(*)
 		FROM DREPLY
 		WHERE d_num = #{ dNum }
 		
 	</select>
 	
-	<select id="selectDreplyList" parameterType="_int" resultType="Dreply">
+	<select id="selectDreplyList" parameterType="_int" resultMap="Dreply">
 		SELECT DRE_NUM, D_NUM, DRE_WRITER, DRE_CONTENT, DRE_DATE, DRE_MDATE,
 			   DRE_PARENTS, DRE_GROUP, UNIQUE_NUM, DRE_DELETE
 		FROM DREPLY
@@ -69,10 +69,11 @@
 		WHERE DRE_NUM = ${ dreNum }
 	</update>
 	
-	<delete id = "updateDreplyDel" parameterType="Dreply">
+	<update id = "updateDreplyDel" parameterType="Dreply">
 		UPDATE DREPLY SET
 			   DRE_DELETE = 'y',
+			   DRE_CONTENT = '삭제된 댓글 입니다',
 			   DRE_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
 		WHERE DRE_NUM = #{ dreNum }
-	</delete>
+	</update>
 </mapper>

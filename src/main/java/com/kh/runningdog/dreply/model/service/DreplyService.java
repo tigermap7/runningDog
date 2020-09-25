@@ -16,5 +16,7 @@ public interface DreplyService {
 
 	int insertDreplyLevel(Dreply dreply);
 
+	int seletListCount(int dNum);
+
 
 }

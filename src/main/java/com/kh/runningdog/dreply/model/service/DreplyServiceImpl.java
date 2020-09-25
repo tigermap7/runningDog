@@ -38,6 +38,11 @@ public class DreplyServiceImpl implements DreplyService {
 	public int insertDreplyLevel(Dreply dreply) {
 		return dreplyDao.insertDreplyLevel(dreply);
 	}
+
+	@Override
+	public int seletListCount(int dNum) {
+		return dreplyDao.selectListCount(dNum);
+	}
 	
 	
 
