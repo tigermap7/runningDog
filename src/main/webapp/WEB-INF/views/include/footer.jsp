@@ -71,7 +71,7 @@
     });
 </script>
 <script type="text/javascript">
-function updateTotalUnread() {
+/*function updateTotalUnread() {
 	var myChatList = ${sessionScope.myChatList};
 	console.log(myChatList);
 	$.ajax({
@@ -98,5 +98,5 @@ function updateTotalUnread() {
 	    }
 	});
 };
-setTimeout(updateTotalUnread, 10);
+setTimeout(updateTotalUnread, 10);*/
 </script>
