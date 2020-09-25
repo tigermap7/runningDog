@@ -25,14 +25,14 @@
         <li>
             <h2><a href="#collapse3" class="collapsed" data-toggle="collapse"><i class="xi-library-bookmark"></i> 콘텐츠 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse3" class="collapse show" data-parent="#accordion">
-                <a href="/WEB-INF/views/admin/contents/knowledgeList.jsp">반려동물 상식 관리</a>
-                <a href="/WEB-INF/views/admin/contents/issueList.jsp">오늘의 이슈 관리</a>
+                <a href="cknowlist.ad">반려동물 상식 관리</a>
+                <a href="cissuelist.ad">오늘의 이슈 관리</a>
             </div>
         </li>
         <li>
             <h2><a href="#collapse4" class="collapsed" data-toggle="collapse"><i class="xi-cog"></i> 관리자 관리 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse4" class="collapse show" data-parent="#accordion">
-                <a href="/WEB-INF/views/admin/etc/aboutView.jsp">사이트소개 관리</a>
+                <!-- <a href="/WEB-INF/views/admin/etc/aboutView.jsp">사이트소개 관리</a> -->
                 <a href="etcView.ad">사용자약관 관리</a>
                 <a href="adminInfo.ad">관리자 정보수정</a>
             </div>
