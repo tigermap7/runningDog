@@ -149,57 +149,15 @@
                     </ul>
                 </div>
 
-				<!-- 파이썬 크롤링 에러날까봐 주석처리 해놓음 -->
-				<!-- 오늘의 이슈 ajax -->
-<!-- 				<script>
-		         $(function(){
-		        	 $.ajax({
-		        		 url : "mainIssueList.do",
-		        		 type : "post",
-		        		 dataType : "json",
-		        		 success : function(data) {
-		        			 console.log("mainIssueList success : " + data)
-		        			 var jsonStr = JSON.stringify(data);
-		        			 var json = JSON.parse(jsonStr);
-		        			 
-		        			 var values = "";
-		        			 for( var i in json.list) {
-		        	              values +=  '<li class="grid-item" onclick="moveIssueDetail("' + json.list[i].link + '")">'
-		        	              + '<div><a href="#none" class="xi-share-alt-o"></a>' 
-		        	              + '<img src="' + json.list[i].thumbnail + '"></div>'
-		        	              + '<dl><dt><img src="' + json.list[i].partnerImg + '"></dt>'
-		                          + '<dd><h3>' + decodeURIComponent(json.list[i].title) + '</h3>'
-		                          + '<p>'
-		                          + '작성자 : ' + decodeURIComponent(json.list[i].partnerName) + '<br/>'
-		                          + '작성일 : ' + json.list[i].date  
-		                          + '</p></dd></dl></li>';
-		        				 
-		        				 if(i == 7) {
-		        					 break;
-		        				 }
-		        				 console.log(i)
-		        			 }
-		        			 
-		        			 $("#mainIssueList").html($("#mainIssueList").html() + values);
-		        		 },
-		 				 error: function(jqXHR, textstatus, errorthrown) {
-							console.log("error : " + jqXHR + ", " + textstatus + ", "
-									+ errorthrown);
-		 				 }
-		        	 }); //ajax
-		        	 
-		         }); //document.ready 
-				
-		        </script> -->
 		        
-		        
+		        <!-- 오늘의 이슈 최신순 리스트 출력 -->
                 <div class="main_animalNews">
                     <h2><span>'나의 작은 천사'</span>천사와<br/>함께보는 오늘의 이슈!</h2>
                     <ul class="grid" id="mainIssueList">
                         <!-- li class="grid-sizer"></li-->
-                        <!-- 오늘의 이슈 최신순 리스트 출력 -->
                     </ul>
                 </div>
+
 
                 <div class="main_banner2">
                     <ul>
@@ -210,12 +168,12 @@
                                 함께하는 여러분의 따뜻한<br/>손길이 모여 큰 힘이 됩니다.
                             </p>
                         </li>
-                        <li>
+                        <li onclick="location.href='cknowlist.do'">
                             <a href="cknowlist.do" class="xi-plus-circle-o"></a>
                             <h2>상식/이슈 <i class="xi-message-o"></i></h2>
                             <p>사랑스러운 반려동물의<br/>유용한 소식을 알려드립니다.</p>
                         </li>
-                        <li>
+                        <li onclick="location.href='nlist.do'">
                             <a href="nlist.do" class="xi-plus-circle-o"></a>
                             <h2>공지사항 <i class="xi-bell-o"></i></h2>
                             <p>'지금 달려갈 개'의<br/>공지사항을 꼭 확인해주세요.</p>
@@ -225,7 +183,42 @@
             </div>
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
-		
-		
 	</body>
+	<!-- 상세페이지 이동은 크롤링해서 가져오기 때문에 오류 날 수도 있음 -->
+	<!-- 오늘의 이슈 ajax -->
+ 	<script>
+	$(function(){
+		$.ajax({
+			url : "mainIssueList.do",
+		    type : "post",
+		    dataType : "json",
+		    success : function(data) {
+		    	console.log("mainIssueList success : " + data)
+		        var jsonStr = JSON.stringify(data);
+		        var json = JSON.parse(jsonStr);
+		        			 
+		        var values = "";
+		        for( var i in json.list) {
+		        	values +=  '<li class="grid-item" onclick=moveIssueDetail("'+ json.list[i].link +'");>'
+		        		+ '<div><a href="#none" class="xi-share-alt-o"></a>' 
+		        	    + '<img src="' + json.list[i].thumbnail + '"></div>'
+		        	    + '<dl><dt><img src="' + json.list[i].partnerImg + '"></dt>'
+		                + '<dd><h3>' + decodeURIComponent(json.list[i].title) + '</h3>'
+		                + '<p>'
+		                + '작성자 : ' + decodeURIComponent(json.list[i].partnerName) + '<br/>'
+		                + '작성일 : ' + json.list[i].date  
+		                + '</p></dd></dl></li>';
+		        				 
+		        }
+		        
+		        $("#mainIssueList").html(values);
+		        
+			},
+		 	error: function(jqXHR, textstatus, errorthrown) {
+		 		console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+		 	}
+		}); //ajax
+		        	 
+	}); //document.ready 
+	</script> 
 </html>
