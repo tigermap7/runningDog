@@ -1,42 +1,46 @@
 package com.kh.runningdog.contents.model.vo;
 
-public class Issue {
-	String order;
-	String partnerName;
-	String partnerImg;
-	String title;
-	String date;
-	int readcount;
-	String thumbnail;
-	String link;
-	String content;
-	int page;
+public class Issue implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 5876L;
+	
+	private String issueOrder;
+	private String partnerName;
+	private String partnerImg;
+	private String issueTitle;
+	private String issueDate;
+	private int issueReadcount;
+	private String issueThumbnail;
+	private String issueLink;
+	private String content;
+	private int page;
 
 	public Issue() {
 		
 	}
 
-	public Issue(String order, String partnerName, String partnerImg, String title, String date, int readcount,
-			String thumbnail, String link, String content, int page) {
+	public Issue(String issueOrder, String partnerName, String partnerImg, String issueTitle, String issueDate,
+			int issueReadcount, String issueThumbnail, String issueLink, String content, int page) {
 		super();
-		this.order = order;
+		this.issueOrder = issueOrder;
 		this.partnerName = partnerName;
 		this.partnerImg = partnerImg;
-		this.title = title;
-		this.date = date;
-		this.readcount = readcount;
-		this.thumbnail = thumbnail;
-		this.link = link;
+		this.issueTitle = issueTitle;
+		this.issueDate = issueDate;
+		this.issueReadcount = issueReadcount;
+		this.issueThumbnail = issueThumbnail;
+		this.issueLink = issueLink;
 		this.content = content;
 		this.page = page;
 	}
 
-	public String getOrder() {
-		return order;
+
+	public String getIssueOrder() {
+		return issueOrder;
 	}
 
-	public void setOrder(String order) {
-		this.order = order;
+	public void setIssueOrder(String issueOrder) {
+		this.issueOrder = issueOrder;
 	}
 
 	public String getPartnerName() {
@@ -55,44 +59,44 @@ public class Issue {
 		this.partnerImg = partnerImg;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getIssueTitle() {
+		return issueTitle;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setIssueTitle(String issueTitle) {
+		this.issueTitle = issueTitle;
 	}
 
-	public String getDate() {
-		return date;
+	public String getIssueDate() {
+		return issueDate;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setIssueDate(String issueDate) {
+		this.issueDate = issueDate;
 	}
 
-	public int getReadcount() {
-		return readcount;
+	public int getIssueReadcount() {
+		return issueReadcount;
 	}
 
-	public void setReadcount(int readcount) {
-		this.readcount = readcount;
+	public void setIssueReadcount(int issueReadcount) {
+		this.issueReadcount = issueReadcount;
 	}
 
-	public String getThumbnail() {
-		return thumbnail;
+	public String getIssueThumbnail() {
+		return issueThumbnail;
 	}
 
-	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setIssueThumbnail(String issueThumbnail) {
+		this.issueThumbnail = issueThumbnail;
 	}
 
-	public String getLink() {
-		return link;
+	public String getIssueLink() {
+		return issueLink;
 	}
 
-	public void setLink(String link) {
-		this.link = link;
+	public void setIssueLink(String issueLink) {
+		this.issueLink = issueLink;
 	}
 
 	public String getContent() {
@@ -111,11 +115,13 @@ public class Issue {
 		this.page = page;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Issue [order=" + order + ", partnerName=" + partnerName + ", partnerImg=" + partnerImg + ", title="
-				+ title + ", date=" + date + ", readcount=" + readcount + ", thumbnail=" + thumbnail + ", link=" + link
-				+ ", content=" + content + ", page=" + page + "]";
+		return "Issue [issueOrder=" + issueOrder + ", partnerName=" + partnerName + ", partnerImg=" + partnerImg
+				+ ", issueTitle=" + issueTitle + ", issueDate=" + issueDate + ", issueReadcount=" + issueReadcount
+				+ ", issueThumbnail=" + issueThumbnail + ", issueLink=" + issueLink + ", content=" + content + ", page="
+				+ page + "]";
 	}
 
 
