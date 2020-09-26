@@ -202,6 +202,7 @@ public class AdminVolunteerController {
 						new File(savePath + "\\" + renameFileName).delete();
 				}
 			}
+				volunteerService.deleteVBreplyAll(volno);
 				url = "redirect:/vlist.ad";
 			}else {
 				model.addAttribute("msg", "글이 삭제되지않았습니다.");
