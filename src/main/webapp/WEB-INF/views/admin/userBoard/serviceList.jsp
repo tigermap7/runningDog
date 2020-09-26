@@ -63,7 +63,7 @@ function deleteAction(){
 	console.log("### checkRow => {"+checkRow+"}");
 	
 	if(confirm("삭제 하시겠습니까?"))
-		location.href = "vdelete.ad?checkRow=" + checkRow ;
+		location.href = "vdeleteche.ad?checkRow=" + checkRow ;
 }
 </script>
             <!-- 본문내용 -->
@@ -164,7 +164,6 @@ function deleteAction(){
                 <!-- 버튼 -->
                 <div class="list-btn">
                     <button type="button" id="" class="btn-left chkBtn" onclick="deleteAction();"><i class="xi-cut"></i> 선택삭제</button>
-                   <!--  <button type="button" id="" class="btn-right writeBtn" onclick="location='serviceWrite.jsp'"><i class="xi-pen-o"></i> 글작성</button> -->
                 </div>
                 <!-- //버튼 -->
 

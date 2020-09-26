@@ -100,9 +100,9 @@ public class AdminVolunteerController {
 			}
 			return url;
 		}
-		//글삭제하기(관리자용)
-		@RequestMapping(value="vdelete.ad") 
-		public String deleteVolunteerAdmin(HttpServletRequest request, Volunteer volunteer, Model model) {
+		//글삭제하기체크박스로삭제(관리자용)
+		@RequestMapping(value="vdeleteche.ad") 
+		public String deleteVolunteerAdminChe(HttpServletRequest request, Volunteer volunteer, Model model) {
 			
 			String[] checkRow = null;
 			checkRow = request.getParameter("checkRow").split(",");
@@ -186,6 +186,32 @@ public class AdminVolunteerController {
 			}
 			return url;
 		}
+		
+		//글삭제하기
+		@RequestMapping(value="vdelete.ad") 
+		public String deleteVolunteerAdmin(HttpServletRequest request, Volunteer volunteer, Model model) {
+			int volno = Integer.parseInt(request.getParameter("volno"));
+			
+			volunteer.setVolno(volno);
+			String url = " ";
+			if(volunteerService.deleteVolunteer(volunteer) > 0) {
+				for (int i = 1; i < 5; i++) {
+					String renameFileName = request.getParameter("rfile"+ i);
+					if(renameFileName != null) {
+						String savePath = request.getSession().getServletContext().getRealPath("resources/vfiles");
+						new File(savePath + "\\" + renameFileName).delete();
+				}
+			}
+				url = "redirect:/vlist.ad";
+			}else {
+				model.addAttribute("msg", "글이 삭제되지않았습니다.");
+				model.addAttribute("url", "vlist.ad");
+				url = "common/errorDboard";
+			}
+			return url;
+			
+		}
+		
 	
 
 }

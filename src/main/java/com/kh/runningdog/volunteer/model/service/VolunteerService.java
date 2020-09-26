@@ -23,4 +23,5 @@ public interface VolunteerService {
 	int selectVolunteerNext(Volunteer volunteer);
 	Vreply selectVreply(int vreply_no);
 	int insertVreplyLevel(Vreply vreply);
+	int deleteVBreplyAll(int volno);
 }

@@ -160,10 +160,10 @@
 		update vreply set vreply_content = #{vreply_content}, vreply_date = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
 					  where vreply_no = #{vreply_no}
 	</update>
-	<!-- <insert id="insertVreplyLevel" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
+	<insert id="insertVreplyLevel" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
 			insert into vreply 
-			values (vreply_seq.nextval,#{volno}, #{nickname}, (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL), #{vreply_content}, #{parant_reply}, #{vreply_level})
-	</insert> -->
+			values (vreply_seq.nextval,#{volno}, #{nickname}, (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL), #{vreply_content}, #{parant_reply}, 1)
+	</insert> 
 	<!-- <insert id="insertVreply1" parameterType="Board">
 			insert into board 
 			values ((select max(board_num) + 1 from board), 
@@ -174,5 +174,9 @@
 	<delete id="deleteVreply" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
 			delete from vreply
 				   where vreply_no = #{ vreply_no }
+	</delete>
+	<delete id="deleteVBreplyAll" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
+			delete from vreply
+				   where volno = #{ volno }
 	</delete>
 </mapper>

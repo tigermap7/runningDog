@@ -79,4 +79,8 @@ public class VolunteerDao {
 		return session.insert("volunteerMapper.insertVreplyLevel", vreply);
 	}
 
+	public int deleteVBreplyAll(int volno) {
+		return session.delete("volunteerMapper.deleteVBreplyAll", volno);
+	}
+
 }

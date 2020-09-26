@@ -95,6 +95,11 @@ public class VolunteerServiceImpl implements VolunteerService{
 		return volunteerDao.insertVreplyLevel(vreply);
 	}
 
+	@Override
+	public int deleteVBreplyAll(int volno) {
+		return volunteerDao.deleteVBreplyAll(volno);
+	}
+
 	
 	
 	
