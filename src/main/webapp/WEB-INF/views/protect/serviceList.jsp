@@ -106,6 +106,7 @@ $(function(){
                                  			<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 											<c:param name="searchValue" value="${pageVO.searchValue }" />
 											<c:param name="volche" value="${ v.volche }"/>
+											<c:param name="volwriter" value="${ v.volwriter }"/>
                                   		</c:url>
                                   		<c:if test="${ v.volche eq 'y' }">
                                     <tr class="serviceOn" onclick="location.href='${vd}'">
@@ -147,22 +148,7 @@ $(function(){
                                         <td><a href="${vd}">자세히 보기 <i class="xi-eye-o"></i></a></td>
                                     </tr>
                                    </c:forEach>
-                                    <%--  <tr class="serviceOut" onclick="location.href='serviceView.jsp'">
-                                        <td class="img">
-                                            <span>마감</span>
-                                            <img src="/runningdog/resources/images/test/animalNews04.jpg">
-                                        </td>
-                                        <td>
-                                            <h3>${ v.voltitle }</h3>
-                                            <ul>
-                                                <li class="location"><span>지역 : </span>${v.voladdress}</li>
-                                                <li><span>센터명 : </span>${v.volname}</li>
-                                                <li><span>모집기간 : </span>${v.volche }</li>
-                                                <li><span>봉사기간 : </span>${v.volterm}</li>
-                                            </ul>
-                                        </td>
-                                        <td><a href="${vd}">자세히 보기 <i class="xi-eye-o"></i></a></td>
-                                    </tr>  --%>
+                                 
                                 </tbody>
                             </table>
                         <!-- 리스트 끝 -->
