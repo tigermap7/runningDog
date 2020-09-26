@@ -38,32 +38,29 @@
 								<if test="searchFiled != null and searchFiled !=''">
 									where ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 								</if>
-								  order by proname)) 
+								  order by proname asc)) 
 			WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}
 	</select>
 	<select id="selectProtect"  parameterType="_int"  resultMap="resultProtect">
 			select * from protect where prono = #{ prono }
 	</select>
 	<select id="selectProtectPre" parameterType="Protect" resultType="_int">
-			
-			select NVL(max(prono),${prono})
-			from protect
-			where 1=1
-			<if test="searchFiled != null and searchFiled !=''">
-				AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
-			</if>
-			<![CDATA[ and prono < #{ prono }]]>
-	
-	</select>
-	<select id="selecProtectNext" parameterType="Protect" resultType="_int">
-			
-			select NVL(min(prono),${prono})
+			select NVL(min(prono), ${ prono })
 			from protect
 			where 1=1
 			<if test="searchFiled != null and searchFiled !=''">
 				AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 			</if>
 			<![CDATA[ and prono > #{ prono } ]]>
+	</select>
+	<select id="selecProtectNext" parameterType="Protect" resultType="_int">
+			select NVL(max(prono), ${ prono })
+			from protect
+			where 1=1
+			<if test="searchFiled != null and searchFiled !=''">
+				AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+			</if>
+			<![CDATA[ and prono < #{ prono }]]>
 	</select>
 	<insert id="insertProtect" parameterType="Protect">
 			insert into protect 
