@@ -88,8 +88,7 @@
 			select * from (select rownum rnum, volno, voltitle, unique_num, volwriter, volcontent, voldate, 
 											voltel, volterm1, volterm2, volname, volor1, volre1, volor2, volre2, volor3, volre3, volor4, volre4, voladdress, volche  
 								 from(select *  from  volunteer 
-								 where 1=1
-								 and unique_num = #{unique_num}
+								 where unique_num = #{unique_num}
 								<if test="searchFiled != null and searchFiled !=''">
 									and ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 								</if>
@@ -121,6 +120,33 @@
 			select NVL(min(volno),${volno})
 			from volunteer
 			where 1=1
+			<if test="searchFiled != null and searchFiled !=''">
+				AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+			</if>
+			<if test="volche != null and volche !=''">
+				AND volche  LIKE  '%' || #{volche} || '%'
+			</if>
+			<![CDATA[and volno > #{ volno } ]]>
+	</select>
+	<select id="selectVolunteerPreMypage" parameterType="Volunteer" resultType="_int">
+			
+			select NVL(max(volno),${volno})
+			from volunteer
+			where unique_num = #{unique_num}
+			<if test="searchFiled != null and searchFiled !=''">
+				AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
+			</if>
+			<if test="volche != null and volche !=''">
+				AND volche  LIKE  '%' || #{volche} || '%'
+			</if>
+			<![CDATA[ and volno < #{ volno }]]>
+	
+	</select>
+	<select id="selectVolunteerNextMypage" parameterType="Volunteer" resultType="_int">
+			
+			select NVL(min(volno),${volno})
+			from volunteer
+			where unique_num = #{unique_num}
 			<if test="searchFiled != null and searchFiled !=''">
 				AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 			</if>

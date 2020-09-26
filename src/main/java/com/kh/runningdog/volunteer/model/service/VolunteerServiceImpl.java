@@ -110,6 +110,16 @@ public class VolunteerServiceImpl implements VolunteerService{
 		return volunteerDao.selectListCountMypage(volunteer);
 	}
 
+	@Override
+	public int selectVolunteerPreMypage(Volunteer volunteer) {
+		return volunteerDao.selectVolunteerPreMypage(volunteer);
+	}
+
+	@Override
+	public int selectVolunteerNextMypage(Volunteer volunteer) {
+		return volunteerDao.selectVolunteerNextMypage(volunteer);
+	}
+
 	
 	
 	

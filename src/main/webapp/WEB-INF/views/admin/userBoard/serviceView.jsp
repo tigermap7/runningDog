@@ -145,16 +145,14 @@
                                 </tr>
                                 <tr>
                                     <th>담당자</th>
-                                    <td>${volunteer.volwriter }</td>
+                                    <td>${volunteer.volwriter } / #${ volunteer.unique_num }</td>
                                     <th>모집기간</th>
-                                    <c:if test="${ !empty volunteer.volche }">
-                                            <c:if test="${ volunteer.volche eq 'Y' }">
-                                                 <td>상시모집 / <span class="serviceOn">상시모집중</span></td>
-                                            </c:if>
-                                            <c:if test="${ volunteer.volche eq 'N'}">
-                                                 <td>상시모집 / <span class="serviceOn">모집완료</span></td>
-                                           </c:if>
-                                     </c:if>
+                                    	<c:if test="${ volunteer.volche eq 'y' }">
+                                            <td>상시모집 / <span class="serviceOn">모집중</span></td>
+                                        </c:if>
+                                        <c:if test="${ volunteer.volche eq 'n'}">
+                                            <td>상시모집 / <span class="serviceOn">모집완료</span></td>
+                                        </c:if>	
                                 </tr>
                                 <tr>
                                     <th>지역/주소</th>
