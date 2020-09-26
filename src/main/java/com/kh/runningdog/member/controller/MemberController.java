@@ -483,7 +483,9 @@ public class MemberController {
 	/*채팅방 관련 코드*/
 	/*나의 채팅에서 유저검색*/
 	@RequestMapping("searchChatUser.do")
-	public String searchChatUser(Member member, Model model) {
+	public String searchChatUser(HttpSession session, Member member, Model model) {
+		int uniqueNum = ((Member) session.getAttribute("loginMember")).getUniqueNum();
+		member.setUniqueNum(uniqueNum);
 		ArrayList<Member> list = memberService.selectNicknameCheckList(member);
 		int userCount = memberService.selectNicknameCount(member);
 		

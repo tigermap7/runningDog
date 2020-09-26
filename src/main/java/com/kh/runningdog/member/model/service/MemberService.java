@@ -38,6 +38,7 @@ public interface MemberService {
 	int insertMember(Member member);
 	int updateMember(Member member);
 	int insertLeaveMember(Member member);
+	String selectRenameProfile(int memberNo);
 	
 	
 	//관리자
@@ -55,6 +56,7 @@ public interface MemberService {
 	int selectMemberLeaveCount(MemberPage memberSerch);
 	LeaveMember selectLeaveUserOne(int leaveUniqueNum);
 	int deleteChk(int temp);
+	
 	
 
 }

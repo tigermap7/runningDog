@@ -48,7 +48,7 @@
                         <!--서브 검색 끝-->
 
                         <div class="sort-area">  
-                            <h4>전체 ${listcount}개의 채팅</h4>
+                            <h4 id="listCount"></h4>
                         </div>
                         <table class="chattingList">
                             <colgroup>
@@ -103,7 +103,7 @@
 								values += "<tr onclick=\"javascript:location.href='moveChattingView.do?roomNo=" + chatUpdate.roomNo 
 										+ "&receiver=" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") 
 										+ "&receiverNo=" + chatUpdate.receiverNo + "'\">"
-		                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/common/userBg.png\"></td>"
+		                            	+ "<td class=\"img\"><img src=\"/runningdog/resources/images/memberImg/" + chatUpdate.profile + "\"></td>"
 		                            	+ "<td class=\"title\">"
 		                                + "<h2>" + decodeURIComponent(chatUpdate.receiver).replace(/\+/gi, " ") + "<span>" + chatUpdate.lastdate + "일 마지막 응답</span></h2>"
 		                                + "<p>" + decodeURIComponent(chatUpdate.lastmessage).replace(/\+/gi, " ") + "</p></td>";
@@ -111,9 +111,11 @@
 		                            	//<td class="img"><img src="/runningdog/resources/images/test/animalNews04.jpg"></td>
 							} // for in
 						} else {
-							values = "현재 참여한 채팅방이 없습니다";
+							values += "<tr class='list-no'><td colspan='10'><p><img src='/runningdog/resources/images/btnIcn/icn_big_listNo.png' alt='' title='' /></p>"
+			                        + "<h1>참여한 채팅이 없습니다.</h1></td></tr>";
 						}
 						$("#chatList").html(values);
+						$("#listCount").html("전체 " + json.list.length +"개의 채팅");
 					},
 					error : function(jqXHR, textstatus, errorthrown) {
 						console.log("error : " + jqXHR + ", " + textstatus + ", "

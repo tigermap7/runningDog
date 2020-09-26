@@ -47,11 +47,11 @@
 	</select>
 	
 	<select id="selectNicknameCheckList" parameterType="Member" resultMap="resultList">
-		select * from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
+		select * from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자' and unique_num != #{uniqueNum}
 	</select>
 	
 	<select id="selectNicknameCount" parameterType="Member" resultType="_int">
-		select count(nickname) from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자'
+		select count(nickname) from member where  nickname like '%' || #{ nickname } || '%' and nickname != '관리자' and unique_num != #{uniqueNum}
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
@@ -107,6 +107,10 @@
 		FROM MEMBER
 		WHERE UNIQUE_NUM = #{uniqueNum}
 	</insert>
+	
+	<select id="selectRenameProfile" parameterType="_int" resultType="string">
+		select RENAME_PROFILE FROM MEMBER WHERE UNIQUE_NUM = #{unique_num}
+	</select>
 	
 	
 	
