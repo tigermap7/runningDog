@@ -56,9 +56,14 @@
 
 						<ul class="snsLogin">
 							<li class="kLogin" onclick="javascript:loginWithKakao()"><span><i class="xi-kickstarter"></i></span>카카오 로그인</li>
-							<li id="naverIdLogin naver_id_login" class="nLogin" onclick="location.href='naverLogin.do'"><span><i class="xi-naver"></i></span>네이버 로그인</li>
+							<li id="naverIdLogin naver_id_login" class="nLogin" onclick="javascript:naverLogin()"><span><i class="xi-naver"></i></span>네이버 로그인</li>
 							<li id="status" scope="public_profile,email" onclick="javascript:facebookLogin();" class="fLogin"><span><i class="xi-facebook"></i></span>페이스북 로그인</li>
             			</ul>
+            			<script>
+            				function naverLogin(){
+            					location.href="${naverAuthUrl}";
+            				}
+            			</script>
 					</div>
 				</form>
 				

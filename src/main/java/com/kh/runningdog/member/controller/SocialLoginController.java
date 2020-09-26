@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonNode;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.omg.CORBA.NameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,8 +95,11 @@ public class SocialLoginController {
 	}
 	
 	
+	
+	
+	
 	// 네이버 로그인 컨트롤러
-	@RequestMapping(value="naverLogin.do", method={ RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value="login.do", method={ RequestMethod.GET, RequestMethod.POST })
 	public String naverLogin(Member member, Model model,HttpSession session, HttpServletResponse response, SessionStatus status) throws IOException {
 
 		logger.info("naverLogin run...");
@@ -106,25 +112,91 @@ public class SocialLoginController {
         System.out.println("네이버:" + naverAuthUrl);
         
         //네이버 
-        model.addAttribute("url", naverAuthUrl);
+        model.addAttribute("naverAuthUrl", naverAuthUrl);
  
         /* 생성한 인증 URL을 View로 전달 */
         return "member/login";
     }
  
     //네이버 로그인 성공시 callback호출 메소드
-    @RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
-            throws IOException {
+    @RequestMapping(value = "naverLogin.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String callback(Member member, Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletResponse response, SessionStatus status)
+            throws IOException, ParseException {
         System.out.println("여기는 callback");
         OAuth2AccessToken oauthToken;
         oauthToken = naverLoginBO.getAccessToken(session, code, state);
         //로그인 사용자 정보를 읽어온다.
         apiResult = naverLoginBO.getUserProfile(oauthToken);
         model.addAttribute("result", apiResult);
- 
+
+
+        System.out.println("apiResult : " + apiResult);
+        
+        /** apiResult json 구조
+        {"resultcode":"00",
+        "message":"success",
+        "response":{"id":"33666449","nickname":"shinn****","age":"20-29","gender":"M","email":"sh@naver.com","name":"\uc2e0\ubc94\ud638"}}
+        **/
+        //2. String형식인 apiResult를 json형태로 바꿈
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(apiResult);
+        JSONObject jsonObj = (JSONObject) obj;
+        //3. 데이터 파싱
+        //Top레벨 단계 _response 파싱
+        JSONObject response_obj = (JSONObject)jsonObj.get("response");
+        //response의 nickname값 파싱
+        String naverId = (String)response_obj.get("id");
+        String naverNickname = (String)response_obj.get("nickname");
+        String naverUserId = (String)response_obj.get("email");
+        String naverProfileImage = (String)response_obj.get("profile_image");
+
+        logger.info("naverId : " + naverId);
+        logger.info("naverNickname : " + naverNickname);
+        logger.info("naverUserId : " + naverUserId);
+        logger.info("naverProfileImage : " + naverProfileImage);
+        
+        
+        //4.파싱 닉네임 세션으로 저장
+        session.setAttribute("sessionId", naverUserId); //세션 생성
+        model.addAttribute("result", apiResult);
+        
+     
+		member.setUserId(naverUserId);
+		Member loginMember = memberService.selectFacebookLogin(member);
+		
+		String url = null;
+		
+		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
+			
+			loginMember.setLoginType("naver");
+			if(memberService.updatemyinfo(loginMember) > 0) {
+				logger.info("loginMember : " + loginMember);
+				logger.info("로그인 성공");
+				
+				session.setAttribute("loginMember", loginMember);
+				status.setComplete(); // 요청성공, 200 전송
+				url = "main/main";
+			}
+		}else if(loginMember != null && loginMember.getLoginLimit().equals("Y")) {
+			logger.info("로그인 제한된 계정");
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인이 제한된 계정입니다.\\n관리자에게 문의주세요.'); history.go(-1);</script>");
+            out.flush();
+		}else{
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('간편로그인을 하기 위해선 회원가입이 필요합니다.');</script>");
+            out.flush();
+			model.addAttribute("naverUserId", naverUserId);
+			model.addAttribute("naverNickname", naverNickname);
+			model.addAttribute("naverProfileImage", naverProfileImage);
+	        return "member/socialJoin";
+		}
+		return url;
         /* 네이버 로그인 성공 페이지 View 호출 */
-        return "naverSuccess";
+        //return null;
+        //return "main/main";
     }
 	
 	
@@ -171,7 +243,7 @@ public class SocialLoginController {
 	
 	
 	
-	//소셜 회원가입 컨트롤러
+	//소셜로그인 회원가입 컨트롤러
 	@RequestMapping(value="facebookJoinAction.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String facebookJoinMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
@@ -260,7 +332,7 @@ public class SocialLoginController {
 	
 	
 	
-	//소셜로그인 나의프로필 변경 컨트롤러
+	//소셜로그인회원 나의프로필 변경 컨트롤러
 	@RequestMapping(value="socialMyinfoAction.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String socialMyinfoMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
@@ -354,7 +426,7 @@ public class SocialLoginController {
 		return url;
 	}
 	
-	//회원탈퇴 컨트롤러
+	//소셜로그인회원 회원탈퇴 컨트롤러
 	@RequestMapping(value="socialMemberLeave.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String socialMemberLeaveMethod(Member member, HttpSession session) {
