@@ -54,12 +54,14 @@
 	</beans:bean>
 	
 	<!-- 파일업로드용 클래스 등록 : 파일 전송 용량 지정 -->
-	<beans:bean
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-		id="multipartResolver">
+	<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
 	<beans:property name="maxUploadSize" value="10000000"></beans:property>
 	</beans:bean>
 
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<beans:bean id="naverLoginBO" class="com.kh.runningdog.member.model.vo.NaverLoginBO" />
+	
+	
 	<context:component-scan base-package="com.kh.runningdog" />	
 	
 	<aop:aspectj-autoproxy proxy-target-class="true" />
@@ -72,6 +74,7 @@
 		<websocket:sockjs/>
 	</websocket:handlers>
 	<beans:bean id="echoHandler" class="com.kh.runningdog.websocket.util.EchoHandler"/>
+	
 	
 	<beans:bean id="loginCheckInterceptor" class="com.kh.runningdog.common.interceptor.LoginCheckInterceptor" />
 	<interceptors>
@@ -88,6 +91,12 @@
 			<exclude-mapping path="/board/blist.do" /> -->
 			<!-- <mapping path="/blist.do" /> -->
 			<mapping path="/moveChatting.do"/>
+			<mapping path="/mypage.do"/>
+			<mapping path="/memberAllList.ad"/>
+			<mapping path="/adminMemberInsert.ad"/>
+			<mapping path="/adminMemberView.ad"/>
+			<mapping path="/memberLeaveList.ad"/>
+			<mapping path="/adminMemberLeaveView.ad"/>
 	        <beans:ref bean="loginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>

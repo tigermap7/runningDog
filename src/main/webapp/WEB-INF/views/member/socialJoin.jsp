@@ -32,17 +32,25 @@
                         <div class="loginInfo">
                             <div>
                                 <span><i class="xi-mail-o"></i></span>
-                                <span><input type="email" name="userId" title="아이디(이메일)" id="userIdChk" class="w100p" placeholder="아이디(이메일)" value="${ param.email }" readonly/></span>
+                                <span><input type="email" name="userId" title="아이디(이메일)" id="userIdChk" class="w100p" placeholder="아이디(이메일)" value="${ param.email }${ param.id }${ naverUserId }" readonly/></span>
                             </div>
                             <div>
                                 <span><i class="xi-profile-o"></i></span>
                                 <span>
+                            		<c:if test="${ param.profileImage eq null && naverProfileImage eq null }">
 	                                <input type="file" name="profilImage" title="프로필 사진" class="w100p"/>
+                            		</c:if>
+                            		<c:if test="${ param.profileImage ne null }">
+									간편로그인 계정의 이미지 사용
+                            		</c:if>
+                            		<c:if test="${ naverProfileImage ne null }">
+									간편로그인 계정의 이미지 사용
+                            		</c:if>
                                 </span>
                             </div>
                             <div>
                                 <span><i class="xi-user-o"></i></span>
-                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임" value="${ param.name }" readonly/></span>
+                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임" value="${ param.nickname }${ naverNickname }"/></span>
                             </div>
                             <p id="nicknameWarning">
                                 <span></span>
@@ -58,7 +66,7 @@
                                 <label><input type="checkbox" name="" id="chkY"/> 서비스의 <a href="#none" class="con1">이용약관</a>과 <a href="#none" class="con2">개인정보처리방침</a>에 동의합니다.</label>
                             </p>
 
-                            <input id="facebookJoinAction" class="join_btn" type="button" name="" value="회원가입">
+                            <input id="facebookJoinAction" class="facebookJoinAction join_btn" type="button" name="" value="회원가입">
                         </div>
                         <div class="privacyCke_con">
                             <c:import url="/WEB-INF/views/include/termsCon.jsp"/>

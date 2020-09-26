@@ -59,14 +59,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		if (obj == null) {
 			logger.debug("비로그인 상태 접근");
 			response.setCharacterEncoding("UTF-8");
-
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter printwriter = response.getWriter();
-
-			printwriter.print("<script>alert('로그인을 해주십시오'); location.href='login.do';</script>");
-
+			printwriter.print("<script>alert('로그인한 회원만 접근 가능한 경로입니다.\\n로그인 후 이용해주세요.'); location.href='login.do';</script>");
 			printwriter.flush();
-
 			printwriter.close();
 			return false;
 		}

@@ -43,6 +43,10 @@
                                     <col width="75%">
                                 </colgroup>
                                 <tbody>
+                                    <tr style="display:none;">
+                                        <td>회원번호(고유번호)</td>
+                                        <td><input type="text" name="uniqueNum" title="회원번호(고유번호)" class="form-control w80p" placeholder="회원번호(고유번호)" value="${sessionScope.loginMember.uniqueNum}" readonly/></td>
+                                    </tr>
                                     <tr>
                                         <td>아이디(이메일)</td>
                                         <td><input type="text" name="userId" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" readonly/></td>
@@ -123,6 +127,10 @@
                                     <col width="75%">
                                 </colgroup>
                                 <tbody>
+                                    <tr style="display:none;">
+                                        <td>회원번호(고유번호)</td>
+                                        <td><input type="text" name="uniqueNum" title="회원번호(고유번호)" class="form-control w80p" placeholder="회원번호(고유번호)" value="${sessionScope.loginMember.uniqueNum}" readonly/></td>
+                                    </tr>
                                     <tr>
                                         <td>아이디(이메일)</td>
                                         <td><input type="text" name="userId" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" readonly/></td>
@@ -130,12 +138,26 @@
                                     <tr>
                                         <td>프로필 사진</td>
                                         <td class="profilImage">
-                                       	 	<c:if test="${ !empty loginMember.originProfile }">
+                                       	 	<c:if test="${ loginMember.loginType eq null }">
+											<c:if test="${ !empty loginMember.originProfile  }">
 											${ loginMember.originProfile } &nbsp;
 											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
 											</c:if>
-											<c:if test="${ empty loginMember.originProfile }">
+											<c:if test="${ empty loginMember.originProfile  }">
 											<input type="file" name="profilImage" title="프로필 사진"/>
+											</c:if>
+											</c:if>
+											
+                                       	 	<c:if test="${ loginMember.loginType ne null }">
+											<c:if test="${ !empty loginMember.renameProfile  }">
+											${ loginMember.renameProfile } &nbsp;
+											<c:if test="${ loginMember.loginType ne 'kakao' }">
+											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+											</c:if>
+											</c:if>
+											<c:if test="${ empty loginMember.renameProfile }">
+											<input type="file" name="profilImage" title="프로필 사진"/>
+											</c:if>
 											</c:if>
                                         </td>
                                     </tr>
@@ -160,7 +182,7 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <button type="button" class="leaveBtn">탈퇴하기</button>
+                                            <button onclick="unlinkApp()" type="button" class="socialMemberLeaveBtn api-btn">탈퇴하기</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -171,7 +193,6 @@
                                 <input type="button" class="btn btn-success socialMyinfoBtn" value="수정하기">
                             </div>
                             </c:if>
-            
                         </div>
                     </div>
                 </div>

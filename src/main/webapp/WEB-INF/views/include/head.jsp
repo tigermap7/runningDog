@@ -27,9 +27,19 @@
 <script src="resources/common/js/sponsor.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
-<!--티스토리 불펌금지-->
+<!-- 소셜로그인 API -->
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="/runningdog/resources/common/js/kakaoLogin.js"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v8.0&appId=1200941690288936&autoLogAppEvents=1" nonce="T57R8Bl1"></script>
+<script src="resources/common/js/facebookLogin.js"></script>
+<script src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
+<script src="resources/common/js/naveridlogin_js_sdk_2.0.0.js"></script>
+<script src="resources/common/js/naverLogin.js"></script>
+<!-- 소셜로그인 API 끝 -->
 
-<!-- <script type="text/javascript">
+
+<!--티스토리 불펌금지-->
+<script type="text/javascript">
     var omitformtags=["input", "textarea", "select"]
     omitformtags=omitformtags.join("|")
     function disableselect(e){
@@ -45,4 +55,4 @@
         document.onmousedown=disableselect
         document.onmouseup=reEnable
     }
-</script> -->
+</script>

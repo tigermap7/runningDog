@@ -63,11 +63,11 @@
 	</update>
 	
 	<update id="updatemyinfo" parameterType="Member">
-		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile} where user_id = #{userId}
+		update member set nickname = #{nickname}, phone = #{phone}, origin_profile = #{originProfile}, rename_profile = #{renameProfile}, last_access_date = #{lastAccessDate}, login_type = #{loginType} where user_id = #{userId}
 	</update>
 	
 	<delete id="deleteMember" parameterType="Member">
-		delete member where user_id = #{userId}
+		delete member where UNIQUE_NUM = #{uniqueNum}
 	</delete>
 	
 	
@@ -79,7 +79,7 @@
 	</select>
 	
 	<select id="insertFacabookMember" parameterType="Member">
-		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, null, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, 'facebook', DEFAULT, DEFAULT)
+		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, null, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, null, DEFAULT, DEFAULT)
 	</select>
 	
 	<update id="updateSocialMyinfo" parameterType="Member">

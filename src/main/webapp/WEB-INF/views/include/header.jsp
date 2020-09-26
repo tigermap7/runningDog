@@ -66,7 +66,7 @@
             	<c:if test="${ empty sessionScope.loginMember }">
                 <li><a class="hover_line01" href="login.do">로그인</a></li>
                 <li><a class="hover_line01" href="join.do">회원가입</a></li>
-            	</c:if>
+                </c:if>
             </ul>
         </div>
     </div>
@@ -146,7 +146,6 @@
                     <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
                     <li><a href="/runningdog/views/mypage/myservice.jsp">나의 자원봉사</a></li>
                     <li><a href="moveChatting.do">나의 채팅</a></li>
-                    <li><a href="/runningdog/views/mypage/myReview.jsp">나의 댓글</a></li>
                 </ul>
             </li>
             <li class="menuAll_close xi-close-square"></li>

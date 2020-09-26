@@ -5,12 +5,18 @@
 <div class="leftMenu_wrap">
     <div class="leftProfile">
         <div>
+			<c:if test="${ loginMember.loginType ne 'kakao' }">
 	        <c:if test="${ sessionScope.loginMember.renameProfile eq null }">
 	        <img src="/runningdog/resources/images/common/userBg.png">
 	        </c:if>        
 	        <c:if test="${ sessionScope.loginMember.renameProfile ne null }">
-	        <img src="/runningdog/resources/images/memberImg/${savePath}${sessionScope.loginMember.renameProfile}"/>
+	        <img src="/runningdog/resources/images/memberImg/${sessionScope.loginMember.renameProfile}"/>
 	        </c:if>
+	        </c:if>
+											
+			<c:if test="${ loginMember.loginType eq 'kakao' }">
+			<img src="${loginMember.renameProfile}">
+			</c:if>
         </div>
         <c:if test="${ !empty sessionScope.loginMember}">
         <h3>${sessionScope.loginMember.nickname} 님 </h3>
@@ -20,7 +26,7 @@
         </ul>
         </c:if>
         <c:if test="${ empty sessionScope.loginMember}">
-        <h3>로그인되어 있지 않은 상태입니다.</h3>
+        <h3>로그인이 필요합니다.</h3>
         <ul>
             <li>회원번호<b> #000</b></li>
             <li><button type="button" onclick="location.href='login.do'">로그인</button></li>
@@ -35,7 +41,6 @@
 	        <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
 	        <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
 	        <li><a href="moveChatting.do">나의 채팅</a></li>
-	        <li><a href="/WEB-INF/views/mypage/myComment.jsp">나의 댓글</a></li>
 	   	</c:if>
     </ul>
 

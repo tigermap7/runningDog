@@ -100,8 +100,8 @@ public class MemberDao {
 		return session.insert("memberMapper.insertLeaveMember", member);
 	}
 	
-	public int deleteMember(String userId) {
-		return session.delete("memberMapper.deleteMember", userId);
+	public int deleteMember(Member member) {
+		return session.delete("memberMapper.deleteMember", member);
 	}
 
 	

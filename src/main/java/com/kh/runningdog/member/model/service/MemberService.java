@@ -24,7 +24,7 @@ public interface MemberService {
 	int selectNicknameCount(Member member);
 	int updateMemberPwd(Member member);
 	int updatemyinfo(Member member);
-	int deleteMember(String userId);
+	int deleteMember(Member member);
 	
 	//간편로그인, 회원가입, 소셜마이페이지
 	Member selectFacebookLogin(Member member);
