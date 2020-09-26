@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="listCount"  value="${ requestScope.listCount }"/>
+<c:set var="listCount" value="${ requestScope.totalCount }" />
 <c:set var="startPage"  value="${ requestScope.startPage }"/>
 <c:set var="endPage"  value="${ requestScope.endPage }"/>
 <c:set var="maxPage"  value="${ requestScope.maxPage }"/>
@@ -85,7 +85,7 @@ $(function(){
                                 </colgroup>
                                 <tbody>
                                     <c:forEach var="v" items="${requestScope.list}">
-                                  		<c:url var="vd" value="vdetail.do">
+                                  		<c:url var="vd" value="vdetailmy.do">
                                   	 		<c:param name="volno" value="${v.volno}"/>
                                   	 		<c:param name="page" value="${currentPage}"/>
                                   		</c:url>
@@ -115,10 +115,10 @@ $(function(){
                                                 <li class="location"><span>지역 : </span>${v.voladdress}</li>
                                                 <li><span>센터명 : </span>${v.volname}</li>
                                                  <li><span>모집기간 :</span> 상시모집 /
-                                                	<c:if test="${ v.volche eq'Y'}">
+                                                	<c:if test="${ v.volche eq'y'}">
                                                 			모집중</li>
                                                		</c:if>
-                                               		<c:if test="${ v.volche ne'Y'}">
+                                               		<c:if test="${ v.volche ne'y'}">
                                                				모집완료</li>
                                                		</c:if>
                                                		<c:if test="${!empty v.volterm1 }">
@@ -141,7 +141,7 @@ $(function(){
                                 <a><i class="xi-angle-left"></i></a>
                             </c:if>
                             <c:if test="${currentPage > 1}">
-                            	<c:url var="sl" value="vlist.do">
+                            	<c:url var="sl" value="vlistmy.do">
                                		<c:param name="page" value="1"/>
                                 </c:url>
                                  <a href="${sl}"><i class="xi-angle-left"></i></a>
@@ -149,7 +149,7 @@ $(function(){
                             	<!-- 이전그룹으로 이동처리 -->
                             <c:if test="${currentPage > 10 }">
                             	<c:if test="${(currentPage -10) < startPage && (currentPage -10) }">
-                                <c:url var="slbefore" value="vlist.do">
+                                <c:url var="slbefore" value="vlistmy.do">
                                 	<c:param name="page" value="${startPage - 10}"/>
                                 </c:url>
                                   <a href="${slbefore}"><i class="xi-angle-left"></i></a>
@@ -161,7 +161,7 @@ $(function(){
                               		<a class="active">${ p }</a>
                               </c:if>	
                               <c:if test="${p ne currentPage }">
-                              		<c:url var="slp" value="vlist.do">
+                              		<c:url var="slp" value="vlistmy.do">
                               			<c:param name="page" value="${p}"/>
                               		</c:url>
                               		   <a href="${slp}">${p}</a>
@@ -170,7 +170,7 @@ $(function(){
                              <!-- 다음그룹으로 이동처리 -->
                             <c:if test="${currentPage > 10 }">
                             	<c:if test="${(currentPage +10) > endPage &&(currentPage + 10) < maxPage }">
-                                <c:url var="slafter" value="vlist.do">
+                                <c:url var="slafter" value="vlistmy.do">
                                 	<c:param name="page" value="${ endPage +10 }"/>
                                 </c:url>
                                   <a href="${slafter}"><i class="xi-angle-right"></i></a>
@@ -181,7 +181,7 @@ $(function(){
                                 <a><i class="xi-angle-right"></i></a>
                             </c:if>
                             <c:if test="${currentPage < maxPage}">
-                            	<c:url var="sl2" value="vlist.do">
+                            	<c:url var="sl2" value="vlistmy.do">
                                		<c:param name="page" value="${maxPage }"/>
                                 </c:url>
                                  <a href="${sl2}"><i class="xi-angle-right"></i></a>

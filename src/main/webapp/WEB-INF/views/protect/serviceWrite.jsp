@@ -79,7 +79,7 @@
                                     </tr>
                                     <tr>
                                         <td>모집*</td>
-                                        <td><label><input type="radio" name="volche" value="Y" checked />상시모집</label>
+                                        <td><label><input type="radio" name="volche" value="y" checked />상시모집</label>
                                         </td>
                                     </tr>
                                     <tr>

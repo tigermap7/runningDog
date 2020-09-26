@@ -78,8 +78,8 @@ $(function(){
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
 								</c:url>
                                 <form action="vlist.do" name="">
-                                    <a ${ volche eq "Y"?'class="active"' : "" }href="${volC}&volche=Y">모집중</a>
-                                    <a ${ volche eq "N"?'class="active"' : "" }href="${volC}&volche=N">모집완료</a>
+                                    <a ${ volche eq "y"?'class="active"' : "" }href="${volC}&volche=y">모집중</a>
+                                    <a ${ volche eq "n"?'class="active"' : "" }href="${volC}&volche=n">모집완료</a>
                                     <a ${ empty volche ?'class="active"' : "" }href="${volC}">전체</a>
                                 </form>
                                 </div>
@@ -107,17 +107,17 @@ $(function(){
 											<c:param name="searchValue" value="${pageVO.searchValue }" />
 											<c:param name="volche" value="${ v.volche }"/>
                                   		</c:url>
-                                  		<c:if test="${ v.volche eq 'Y' }">
+                                  		<c:if test="${ v.volche eq 'y' }">
                                     <tr class="serviceOn" onclick="location.href='${vd}'">
                                     	</c:if>
-                                    	<c:if test="${ v.volche eq 'N' }">
+                                    	<c:if test="${ v.volche eq 'n' }">
                                     <tr class="serviceOut" onclick="location.href='${vd}'">
                                         </c:if>
                                         <td class="img">
-                                           <c:if test="${ v.volche eq 'Y' }">  
+                                           <c:if test="${ v.volche eq 'y' }">  
                                               <span>모집중</span>
                                            </c:if>
-                                           <c:if test="${ v.volche eq 'N' }">
+                                           <c:if test="${ v.volche eq 'n' }">
                                           	  <span>마감</span>
                                            </c:if>
                                            <c:if test="${ empty v.volre1 }">
@@ -133,10 +133,10 @@ $(function(){
                                                 <li class="location"><span>지역 : </span>${v.voladdress}</li>
                                                 <li><span>센터명 : </span>${v.volname}</li>
                                                  <li><span>모집기간 :</span> 상시모집 /
-                                                	<c:if test="${ v.volche eq 'Y'}">
+                                                	<c:if test="${ v.volche eq 'y'}">
                                                 			모집중</li>
                                                		</c:if>
-                                               		<c:if test="${ v.volche eq 'N'}">
+                                               		<c:if test="${ v.volche eq 'n'}">
                                                				모집완료</li>
                                                		</c:if>
                                                		<c:if test="${!empty v.volterm1 }">

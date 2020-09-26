@@ -119,8 +119,8 @@
                                     </tr>
                                     <tr>
                                         <td>*모집기간</td>
-                                        <td><label><input type="radio" name="volche" value="Y" ${volunteer.volche eq "Y"?"checked":"" } />상시모집</label>
-                                        	<label><input type="radio" name="volche" value="N" ${volunteer.volche eq "N"?"checked":"" } />모집완료</label>
+                                        <td><label><input type="radio" name="volche" value="y" ${volunteer.volche eq "y"?"checked":"" } />상시모집</label>
+                                        	<label><input type="radio" name="volche" value="n" ${volunteer.volche eq "n"?"checked":"" } />모집완료</label>
                                         </td>
                                     </tr>
                                     <tr>

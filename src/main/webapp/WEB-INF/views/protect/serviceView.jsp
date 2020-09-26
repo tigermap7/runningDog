@@ -219,10 +219,10 @@
                                                 <th>담당자</th>
                                                 <td>${volunteer.volwriter } / #${ volunteer.unique_num }</td>
                                                 <th>모집기간</th>
-                                               		<c:if test="${ volunteer.volche eq 'Y' }">
+                                               		<c:if test="${ volunteer.volche eq 'y' }">
                                                  		 <td>상시모집 / <span class="serviceOn">모집중</span></td>
                                                		</c:if>
-                                               		<c:if test="${ volunteer.volche ne 'Y'}">
+                                               		<c:if test="${ volunteer.volche eq 'n'}">
                                                  		 <td>상시모집 / <span class="serviceOn">모집완료</span></td>
                                                		</c:if>
                                             </tr>
@@ -268,7 +268,7 @@
 								<c:param name="volche" value="${ volunteer.volche }"/>
                             </c:url>
                             
-                            <button class="prevBtn" onclick="javascript:location.href='${vnext}'">다음<i class="xi-angle-right-min"></i></button>
+                            <button class="prevBtn" onclick="javascript:location.href='${vnext}'"><i class="xi-angle-right-min"></i>다음</button>
                             <button class="listBtn" onclick="location.href='vlist.do'"><i class="xi-rotate-left"></i>목록</button>
                             <c:if test= "${ sessionScope.loginMember.nickname == volunteer.volwriter }">
                             <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
