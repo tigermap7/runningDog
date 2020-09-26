@@ -147,7 +147,7 @@
                                        		※금융거래 기록이 없는 14세 미만은 인증이 불가할 수도 있습니다.<br>
                                        		주민등록번호
 											<input type="text" id="jumin1" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="6">-<input id="jumin2" type="password" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="7">
-											<button id="re" value="n" onclick="aaa(); return false;" style="width:60px; height:30px;">확인</button>
+											<button data-val="n" id="re" value="n" onclick="aaa(); return false;" style="width:60px; height:30px;">확인</button>
                                        	</div>
                                     </td>
                                 </tr>

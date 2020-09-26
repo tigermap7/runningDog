@@ -228,10 +228,8 @@ public class SponsorController {
 		
 		sponsor = sponsorService.selectOne(Integer.parseInt((String)job.get("sNum")));
 		
-		if(sponsor.getsAmount() <= sponsor.getsCurrent()) { logger.info("실행");
+		if(sponsor.getsAmount() <= sponsor.getsCurrent())
 			sponsorService.updateSponsorComplete(Integer.parseInt((String)job.get("sNum")));
-			logger.info("실행완료");
-		}
 		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
     }

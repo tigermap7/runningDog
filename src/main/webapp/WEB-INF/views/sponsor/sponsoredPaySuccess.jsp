@@ -37,12 +37,12 @@
                         	<p align="center" style="font-size:30px;">후원해 주셔서 감사합니다.</p>
                         <br><br><br>
                         
-                        <table class="list">
+                        <table class="sPaymentInfo">
                             <colgroup>
                                 <col width="20%">
-                                <col width="40%">
-                                <col width="20%">
-                                <col width="20%">
+                                <col width="45%">
+                                <col width="15%">
+                                <col width="10%">
                             </colgroup>
                             <thead>
                                 <tr>
@@ -50,7 +50,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr style="background-color:#ff92a8; border-bottom: 1px solid;">
                                     <td>후원유형</td>
                                     <td>후원항목</td>
                                     <td>후원방법</td>
@@ -66,7 +66,7 @@
                         </table>
 
                         <div class="sPayment_Btn">
-                            <a type="button" href='slist.do' style="width:80px;">확인</button>
+                            <button onclick="javascript:location.href='slist.do'" style="width:80px;">확인</button>
                         </div>
                         <!-- 상세 끝 -->                        
                     </div>

@@ -18,7 +18,8 @@
         		  name: '${ title }',
         		  amount: '${ sponsorList.spCash }',
         		  buyer_name : '${ sponsorList.spName }',
-        		  buyer_email : '${ sponsorList.spEmail }'
+        		  buyer_email : '${ sponsorList.spEmail }',
+        		  m_redirect_url : 'http://192.168.35.72:9392/runningdog/WEB-INF/views/sponsor/sponsoredPaySuccess'
         	  }, function(rsp){
         		  if(rsp.success) {
         			  var title = '${ title }';

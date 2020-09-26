@@ -126,9 +126,9 @@
                 <!-- //버튼 -->
 
                 <!-- 페이징 -->
-                <c:if test="${ totalPage < 1 }"><br><br></c:if>
+                <c:if test="${ totalPage <= 1 }"><br><br></c:if>
                 	<!-- 검색x 페이징 -->
-               <c:if test="${ empty selected && totalPage >= 1 }">
+               <c:if test="${ empty selected && totalPage > 1 }">
 					<dl class="list-paging">
 						<dd>
 							<c:if test="${ page > 1 }">
@@ -168,7 +168,7 @@
 				</c:if>
 				
 				<!-- 검색 페이징 -->
-				<c:if test="${ !empty selected && totalPage >= 1 }">
+				<c:if test="${ !empty selected && totalPage > 1 }">
 					<dl class="list-paging">
 						<dd>
 							<c:if test="${ page > 1 }">

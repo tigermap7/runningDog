@@ -7,8 +7,8 @@ $(function(){
 		html: true,
 		content: function() {
 			var id = $(this).attr('data-id');
-			var title = $(this).attr('data-title');
-			var summary = $(this).attr('data-summary');
+			var title = $(this).attr('data-title').replace(/\'/g, "&#39;");
+			var summary = $(this).attr('data-summary').replace(/\'/g, "&#39;");
 			var image = $(this).attr('data-image');
 			var count = $(this).attr('data-count');
 			
@@ -62,8 +62,13 @@ function snsGo(e, id, title, summary) {
 	window.open(loc, '', 'width=400,height=400,left=600');
 }
 
+$(function(){
+	 Kakao.init('791ee46aea17d56869d6ab228ba850c1');
+});
+
 //카카오톡 공유
 function sendLink(id, title, summary, image, count) {
+  //<![CDATA[
   //카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
   Kakao.Link.createDefaultButton({
     container: '#kakao-link-btn',
@@ -71,10 +76,10 @@ function sendLink(id, title, summary, image, count) {
     content: {
       title: title,
       description: summary,
-      imageUrl: 'http://127.0.0.1:9392/runningdog/resources/sponsor/summernoteContent/'+image,
+      imageUrl: 'http://192.168.35.72:9392/runningdog/resources/sponsor/summernoteContent/'+image,
       link: {
-        mobileWebUrl: "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
-        webUrl: "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
+        mobileWebUrl: "http://192.168.35.72:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
+        webUrl: "http://192.168.35.72:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
       }
     },
     social: {
@@ -84,12 +89,13 @@ function sendLink(id, title, summary, image, count) {
       {
         title: '자세히 보기',
         link: {
-          mobileWebUrl: "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
-          webUrl: "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
+          mobileWebUrl: "http://192.168.35.72:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
+          webUrl: "http://192.168.35.72:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
         }
       }
     ]
   });
+//]]>
 }
 //sns공유하기 끝
 
@@ -205,21 +211,6 @@ $(function(){
 			alert("썸네일을 선택해주세요");
 			return false;
 		}
-		
-		var file_kind = obj.value.lastIndexOf('.');
-		var file_name = obj.value.substring(file_kind+1, obj.length);
-		var file_type = file.name.toLowerCase();
-		
-		var check_file_type = new Array();
-		check_file_type = ['jpg', 'gif', 'png', 'jpeg', 'bmp'];
-		
-		if(check_file_type.indexOf(file_type) == -1) {
-			alert("이미지 파일만 선택할 수 있습니다.");
-			var parent_Obj = obj.parentNode
-			var node = parent_Obj.replaceChild(obj.cloneNode(true), obj);
-			return false;
-		}
-		
 	});
 });
 
@@ -267,11 +258,13 @@ $(function(){
 		$("#spnum").show();
 		$('#no').removeClass('active');
 		$('#yes').addClass('active');
+		$("#re").attr("data-val", "y");
 	});
 	$("#no").on("click", function(){
 		$("#spnum").hide();
 		$('#yes').removeClass('active');
 		$('#no').addClass('active');
+		$("#re").attr("data-val", "n");
 	});
 });
 
@@ -322,8 +315,14 @@ function aaa() {
 	}	
 }
 
+//기부금영수증 요청시 검사
 $(function(){
 	$("#sub").on("click", function(){
+		if($("#jumin2").val() == "" && $("#re").val() == "n" && $("#re").attr("data-val") == "y") {
+			alert("주민등록번호를 입력해 주세요.");
+			$("re").focus();
+			return false;
+		}
 		if($("#jumin2").val() != "" && $("#re").val() == "n") {
 			alert("주민등록번호 확인을 눌러주세요.");
 			$("re").focus();
@@ -332,11 +331,5 @@ $(function(){
 	});
 });
 
-$(function(){
-	$("#no").on("click", function(){
-		$("#re").attr("value", "n");
-		return false;
-	});
-});
 
 
