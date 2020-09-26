@@ -1,7 +1,5 @@
 package com.kh.runningdog.sponsor.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +8,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -25,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.runningdog.sponsor.model.service.SponsorService;
@@ -232,8 +228,10 @@ public class SponsorController {
 		
 		sponsor = sponsorService.selectOne(Integer.parseInt((String)job.get("sNum")));
 		
-		if(sponsor.getsAmount() <= sponsor.getsCurrent())
+		if(sponsor.getsAmount() <= sponsor.getsCurrent()) { logger.info("실행");
 			sponsorService.updateSponsorComplete(Integer.parseInt((String)job.get("sNum")));
+			logger.info("실행완료");
+		}
 		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
     }

@@ -42,7 +42,7 @@
                             </select>
                         <div>
                             <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
-                            <button id="seld" type="" class="top-search"><i class="xi-search"></i></button>
+                            <button id='seld' type="submit" class="top-search"><i class="xi-search"></i></button>
                         </div>
                     </div>
                     </form>
@@ -107,7 +107,7 @@
                         
                         <c:if test="${ list.size() eq 0 }">
 						<tr class="list-no">
-							<td colspan="7">
+							<td colspan="9">
 								<p><img src="resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
 								<h1>목록이 없습니다.</h1>
 							</td>
@@ -126,10 +126,9 @@
                 <!-- //버튼 -->
 
                 <!-- 페이징 -->
-                <c:if test="${ totalPage eq 1 }"><br><br></c:if>
+                <c:if test="${ totalPage < 1 }"><br><br></c:if>
                 	<!-- 검색x 페이징 -->
-                <c:if test="${ empty selected }">
-                <c:if test="${ totalPage ne 1 }">
+               <c:if test="${ empty selected && totalPage >= 1 }">
 					<dl class="list-paging">
 						<dd>
 							<c:if test="${ page > 1 }">
@@ -166,11 +165,10 @@
 							</c:if>
 						</dd>
 					</dl>
-				</c:if></c:if>
+				</c:if>
 				
 				<!-- 검색 페이징 -->
-				<c:if test="${ !empty selected }">
-				<c:if test="${ totalPage ne 1 }">
+				<c:if test="${ !empty selected && totalPage >= 1 }">
 					<dl class="list-paging">
 						<dd>
 							<c:if test="${ page > 1 }">
@@ -213,7 +211,7 @@
 							</c:if>
 						</dd>
 					</dl>
-				</c:if></c:if>
+				</c:if>
                 <!-- //페이징 -->
 
             </div>

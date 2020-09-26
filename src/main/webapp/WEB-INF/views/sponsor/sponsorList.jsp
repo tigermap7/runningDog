@@ -16,6 +16,10 @@
 				text-decoration:none;
 			}
 		</style>
+		<script type="text/javascript">
+			//사용할 앱의 JavaScript 키를 설정해 주세요.
+			Kakao.init('791ee46aea17d56869d6ab228ba850c1');
+		</script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -136,9 +140,8 @@
                         <!-- 리스트 끝 -->
                     
                         <!-- 검색 x 페이징 -->
-                      <c:if test="${ empty selected && flag eq 1 }">
-                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
-                        <c:if test="${ totalPage ne 1 }">
+                        <c:if test="${ totalPage < 1 }"><br><br><br><br></c:if>
+                        <c:if test="${ empty selected && flag eq 1 && totalPage >= 1 }">
                         <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
@@ -175,13 +178,10 @@
                             </dd>
                         </dl>
                         </c:if>
-                      </c:if>
                         
                         
                         <!-- 검색 페이징 -->
-                      <c:if test="${ !empty selected }">  
-                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
-                        <c:if test="${ totalPage ne 1 }">
+                        <c:if test="${ !empty selected && totalPage >= 1 }">
                         <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
@@ -224,13 +224,10 @@
                             </dd>
                         </dl>
                         </c:if>
-                      </c:if>
                       
                         
                         <!-- 후원중 페이징 -->
-                      <c:if test="${ flag eq 2 }">  
-                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
-                        <c:if test="${ totalPage ne 1 }">
+                        <c:if test="${ flag eq 2 && totalPage >= 1 }">
                         <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
@@ -267,13 +264,10 @@
                             </dd>
                         </dl>
                         </c:if>
-                      </c:if>
                         
                         
                         <!-- 후원완료 페이징 -->
-                      <c:if test="${ flag eq 3 }">  
-                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
-                        <c:if test="${ totalPage ne 1 }">
+                        <c:if test="${ flag eq 3 && totalPage ne 1 }">
                         <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
@@ -310,7 +304,6 @@
                             </dd>
                         </dl>
                         </c:if>
-                      </c:if>
                       
                       
                     </div>

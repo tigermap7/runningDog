@@ -151,7 +151,7 @@
 	
 	<update id="updateComplete" parameterType="int">
 		update sponsor
-		set s_chk = y
+		set s_chk = 'y'
 		where s_num = #{ sNum }
 	</update>
 	

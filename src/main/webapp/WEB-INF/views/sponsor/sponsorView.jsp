@@ -7,6 +7,10 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+        <script type="text/javascript">
+			//사용할 앱의 JavaScript 키를 설정해 주세요.
+			Kakao.init('791ee46aea17d56869d6ab228ba850c1');
+		</script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">

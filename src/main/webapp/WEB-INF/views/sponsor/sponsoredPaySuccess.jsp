@@ -37,10 +37,12 @@
                         	<p align="center" style="font-size:30px;">후원해 주셔서 감사합니다.</p>
                         <br><br><br>
                         
-                        <table class="sPaymentInfo">
+                        <table class="list">
                             <colgroup>
                                 <col width="20%">
-                                <col width="80%">
+                                <col width="40%">
+                                <col width="20%">
+                                <col width="20%">
                             </colgroup>
                             <thead>
                                 <tr>

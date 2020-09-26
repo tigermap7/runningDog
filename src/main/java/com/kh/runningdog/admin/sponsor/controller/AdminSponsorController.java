@@ -383,23 +383,28 @@ public class AdminSponsorController {
 	}
 
 	//스케쥴러
-	@Scheduled(cron = "0 0 14 * * 6") //매주 금요일 오후 2시
+	@Scheduled(cron = "0 0 14 * * *") //매일 오후 2시
 	public void checkContentFile() {
 		logger.info("스케줄링 테스트");
 		String cFolder = "C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\sponsor\\summernoteContent";
 
 		ArrayList<SponsorImage> list = sponsorService.selectImageList();
 		ArrayList<String> del = new ArrayList<String>();
-
+		
 		//하위의 모든 파일
 		for(File info : FileUtils.listFiles(new File(cFolder), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
 			String inFolder = info.getName(); //서버폴더에 저장된 파일명
-			for(int i=0; i<list.size(); i++) {
-				String realFile = list.get(i).getSiName(); //테이블에 저장된 파일명
-				if(realFile.equals(inFolder))
-					break;
-				else if(!realFile.equals(inFolder) && i == list.size()-1)
-					del.add(inFolder);
+			logger.info(inFolder);
+			if(list.size() > 0) {
+				for(int i=0; i<list.size(); i++) {
+					String realFile = list.get(i).getSiName(); //테이블에 저장된 파일명
+					if(realFile.equals(inFolder))
+						break;
+					else if(!realFile.equals(inFolder) && i == list.size()-1)
+						del.add(inFolder);
+				}
+			}else {
+				del.add(inFolder);
 			}
 		}
 
@@ -426,19 +431,18 @@ public class AdminSponsorController {
 
 		int result = sponsorService.deleteSponsor(checkRow);
 
-		String re = null;
-		if(result > 0) {
+		if(delTh.size() > 0) {
 			for(Sponsor image : delTh) {
 				new File(savePathTh + "\\" + image.getsOriginal()).delete();
 				new File(savePathTh + "\\" + image.getsRename()).delete();
 			}
-			if(delIm.size() > 0 ) {
-				for(SponsorImage image : delIm)
-					new File(savePathIm + "\\" + image.getSiName()).delete();
-				re = "redirect:aslist.ad?page=" + page;
+		}
+		if(delIm.size() > 0 ) {
+			for(SponsorImage image : delIm) {
+				new File(savePathIm + "\\" + image.getSiName()).delete();
 			}
 		}
-		return re;
+		return "redirect:aslist.ad?page=" + page;
 	}
 
 	@RequestMapping("ssearch.ad")

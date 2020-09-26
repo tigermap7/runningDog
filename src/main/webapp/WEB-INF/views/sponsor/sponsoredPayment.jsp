@@ -81,7 +81,7 @@
                                     <td>이메일<span>*</span></td>
                                     <td>
                                         <input value="${ loginMember.userId }" type="email" name="spEmail" title="이메일" class="form-control w50p" placeholder="이메일" required/>
-                                        <label style="margin-left:0.9375rem;"><input type="checkbox" name="spEch" value="y"> 이메일수신동의(선택)</label> 
+                                        <label style="margin-left:0.9375rem;"><input type="checkbox" name="spEch" value="y"> 이메일수신동의(선택)</label>
                                     </td>
                                 </tr>
                                 <tr>

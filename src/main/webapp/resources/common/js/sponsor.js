@@ -63,9 +63,6 @@ function snsGo(e, id, title, summary) {
 }
 
 //카카오톡 공유
-//사용할 앱의 JavaScript 키를 설정해 주세요.
-Kakao.init('791ee46aea17d56869d6ab228ba850c1');
-
 function sendLink(id, title, summary, image, count) {
   //카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
   Kakao.Link.createDefaultButton({
@@ -195,11 +192,11 @@ $(function(){
 	//공백만 입력하고 검색할 때
 	var keyword = $.trim($("input[name=keyword]").val());
 		if(keyword == "") {
-			alert("공백만 입력은 할 수 없습니다.");
+			alert("내용을 입력해주세요.");
 			return false;
 		}
 	});
-});	
+});
 
 //썸네일 알림
 $(function(){
@@ -208,8 +205,23 @@ $(function(){
 			alert("썸네일을 선택해주세요");
 			return false;
 		}
+		
+		var file_kind = obj.value.lastIndexOf('.');
+		var file_name = obj.value.substring(file_kind+1, obj.length);
+		var file_type = file.name.toLowerCase();
+		
+		var check_file_type = new Array();
+		check_file_type = ['jpg', 'gif', 'png', 'jpeg', 'bmp'];
+		
+		if(check_file_type.indexOf(file_type) == -1) {
+			alert("이미지 파일만 선택할 수 있습니다.");
+			var parent_Obj = obj.parentNode
+			var node = parent_Obj.replaceChild(obj.cloneNode(true), obj);
+			return false;
+		}
+		
 	});
-});	
+});
 
 //썸머노트때문에 리셋추가
 function Refresh() {
@@ -275,13 +287,6 @@ $(function(){
 	});
 });
 
-//이메일 & 전화 수신 동의 여부 & 결제방법
-$(function(){
-	$("input[name=spEch]").is(":checked").each(function(){
-		$("input[name=spEch]").attr("value", $(this).attr("id"));
-	});
-});
-
 //주민번호 유효성 검사
 function aaa() {
 	var jumins3 = $("#jumin1").val() + $("#jumin2").val();
@@ -327,6 +332,11 @@ $(function(){
 	});
 });
 
-
+$(function(){
+	$("#no").on("click", function(){
+		$("#re").attr("value", "n");
+		return false;
+	});
+});
 
 

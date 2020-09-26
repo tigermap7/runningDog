@@ -85,7 +85,7 @@
                     <!-- 좌측메뉴 끝 -->
                     <div class="subContent">
                         <!--상세-->
-                        <form action="sSpon.do" method="post" id="spay">
+                        <form action="" method="post" id="spay">
                         <input type="hidden" value="${ sNum }" name="sNum">
                         <input type="hidden" value="null" name="spSnumber">
                         <table class="sPaymentInfo">
@@ -109,21 +109,21 @@
                                 <tr>
                                     <td>후원인(이름or가명)<span>*</span></td>
                                     <td>
-                                        <input type="text" name="spName" title="후원인(이름or가명)" class="form-control w50p" placeholder="이름" required/>
+                                        <input value="${ sponsorList.spName }" type="text" name="spName" title="후원인(이름or가명)" class="form-control w50p" placeholder="이름" required/>
                                         <label style="margin-left:0.9375rem;"><input type="checkbox" required> 14세 이상</label> 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>이메일<span>*</span></td>
                                     <td>
-                                        <input value="${ loginMember.userId }" type="email" name="spEmail" title="이메일" class="form-control w50p" placeholder="이메일" required/>
+                                        <input value="${ sponsorList.spEmail }" type="email" name="spEmail" title="이메일" class="form-control w50p" placeholder="이메일" required/>
                                         <label style="margin-left:0.9375rem;"><input type="checkbox" name="spEch" value="y"> 이메일수신동의(선택)</label> 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>연락처<span>*</span></td>
                                     <td>
-                                        <input value="${ loginMember.phone }" type="tel" name="spPhone" title="연락처" class="form-control w50p" placeholder="연락처" required/>
+                                        <input value="${ sponsorList.spPhone }" type="tel" name="spPhone" title="연락처" class="form-control w50p" placeholder="연락처" required/>
                                         <label style="margin-left:0.9375rem;"><input type="checkbox" name="spPch" value="y"> SNS수신동의(선택)</label> 
                                     </td>
                                 </tr>
