@@ -164,10 +164,6 @@
                                     <th>봉사기간</th>
                                     <td colspan="3">${volunteer.volterm1 }~${volunteer.volterm2}</td>
                                 </tr>
-                                <!-- <tr>
-                                    <th>홈페이지</th>
-                                    <td colspan="3"><a href="https://www.naver.com" target="_blink">https://www.naver.com</a></td>
-                                </tr> -->
                             </tbody>
                         </table>
                     </dd>
@@ -187,8 +183,8 @@
 								<c:param name="searchValue" value="${ searchValue }" />
 								<c:param name="volche" value="${ volunteer.volche }"/>
                             </c:url>
-                            <button class="nextBtn" onclick="javascript:location.href='${vpread}'"><i class="xi-angle-left-min"></i>이전</button>
-                            <button class="listBtn" onclick="location.href='vlist.ad'"><i class="xi-rotate-left"></i>목록</button>
+                            <button class="prevBtn" onclick="javascript:location.href='${vpread}'"><i class="xi-angle-left-min"></i>이전</button>
+                            <button class="listBtn" onclick="javascript:history.go(-1); return false;"><i class="xi-rotate-left"></i>목록</button>
                             <c:url var="vdel" value="vdelete.ad">
                             	<c:param name="volno" value="${volunteer.volno}"/>
                             </c:url>
@@ -199,7 +195,7 @@
 								<c:param name="searchValue" value="${ searchValue }" />
 								<c:param name="volche" value="${ volunteer.volche }"/>
                             </c:url>
-                            <button class="prevBtn" onclick="javascript:location.href='${vnextad}'"></i></button>
+                            <button class="nextBtn" onclick="javascript:location.href='${vnextad}'"></i>다음</button>
                         </div>
                         <!-- 버튼 끝 -->
         </div>

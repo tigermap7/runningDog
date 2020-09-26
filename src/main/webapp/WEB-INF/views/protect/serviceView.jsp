@@ -4,11 +4,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="currentPage"  value="${ requestScope.currentPage }"/>
 <c:set var="listCountVreply"  value="${ requestScope.listCountVreply }"/>
-<c:set var="vr" value="${requestScope.vrlist}"/>
+<c:set var="vr" value="${requestScope.vreply}"/>
+
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+        
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -154,11 +156,9 @@
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </dt>
                                 <dd>
-                                    <div id="map" style="width:500px;height:400px;"></div>
-                                    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01975b71985ce8a6ebd803e488cb6d08&libraries=services"></script>
+                                    <div id="map" style="width:100%;height:350px;"></div>
+                                    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78554901e4ce05b55a812c066e4b2f3b&libraries=services"></script>
                                   <script>
-                                    //var volname = <c:out value="${volunteer.volname }"/>
-                                    //var voladdress = <c:out value="${volunteer.voladdress}"/>
                                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                                     mapOption = {
                                         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -194,10 +194,8 @@
                                         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                                         map.setCenter(coords);
                                     } 
-                                    });  
-
+                                    });
                                   </script>
-                                    <!-- 구글지도<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6324.481505654264!2d127.00051190256856!3d37.572948171699984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca325b4d9b81b%3A0xba2de96c741b670a!2z7ISc7Jq47Yq567OE7IucIOyiheuhnOq1rCDsooXroZw1LjbqsIDrj5k!5e0!3m2!1sko!2skr!4v1598454835067!5m2!1sko!2skr" width="100%" height="281.3rem" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div> -->                  
                                     <h3 class="mt30">센터정보</h3>
                                     <table class="serviceInfo">
                                        <colgroup>
@@ -219,7 +217,7 @@
                                             </tr>
                                             <tr>
                                                 <th>담당자</th>
-                                                <td>${volunteer.volwriter }</td>
+                                                <td>${volunteer.volwriter } / #${ volunteer.unique_num }</td>
                                                 <th>모집기간</th>
                                                		<c:if test="${ volunteer.volche eq 'Y' }">
                                                  		 <td>상시모집 / <span class="serviceOn">모집중</span></td>
@@ -252,24 +250,31 @@
                         <div class="viewBtn-wrap">
                             <c:url var="vpre" value="vpre.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
-                            	<c:param name="page" value="${currentPage}"/>
+                            	<c:param name="searchFiled" value="${ searchFiled }" />
+								<c:param name="searchValue" value="${ searchValue }" />
+								<c:param name="volche" value="${ volunteer.volche }"/>
                             </c:url>
-                            <button class="nextBtn" onclick="javascript:location.href='${vpre}'"><i class="xi-angle-left-min"></i>이전</button>
-                            <button class="listBtn" onclick="location.href='vlist.do'"><i class="xi-rotate-left"></i>목록</button>
                             <c:url var="vdel" value="vdelete.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
                             </c:url>
-                            <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
                             <c:url var="vup" value="vUpdateView.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
                             	<c:param name="page" value="${currentPage}"/>
                             </c:url>
-                            <button class="modifiedBtn" onclick="javascript:location.href='${vup}'"><i class="xi-pen-o"></i>수정</button>
                             <c:url var="vnext" value="vnext.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
-                            	<c:param name="page" value="${currentPage}"/>
+                            	<c:param name="searchFiled" value="${ searchFiled }" />
+								<c:param name="searchValue" value="${ searchValue }" />
+								<c:param name="volche" value="${ volunteer.volche }"/>
                             </c:url>
+                            
                             <button class="prevBtn" onclick="javascript:location.href='${vnext}'">다음<i class="xi-angle-right-min"></i></button>
+                            <button class="listBtn" onclick="location.href='vlist.do'"><i class="xi-rotate-left"></i>목록</button>
+                            <c:if test= "${ sessionScope.loginMember.nickname == volunteer.volwriter }">
+                            <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
+                            <button class="modifiedBtn" onclick="javascript:location.href='${vup}'"><i class="xi-pen-o"></i>수정</button>
+                            </c:if>
+                            <button class="nextBtn" onclick="javascript:location.href='${vpre}'"><i class="xi-angle-left-min"></i>이전</button>
                         </div>
                         <!-- 버튼 끝 --> 
                         
@@ -281,18 +286,20 @@
                                         <h4 class="cmt_head" id="totalcount"></h4>
                                         <div class="cmt_body">
         <textarea id="vreply_content" name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                            <div class="cmt_ok">
                                             <input type="hidden" name="volno" value="${ volunteer.volno}">
                                             <input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">
-                                            <input type="button" id="btn_vreplyInsert" value="등록"></div>
+                                             <input type="hidden" name="unique_num" value="${ sessionScope.loginMember.uniqueNum}">
+                                            <div class="cmt_ok"><input type="submit" id="btn_vreplyInsert" value="등록"></div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </form>
+                        <!-- 댓글리스트 보기 -->
+                           <ul id="VreplyList" class="cmt_con">
+                     	   </ul>
                            </div>
-                            <!-- 댓글리스트 보기 -->
-                      <ul id="VreplyList" class="cmt_con">
-                      </ul>
+                            
+                      
                          
                                     <!-- <div class="Subcmt_form">
                                         <form action="vrupdate.do" method="post">
@@ -316,57 +323,59 @@ $(document).ready(function(){
 	showReplyList();
 });
 function showReplyList(){
-	var paramData = {"volno" : "${ volunteer.volno}"};
+	var paramData = {"volno" : ${ volunteer.volno}};
+
 	$.ajax({
         type: "get",
         url: "vreplylist.do",
         data: paramData,
         dataType: "json",
         success: function(result) {
-        	console.log("success : " + result);
-			console.log("댓글 나오기")
+        	console.log("success : " + result); 
+        	console.log("this.vreply_date : " + this.vreply_date);
+			console.log("댓글 나오기");
 			
 			var totalcount = 0;
 			var htmls = "";
 			
-		
 			$(result).each(function(){
 				htmls +='<li id="vreply_no'+this.vreply_no+'">'+
 							'<dl>'+
 							'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
-							'<dd><h4>'+ this.nickname +'</h4></dd>'+
+							'<dd><h4>'+ this.nickname+' / #'+this.unique_num +'</h4></dd>'+
 							'<dt class="cmt_date">' + this.vreply_date +'</dt>'+
 							' </dl>'+
 							'<p>'+ this.vreply_content +'</p>'+
 							'<div class="cmt_conBtn">'+
-							'<button id="vreply">댓글</button>'+
-							'<c:if test="${sessionScope.loginMember.nickname eq vr.nickname }">'+
-							'<button class="Cmt_delete_ctn" onclick="fn_DeleteVreply(' + this.vreply_no + ')">삭제</button>'+
-							'<button class="Cmt_update_btn" onclick="fn_UpdateVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\' )">수정</button>'+
-							' </c:if>'+
+							'<button id="insertvreply" onclick="fn_SecondVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\' , \'' + this.unique_num + '\')">댓글</button>'+
+							'<button class="Cmt_delete_ctn" onclick="fn_DeleteVreply(' + this.vreply_no + ', \'' + this.nickname + '\')">삭제</button>'+
+							'<button id="Cmt_update_btn" onclick="fn_UpdateVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\', \'' + this.unique_num + '\' )">수정</button>'+
 							'</div>'+
 							'</li>'	
 							
 							totalcount = totalcount + 1
 			}); //for in
 			
-			$("#totalcount").text('전체' + totalcount + '개');
-			$('#VreplyList').empty();
+			$("#totalcount").text('전체'+ totalcount + '개');
 			$('#VreplyList').html(htmls);
 			
         },	  // Ajax success end
         error : function(jqXHR, textstatus, errorthrown) {
 				console.log("error : " + jqXHR + ", " + textstatus
-						+ ", " + errorthrown);
+						+ ", " + errorthrown); 
 		}
 	});	// Ajax end
 }
 
 //댓글저장
 $(document).on('click', '#btn_vreplyInsert', function(){
+	var nickname = "${ sessionScope.loginMember.nickname}";
+	if( nickname == "" )
+		alert("로그인 후 이용해주세요.");
+	 
 	var VreplyContent = $('#vreply_content').val();
 	console.log(VreplyContent+"VreplyContent");
-	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', "volno" : ${ volunteer.volno} });
+	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
 	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
 	$.ajax({
 		url : 'vrinsert.do',
@@ -378,38 +387,44 @@ $(document).on('click', '#btn_vreplyInsert', function(){
 			
 			$('#vreply_content').val();
 			$('#nickname').val();
+			$('#unique_num').val();
 			showReplyList();
 		},
 		error : function(jqXHR, textstatus, errorthrown) {
-			console.log("error : " + jqXHR + ", " + textstatus
-					+ ", " + errorthrown);
+			alert("댓글 등록을 실패하였습니다.");
+			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
 		}
-	});
-
+	}); 
 });
-
 //댓글수정폼
-function fn_UpdateVreply(vreply_no, nickname, vreply_content){
-	var htmls = "";
-	htmls +='<div class="cmt_wrap" id="vreply_no'+vreply_no+'">'+
-				'<form name="vreply" id="vreply" role="vreply">'+
-				'<fieldset>'+
-				'<div class="cmt_form">'+
-				'<h4 class="cmt_head" id="totalcount"></h4>'+
-				'<div class="cmt_body">'+
-				'<textarea id="vreply_content" name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;">'+vreply_content+'</textarea>'+
-				'<div class="cmt_ok">'+
-				'<input type="hidden" name="volno" value="${ volunteer.volno}">'+
-				'<input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">'+
-				'<button class="Cmt_update_btn" onclick="updateVreply(' + vreply_no + ', \'' + nickname + '\')">저장</div>'+
-				'<button class="Cmt_update_btn" onclick="showReplyList();">취소</div>'+
-				'</div>'+
-				'</div>'+
-				'</fieldset>'+
-				'</form>'+
-				'</div>'
-				$('#vreply_no'+vreply_no).replaceWith(htmls);
-				$('#vreply_no'+vreply_no+'#editContent').focus();
+function fn_UpdateVreply(vreply_no, nickname, vreply_content, unique_num){
+	var user = "${ sessionScope.loginMember.nickname}";
+	var result = confirm("수정하시겠습니까?");
+	var nickname = nickname
+	if( user == "" )
+		alert("로그인 후 이용해주세요.");
+	else
+		if( user == nickname )
+			if(result == true){
+				var htmls = "";
+				htmls +='<li id="vreply_no'+vreply_no+'">'+
+						'<dl>'+
+						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
+						'<dd><h4>'+ nickname +'</h4></dd>'+
+						' </dl>'+
+						'<p><textarea id="editContent" name="editContent" style="resize: none; width:100%; min-height:100px; max-height:100px;">'+ vreply_content +'</textarea></p>'+
+						'<div class="cmt_conBtn">'+
+						'<button class="Cmt_delete_ctn" onclick="showReplyList();">취소</button>'+
+						'<button class="Cmt_update_btn" onclick="updateVreply(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')">저장</button>'+
+						'</div>'+
+						'</li>'
+							$('#vreply_no'+vreply_no).replaceWith(htmls);
+							$('#vreply_no'+vreply_no+'#editContent').focus();
+			}else
+				return;
+		else
+			alert("작성자만 이용하실 수 있습니다.");
+	
 }
 //댓글수정내용저장
 function updateVreply(vreply_no, nickname){
@@ -420,11 +435,13 @@ function updateVreply(vreply_no, nickname){
 	$.ajax({
 		url : "vrupdate.do",
 		headers : headers,
+		data : paramData,
 		type : 'POST',
 		dataType :'text',
 		success : function(result){
 			console.log(result);
-			showReplyList();
+			alert("댓글이 수정되었습니다.");
+			showReplyList(); 
 		},
 		error : function(jqXHR, textstatus, errorthrown) {
 			console.log("error : " + jqXHR + ", " + textstatus
@@ -433,23 +450,116 @@ function updateVreply(vreply_no, nickname){
 		
 	});
 }
-function fn_DeleteVreply( vreply_no ){
-	var paramData = { "vreply_no" : vreply_no };
+//대댓글폼
+function fn_SecondVreply(vreply_no, nickname, vreply_content, unique_num){
+	var user = "${ sessionScope.loginMember.nickname}";
+	var nickname = nickname
+				var htmls = "";
+				htmls += '<li id="vreply_no'+vreply_no+'">'+
+						'<dl>'+
+						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
+						'<dd><h4>'+ nickname +'</h4></dd>'+
+						' </dl>'+
+						'<p>'+ vreply_content +'</p>'+
+						'</li>'	+
+						'<li id="vreply_no'+vreply_no+'">'+
+						'<dl>'+
+						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
+						'<dd><h4>'+ nickname +'</h4></dd>'+
+						' </dl>'+
+						'<p><textarea id="SecondContent" name="SecondContent" style="resize: none; width:100%; min-height:100px; max-height:100px;">비방글은 작성하실 수 없습니다.</textarea></p>'+
+						'<div class="cmt_conBtn">'+
+						'<button class="Cmt_delete_ctn" onclick="showReplyList();">취소</button>'+
+						'<button class="Cmt_update_btn" onclick="insertSVrLevel(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')">등록</button>'+
+						'</div>'+
+						'</li>'
+						$('#vreply_no'+vreply_no).html(htmls);
+						$('#vreply_no'+vreply_no+'#SecondContent').focus();
+	
+}
+
+//대댓글저장
+$(document).on('click', '#btn_InsertSVreply', function(){
+	var nickname = "${ sessionScope.loginMember.nickname}";
+	if( nickname == "" )
+		alert("로그인 후 이용해주세요.");
+	 
+	var VreplyContent = $('#vreply_content').val();
+	console.log(VreplyContent+"VreplyContent");
+	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
+	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
+	$.ajax({
+		url : 'vrinsert.do',
+		data : paramData,
+		headers : headers,
+		type : 'post',
+		dataType : 'text',
+		success : function(result){
+			
+			$('#vreply_content').val();
+			$('#nickname').val();
+			$('#unique_num').val();
+			showReplyList();
+		},
+		error : function(jqXHR, textstatus, errorthrown) {
+			alert("댓글 등록을 실패하였습니다.");
+			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+		}
+	});
+});
+//대댓글수정내용저장
+function insertSVreplyLevel(vreply_no, nickname){
+	var SecondContent = $('#SecondContent').val();
+	var paramData = JSON.stringify({"vreply_content" : SecondContent, "vreply_no" : vreply_no});
+	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
 	
 	$.ajax({
-		url : "vrdelete.do",
+		url : "vrinsertlevel.do",
+		headers : headers,
 		data : paramData,
 		type : 'POST',
 		dataType :'text',
 		success : function(result){
 			console.log(result);
-			showReplyList();
+			alert("대댓글 성공!");
+			showReplyList(); 
 		},
 		error : function(jqXHR, textstatus, errorthrown) {
 			console.log("error : " + jqXHR + ", " + textstatus
 					+ ", " + errorthrown);
 		} 
+		
 	});
+}
+//댓글삭제기능
+function fn_DeleteVreply( vreply_no, nickname ){
+	var paramData = { "vreply_no" : vreply_no };
+	var user = "${ sessionScope.loginMember.nickname}";
+	var result = confirm("삭제하시겠습니까?");
+	var nickname = nickname
+	if( user == "" )
+		alert("로그인 후 이용해주세요.");
+	else
+		if( user == nickname )
+			if(result == true){
+		$.ajax({
+			url : "vrdelete.do",
+			data : paramData,
+			type : 'POST',
+			dataType :'text',
+			success : function(result){
+				console.log(result);
+				showReplyList();
+			},
+			error : function(jqXHR, textstatus, errorthrown) {
+				console.log("error : " + jqXHR + ", " + textstatus
+						+ ", " + errorthrown);
+			} 
+		});
+			}else
+				return;
+		else
+			alert("작성자만 이용하실 수 있습니다.");
 }
 
 
