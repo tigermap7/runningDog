@@ -18,7 +18,7 @@
                        <div>
                             <ul class="navi">
                                 <li><a href="main.do">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">보호센터 정보</a></li>
+                                <li class="xi-angle-right"><a href="movePlist.do">보호센터 정보</a></li>
                             </ul>
                         </div>
                         <h2><span>보호센터 정보</span></h2>
@@ -89,8 +89,49 @@
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </dt>
                                 <dd>
-                                    <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6324.481505654264!2d127.00051190256856!3d37.572948171699984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca325b4d9b81b%3A0xba2de96c741b670a!2z7ISc7Jq47Yq567OE7IucIOyiheuhnOq1rCDsooXroZw1LjbqsIDrj5k!5e0!3m2!1sko!2skr!4v1598454835067!5m2!1sko!2skr" width="100%" height="281.3rem" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>
-                                    <h3 class="mt30">센터정보</h3>
+                                    <div id="map" style="width:100%;height:350px;"></div>
+                                    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78554901e4ce05b55a812c066e4b2f3b&libraries=services"></script>
+                                  <script>
+                                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                                    mapOption = {
+                                        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                                        level: 3 // 지도의 확대 레벨
+                                    };  
+
+                                    //지도를 생성합니다    
+                                    var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+                                    //주소-좌표 변환 객체를 생성합니다
+                                    var geocoder = new kakao.maps.services.Geocoder();
+
+                                    //주소로 좌표를 검색합니다
+                                    geocoder.addressSearch('${protect.proaddressnew}', function(result, status) {
+
+                                    // 정상적으로 검색이 완료됐으면 
+                                     if (status === kakao.maps.services.Status.OK) {
+
+                                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                                        // 결과값으로 받은 위치를 마커로 표시합니다
+                                        var marker = new kakao.maps.Marker({
+                                            map: map,
+                                            position: coords
+                                        });
+
+                                        // 인포윈도우로 장소에 대한 설명을 표시합니다
+                                        var infowindow = new kakao.maps.InfoWindow({
+                                            content: '<div style="width:150px;text-align:center;padding:6px 0;">${protect.proname }</div>'
+                                        });
+                                        infowindow.open(map, marker);
+
+                                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                                        map.setCenter(coords);
+                                    } 
+                                    });
+                                  </script>
+                                    <!-- <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6324.481505654264!2d127.00051190256856!3d37.572948171699984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca325b4d9b81b%3A0xba2de96c741b670a!2z7ISc7Jq47Yq567OE7IucIOyiheuhnOq1rCDsooXroZw1LjbqsIDrj5k!5e0!3m2!1sko!2skr!4v1598454835067!5m2!1sko!2skr" width="100%" height="281.3rem" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div> -->
+                                    <h3 class="mt30" id="detail" >센터정보</h3>
+                                    
                                     <table id="pdetail" class="serviceInfo">
                                        <colgroup>
                                            <col width="15%">
@@ -99,7 +140,30 @@
                                            <col width="35%">
                                        </colgroup>
                                         <tbody>
-                                            
+                                           <tr>
+                                                <th>동물보호센터명</th>
+                                                <td colspan="3">${ protect.proname }</td>
+                                            </tr>
+                                            <tr>
+                                                <th>동물보호센터유형</th>
+                                                <td>${ protect.protype }</td>
+                                                <th>연락처</th>
+                                                <td>${ protect.protel }</td>
+                                            </tr>
+                                            <tr>
+                                                <th>관할구역</th>
+                                                <td>${ protect.proorgnm }</td>
+                                                <th>운영시간</th>
+                                                <td>9:00 ~ 18:00 (평일)</td>
+                                            </tr>
+                                            <tr>
+                                                <th>도로명주소</th>
+                                                <td colspan="3">${ protect.proaddressnew }</td>
+                                            </tr>
+                                            <tr>
+                                                <th>소재지번주소</th>
+                                                <td colspan="3">${ protect.proaddressold }</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </dd>
@@ -112,9 +176,19 @@
                     
                         <!-- 버튼 -->
                         <div class="viewBtn-wrap">
-                            <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
-                            <button class="listBtn"><i class="xi-rotate-left"></i> 목록</button>
-                            <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
+                        	<c:url var="ppre" value="ppre.do">
+                            	<c:param name="prono" value="${protect.prono}"/>
+                            	<c:param name="searchFiled" value="${ searchFiled }" />
+								<c:param name="searchValue" value="${ searchValue }" />
+                            </c:url>
+                            <c:url var="pnext" value="pnext.do">
+                            	<c:param name="prono" value="${protect.prono}"/>
+                            	<c:param name="searchFiled" value="${ searchFiled }" />
+								<c:param name="searchValue" value="${ searchValue }" />
+                            </c:url>
+                       		<button class="nextBtn" onclick="javascript:location.href='${ppre}'"><i class="xi-angle-left-min"></i>이전</button>
+                            <button class="listBtn"onclick="location.href='movePlist.do'"><i class="xi-rotate-left"></i> 목록</button>
+                            <button class="prevBtn" onclick="javascript:location.href='${pnext}'"> <i class="xi-angle-right-min"></i>다음</button>
                         </div>
                         <!-- 버튼 끝 -->
                     </div>
@@ -126,60 +200,52 @@
 		</div>
 		
 				<!-- ajax로 JSON객체 가져오기 -->
-<script type="text/javascript">
-
+<!-- <script type="text/javascript">
 
 $(function(){
-	var careNm = '${careNm}';/* '<c:out value="${careNm}"/>' */
+	var careNm = '${careNm}';/* '<c:out value="${careNm}"/>' */	
 	console.log(careNm)
 	$.ajax({
-		url : "pdetail.do",
-		type : "get",
-		data : { careNm : careNm }, //보내는 값
-		dataType: "json", //받는 값
+		url : "resources/ProtectXml/protectlist.xml",
+		cache : "false", 
+		dataType: "xml", //받는 값
 		success : function(data){
 			console.log("success:성공");
-			var jsonStr = JSON.stringify(data);
-			var json = JSON.parse(jsonStr);
-			var totalcount = (json.list).length;
-			var values = "";
-			console.log((json.list).length);
-			for(var i in json.list){
-				values += 
+			var info = "";
+			$(data).find("item").each(function(){
+				info += 
 					"<tr>"
             		    +"<th>동물보호센터명</th>"
-            		    +"<td colspan='3'>"+decodeURIComponent(json.list[i].careNm).replace(/\+/gi, "  ")+"</td>"
+            		    +"<td colspan='3'>"+$(this).find("careNm").text() +"</td>"
             		    +"</tr>"
             		    +"<tr>"
             		    +"<th>동물보호센터유형</th>"
-            		    +"<td>" + decodeURIComponent(json.list[i].divisionNm).replace(/\+/gi, "  ") + "</td>"
+            		    +"<td>" + $(this).find("divisionNm").text() + "</td>"
             		    +"<th>연락처</th>"
-            		    +"<td>" + json.list[i].careTel + "</td>"
+            		    +"<td>" + $(this).find("careTel").text() + "</td>"
             		    +"</tr>"
             		    +"<tr>"
             		    +"<th>운영방식</th>"
-            		    +"<td>" + decodeURIComponent(json.list[i].divisionNm).replace(/\+/gi, "  ") + "</td>"
+            		    +"<td>" +  $(this).find("divisionNm").text() + "</td>"
             		   // +"<th>운영시간</th>"
             		   // +"<td> " + json.list[i].weekOprStime +"~"+json.list[i].weekOprEtime + " (평일)</td>"
             		    +"</tr>"
             		    +"<tr>"
             		    +"<th>도로명 주소</th>"
-            		    +"<td colspan='3'>"+decodeURIComponent(json.list[i].careAddr).replace(/\+/gi, "  ")+"</td>"
+            		    +"<td colspan='3'>"+ $(this).find("careAddr").text() +"</td>"
             		   + "</tr>"
-					} //for in
-            
-   
-            $('#pdetail > tbody').html(values); 
+           		 $('#pdetail > tbody').html(info); 
+			});//success
+				
             },
             error : function(jqXHR, textstatus, errorthrown) {
                console.log("error : " + jqXHR + ", " + textstatus
                      + ", " + errorthrown); 
-			
 		}
 	});//ajax
 	
 });//document.ready
 
-</script> 
+</script>  -->
 	</body>
 </html>

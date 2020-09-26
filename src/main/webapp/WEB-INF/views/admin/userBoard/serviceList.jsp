@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="listCount"  value="${ requestScope.listCount }"/>
+<c:set var="listCount" value="${ requestScope.totalCount }" />
 <c:set var="startPage"  value="${ requestScope.startPage }"/>
 <c:set var="endPage"  value="${ requestScope.endPage }"/>
 <c:set var="maxPage"  value="${ requestScope.maxPage }"/>
@@ -63,23 +63,23 @@ function deleteAction(){
 	console.log("### checkRow => {"+checkRow+"}");
 	
 	if(confirm("삭제 하시겠습니까?"))
-		location.href = "vdelete.ad?checkRow=" + checkRow ;
+		location.href = "vdeleteche.ad?checkRow=" + checkRow ;
 }
 </script>
             <!-- 본문내용 -->
             <div class="list_wrap">
                 <!-- 검색영역 -->
                 <div class="sort-area">  
-                    <h4>전체 ${listCount}개</h4>
+                    <h4>전체 ${requestScope.totalCount}개</h4>
                     <form action="vlist.ad" method="get" id="">
                     <div class="searchBox">
-                        <select name="type" class="ListSelect">
-                                <option value="" selected disabled>전체</option>
-                                 <option value="address">지역</option>
-                                <option value="term">봉사기간(월)</option>
+                        <select name="searchFiled" class="ListSelect">
+                                 <option value="voltitle" class="fontColor-dark" ${pageVO.searchFiled eq"voltitle"?"selected":""}>제목</option>
+                                <option value="voladdress" class="fontColor-dark" ${pageVO.searchFiled eq"voladdress"?"selected":""}>지역</option>
+                                <option value="volterm2" class="fontColor-dark"${pageVO.searchFiled eq"volterm2"?"selected":""}>기간</option>
                         </select>
                         <div>
-                            <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
+                            <input type="text" name="searchValue" value ="${ pageVO.searchValue }"  placeholder="검색어를 입력해주세요.">
                             <button type="submit" name="sel" class="top-search"><i class="xi-search"></i></button>
                         </div>
                     </div>
@@ -114,10 +114,13 @@ function deleteAction(){
                         </tr>
                     </thead>
                     <tbody>
-                     <c:forEach var="v" items="${requestScope.list}">
+                     <c:forEach var="v" items="${requestScope.Vlist}">
                      		<c:url var="vd" value="vdetail.ad">
-                                  	 		<c:param name="volno" value="${v.volno}"/>
-                                  	 		<c:param name="page" value="${currentPage}"/>
+                                  	<c:param name="volno" value="${ v.volno}"/>
+                                  	<c:param name="pageNo" value="${ pageVO.pageNo }"/>
+                          			<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+									<c:param name="volche" value="${ v.volche }"/>
                             </c:url>
                         <tr>
                             <td><input type="checkbox" name="checkDel" id="" value="${v.volno }"></td>
@@ -142,6 +145,17 @@ function deleteAction(){
                             <td class="date" onclick="location.href='${vd}'">${v.voldate}</td>
                         </tr>
                      </c:forEach>
+                     <%-- <c:if test="${ listCount eq 0 }">
+							<tr class="list-no">
+								<td colspan="8">
+									<p>
+										<img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png"
+											alt="" title="" />
+									</p>
+									<h1>목록이 없습니다.</h1>
+								</td>
+							</tr>
+						</c:if> --%>
                     </tbody>
                 </table>
                 <p class="warning_text"> *삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p>
@@ -150,67 +164,51 @@ function deleteAction(){
                 <!-- 버튼 -->
                 <div class="list-btn">
                     <button type="button" id="" class="btn-left chkBtn" onclick="deleteAction();"><i class="xi-cut"></i> 선택삭제</button>
-                   <!--  <button type="button" id="" class="btn-right writeBtn" onclick="location='serviceWrite.jsp'"><i class="xi-pen-o"></i> 글작성</button> -->
                 </div>
                 <!-- //버튼 -->
 
                 <!-- 페이징 -->
                 <c:if test="${listCount > 0}">
                         <dl class="list-paging">
-                            <dd>
-                            <c:if test="${currentPage <= 1 }">
-                                <a><i class="xi-angle-left"></i></a>
-                            </c:if>
-                            <c:if test="${currentPage > 1}">
-                            	<c:url var="sl" value="vlist.ad">
-                               		<c:param name="page" value="1"/>
-                                </c:url>
-                                 <a href="${sl}"><i class="xi-angle-left"></i></a>
-                            </c:if>
-                            	<!-- 이전그룹으로 이동처리 -->
-                            <c:if test="${currentPage > 10 }">
-                            	<c:if test="${(currentPage -10) < startPage && (currentPage -10) }">
-                                <c:url var="slbefore" value="vlist.ad">
-                                	<c:param name="page" value="${startPage - 10}"/>
-                                </c:url>
-                                  <a href="${slbefore}"><i class="xi-angle-left"></i></a>
-                                </c:if>
-                             </c:if>
-                             	<!-- 현재 페이지가 속한 페이지 그룹의 숫자 출력 처리 -->
-                           <c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
-                              <c:if test="${p eq currentPage }">
-                              		<a class="active">${ p }</a>
-                              </c:if>	
-                              <c:if test="${p ne currentPage }">
-                              		<c:url var="slp" value="vlist.ad">
-                              			<c:param name="page" value="${p}"/>
-                              		</c:url>
-                              		   <a href="${slp}">${p}</a>
-                              </c:if>
-                           </c:forEach>
-                             <!-- 다음그룹으로 이동처리 -->
-                            <c:if test="${currentPage > 10 }">
-                            	<c:if test="${(currentPage +10) > endPage &&(currentPage + 10) < maxPage }">
-                                <c:url var="slafter" value="vlist.ad">
-                                	<c:param name="page" value="${ endPage +10 }"/>
-                                </c:url>
-                                  <a href="${slafter}"><i class="xi-angle-right"></i></a>
-                                </c:if>
-                             </c:if>
-                             <!-- 맨끝 페이지로 이동처리 -->
-                             <c:if test="${currentPage >= maxPage }">
-                                <a><i class="xi-angle-right"></i></a>
-                            </c:if>
-                            <c:if test="${currentPage < maxPage}">
-                            	<c:url var="sl2" value="vlist.ad">
-                               		<c:param name="page" value="${maxPage }"/>
-                                </c:url>
-                                 <a href="${sl2}"><i class="xi-angle-right"></i></a>
-                            </c:if>
-                            </dd>
-                        </dl>
-                        </c:if>
-                     <c:if test="${listCount < 0 and listCount eq 0}">
+					<dd>
+						<c:if test="${pageVO.pageNo >0 }">
+							<c:if test="${pageVO.startPageNo >5 }">
+								<c:url var="VadminPage" value="vlist.ad">
+									<c:param name="pageNo" value="${ pageVO.startPageNo-5 }" />
+									<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+								</c:url>
+								<a href="${ VadminPage }"><i class="xi-angle-left"></i></a>
+							</c:if>
+							<c:forEach var="i" begin="${pageVO.startPageNo}"
+								end="${ pageVO.endPageNo }" step="1">
+								<c:url var="dl2" value="vlist.ad">
+									<c:param name="pageNo" value="${ i }" />
+									<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+								</c:url>
+								<c:choose>
+									<c:when test="${i eq pageVO.pageNo }">
+										<a href="${dl2}" class="active">${ i }</a>
+									</c:when>
+									<c:otherwise>
+										<a href="${dl2}" class="">${ i }</a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
+								<c:url var="dl3" value="vlist.ad">
+									<c:param name="pageNo" value="${ pageVO.endPageNo +1 }" />
+									<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+								</c:url>
+								<a href="${dl3 }"><i class="xi-angle-right"></i></a>
+							</c:if>
+						</c:if>
+					</dd>
+				</dl>
+               </c:if>
+                     <c:if test="${ listCount eq 0}">
                         <tr class="list-no">
 							<td colspan="7">
 								<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>

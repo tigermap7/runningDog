@@ -2,11 +2,14 @@ package com.kh.runningdog.volunteer.model.vo;
 
 import java.sql.Date;
 
-public class Volunteer implements java.io.Serializable{
+import com.kh.runningdog.dboard.model.vo.PageVO;
+
+public class Volunteer extends PageVO implements java.io.Serializable{
 	private static final long serialVersionUID = 8888L;
 	
 	private int volno;
 	private String voltitle;
+	private int unique_num;
 	private String volwriter;
 	private String volcontent;
 	private java.sql.Date voldate;
@@ -27,13 +30,16 @@ public class Volunteer implements java.io.Serializable{
 	
 	public Volunteer() {}
 
-	public Volunteer(int volno, String voltitle, String volwriter, String volcontent, Date voldate, String voltel,
-			String volterm1, String volterm2, String volname, String volor1, String volre1, String volor2,
-			String volre2, String volor3, String volre3, String volor4, String volre4, String voladdress,
+	
+
+	public Volunteer(int volno, String voltitle, int unique_num, String volwriter, String volcontent, Date voldate,
+			String voltel, String volterm1, String volterm2, String volname, String volor1, String volre1,
+			String volor2, String volre2, String volor3, String volre3, String volor4, String volre4, String voladdress,
 			String volche) {
 		super();
 		this.volno = volno;
 		this.voltitle = voltitle;
+		this.unique_num = unique_num;
 		this.volwriter = volwriter;
 		this.volcontent = volcontent;
 		this.voldate = voldate;
@@ -53,6 +59,8 @@ public class Volunteer implements java.io.Serializable{
 		this.volche = volche;
 	}
 
+
+
 	public int getVolno() {
 		return volno;
 	}
@@ -67,6 +75,14 @@ public class Volunteer implements java.io.Serializable{
 
 	public void setVoltitle(String voltitle) {
 		this.voltitle = voltitle;
+	}
+	
+	public int getUnique_num() {
+		return unique_num;
+	}
+
+	public void setUnique_num(int unique_num) {
+		this.unique_num = unique_num;
 	}
 
 	public String getVolwriter() {
@@ -211,13 +227,14 @@ public class Volunteer implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Volunteer [volno=" + volno + ", voltitle=" + voltitle + ", volwriter=" + volwriter + ", volcontent="
-				+ volcontent + ", voldate=" + voldate + ", voltel=" + voltel + ", volterm1=" + volterm1 + ", volterm2="
-				+ volterm2 + ", volname=" + volname + ", volor1=" + volor1 + ", volre1=" + volre1 + ", volor2=" + volor2
-				+ ", volre2=" + volre2 + ", volor3=" + volor3 + ", volre3=" + volre3 + ", volor4=" + volor4
-				+ ", volre4=" + volre4 + ", voladdress=" + voladdress + ", volche=" + volche + "]";
+		return "Volunteer [volno=" + volno + ", voltitle=" + voltitle + ", unique_num=" + unique_num + ", volwriter="
+				+ volwriter + ", volcontent=" + volcontent + ", voldate=" + voldate + ", voltel=" + voltel
+				+ ", volterm1=" + volterm1 + ", volterm2=" + volterm2 + ", volname=" + volname + ", volor1=" + volor1
+				+ ", volre1=" + volre1 + ", volor2=" + volor2 + ", volre2=" + volre2 + ", volor3=" + volor3
+				+ ", volre3=" + volre3 + ", volor4=" + volor4 + ", volre4=" + volre4 + ", voladdress=" + voladdress
+				+ ", volche=" + volche + "]";
 	}
-
+	
 	
 
 }

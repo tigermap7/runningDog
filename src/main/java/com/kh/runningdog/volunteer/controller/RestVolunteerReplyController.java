@@ -30,13 +30,13 @@ public class RestVolunteerReplyController {
 	
 	@Inject
 	private VolunteerService volunteerService;
-	
+	//목록
 	@RequestMapping(value = "vreplylist.do")
 	public List<Vreply> SelectVreplyList(@RequestParam("volno") int volno, HttpServletRequest request) throws Exception {
 		
 		return volunteerService.selectVreplyList(volno);
 	}
-	
+	//댓글추가
 	@RequestMapping(value="vrinsert.do", method = RequestMethod.POST)
 	public Map<String, Object> insertVreply(@RequestBody Vreply vreply)throws Exception{
 		Map<String, Object> result = new HashMap<>();
@@ -50,6 +50,7 @@ public class RestVolunteerReplyController {
 		}
 		return result;
 	}
+	//수정
 	@RequestMapping(value="vrupdate.do", method = RequestMethod.POST)
 	public Map<String, Object> updateVreply(@RequestBody Vreply vreply)throws Exception{
 		Map<String, Object> result = new HashMap<>();
@@ -63,15 +64,27 @@ public class RestVolunteerReplyController {
 		}
 		return result;
 	}
-	
+	//삭제
 	@RequestMapping(value = "vrdelete.do")
-	public String deleteVreply (@RequestParam(value="vreply_no") int vreply_no, Vreply vreply, 
-								@RequestParam(value="volno") int volno) throws Exception{
+	public String deleteVreply (@RequestParam(value="vreply_no") int vreply_no, Vreply vreply) throws Exception{
         
 	volunteerService.deleteVreply(vreply_no);
 	
 	return "forward:/vdetail.do";
 	}
-	
+	//대댓글 저장
+	@RequestMapping(value="vrinsertlevel.do", method = RequestMethod.POST)
+	public Map<String, Object> insertVreplyLevel(@RequestBody Vreply vreply)throws Exception{
+		Map<String, Object> result = new HashMap<>();
+		
+		try {
+			volunteerService.insertVreplyLevel(vreply);
+			result.put("status", "OK");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "False");
+		}
+		return result;
+	}
 
 }
