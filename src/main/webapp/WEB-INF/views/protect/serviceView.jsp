@@ -467,14 +467,14 @@ function fn_SecondVreply(vreply_no, nickname, vreply_content, unique_num){
 						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
 						'<dd><h4>'+ nickname +'</h4></dd>'+
 						' </dl>'+
-						'<p><textarea id="SecondContent" name="SecondContent" style="resize: none; width:100%; min-height:100px; max-height:100px;">비방글은 작성하실 수 없습니다.</textarea></p>'+
+						'<p><textarea id="vreply_content" name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;">비방글은 작성하실 수 없습니다.</textarea></p>'+
 						'<div class="cmt_conBtn">'+
 						'<button class="Cmt_delete_ctn" onclick="showReplyList();">취소</button>'+
-						'<button class="Cmt_update_btn" onclick="insertSVrLevel(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')">등록</button>'+
+						'<button class="Cmt_update_btn" id="btn_InsertSVreply" onclick="insertSVrLevel(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')">등록</button>'+
 						'</div>'+
 						'</li>'
 						$('#vreply_no'+vreply_no).html(htmls);
-						$('#vreply_no'+vreply_no+'#SecondContent').focus();
+						$('#vreply_no'+vreply_no+'#vreply_content').focus();
 	
 }
 
@@ -484,12 +484,12 @@ $(document).on('click', '#btn_InsertSVreply', function(){
 	if( nickname == "" )
 		alert("로그인 후 이용해주세요.");
 	 
-	var VreplyContent = $('#vreply_content').val();
-	console.log(VreplyContent+"VreplyContent");
-	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
+	var vreply_content = $('#vreply_content').val();
+	console.log(VreplyContent+"vreply_content");
+	var paramData = JSON.stringify({ "vreply_content" : vreply_content , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
 	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
 	$.ajax({
-		url : 'vrinsert.do',
+		url : 'vrinsertlevel.do',
 		data : paramData,
 		headers : headers,
 		type : 'post',
@@ -507,30 +507,7 @@ $(document).on('click', '#btn_InsertSVreply', function(){
 		}
 	});
 });
-//대댓글수정내용저장
-function insertSVreplyLevel(vreply_no, nickname){
-	var SecondContent = $('#SecondContent').val();
-	var paramData = JSON.stringify({"vreply_content" : SecondContent, "vreply_no" : vreply_no});
-	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
-	
-	$.ajax({
-		url : "vrinsertlevel.do",
-		headers : headers,
-		data : paramData,
-		type : 'POST',
-		dataType :'text',
-		success : function(result){
-			console.log(result);
-			alert("대댓글 성공!");
-			showReplyList(); 
-		},
-		error : function(jqXHR, textstatus, errorthrown) {
-			console.log("error : " + jqXHR + ", " + textstatus
-					+ ", " + errorthrown);
-		} 
-		
-	});
-}
+
 //댓글삭제기능
 function fn_DeleteVreply( vreply_no, nickname ){
 	var paramData = { "vreply_no" : vreply_no };

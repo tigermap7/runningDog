@@ -83,4 +83,12 @@ public class VolunteerDao {
 		return session.delete("volunteerMapper.deleteVBreplyAll", volno);
 	}
 
+	public ArrayList<Volunteer> selectListMypage(Volunteer volunteer) {
+		List<Volunteer> list = session.selectList("volunteerMapper.selectListMypage",volunteer);
+		return (ArrayList<Volunteer>)list;
+	}
+
+	public int selectListCountMypage(Volunteer volunteer) {
+		return session.selectOne("volunteerMapper.selectListCountMypage", volunteer );
+	}
 }

@@ -100,6 +100,16 @@ public class VolunteerServiceImpl implements VolunteerService{
 		return volunteerDao.deleteVBreplyAll(volno);
 	}
 
+	@Override
+	public ArrayList<Volunteer> selectListMypage(Volunteer volunteer) {
+		return volunteerDao.selectListMypage(volunteer);
+	}
+
+	@Override
+	public int selectListCountMypage(Volunteer volunteer) {
+		return volunteerDao.selectListCountMypage(volunteer);
+	}
+
 	
 	
 	

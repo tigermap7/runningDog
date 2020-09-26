@@ -72,7 +72,7 @@ public class RestVolunteerReplyController {
 	
 	return "forward:/vdetail.do";
 	}
-	//대댓글 
+	//대댓글 저장
 	@RequestMapping(value="vrinsertlevel.do", method = RequestMethod.POST)
 	public Map<String, Object> insertVreplyLevel(@RequestBody Vreply vreply)throws Exception{
 		Map<String, Object> result = new HashMap<>();

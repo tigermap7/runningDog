@@ -417,7 +417,7 @@ public class VolunteerController {
 			volunteer.setVolche(request.getParameter("volche"));
 			logger.info("SearchFiled : " + volunteer.getSearchFiled());
 			logger.info("SearchValue : " + volunteer.getSearchValue());
-			int totalCount = volunteerService.selectListCount(volunteer); // 게시물 총갯수를 구한다
+			int totalCount = volunteerService.selectListCountMypage(volunteer); // 게시물 총갯수를 구한다
 			
 			
 			//게시물 총횟수랑 첫 페이지에 몇개의 리스트를 보여줄지 체크,
@@ -437,7 +437,7 @@ public class VolunteerController {
 			logger.info("EndPageNo // 끝 페이지 (페이징 네비 기준) : " + volunteer.getEndPageNo());
 			logger.info("totalCount // 게시 글 전체 수 : " + totalCount);
 
-			ArrayList<Volunteer> list = volunteerService.selectList(volunteer);
+			ArrayList<Volunteer> list = volunteerService.selectListMypage(volunteer);
 			
 			model.addAttribute("volche", volunteer.getVolche());
 			model.addAttribute("totalCount", totalCount);

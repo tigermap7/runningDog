@@ -24,4 +24,6 @@ public interface VolunteerService {
 	Vreply selectVreply(int vreply_no);
 	int insertVreplyLevel(Vreply vreply);
 	int deleteVBreplyAll(int volno);
+	ArrayList<Volunteer> selectListMypage(Volunteer volunteer);
+	int selectListCountMypage(Volunteer volunteer);
 }
