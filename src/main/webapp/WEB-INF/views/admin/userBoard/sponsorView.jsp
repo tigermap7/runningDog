@@ -43,7 +43,18 @@
 
                 <!-- 버튼 -->
                 <div class="viewBtn-wrap">
-                    <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
+	                	<c:url var="spre" value="asdetial.ad">
+							<c:param name="sNum" value="${ preNo }" />
+							<c:param name="page" value="${ page }" />
+						</c:url>
+						<c:if test="${ preNo ne 0 }">
+							<button class="nextBtn" onclick="location.href='${ spre }'"><i class="xi-angle-left-min"></i> 이전</button>
+						</c:if>
+						<c:if test="${ preNo eq 0 }">
+							&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						</c:if>
+                
+                
 	                    <c:url var="sl" value="aslist.ad">
 	                    	<c:param name="page" value="${ page }"/>
 	                    </c:url>
@@ -58,7 +69,18 @@
 	                    	<c:param name="sNum" value="${ sponsor.sNum }"/>
 	                    </c:url>
                     <button class="modifiedBtn" onclick="javascript:location.href='${ uform }'"><i class="xi-pen-o"></i> 수정</button>
-                    <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
+                    
+					
+						<c:url var="snext" value="asdetial.ad">
+							<c:param name="sNum" value="${ nextNo }" />
+							<c:param name="page" value="${ page }" />
+						</c:url>
+						<c:if test="${ nextNo ne 0 }">
+							<button class="prevBtn" onclick="location.href='${ snext }'">다음 <i class="xi-angle-right-min"></i></button>
+						</c:if>
+						<c:if test="${ nextNo eq 0 }">
+							&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						</c:if>
                 </div>
                 <!-- 버튼 끝 -->
             </div>

@@ -69,8 +69,8 @@ public class SponsorServiceImpl implements SponsorService{
 	}
 
 	@Override
-	public ArrayList<Sponsor> selectSearch(HashMap<String, String> key) {
-		return sponsorDao.selectSearch(key);
+	public ArrayList<Sponsor> selectSearch(HashMap<String, Object> key, int currentPage, int countList) {
+		return sponsorDao.selectSearch(key, currentPage, countList);
 	}
 
 	@Override
@@ -102,6 +102,45 @@ public class SponsorServiceImpl implements SponsorService{
 	public String selectContent(int sNum) {
 		return sponsorDao.selectContent(sNum);
 	}
+
+	@Override
+	public void updateSponsorReadCount(int sNum) {
+		sponsorDao.updateSponsorReadCount(sNum);
+	}
+
+	@Override
+	public Integer selectSponsorPre(int sNum) {
+		return sponsorDao.selectSponsorPre(sNum);
+	}
+
+	@Override
+	public Integer selectSponsorNext(int sNum) {
+		return sponsorDao.selectSponsorNext(sNum);
+	}
+
+	@Override
+	public ArrayList<Sponsor> selectProgress(int currentPage, int countList) {
+		return sponsorDao.selectProgress(currentPage, countList);
+	}
 	
+	@Override
+	public ArrayList<Sponsor> selectComple(int currentPage, int countList) {
+		return sponsorDao.selectComple(currentPage, countList);
+	}
+
+	@Override
+	public int selectListCount(String flag) {
+		return sponsorDao.selectListCount(flag);
+	}
+
+	@Override
+	public int selectListCount(HashMap<String, Object> key) {
+		return sponsorDao.selectListCount(key);
+	}
+
+	@Override
+	public void updateSponsorComplete(int sNum) {
+		sponsorDao.updateSponsorComplete(sNum);
+	}
 	
 }

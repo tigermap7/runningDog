@@ -42,6 +42,11 @@
 	        	});
 	        }); 
 	        
+ 	        	/* 공지사항 상세페이지 이동 */
+			function moveNoticeDetail(noticeNo){
+				location.href = "ndetail.do?noticeNo=" + noticeNo;
+			}
+	       		
 	        </script> 
 	        
 	        <!-- 공지사항 알림, 최신 출력 -->

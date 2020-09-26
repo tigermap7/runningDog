@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -84,15 +85,51 @@ public class AdminSponsorController {
 	}
 
 	@RequestMapping("asdetial.ad")
-	public ModelAndView moveAdminSponsorDetail(ModelAndView mv, @RequestParam() int page, @RequestParam() int sNum) {
+	public ModelAndView moveAdminSponsorDetail(ModelAndView mv, @RequestParam() int page, @RequestParam() int sNum,
+													HttpServletRequest request, HttpServletResponse response) {
 		Sponsor sponsor = sponsorService.selectOne(sNum);
 		sponsor.setsContent(sponsorService.selectContent(sNum));
-		
-		if(sponsor != null) {
-			mv.addObject("page", page);
-			mv.addObject("sponsor", sponsor);
-			mv.setViewName("admin/userBoard/sponsorView");
-		}
+    	
+    	Cookie[] cookies = request.getCookies();
+	    Cookie viewCookie = null;
+    	
+	    //쿠키가 있을 경우 이름 만들기
+        if(cookies != null && cookies.length > 0) {
+        	for(int i = 0; i < cookies.length; i++) {
+        		//Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
+                if (cookies[i].getName().equals("cookie" + sNum)) {
+                    viewCookie = cookies[i];
+                }
+            }
+        }
+        
+        if(sponsor != null) {
+            //만일 viewCookie가 null일 경우 쿠키를 생성해서 조회수 증가 로직을 처리함.
+            if (viewCookie == null) {
+            	//쿠키 생성(이름, 값)
+                Cookie newCookie = new Cookie("cookie"+sNum, "|" + sNum + "|");
+                                
+                // 쿠키 추가
+                response.addCookie(newCookie);
+ 
+                // 쿠키를 추가 시키고 조회수 증가시킴
+                sponsorService.updateSponsorReadCount(sNum); //조회수 증가
+            } else {
+                // 쿠키 값 받아옴
+                String value = viewCookie.getValue();
+            }
+         
+         Integer preNo = sponsorService.selectSponsorPre(sNum); //이전글 번호 조회, int는 null값을 못 받아서 integer사용
+         Integer nextNo = sponsorService.selectSponsorNext(sNum); //다음글 번호 조회
+         if(preNo == null){ preNo = 0;}   //이전글이 없을 때 0으로 설정
+         if(nextNo == null){ nextNo = 0;}   //다음글이 없울 때 0으로 설정 
+
+         mv.addObject("preNo", preNo);
+         mv.addObject("nextNo", nextNo);
+         mv.addObject("page", page);
+         mv.addObject("sponsor", sponsor);
+         mv.setViewName("admin/userBoard/sponsorView");
+    	}
 		return mv;
 	}
 
@@ -126,7 +163,8 @@ public class AdminSponsorController {
 
 	@RequestMapping(value="supdate.ad", method=RequestMethod.POST)
 	public String sUpdate(Sponsor sponsor, HttpServletRequest request, @RequestParam(name = "upfile", required = false) MultipartFile upfile) {
-		int sNum = sponsor.getsNum();logger.info(Integer.toString(sNum));
+		int sNum = sponsor.getsNum();
+		logger.info(Integer.toString(sNum));
 		sponsor.setsAmount(Integer.parseInt(request.getParameter("amount").replaceAll(",", "")));
 
 		if(!upfile.getOriginalFilename().equals("")) {
@@ -394,51 +432,51 @@ public class AdminSponsorController {
 				new File(savePathTh + "\\" + image.getsOriginal()).delete();
 				new File(savePathTh + "\\" + image.getsRename()).delete();
 			}
-			for(SponsorImage image : delIm)
-				new File(savePathIm + "\\" + image.getSiName()).delete();
-			re = "redirect:aslist.ad?page=" + page;
+			if(delIm.size() > 0 ) {
+				for(SponsorImage image : delIm)
+					new File(savePathIm + "\\" + image.getSiName()).delete();
+				re = "redirect:aslist.ad?page=" + page;
+			}
 		}
 		return re;
 	}
 
 	@RequestMapping("ssearch.ad")
 	public ModelAndView moveSponsorSearch(ModelAndView mv, HttpServletRequest request) {
-		HashMap<String, String> key = new HashMap<>();
+		HashMap<String, Object> key = new HashMap<>();
 		key.put("selected", request.getParameter("selected"));
 		key.put("keyword", request.getParameter("keyword"));
-
-		ArrayList<Sponsor> list = sponsorService.selectSearch(key);
-
+    	
+    	int currentPage = 1;
+		if(request.getParameter("page") != null)
+			currentPage = Integer.parseInt(request.getParameter("page"));
+		
+		int countList = 6;
+		int countPage = 5;
+		
+		int totalList = sponsorService.selectListCount(key);
+		int totalPage = (int)(((double)totalList / countList) + 0.9);
+		int startPage = ((int)(((double)currentPage / countPage) + 0.9) - 1) * countPage + 1;
+		int endPage = startPage + countPage - 1;
+		if(endPage > totalPage)
+			endPage = totalPage;
+		
+		ArrayList<Sponsor> list = sponsorService.selectSearch(key, currentPage, countList);
+		
 		if(list.size() > -1) {
+			mv.addObject("selected", request.getParameter("selected"));
+			mv.addObject("keyword", request.getParameter("keyword"));
+			//mv.addObject("flag", "1");
 			mv.addObject("list", list);
-			mv.addObject("page", 1);
-			mv.addObject("totalList", list.size());
-			mv.addObject("totalPage", 1);
-			mv.addObject("startPage", 1);
-			mv.addObject("endPage", 1);
+			mv.addObject("page", currentPage);
+			mv.addObject("totalList", totalList);
+			mv.addObject("totalPage", totalPage);
+			mv.addObject("startPage", startPage);
+			mv.addObject("endPage", endPage);
 			mv.setViewName("admin/userBoard/sponsorList");
 		}
 		return mv;
 	}
-
-
-
-
-
-
-	//	admin.sponsor.controller	moveAdminSponsorList	aslist.ad	관리자용 후원 목록 출력
-	//	admin.sponsor.controller	moveAdminSponsorDetail	asdetial.ad	관리자용 후원 상세 뷰 출력
-	//	admin.sponsor.controller	moveSponsorWrite	aswrite.ad	관리자용 후원 글 쓰기 뷰 이동
-	//	admin.sponsor.controller	moveSponsorUpdateView	asupview.ad	관리자용 후원 글 수정 뷰 이동
-	//	admin.sponsor.controller	insertSponsor	sinsert.ad	관리자용 후원 글 쓰기
-	//	admin.sponsor.controller	updateSponsor	supdate.ad	관리자용 후원 글 수정
-	//	admin.sponsor.controller	deleteSponsor	sdelete.ad	관리자용 후원 글 삭제
-
-
-
-
-
-
 
 
 }

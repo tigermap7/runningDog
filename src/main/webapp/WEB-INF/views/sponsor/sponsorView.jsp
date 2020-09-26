@@ -38,17 +38,18 @@
                             <div class="sPaymentTitle">
                                 <p>
                                     조회수 : ${ sponsor.sCount } · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
-                                    <a data-id="${ sponsor.sNum }" data-title="${ sponsor.sTitle }" data-summary="${ sponsor.sSummary }" class="linkBtn" data-toggle="popover"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    <a data-id="${ sponsor.sNum }" data-title="${ sponsor.sTitle }" data-summary="${ sponsor.sSummary }" data-image="${ s.sRename }"
+                                    	 data-count="${ sponsor.sCount }" class="linkBtn" data-toggle="popover"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </p>
                                 
                                 <div>
                                     <h3>'따뜻한 마음의 실천'</h3>
                                     <h2>${ sponsor.sTitle }</h2>
                                     	<c:url var="spd" value="spay.do">
-                                    		<c:param value="${ s.sNum }" name="sNum"/>
-                                        	<c:param value="${ s.sTitle }" name="title"/>
+                                    		<c:param value="${ sponsor.sNum }" name="sNum"/>
+                                        	<c:param value="${ sponsor.sTitle }" name="title"/>
                                         </c:url>
-                                    <span class="sPaymentBtn"><a href="spay.do"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
+                                    <span class="sPaymentBtn"><a href="${ spd }"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
                                 </div>
                             </div>
                             
@@ -57,22 +58,43 @@
                                 ${ sponsor.sContent }
                             </div>
                             	<c:url var="spd" value="spay.do">
-                            		<c:param value="${ s.sNum }" name="sNum"/>
-                                	<c:param value="${ s.sTitle }" name="title"/>
+                            		<c:param value="${ sponsor.sNum }" name="sNum"/>
+                                	<c:param value="${ sponsor.sTitle }" name="title"/>
                                 </c:url>
-                            <span class="sPaymentBtn"><a href="slist.do"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
+                            <span class="sPaymentBtn"><a href="${ spd }"><i class="xi-piggy-bank"></i> 후원 참여하기 <i class="xi-angle-right-min"></i></a></span>
                                 
                         </div>
                         <!-- 상세 끝 -->
                     
                         <!-- 버튼 -->
                         <div class="viewBtn-wrap">
-                            <button class="nextBtn"><i class="xi-angle-left-min"></i> 이전</button>
+                        	<c:url var="spre" value="sdetail.do">
+								<c:param name="sNum" value="${ preNo }" />
+								<c:param name="page" value="${ page }" />
+							</c:url>
+							<c:if test="${ preNo ne 0 }">
+								<button class="nextBtn" onclick="location.href='${ spre }'"><i class="xi-angle-left-min"></i> 이전</button>
+							</c:if>
+							<c:if test="${ preNo eq 0 }">
+								&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+							</c:if>
+                            
                             <c:url var="sl" value="slist.do">
                             	<c:param name="page" value="${ page }"/>
                             </c:url>
                             <button class="listBtn" onclick="javascript:location.href='${ sl }'"><i class="xi-rotate-left"></i> 목록</button>
-                            <button class="prevBtn">다음 <i class="xi-angle-right-min"></i></button>
+                            
+                            <c:url var="snext" value="sdetail.do">
+								<c:param name="sNum" value="${ nextNo }" />
+								<c:param name="page" value="${ page }" />
+							</c:url>
+							<c:if test="${ nextNo ne 0 }">
+								<button class="prevBtn" onclick="location.href='${ snext }'">다음 <i class="xi-angle-right-min"></i></button>
+							</c:if>
+							<c:if test="${ nextNo eq 0 }">
+								&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+							</c:if>
+                            
                         </div>
                         <!-- 버튼 끝 -->
                     </div>

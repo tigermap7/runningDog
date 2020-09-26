@@ -24,6 +24,7 @@
 <script src="resources/common/js/swiper.min.js"></script>
 <!-- <script src="resources/common/js/summernote-ko-KR.js"></script> -->
 <script src="resources/common/js/member.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="resources/common/js/sponsor.js"></script>
 <script src="resources/common/js/volunteer.js"></script>
 <script src="resources/common/js/contents.js"></script>

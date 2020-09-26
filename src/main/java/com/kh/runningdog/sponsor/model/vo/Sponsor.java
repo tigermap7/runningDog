@@ -15,13 +15,14 @@ public class Sponsor implements Serializable {
 	private Date sDate;
 	private int sAmount;
 	private int sCurrent;
+	private String sChk;
 	private String sOriginal;
 	private String sRename;
 	
 	public Sponsor() {}
 
 	public Sponsor(int sNum, String sId, String sTitle, String sSummary, String sContent, int sCount, Date sDate, int sAmount,
-			int sCurrent, String sOriginal, String sRename) {
+			int sCurrent, String sChk, String sOriginal, String sRename) {
 		super();
 		this.sNum = sNum;
 		this.sId = sId;
@@ -32,8 +33,17 @@ public class Sponsor implements Serializable {
 		this.sDate = sDate;
 		this.sAmount = sAmount;
 		this.sCurrent = sCurrent;
+		this.sChk = sChk;
 		this.sOriginal = sOriginal;
 		this.sRename = sRename;
+	}
+	
+	public String getsChk() {
+		return sChk;
+	}
+
+	public void setsChk(String sChk) {
+		this.sChk = sChk;
 	}
 	
 	public int getsCount() {
@@ -128,8 +138,6 @@ public class Sponsor implements Serializable {
 	public String toString() {
 		return "Sponsor [sNum=" + sNum + ", sId=" + sId + ", sTitle=" + sTitle + ", sSummary=" + sSummary
 				+ ", sContent=" + sContent + ", sCount=" + sCount + ", sDate=" + sDate + ", sAmount=" + sAmount
-				+ ", sCurrent=" + sCurrent + ", sOriginal=" + sOriginal + ", sRename=" + sRename + "]";
+				+ ", sCurrent=" + sCurrent + ", sChk=" + sChk + ", sOriginal=" + sOriginal + ", sRename=" + sRename + "]";
 	}
-	
-	
 }

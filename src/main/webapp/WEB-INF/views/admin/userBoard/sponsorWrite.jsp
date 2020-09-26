@@ -26,6 +26,7 @@
             <!-- 본문내용 -->
             <form id="editor" method="post" enctype="multipart/form-data" action="sinsert.ad" class="form-inline">
             	<input type="hidden" value="${ loginMember.nickname }" name="sId">
+            	<input type="hidden" value="n" name="sChk">
             <div class="write-area">
             
                 <h2>후원하기 작성</h2>
@@ -63,7 +64,7 @@
                 <div class="write-btn">
                     <input type="button" class="btn btn-list" value="목록으로" onclick="javascript:location.href='aslist.ad'">
                     <input type="reset" class="btn btn-cancel" value="취소하기" onclick="Refresh(); return false;">
-                    <input type="submit" class="btn btn-success" value="작성하기">
+                    <input type="submit" class="btn btn-success" value="작성하기" id="cucu">
                 </div>
             </div>
             </form>
