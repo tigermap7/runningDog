@@ -44,6 +44,8 @@
                         <input type="hidden" name="volre2" value="${ volunteer.volre2 }">
                         <input type="hidden" name="volre3" value="${ volunteer.volre3 }">
                         <input type="hidden" name="volre4" value="${ volunteer.volre4 }">
+                        <input type="hidden" name="unique_num" value="${ sessionScope.loginMember.uniqueNum }">
+                        <%-- <input type="hidden" name="volwriter" value="${ sessionScope.loginMember.nickname }"> --%>
                         <div class="write-area" id="inHere" >
                         
                             <h2>자원봉사모집 작성</h2>
@@ -65,74 +67,66 @@
                                         <c:if test="${!empty volunteer.volor1 }">
                                         	<p id="original1">${  volunteer.volor1 }&nbsp;&nbsp;
                                         	<button class="deleteBtn" onclick="showFileSelect1(); deletefile1();"><i class="xi-cut"></i> 파일삭제</button></p>
-                                            <%-- <input type="file" name="ofile1" value="${volunteer.volor1}" class="mb5"/> --%>
                                         </c:if>
                                         <c:if test="${ empty volunteer.volor1 }">
-                                            <input type="file" name="newfile1" class="mb5"/>
+                                            <input type="file" name="newfile1" class="mb5" accept="image/jpeg,image/png,image/jpeg,image/bmp" onchange='chk_type(this);che_Size(this);'/>
                                         </c:if>
-                                        <input type="file" id="showSelect1" name="refile1" class="mb5">
+                                        <input type="file" id="showSelect1" name="refile1" class="mb5" accept="image/jpeg,image/png,image/jpeg,image/bmp" onchange='chk_type(this);che_Size(this);' />
                                          
                                         <c:if test="${!empty volunteer.volor2 }">
                                         	<p id="original2">${  volunteer.volor2 }&nbsp;&nbsp;
                                         	<button class="deleteBtn" onclick="showFileSelect2(); deletefile2();"><i class="xi-cut"></i> 파일삭제</button></p>
                                         </c:if>
                                         <c:if test="${ empty volunteer.volor2 }">
-                                            <input type="file" name="newfile2" class="mb5"/>
+                                            <input type="file" name="newfile2" class="mb5" accept="image/jpeg,image/png,image/jpeg,image/bmp" onchange='chk_type(this);che_Size(this);'/>
                                         </c:if>
-                                        <input type="file" id="showSelect2" name="refile2" class="mb5"> 
+                                        <input type="file" id="showSelect2" name="refile2" class="mb5" accept="image/jpeg,image/png,image/jpeg,image/bmp" onchange='chk_type(this);che_Size(this);'/> 
                                         
                                         <c:if test="${!empty volunteer.volor3 }">
                                         	<p id="original3">${  volunteer.volor3 }&nbsp;&nbsp;
                                         	<button class="deleteBtn" onclick="showFileSelect3(); deletefile3();"><i class="xi-cut"></i> 파일삭제</button></p>
                                         </c:if>
                                         <c:if test="${ empty volunteer.volor3 }">
-                                            <input type="file" name="newfile3" class="mb5"/>
+                                            <input type="file" name="newfile3" class="mb5" accept="image/jpeg,image/png,image/jpeg,image/bmp" onchange='chk_type(this);che_Size(this);'/>
                                         </c:if>
-                                        <input type="file" id="showSelect3" name="refile3" class="mb5"> 
+                                        <input type="file" id="showSelect3" name="refile3" class="mb5" accept="image/jpeg,image/png,image/jpeg,image/bmp" onchange='chk_type(this);che_Size(this);'/> 
                                         
                                         <c:if test="${!empty volunteer.volor4 }">
                                         	<p id="original4">${  volunteer.volor4 }&nbsp;&nbsp;
                                         	<button class="deleteBtn" onclick="showFileSelect4(); deletefile4();"><i class="xi-cut"></i> 파일삭제</button></p>
                                         </c:if>
                                         <c:if test="${ empty volunteer.volor4 }">
-                                            <input type="file" name="newfile4" class="mb5"/>
+                                            <input type="file" name="newfile4" class="mb5"accept="image/jpeg,image/png,image/jpeg,image/bmp" onchange='chk_type(this);che_Size(this);'/>
                                         </c:if>
-                                        <input type="file" id="showSelect4" name="refile4" class="mb5"> 
+                                        <input type="file" id="showSelect4" name="refile4" class="mb5" accept="image/jpeg,image/png,image/jpeg,image/bmp" onchange='chk_type(this);che_Size(this);'/> 
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>담당자</td>
+                                        <td>*담당자</td>
                                         <td><input type="text" name="volwriter" value="${volunteer.volwriter}" class="form-control w50p" required readonly/></td>
                                     </tr>
                                     <tr>
-                                        <td>연락처</td>
+                                        <td>*연락처</td>
                                         <td><input type="tel" name="voltel" value="${volunteer.voltel}" class="form-control w50p"  required/></td>
                                     </tr>
                                     <tr>
-                                        <td>센터명</td>
+                                        <td>*센터명</td>
                                         <td><input type="text" name="volname" value="${volunteer.volname}" class="form-control w50p"  required readonly/></td>
                                     </tr>
                                     <tr>
-                                        <td>지역</td>
+                                        <td>*지역</td>
                                         <td><input type="text" name="voladdress" value="${volunteer.voladdress}" class="form-control w100p" placeholder="지역 입력" required readonly/></td>
                                     </tr>
                                     <tr>
-                                        <td>모집기간</td>
-                                        <td>
-                                            <select class="form-control w30p" name="volche">
-                                            <option value="Y">상시모집</option>
-                                            <option value="N">모집완료</option>
-                                            </select>
+                                        <td>*모집기간</td>
+                                        <td><label><input type="radio" name="volche" value="Y" ${volunteer.volche eq "Y"?"checked":"" } />상시모집</label>
+                                        	<label><input type="radio" name="volche" value="N" ${volunteer.volche eq "N"?"checked":"" } />모집완료</label>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>봉사기간</td>
+                                        <td>*봉사기간</td>
                                         <td><input type="date" name="volterm1" value="${volunteer.volterm1}" class="form-control w30p" required/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="volterm2" value="${volunteer.volterm2}" class="form-control w30p" required/></td>
                                     </tr>
-                                    <!-- <tr>
-                                        <td>홈페이지 링크</td>
-                                        <td><input type="text" name="" title="" class="form-control w100p" placeholder="홈페이지 링크" required/></td>
-                                    </tr> -->
                                     <tr>
                                         <td>내용</td>
                                         <td><textarea name="volcontent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;">${volunteer.volcontent}</textarea></td>
