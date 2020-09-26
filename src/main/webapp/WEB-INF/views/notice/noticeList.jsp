@@ -68,9 +68,14 @@
 
 					<div class="sort-area">
 						<h4>전체 ${ noticePage.listCount }개의 공지사항</h4>
+						
 						<div>
+						<!-- 관리자일때만 등록버튼 나오기 -->
+						<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y' }">
 							<a href="ninview.do" class="writeBtn">글쓰기</a>
+						</c:if>
 						</div>
+						
 					</div>
 
 					<!--리스트-->

@@ -27,13 +27,13 @@
 				  NOTICE_ORIGINAL_FILENAME2, NOTICE_RENAME_FILENAME2, NOTICE_ORIGINAL_FILENAME3, NOTICE_RENAME_FILENAME3
 			  FROM (select * from notice 
 			  <if test="search == 'title'">
-				WHERE NOTICE_TITLE LIKE '%' ||  #{keyword} || '%'
+				WHERE UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
 	  		<if test="search == 'content'">
-	  			WHERE NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%'
+	  			WHERE UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
 	  		<if test="search == 'both'">
-	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+	  			WHERE (UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%' OR UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%')
 			</if>
 			  order by notice_state nulls last, notice_date desc)) 
 	     	<![CDATA[
@@ -45,13 +45,13 @@
 	<select id="getListCount" resultType="_int" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
 		select count(*) from notice
 			<if test="search == 'title'">
-				WHERE NOTICE_TITLE LIKE '%' ||  #{keyword} || '%'
+				WHERE UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
 	  		<if test="search == 'content'">
-	  			WHERE NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%'
+	  			WHERE UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
 	  		<if test="search == 'both'">
-	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+	  			WHERE (UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%' OR UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%')
 			</if>
 	</select>
 	
@@ -68,13 +68,13 @@
 	<select id="selectNoticePre" resultType="Integer" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
 		select lagnum from (select notice_no, lag(notice_no) over(order by notice_state nulls last, notice_date desc) lagnum from notice
 			<if test="search == 'title'">
-				WHERE NOTICE_TITLE LIKE '%' ||  #{keyword} || '%'
+				WHERE UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
 	  		<if test="search == 'content'">
-	  			WHERE NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%'
+	  			WHERE UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
 	  		<if test="search == 'both'">
-	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+	  			WHERE (UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%' OR UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%')
 			</if>	
 		) where notice_no = #{ noticeNo }
 	</select>
@@ -82,13 +82,13 @@
 	<select id="selectNoticeNext" resultType="Integer" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
 		select leadnum from (select notice_no, lead(notice_no) over(order by notice_state nulls last, notice_date desc) leadnum from notice
 			<if test="search == 'title'">
-				WHERE NOTICE_TITLE LIKE '%' ||  #{keyword} || '%'
+				WHERE UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
 	  		<if test="search == 'content'">
-	  			WHERE NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%'
+	  			WHERE UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
 	  		<if test="search == 'both'">
-	  			WHERE (NOTICE_TITLE LIKE '%' ||  #{keyword} || '%' OR NOTICE_CONTENT LIKE '%' ||  #{keyword} || '%')
+	  			WHERE (UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%' OR UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%')
 			</if>	
 		) where notice_no = #{ noticeNo }
 	</select>
@@ -125,6 +125,7 @@
 			from notice 
 			where notice_state is not null
 			or notice_date > (select to_char(add_months(sysdate -1, -1), 'yyyy/mm/dd') from dual)
+			order by notice_state nulls last, notice_date desc
 		]]>
 	</select>
 

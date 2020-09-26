@@ -33,6 +33,7 @@
 		<typeAlias type="com.kh.runningdog.protect.model.vo.Protect" alias="Protect" />
 		<typeAlias type="com.kh.runningdog.volunteer.model.vo.Vreply" alias="Vreply" />
 		<typeAlias type="com.kh.runningdog.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.kh.runningdog.contents.model.vo.Issue" alias="Issue" />
 		<typeAlias type="com.kh.runningdog.dboard.model.vo.Dboard" alias="Dboard" />
 		<typeAlias type="com.kh.runningdog.dreply.model.vo.Dreply" alias="Dreply" />
 		<typeAlias type="com.kh.runningdog.animal.model.vo.Animal" alias="Animal" />
@@ -42,6 +43,7 @@
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/issue-mapper.xml" />
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/chatroom-mapper.xml" />
 		<mapper resource="mappers/message-mapper.xml" />

@@ -56,7 +56,7 @@ public class AdminNoticeController {
 		noticeSearch.setKeyword(keyword);
 		
 		int listCount = noticeService.selectNoticeListCount(noticeSearch);	//목록 갯수
-		int limit = 12;
+		int limit = 10;
 		
 		NoticePage noticePage = new NoticePage(currentPage, listCount, limit); //현재 페이지와 총 갯수 보내서, startPage, endpage등.. 값 만들기
 
@@ -82,7 +82,7 @@ public class AdminNoticeController {
 		Notice notice = noticeService.selectNoticeOne(noticeNo);
 		
 		if(notice != null) {
-			noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
+			//noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
 			noticePage.setNoticeNo(noticeNo);	//이전, 다음글 번호 조회할 때 객체 하나로 보내야해서 추가
 			
 			Integer preNo = noticeService.selectNoticePre(noticePage); //이전글 번호 조회, int는 null값을 못 받아서 integer사용
@@ -190,7 +190,6 @@ public class AdminNoticeController {
 		int i = 1;
 		
 		String getReturnView = request.getParameter("returnView");
-		System.out.println(getReturnView);
 		String deleteFilename1 = request.getParameter("deleteFilename1");
 		String deleteFilename2 = request.getParameter("deleteFilename2");
 		String deleteFilename3 = request.getParameter("deleteFilename3");

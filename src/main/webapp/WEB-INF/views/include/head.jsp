@@ -26,6 +26,8 @@
 <script src="resources/common/js/member.js"></script>
 <script src="resources/common/js/sponsor.js"></script>
 <script src="resources/common/js/volunteer.js"></script>
+<script src="resources/common/js/contents.js"></script>
+<script src="resources/common/js/notice.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <!-- 소셜로그인 API -->

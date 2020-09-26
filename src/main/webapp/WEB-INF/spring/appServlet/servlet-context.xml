@@ -75,8 +75,10 @@
 	</websocket:handlers>
 	<beans:bean id="echoHandler" class="com.kh.runningdog.websocket.util.EchoHandler"/>
 	
+	<beans:bean id="loginCheckInterceptor" class="com.kh.runningdog.common.interceptor.LoginCheckInterceptor" primary="false" />
+		
+	<beans:bean id="loginAdminCheckInterceptor" class="com.kh.runningdog.common.interceptor.LoginAdminCheckInterceptor" primary="false"/>
 	
-	<beans:bean id="loginCheckInterceptor" class="com.kh.runningdog.common.interceptor.LoginCheckInterceptor" />
 	<interceptors>
 		 <interceptor>
 			<mapping path="/**" />
@@ -100,4 +102,15 @@
 	        <beans:ref bean="loginCheckInterceptor"/>
 		</interceptor>
 	</interceptors>
+	
+	<!-- 관리자로그인 체크용 인터셉터 등록 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/*.ad"/>
+	        <beans:ref bean="loginAdminCheckInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	
+	
 </beans:beans>

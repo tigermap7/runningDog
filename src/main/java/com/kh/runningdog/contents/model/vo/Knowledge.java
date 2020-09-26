@@ -77,6 +77,8 @@ public class Knowledge {
 	public void setPage(int page) {
 		this.page = page;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "Knowledge [animal=" + animal + ", keyfield=" + keyfield + ", keyword=" + keyword + ", no=" + no
