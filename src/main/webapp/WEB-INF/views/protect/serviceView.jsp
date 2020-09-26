@@ -268,13 +268,13 @@
 								<c:param name="volche" value="${ volunteer.volche }"/>
                             </c:url>
                             
-                            <button class="prevBtn" onclick="javascript:location.href='${vnext}'"><i class="xi-angle-right-min"></i>다음</button>
+                            <button class="prevBtn" onclick="javascript:location.href='${vpre}'">이전<i class="xi-angle-right-min"></i></button>
                             <button class="listBtn" onclick="location.href='vlist.do'"><i class="xi-rotate-left"></i>목록</button>
                             <c:if test= "${ sessionScope.loginMember.nickname == volunteer.volwriter }">
                             <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
                             <button class="modifiedBtn" onclick="javascript:location.href='${vup}'"><i class="xi-pen-o"></i>수정</button>
                             </c:if>
-                            <button class="nextBtn" onclick="javascript:location.href='${vpre}'"><i class="xi-angle-left-min"></i>이전</button>
+                            <button class="nextBtn" onclick="javascript:location.href='${vnext}'"><i class="xi-angle-left-min"></i>다음</button>
                         </div>
                         <!-- 버튼 끝 --> 
                         
@@ -372,7 +372,7 @@ $(document).on('click', '#btn_vreplyInsert', function(){
 	var nickname = "${ sessionScope.loginMember.nickname}";
 	if( nickname == "" )
 		alert("로그인 후 이용해주세요.");
-	 
+	else{   
 	var VreplyContent = $('#vreply_content').val();
 	console.log(VreplyContent+"VreplyContent");
 	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
@@ -395,6 +395,8 @@ $(document).on('click', '#btn_vreplyInsert', function(){
 			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
 		}
 	}); 
+	return ; 
+	} 
 });
 //댓글수정폼
 function fn_UpdateVreply(vreply_no, nickname, vreply_content, unique_num){
@@ -467,46 +469,41 @@ function fn_SecondVreply(vreply_no, nickname, vreply_content, unique_num){
 						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
 						'<dd><h4>'+ nickname +'</h4></dd>'+
 						' </dl>'+
-						'<p><textarea id="vreply_content" name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;">비방글은 작성하실 수 없습니다.</textarea></p>'+
+						'<p><textarea id="second_content" name="second_content" style="resize: none; width:100%; min-height:100px; max-height:100px;">비방글은 작성하실 수 없습니다.</textarea></p>'+
 						'<div class="cmt_conBtn">'+
 						'<button class="Cmt_delete_ctn" onclick="showReplyList();">취소</button>'+
 						'<button class="Cmt_update_btn" id="btn_InsertSVreply" onclick="insertSVrLevel(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')">등록</button>'+
 						'</div>'+
 						'</li>'
 						$('#vreply_no'+vreply_no).html(htmls);
-						$('#vreply_no'+vreply_no+'#vreply_content').focus();
+						$('#vreply_no'+vreply_no+'#second_content').focus();
 	
 }
 
-//대댓글저장
-$(document).on('click', '#btn_InsertSVreply', function(){
-	var nickname = "${ sessionScope.loginMember.nickname}";
-	if( nickname == "" )
-		alert("로그인 후 이용해주세요.");
-	 
-	var vreply_content = $('#vreply_content').val();
-	console.log(VreplyContent+"vreply_content");
-	var paramData = JSON.stringify({ "vreply_content" : vreply_content , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
+//대댓글내용저장
+function insertSVrLevel(vreply_no, nickname, unique_num){
+	var secondcontent = $('#second_content').val();
+	var paramData = JSON.stringify({"vreply_content" : secondcontent, "vreply_no" : vreply_no, "nickname" : nickname, "unique_num" : unique_num, "volno" : ${ volunteer.volno} });
 	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
+	
 	$.ajax({
-		url : 'vrinsertlevel.do',
-		data : paramData,
+		url : "vrinsertlevel.do",
 		headers : headers,
-		type : 'post',
-		dataType : 'text',
+		data : paramData,
+		type : 'POST',
+		dataType :'text',
 		success : function(result){
-			
-			$('#vreply_content').val();
-			$('#nickname').val();
-			$('#unique_num').val();
-			showReplyList();
+			console.log(result);
+			alert("댓글이 등록되었습니다.");
+			showReplyList(); 
 		},
 		error : function(jqXHR, textstatus, errorthrown) {
-			alert("댓글 등록을 실패하였습니다.");
-			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-		}
+			console.log("error : " + jqXHR + ", " + textstatus
+					+ ", " + errorthrown);
+		} 
+		
 	});
-});
+}
 
 //댓글삭제기능
 function fn_DeleteVreply( vreply_no, nickname ){

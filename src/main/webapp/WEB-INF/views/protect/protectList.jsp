@@ -60,7 +60,6 @@
                             <div>
                                 <div>
                                 <form action="" name="">
-                                    <a class="active" href="#none">전체</a>
                                 </form>
                                 </div>
                             </div>

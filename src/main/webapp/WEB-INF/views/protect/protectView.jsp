@@ -186,9 +186,9 @@
                             	<c:param name="searchFiled" value="${ searchFiled }" />
 								<c:param name="searchValue" value="${ searchValue }" />
                             </c:url>
-                       		<button class="nextBtn" onclick="javascript:location.href='${ppre}'"><i class="xi-angle-left-min"></i>이전</button>
+                       		<button class="nextBtn" onclick="javascript:location.href='${pnext}'"><i class="xi-angle-left-min"></i>다음</button>
                             <button class="listBtn"onclick="location.href='movePlist.do'"><i class="xi-rotate-left"></i> 목록</button>
-                            <button class="prevBtn" onclick="javascript:location.href='${pnext}'"> <i class="xi-angle-right-min"></i>다음</button>
+                            <button class="prevBtn" onclick="javascript:location.href='${ppre}'">이전<i class="xi-angle-right-min"></i></button>
                         </div>
                         <!-- 버튼 끝 -->
                     </div>

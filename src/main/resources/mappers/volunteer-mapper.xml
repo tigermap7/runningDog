@@ -191,7 +191,7 @@
 	</update>
 	<insert id="insertVreplyLevel" parameterType="com.kh.runningdog.volunteer.model.vo.Vreply">
 			insert into vreply 
-			values (vreply_seq.nextval,#{volno}, #{nickname},  #{unique_num}, (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL), #{vreply_content}, #{parant_reply}, 2)
+			values (vreply_seq.nextval,#{volno}, #{nickname},  #{unique_num}, (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL), #{vreply_content}, #{vreply_no}, 2)
 	</insert> 
 	<!-- <insert id="insertVreply1" parameterType="Board">
 			insert into board 

@@ -125,10 +125,10 @@ function deleteAction(){
                         <tr>
                             <td><input type="checkbox" name="checkDel" id="" value="${v.volno }"></td>
                             <td class="number" onclick="location.href='${vd}'">${v.volno}</td>
-                            <c:if test="${ v.volche eq'Y'}">
+                            <c:if test="${ v.volche eq'y'}">
                             <td class="kinds" onclick="location.href='${vd}'"><span class="protect">상시모집</span></td>
                             </c:if>
-                             <c:if test="${ v.volche eq'N'}">
+                             <c:if test="${ v.volche eq'n'}">
                             <td class="kinds" onclick="location.href='${vd}'"><span class="protect">모집완료</span></td>
                             </c:if>
                             <td class="thumbnail" onclick="location.href=''">
