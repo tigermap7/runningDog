@@ -92,4 +92,9 @@ public class DboardDao {
 		return session.update("dboardMapper.updateAdminHide", checkRow);
 	}
 
+
+	public void updateReadCount(int dNum) {
+		session.update("dboardMapper.updateReadCount" , dNum);
+	}
+
 }

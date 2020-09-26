@@ -34,12 +34,17 @@ public class DreplyDao {
 
 
 	public int updateDreplyDel(Dreply dreply) {
-		return session.update("dreplyMapper.updateDreplyLevel", dreply);
+		return session.update("dreplyMapper.updateDreplyDel", dreply);
 	}
 
 
 	public int insertDreplyLevel(Dreply dreply) {
 		return session.insert("dreplyMapper.insertDreplyLevel",dreply);
+	}
+
+
+	public int selectListCount(int dNum) {
+		return session.selectOne("dreplyMapper.selectListCount", dNum);
 	}
 	
 	

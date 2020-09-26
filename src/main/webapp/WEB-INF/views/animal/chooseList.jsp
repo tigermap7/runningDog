@@ -42,9 +42,9 @@
                         <!-- searchFiled 로 구분하고 값은 searchValue 로 받음 -->
                        <form action="dboardList.do" method="">
                       	 <div class="search_wrap" id ="search">
-                            <input type="hidden" name="dCategory" value="${ dCategory }">
-                            <input type="hidden" name="dLocal" value="${ dLocal }">
-                            <select name="searchFiled" id="searchS">
+                            <input type="hidden" name="dCategory" value="${ dboard.dCategory }">
+                            <input type="hidden" name="dLocal" value="${ dboard.dLocal }">
+                            <select name="searchFiled" id="searchS">t
                             <!-- 삼항연산자로 selected 여부 구분 -->
                                 <option value="d_title" class="fontColor-dark" ${pageVO.searchFiled eq"d_title"?"selected":""}>제목</option>
                                 <option value="d_writer" class="fontColor-dark" ${pageVO.searchFiled eq"d_writer"?"selected":""}>임시보호자</option>
@@ -67,25 +67,23 @@
                             </c:if>
                                 <div>
                                 <c:url var = "dCate" value= "dboardList.do">
-									<c:param name="dLocal" value="${ dLocal }"/>
-									<c:param name="dLocal" value="${ dLocal }"/>
+									<c:param name="dLocal" value="${ dboard.dLocal }"/>
                                  	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
-									<c:param name="dCategory" value="${ d.dCategory }"/>
 								</c:url>
 								
                                 <form action="" name="dCategory">
-                                    <a ${dCategory eq "d"?'class="active"' : "" }href="${dCate}&dCategory=d">강아지</a>
-                                    <a ${dCategory eq "c"?'class="active"' : "" }href="${dCate}&dCategory=c">고양이</a>
-                                    <a ${dCategory eq "e"?'class="active"' : "" }href="${dCate}&dCategory=e">기타</a>
-                                    <a ${empty dCategory ?'class="active"' : "" }href="${dCate}">전체</a>
+                                    <a ${dboard.dCategory eq "d"?'class="active"' : "" }href="${dCate}&dCategory=d">강아지</a>
+                                    <a ${dboard.dCategory eq "c"?'class="active"' : "" }href="${dCate}&dCategory=c">고양이</a>
+                                    <a ${dboard.dCategory eq "e"?'class="active"' : "" }href="${dCate}&dCategory=e">기타</a>
+                                    <a ${empty dboard.dCategory ?'class="active"' : "" }href="dboardList.do">전체</a>
                                     
                                  </form>
                                 </div>
 	                            <form action="dboardList.do" name="dLocal" class="location">
-	                            <input type="hidden" name="dCategory" value="${ dCategory }">
+	                            <input type="hidden" name="dCategory" value="${ dboard.dCategory }">
 									<select name="dLocal" class="LocationSelect"   onchange=this.form.submit()>
-	                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체보기</option>
+	                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체지역</option>
 	                                    <option value="0" ${ dLocal eq"0"?"selected" :"" }>서울시</option>
 	                                    <option value="1" ${ dLocal eq"1"?"selected" :"" }>인천시</option>
 	                                    <option value="2" ${ dLocal eq"2"?"selected" :"" }>대전시</option>
@@ -122,7 +120,7 @@
                                  <c:url var="dboardView" value="dboardView.do">
                                  	<c:param name="pageNo" value="${ pageVO.pageNo }"/>
                                  	<c:param name="dNum" value="${ d.dNum }"/>
-                                 	<c:param name="dLocal" value="${ dLocal }"/>
+                                 	<c:param name="dLocal" value="${ d.dLocal }"/>
                                  	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
 									<c:param name="dCategory" value="${ d.dCategory }"/>
@@ -166,8 +164,8 @@
                                         발견날짜 : ${ d.dFindDate }<br/>
                                         발견지역 : ${ d.dFindLocal } 부근<br/>
                                         보호자 지역 :<c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }"/>
-										 <c:forEach var ="lo" items="${local }" varStatus="l">
-                                         <c:if test="${l.count== (d.dLocal+1) }"> ${lo }</c:if>
+										 <c:forEach var ="lo" items="${ local }" varStatus="l">
+                                         <c:if test="${l.count== (d.dLocal+1) }"> ${ lo }</c:if>
 										</c:forEach>
                                         <span>
                                         ${ d.dDate eq d.dMdate ?"등록일": "수정일"} : ${ d.dDate eq d.dMdate ?d.dDate : d.dMdate}
@@ -190,8 +188,8 @@
 											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
-											<c:param name="dLocal" value="${ dLocal }"/>
-											<c:param name="dCategory" value="${ d.dCategory }"/>
+											<c:param name="dLocal" value="${ dboard.dLocal }"/>
+											<c:param name="dCategory" value="${ dboard.dCategory }"/>
 										</c:url>
 										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
@@ -201,8 +199,8 @@
 												<c:param name="pageNo" value="${ i }"/>
 												<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 												<c:param name="searchValue" value="${pageVO.searchValue }"/>
-												<c:param name="dLocal" value="${ dLocal }"/>
-												<c:param name="dCategory" value="${ d.dCategory }"/>
+												<c:param name="dLocal" value="${ dboard.dLocal }"/>
+												<c:param name="dCategory" value="${ dboard.dCategory }"/>
 											</c:url>
 										<c:choose>
 											<c:when test="${i eq pageVO.pageNo }">
@@ -219,8 +217,8 @@
 											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
-											<c:param name="dLocal" value="${ dLocal }"/>
-											<c:param name="dCategory" value="${ d.dCategory }"/>
+											<c:param name="dLocal" value="${ dboard.dLocal }"/>
+											<c:param name="dCategory" value="${ dboard.dCategory }"/>
 										</c:url>
 										<a href="${dl3 }"><i
 											class="xi-angle-right"></i></a>

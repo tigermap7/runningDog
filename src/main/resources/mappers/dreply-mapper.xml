@@ -12,14 +12,14 @@
 		<result column="dre_date" property="dreDate" />
 		<result column="dre_mdate" property="dreMdate" />
 		<result column="dre_parents" property="dreParents" />
-		<result column="dre_group" property="dreGroup" />
+		<result column="dre_level" property="dreLevel" />
 		<result column="unique_num" property="uniqueNum" />
 		<result column="dre_delete" property="dreDelete" />
 		
 	</resultMap>
 	
 	
-	<select id="selectListCount" parameterType="Dreply" resultType="int">
+	<select id="selectListCount" parameterType="_int" resultType="int">
 		SELECT COUNT(*)
 		FROM DREPLY
 		WHERE d_num = #{ dNum }
@@ -28,7 +28,7 @@
 	
 	<select id="selectDreplyList" parameterType="_int" resultType="Dreply">
 		SELECT DRE_NUM, D_NUM, DRE_WRITER, DRE_CONTENT, DRE_DATE, DRE_MDATE,
-			   DRE_PARENTS, DRE_GROUP, UNIQUE_NUM, DRE_DELETE
+			   DRE_PARENTS, DRE_LEVEL, UNIQUE_NUM, DRE_DELETE
 		FROM DREPLY
 		WHERE D_NUM = #{ dNum }
 		ORDER BY DRE_PARENTS ASC, DRE_NUM ASC 
@@ -43,7 +43,7 @@
 			   (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
 			   (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
 			   DRE_NUM_SEQ.NEXTVAL,
-			   #{ dNum },
+			   1,
 			   #{ uniqueNum },
 			   DEFAULT)
 	</insert>
@@ -57,7 +57,7 @@
 				(SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
 				(SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
 				#{ dreNum },
-				#{ dNum },
+				2,
 				#{ uniqueNum },
 				DEFAULT)
 	</insert>
@@ -69,10 +69,11 @@
 		WHERE DRE_NUM = ${ dreNum }
 	</update>
 	
-	<delete id = "updateDreplyDel" parameterType="Dreply">
+	<update id = "updateDreplyDel" parameterType="Dreply">
 		UPDATE DREPLY SET
 			   DRE_DELETE = 'y',
+			   DRE_CONTENT = '삭제된 댓글 입니다',
 			   DRE_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
 		WHERE DRE_NUM = #{ dreNum }
-	</delete>
+	</update>
 </mapper>

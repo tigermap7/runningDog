@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +23,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.runningdog.common.ImageUtil.Image;
 import com.kh.runningdog.common.ImageUtil.ImageLoader;
 import com.kh.runningdog.dboard.model.service.DboardService;
 import com.kh.runningdog.dboard.model.vo.Dboard;
+import com.kh.runningdog.dreply.model.service.DreplyService;
+import com.kh.runningdog.dreply.model.vo.Dreply;
 
 @Controller
 public class DboardController {
@@ -32,6 +40,12 @@ public class DboardController {
 	@Autowired
 	private DboardService dboardService;
 	
+	
+	//게시물 보기할시에 댓글리스트를 불러오기 위함
+	@Autowired
+	private DreplyService dreplyService;
+	
+	
 //	@RequestMapping("dlistPage.do")
 //	public String moveDlistPage() {
 //		return "animal/chooseList";
@@ -39,7 +53,7 @@ public class DboardController {
 
 	@RequestMapping("dinsertPage.do")
 	public String moveDinsertPage() {
-		return "animal/chooseAdminWrite";
+		return "animal/chooseWrite";
 	}
 	
 	@RequestMapping(value = "dinsert.do", method = RequestMethod.POST)
@@ -134,13 +148,15 @@ public class DboardController {
 		logger.info("EndPageNo // 끝 페이지 (페이징 네비 기준) : " + dboard.getEndPageNo());
 		logger.info("totalCount // 게시 글 전체 수 : " + totalCount);
 
-		ArrayList<Dboard> dboardList = dboardService.selectList(dboard);
+		ArrayList<Dboard> dboardList = dboardService.selectList(dboard); 
 		
 		
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("dboardList", dboardList);
+		
+		
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url = "";
 		if (totalCount > 0) {
@@ -152,25 +168,95 @@ public class DboardController {
 		}
 		return url;
 	}
-
+	
+	@RequestMapping(value="dboardNew4.do" , method = RequestMethod.POST)
+	@ResponseBody
+	public String selectDboardNew4(HttpServletResponse response) throws IOException{
+		ArrayList<Dboard> list = dboardService.selectNew4();
+		
+		JSONObject sendJson = new JSONObject();
+		
+		JSONArray jarr = new JSONArray();
+		
+		for(Dboard dboard : list) {
+			JSONObject job = new JSONObject();
+			job.put("dNum", dboard.getdNum());
+			job.put("dWriter", URLEncoder.encode(dboard.getdWriter(), "utf-8"));
+			job.put("dTitle", URLEncoder.encode(dboard.getdTitle(),"utf-8"));
+			job.put("dFindDate", dboard.getdFindDate());
+			job.put("dFindLocal",URLEncoder.encode(dboard.getdFindLocal(),"utf-8"));
+			job.put("dDate", dboard.getdDate());
+			job.put("listImage", dboard.getlistImage());
+		
+			jarr.add(job);
+		}
+		//전송용 객체에 배열 저장
+		sendJson.put("list", jarr);
+		
+		
+		return sendJson.toJSONString();
+		
+	}
+	
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum,Model model,HttpServletRequest request) {
-		
-		
-		Dboard dboard = dboardService.selectOne(dNum);
+	public String selectOne(@RequestParam("dNum") int dNum, Dreply dreply, Model model,HttpServletRequest request,HttpServletResponse response) {
+				
 		logger.info("dboard View게시글 번호" + dNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
-		dboard.setSearchFiled(request.getParameter("searchFiled"));
-		dboard.setSearchValue(request.getParameter("searchValue"));
+		Cookie[] cookies =request.getCookies();
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
-		model.addAttribute("dCategory", dboard.getdCategory());
-		model.addAttribute("searchFiled", dboard.getSearchFiled());
-		model.addAttribute("searchValue", dboard.getSearchValue());
+		Cookie viewCookie = null;
+		
+		//cookies가 null이 아닐경우 이름 만들기
+		if(cookies != null && cookies.length > 0) {
+			for (int i = 0; i < cookies.length; i++) {
+			// Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
+				if(cookies[i].getName().equals("cookie" + dNum)) {
+					logger.info("처음 쿠키가 생성한 뒤에 들어옴.");
+					viewCookie = cookies[i];
+				}
+			}
+		}
+		
+		// 만일 viewCookie 가 null 일 경우 쿠키를 생성해서 조회수 증가 처리함
+		if (viewCookie == null) {
+			logger.info("cookie 없음");
+
+			// 쿠키 생성(이름 , 값)
+
+			Cookie newCookie = new Cookie("cookie" + dNum, "|" + dNum + "|");
+			// 쿠키추가
+			response.addCookie(newCookie);
+			// 쿠키를 추가 시키고 조회수 증가처리
+			dboardService.updateReadCount(dNum); // 조회수 1 증가
+		} else {
+			logger.info("cookie 있음");
+			// 쿠키값을 받아옴
+			String value = viewCookie.getValue();
+			logger.info("cookie 값 : " + value);
+		}
+		
+		//조회수 처리 후 게시물에 대한 정보 불러오기
+		Dboard dboard = dboardService.selectOne(dNum); //게시물 하나의 정보를 가져옴
+		int dreplyCount = dreplyService.seletListCount(dNum); // 게시물의 댓글 갯수를 구한다
+		ArrayList<Dreply> dreplyList = dreplyService.selectList(dNum); //댓글 리스트 
+		
+		
+		//dboard.setdCategory(request.getParameter("dCategory"));
+		//dboard.setdLocal(request.getParameter("dLocal"));
+		//dboard.setSearchFiled(request.getParameter("searchFiled"));
+		//dboard.setSearchValue(request.getParameter("searchValue"));
+		
+		model.addAttribute("dreplyCount" , dreplyCount);
+		model.addAttribute("dreplyList", dreplyList);
+		//model.addAttribute("dLocal", dboard.getdLocal());
+		//model.addAttribute("dCategory", dboard.getdCategory());
+		//model.addAttribute("searchFiled", dboard.getSearchFiled());
+		//model.addAttribute("searchValue", dboard.getSearchValue());
+		
 		String url = "";
+		
 		if (dboard != null) {
 			model.addAttribute("dboard", dboard);
 			url = "animal/chooseView";
@@ -283,11 +369,10 @@ public class DboardController {
 	public String updateDboardHide(@RequestParam("dNum") int dNum, Dboard dboard,Model model) {
 		//게시물을 삭제 하지 않고 표시 여부에 업데이트 하여
 		//3개월 후 프로시저 등록 후 스케줄러 이용하여 게시물 삭제
-		int result = dboardService.updateDboardHide(dboard);
-		
+		 
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url ="";
-		if (result > 0) {
+		if (dboardService.updateDboardHide(dboard) > 0) {
 			model.addAttribute("msg", "게시물을 삭제 했습니다.");
 			model.addAttribute("url", "dboardList.do");
 			url = "common/errorDboard";
@@ -302,13 +387,13 @@ public class DboardController {
     @RequestMapping("dUpSuccess.do")
     public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
                                 Dboard dboard,Model model) {
+    	//분양여
         dboard.setdSuccess(dSuccess);
         logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
-        int result = dboardService.updateDboardSuc(dboard);
-        
+    
         
         String url="";
-        if (result > 0) {
+        if (dboardService.updateDboardSuc(dboard) > 0) {
             model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
             model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
             url = "common/errorDboard";
@@ -322,7 +407,7 @@ public class DboardController {
     }
 	
 	@RequestMapping("dboardnext.do")
-	public String dboardNext(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+	public String dboardNext(HttpServletRequest request,Model model, Dboard dboard) {
 		//다음글 번호조회
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
@@ -355,7 +440,7 @@ public class DboardController {
 	}
 	
 	@RequestMapping("dboardprev.do")
-	public String dboardPrev(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
+	public String dboardPrev(HttpServletRequest request,Model model, Dboard dboard) {
 		dboard.setSearchFiled(request.getParameter("searchFiled"));
 		dboard.setSearchValue(request.getParameter("searchValue"));
 		dboard.setdCategory(request.getParameter("dCategory"));

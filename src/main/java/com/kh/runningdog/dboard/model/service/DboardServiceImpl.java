@@ -87,4 +87,9 @@ public class DboardServiceImpl implements DboardService{
 	public int updateAdminHide(String[] checkRow) {
 		return dboardDao.updateAdminHide(checkRow);
 	}
+
+	@Override
+	public void updateReadCount(int dNum) {
+		dboardDao.updateReadCount(dNum);
+	}
 }

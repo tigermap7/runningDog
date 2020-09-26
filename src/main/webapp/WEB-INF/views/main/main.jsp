@@ -6,6 +6,42 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+        <script type="text/javascript">
+
+        $(function() {
+
+        	$.ajax({
+        		url : "dboardNew4.do",
+        		type : "post",
+        		dataType : "json",
+        		success : function(data) {
+        			console.log("success : " + data);
+        			// object ==> string으로 변환
+        			var jsonStr = JSON.stringify(data);
+        			// string ==> json 객채로 바꿈
+        			var json = JSON.parse(jsonStr);
+        			var values = "";
+        			for ( var i in json.list) {
+        				values += '<li onclick="location='+ "'dboardList.do'" + '">'
+                        	   +'<div><img src="/runningdog/resources/dboard/dboardImage/'+json.list[i].listImage+'">'
+                        	   +'</div><h3>' + decodeURIComponent(json.list[i].dTitle).replace(/\+/gi, " ") +'</h3><p>임시보호자 :'
+                        	   + decodeURIComponent(json.list[i].dWriter).replace(/\+/gi, " ") +'<br/>'
+                        	   +'발견날짜 : '+ json.list[i].dFindDate +'<br/>'
+                        	   +'발견지역 :'+ decodeURIComponent(json.list[i].dFindLocal).replace(/\+/gi, " ")
+                        	   +'<span>등록일 :'+json.list[i].dDate +'</span></p></li>'
+        						
+        					} // for in
+
+        					$("#dtoplist").html($("#dtoplist").html() + values);
+        				},
+        				error : function(jqXHR, textstatus, errorthrown) {
+        					console.log("error : " + jqXHR + ", " + textstatus + ", "
+        							+ errorthrown);
+        				}
+        			});
+        });
+        
+        </script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -64,18 +100,19 @@
             
             <div id="main_content">
                 <div class="search_wrap">
-                    <form action="" name="">
+                    <form action="dboardList.do" name="">
                     <div class="search-box">
-                        <input type="text" placeholder="작은 천사들을 검색해주세요.">
-                        <button onclick="#none" class="xi-search"></button>
+                        <input type="text" name="searchValue" placeholder="작은 천사들을 검색해주세요.">
+                        <input type="hidden" name="searchFiled" value="d_title"/>
+                        <button type="submit" class="xi-search"></button>
                     </div>
                 </form>
                 </div>
                 
                 <div class="main_animalInfo">
                     <h2><span>'작은 생명'</span>의 소중한 친구가<br/>될 수 있는 <span>'작은 실천'</span></h2>
-                    <ul>
-                        <li onclick="location='#none'">
+                    <ul id="dtoplist">
+                        <!-- <li onclick="location='dboardList.do'">
                             <div>
                                 <a href="#none" class="chooseIcon">분양가능</a>
                                 <a href="#none" class="urlIcon xi-share-alt-o"></a>
@@ -88,49 +125,7 @@
                                 주소 : 서울시 종로구 종로5. 6가동
                                 <span>등록일 : 2020.08.22</span>
                             </p>
-                        </li>
-                        <li onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="chooseIcon">분양가능</a>
-                                <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalImg02.jpg">
-                            </div>
-                            <h3>[강아지] 말티즈</h3>
-                            <p>
-                                나이 : 약 2세<br/>
-                                보호센터 : '따뜻한 집'<br/>
-                                주소 : 서울시 종로구 종로5. 6가동
-                                <span>등록일 : 2020.08.22</span>
-                            </p>
-                        </li>
-                        <li onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="chooseIcon">분양가능</a>
-                                <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalImg03.jpg">
-                            </div>
-                            <h3>[강아지] 말티즈</h3>
-                            <p>
-                                나이 : 약 2세<br/>
-                                보호센터 : '따뜻한 집'<br/>
-                                주소 : 서울시 종로구 종로5. 6가동
-                                <span>등록일 : 2020.08.22</span>
-                            </p>
-                        </li>
-                        <li onclick="location='#none'">
-                            <div>
-                                <a href="#none" class="chooseIcon">분양가능</a>
-                                <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalImg04.jpg">
-                            </div>
-                            <h3>[강아지] 푸들</h3>
-                            <p>
-                                나이 : 약 2세<br/>
-                                보호센터 : '따뜻한 집'<br/>
-                                주소 : 서울시 종로구 종로5. 6가동
-                                <span>등록일 : 2020.08.22</span>
-                            </p>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
 

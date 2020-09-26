@@ -81,9 +81,11 @@ $(function() {
                                         <tbody>
                                             <tr>
                                                 <th>반려 동물 종류</th>
-                                                <td>${ dboard.dCategory eq "d"?"강아지": "" }
-                                                	${ dboard.dCategory eq "c"?"고양이": "" }
-                                                	${ dboard.dCategory eq "e"?"기  타": "" }
+                                                
+                                                <td>
+                                                ${ dboard.dCategory eq "d" ? "강아지" : "" }
+                                                ${ dboard.dCategory eq "c" ? "고양이" : "" }
+                                                ${ dboard.dCategory eq "e" ? "기  타" : "" }
                                                 </td>
                                                 <th>발견날짜</th>
                                                 <td>${ dboard.dFindDate }</td>
@@ -91,13 +93,12 @@ $(function() {
                                             <tr>
                                                 <th>성별</th>
                                                 <td>
-                                                ${ dboard.dGender eq "m"?"남/男" : "" }
-                                                ${ dboard.dGender eq "f"?"여/女" : "" }
+                                                ${ dboard.dGender eq "m" ? "남/男" : "여/女" }
 												</td>
                                                 <th>분양 여부</th>
                                                 <td>
-                                                ${ dboard.dSuccess eq "y"? "새로운 가족을 찾았어요" : ""}
-                                                ${ dboard.dSuccess eq "n"? "가족을 기다리고 있어요" : ""}
+                                                ${ dboard.dSuccess eq "y" ? "새로운 가족을 찾았어요" : ""}
+                                                ${ dboard.dSuccess eq "n" ? "가족을 기다리고 있어요" : ""}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -107,6 +108,7 @@ $(function() {
                                             <tr>
                                                 <th>특이사항</th>
                                                 <td colspan="3">${ dboard.dPoint }</td>
+                                               
                                             </tr>
                                         </tbody>
                                     </table>
@@ -136,11 +138,13 @@ $(function() {
                                             </tr>
                                             <tr>
                                                 <th>지역</th>
-                                                <td colspan="3">
+                                                <td colspan="1">
                                                 <c:set var="local" value="${fn:split('[서울시]|[인천시]|[대전시]|[광주시]|[대구시]|[울산시]|[부산시]|[경기도]|[강원도]|[세종시]|[충청남도]|[충청북도]|[전라남도]|[전라북도]|[경상남도]|[경상북도]|[제주시]', '|') }" />
 												<c:forEach var="lo" items="${local }" varStatus="l">
 													<c:if test="${l.count== (dboard.dLocal+1) }"> ${lo }</c:if>
 												</c:forEach></td>
+												<th>조회수</th>
+												<td colspan="1">${ dboard.dCount }</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -150,9 +154,9 @@ $(function() {
                             <div class="viewContent">
                             ${ dboard.dContent }
                             </div>
-						<tr>
+					
 							<td>발견 장소</td>
-							<td>
+						
 								<div class="map_wrap">
 									<div class="hAddr">
 										<div id="map"
@@ -220,17 +224,17 @@ $(function() {
 						</c:url>
 						<c:url var="dboardNext" value="dboardnext.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dLocal }"/>
-                            <c:param name="searchFiled" value="${ searchFiled }" />
-							<c:param name="searchValue" value="${ searchValue }" />
-							<c:param name="dCategory" value="${ dCategory }"/>
+							<c:param name="dLocal" value="${ dboard.dLocal }"/>
+                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
+							<c:param name="searchValue" value="${ dboard.searchValue }" />
+							<c:param name="dCategory" value="${ dboard.dCategory }"/>
 						</c:url>
 						<c:url var="dboardPrev" value="dboardprev.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dLocal }"/>
-                            <c:param name="searchFiled" value="${ searchFiled }" />
-							<c:param name="searchValue" value="${ searchValue }" />
-							<c:param name="dCategory" value="${ dCategory }"/>
+							<c:param name="dLocal" value="${ dboard.dLocal }"/>
+                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
+							<c:param name="searchValue" value="${ dboard.searchValue }" />
+							<c:param name="dCategory" value="${ dboard.dCategory }"/>
 						</c:url>
                         <div class="viewBtn-wrap">
                             <button class="nextBtn" onclick="location='${ dboardPrev }'"><i class="xi-angle-left-min"></i> 이전</button>
@@ -245,23 +249,89 @@ $(function() {
                         
                         <!-- 댓글 시작 -->
                           <div class="cmt_wrap">
-                            <form name = "dreplyS"action="" method="post">
+                            <form name = ""action="insertDreply.do" method="post">
                             <input type="hidden" id= "dNum" name="dNum" value="${dboard.dNum }">
                             <input type="hidden" id="dreWriter" name="dreWriter" value="${loginMember.nickname }">
                             <input type="hidden" id= "uniqueNum" name="uniqueNum" value="${loginMember.uniqueNum }">
                                 <fieldset>
                                     <div class="cmt_form">
-                                        <h4 class="cmt_head">댓글 77</h4>
+                                        <h4 class="cmt_head">댓글 ${ dreplyCount }</h4>
                                         <div class="cmt_body">
-        <textarea name="dreContent" id = "dreContent" onfocus="this.value='';"></textarea>
-                                            <div class="cmt_ok"><input type="button" value="등록" onclick="DreplySubmit(${result.code})"></div>
+        								<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" id = "dreContent" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+                                            <div class="cmt_ok">
+                                            	<input type="submit" value="등록" >
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
                             </form>
                             <ul class="cmt_con" id="dreply">
-                            </ul>
- <script type="text/javascript">
+							<c:forEach items="${ requestScope.dreplyList }" var="d">
+							<!--  대댓글일 경우 대댓글 창 색상 다르게함 -->
+								<li ${ d.dreLevel eq 2? "style='background-color: #E6E6E6;'" : "" }>
+								<dl>
+									<dt class="img">
+										<img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}">
+									</dt>
+										<dd>
+											<h4>${ d.dreWriter }/#${ d.uniqueNum }</h4>
+										</dd>
+										<dt class="cmt_date">${ d.dreMdate }</dt>
+									</dl>
+									<p>${ d.dreContent }</p>
+									<div class="cmt_conBtn">
+										<c:if test="${ d.dreLevel eq 1 and d.dreDelete eq 'n'}">
+										<button class="Subcmt_btn">대댓글</button>
+										</c:if>
+										<c:if test="${ sessionScope.loginMember.uniqueNum == d.uniqueNum and d.dreDelete eq 'n'}">
+										<button onclick="location.href='updateDreplyDel.do?dreNum=${d.dreNum}&dNum=${d.dNum}'" style="float: right;">삭제</button>
+										<button class="Cmt_update_btn" style="float: right; margin-right: 10px;">수정</button>
+										</c:if>
+										<br>
+										<br>
+										<div class="Cmt_update" style="display: none;">
+											<form name="updateDreply" action="updateDreply.do" method="post">
+												<input type="hidden" name="dreNum" id="dreNumUp" value="${ d.dreNum }">
+												<input type="hidden" name="dNum" value="${ d.dNum }">
+												<input type="hidden" name="dreParents" value="${ d.dreParents }">
+												<fieldset>
+													<div class="cmt_form">
+														<div class="cmt_body">
+															<textarea name="dreContent"
+																style="resize: none; width: 100%; min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
+															<div class="cmt_ok">
+																<input type="submit" class="updateDreply" value="수정">
+															</div>
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										<div style="display: none" class="Subcmt" id="commentReply">
+											<form action="insertDreplyLevel.do" method="post">
+												<input type="hidden" name="dreNum" id="dreNum" value="${ d.dreNum }"> 
+												<input type="hidden" name="dNum" id="dNum" value="${ d.dNum }"> 
+												<input type="hidden" name="dreWriter" id="dreWriter" value="${loginMember.nickname}"> 
+												<input type="hidden" name="uniqueNum" id="uniqueNum" value="${loginMember.uniqueNum}">
+												<fieldset>
+													<div class="cmt_form">
+														<div class="cmt_body">
+															<textarea name="dreContent" id="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
+																onfocus="this.value='';">비방글은 작성할 수 없습니다.</textarea>
+															<div class="cmt_ok">
+																<input type="submit"  value="등록">
+															</div>
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div></li>
+							</c:forEach>
+
+
+
+						</ul>
+<!--  <script type="text/javascript">
                       $(function(){
                     	  getCommentList()
                       });
@@ -442,7 +512,7 @@ function Dreplydelete(dreNum) {
 	});
 }
 
-</script>
+</script> -->
 
                     </div>
                 </div>

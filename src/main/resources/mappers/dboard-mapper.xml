@@ -34,18 +34,22 @@
 	<resultMap type="Dboard" id="resultNew4">
 		<result column="d_num" property="dNum" />
 		<result column="d_title" property="dTitle" />
-		<result column="d_count" property="dCount" />
+		<result column="d_writer" property="dWriter" />
+		<result column="d_find_date" property="dFindDate" />
+		<result column="d_find_local" property="dFindLocal" />
+		<result column="d_date" property="dDate" />
+		<result column="d_writer" property="dWriter" />
+		<result column="list_image" property="listImage" />
 	</resultMap>
 	
 	
 	<select id="selectNew4" resultMap="resultNew4">
 		<![CDATA[ 
 		SELECT * 
-		FROM (SELECT ROWNUM RNUM, BOARD_NUM, BOARD_TITLE, BOARD_READCOUNT  
+		FROM (SELECT ROWNUM RNUM, D_NUM, D_WRITER, D_TITLE, D_FIND_DATE, D_FIND_LOCAL, D_DATE, LIST_IMAGE
 			  FROM(SELECT * 
-					FROM BOARD 
-					WHERE BOARD_LEVEL = 0 
-					ORDER BY BOARD_READCOUNT DESC)) 
+					FROM DBOARD 
+					ORDER BY D_NUM DESC)) 
 		WHERE RNUM >=1 AND RNUM <=4
 		]]>
 	</select>
@@ -58,7 +62,7 @@
 			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 		</if>
 		<if test="dCategory != null and dCategory !=''">
-			AND d_category LIKE  '%' || #{dCategory} || '%'
+			AND D_CATEGORY LIKE  '%' || #{dCategory} || '%'
 		</if>
 		<if test="dLocal != null and dLocal !=''">
 			AND D_LOCAL = #{dLocal}
@@ -74,7 +78,7 @@
 			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 		</if>
 		<if test="dCategory != null and dCategory !=''">
-			AND d_category LIKE  '%' || #{dCategory} || '%'
+			AND D_CATEGORY LIKE  '%' || #{dCategory} || '%'
 		</if>
 		<if test="dLocal != null and dLocal !=''">
 			AND D_LOCAL = #{dLocal}
@@ -128,7 +132,7 @@
 	<!-- 검색한 글 번호중 현재 조회한 글 보다 큰 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
 	현재 번호를 리턴시킴 --> 
 	<select id="selectNext" parameterType="Dboard" resultType="int">
-		SELECT NVL(MIN(D_NUM),${dNum})
+		SELECT NVL(MIN(D_NUM),#{dNum})
 		FROM DBOARD
 		WHERE 1=1
 		<if test="searchFiled != null and searchFiled !=''">
@@ -141,13 +145,13 @@
 			AND D_LOCAL = #{dLocal}
 		</if>
 		<![CDATA[
-			AND D_CHECK = 'y' AND D_NUM > ${ dNum }
+			AND D_CHECK = 'y' AND D_NUM > #{ dNum }
 		]]>
 	</select>
 	<!-- 검색한 글 번호중 현재 조회한 글 보다 큰 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
 	현재 번호를 리턴시킴 --> 
 		<select id="selectAdminNext" parameterType="Dboard" resultType="int">
-		SELECT NVL(MIN(D_NUM),${dNum})
+		SELECT NVL(MIN(D_NUM),#{dNum})
 		FROM DBOARD
 		WHERE 1=1
 		<if test="searchFiled != null and searchFiled !=''">
@@ -160,13 +164,13 @@
 			AND D_LOCAL = #{dLocal}
 		</if>
 		<![CDATA[
-		AND D_NUM > ${ dNum }
+		AND D_NUM > #{ dNum }
 		]]>
 	</select>
 	<!-- 검색한 글 번호중 현재 조회한 글 보다 작은 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
 	현재 번호를 리턴시킴 --> 
 	<select id="selectPrev" parameterType="Dboard" resultType="int">
-		SELECT NVL(MAX(D_NUM),${dNum})
+		SELECT NVL(MAX(D_NUM),#{dNum})
 		FROM DBOARD
 		WHERE 1=1
 		<if test="searchFiled != null and searchFiled !=''">
@@ -179,7 +183,7 @@
 			AND D_LOCAL = #{dLocal}
 		</if>
 		<![CDATA[
-		AND D_CHECK = 'y' AND D_NUM < ${ dNum }
+		AND D_CHECK = 'y' AND D_NUM < #{ dNum }
 		]]>
 		
 	</select>
@@ -187,7 +191,7 @@
 	<!-- 검색한 글 번호중 현재 조회한 글 보다 작은 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
 	현재 번호를 리턴시킴 --> 
 	<select id="selectAdminPrev" parameterType="Dboard" resultType="int">
-		SELECT NVL(MAX(D_NUM),${dNum})
+		SELECT NVL(MAX(D_NUM),#{dNum})
 		FROM DBOARD
 		WHERE 1=1
 		<if test="searchFiled != null and searchFiled !=''">
@@ -200,7 +204,7 @@
 			AND D_LOCAL = #{dLocal}
 		</if>
 		<![CDATA[
-		AND D_NUM < ${ dNum }
+		AND D_NUM < #{ dNum }
 		]]>
 		
 	</select>
@@ -280,6 +284,11 @@
 		</foreach>
 	</update>
 	
+	<update id="updateReadCount" parameterType="_int">
+		UPDATE DBOARD SET
+		D_COUNT = D_COUNT + 1
+		WHERE D_NUM = #{ dNum }
 	
+	</update>
 	
 </mapper>
