@@ -58,6 +58,7 @@ $(function(){
                             </select>
                             <div class="search-box">
                                 <input type="text" id="searchI" name="searchValue" placeholder="원하시는 키워드를 검색해주세요." value ="${ pageVO.searchValue }">
+                                <input type="hidden" name="unique_num" value="${ loginMember.uniqueNum }"/>
                                  <button type="submit" name="sel" value="SEARCH"  class="xi-search"></button>
                             </div>
                             </form>

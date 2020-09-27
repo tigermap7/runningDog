@@ -23,7 +23,7 @@
                        <div>
                             <ul class="navi">
                                 <li><a href="main.do">홈</a></li>
-                                <li class="xi-angle-right"><a href="/runningdog/vlist.do">자원봉사모집</a></li>
+                                <li class="xi-angle-right"><a href="vlist.do">자원봉사모집</a></li>
                             </ul>
                         </div>
                         <h2><span>자원봉사모집</span></h2>
@@ -150,12 +150,14 @@
 												});
 									</script>
 								</div>
+								
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"></i> 메일보내기</a> -->
                                     <a class="linkBtn" href="tel:010-3387-7583"><i class="xi-call"></i> 전화하기</a>
                                     <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </dt>
                                 <dd>
+                                <!-- 카카오지도 -->
                                     <div id="map" style="width:100%;height:350px;"></div>
                                     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78554901e4ce05b55a812c066e4b2f3b&libraries=services"></script>
                                   <script>
@@ -196,6 +198,7 @@
                                     } 
                                     });
                                   </script>
+                                  <!-- 카카오지도 -->
                                     <h3 class="mt30">센터정보</h3>
                                     <table class="serviceInfo">
                                        <colgroup>
@@ -259,7 +262,7 @@
                             </c:url>
                             <c:url var="vup" value="vUpdateView.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
-                            	<c:param name="page" value="${currentPage}"/>
+                            	<c:param name="unique_num" value="${ volunteer.unique_num}"/>
                             </c:url>
                             <c:url var="vnext" value="vnext.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
@@ -301,18 +304,7 @@
                             
                       
                          
-                                    <!-- <div class="Subcmt_form">
-                                        <form action="vrupdate.do" method="post">
-                                            <fieldset>
-                                                <div class="cmt_form">
-                                                    <div class="cmt_body">
-        <textarea name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                                    <div class="cmt_ok"><input type="submit" value="등록"></div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </form>
-                                    </div> -->
+                                    
                       
                    </div>   
                 </div>
@@ -354,7 +346,7 @@ function showReplyList(){
 							'</li>'	
 							
 							totalcount = totalcount + 1
-			}); //for in
+			}); //for in 
 			
 			$("#totalcount").text('전체'+ totalcount + '개');
 			$('#VreplyList').html(htmls);
@@ -372,7 +364,7 @@ $(document).on('click', '#btn_vreplyInsert', function(){
 	var nickname = "${ sessionScope.loginMember.nickname}";
 	if( nickname == "" )
 		alert("로그인 후 이용해주세요.");
-	else{   
+	else
 	var VreplyContent = $('#vreply_content').val();
 	console.log(VreplyContent+"VreplyContent");
 	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
@@ -394,9 +386,7 @@ $(document).on('click', '#btn_vreplyInsert', function(){
 			alert("댓글 등록을 실패하였습니다.");
 			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
 		}
-	}); 
-	return ; 
-	} 
+	});  
 });
 //댓글수정폼
 function fn_UpdateVreply(vreply_no, nickname, vreply_content, unique_num){
