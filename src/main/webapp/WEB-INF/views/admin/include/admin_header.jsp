@@ -29,13 +29,13 @@
                 <a href="cissuelist.ad">오늘의 이슈 관리</a>
             </div>
         </li>
-        <li>
+        <!-- li>
             <h2><a href="#collapse4" class="collapsed" data-toggle="collapse"><i class="xi-cog"></i> 관리자 관리 <i class="xi-angle-down-min more"></i></a></h2>
             <div id="collapse4" class="collapse show" data-parent="#accordion">
-                <!-- <a href="/WEB-INF/views/admin/etc/aboutView.jsp">사이트소개 관리</a> -->
+                <a href="/WEB-INF/views/admin/etc/aboutView.jsp">사이트소개 관리</a>
                 <a href="etcView.ad">사용자약관 관리</a>
                 <a href="adminInfo.ad">관리자 정보수정</a>
             </div>
-        </li>
+        </li-->
     </ul>
 </div>

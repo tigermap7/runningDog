@@ -171,21 +171,24 @@ public class MemberController {
 		Member userIdChk = memberService.selectUserIdCheck(member);
 		Member nicknameChk = memberService.selectNicknameCheck(member);
 		Member phoneChk = memberService.selectPhoneCheck(member);
-		
+				
 		String url = null;
-		int pChk = 0, iChk = 0, nChk = 0;
 		
-		iChk = (member.getUserId().equals(member.getUserId())) ? 1 : 0;
-		nChk = (member.getNickname().equals(member.getNickname())) ? 1 : 0;
-		pChk = (member.getPhone().equals(member.getPhone())) ? 1 : 0;
-
-		if(userIdChk != null && iChk > 0) {
+		logger.info("확인1");
+		logger.info("확인2 : " + userIdChk + nicknameChk + phoneChk);
+		
+		if(userIdChk != null) {
+			logger.info("userIdChk : " + userIdChk);
 			url = "notUserId";
-		} else if(nicknameChk != null && nChk > 0) {
+		} else if(nicknameChk != null) {
+			logger.info("nicknameChk : " + nicknameChk);
 			url = "notNickname";
-		} else if(phoneChk != null && pChk > 0) {
+		} else if(phoneChk != null) {
+			logger.info("phoneChk : " + phoneChk);
 			url = "notPhone";
-		} else if(iChk == 0 && nChk == 0 && pChk == 0) {
+		} else {
+
+			logger.info("확인3");
 			
 			if(profilImg.getOriginalFilename() != "") {
 
@@ -242,17 +245,17 @@ public class MemberController {
 					member.setRenameProfile(renameProfile);
 				}
 				if(memberService.insertMember(member) > 0) {
+					logger.info("확인4");
 					url = "joinOk";
 				}
 			} else {
 				if(memberService.insertMember(member) > 0) {
+					logger.info("확인5");
 					url = "joinOk";
 				}
 			}
-		} else {
-			model.addAttribute("message", "회원가입 실패.");
-			return "common/error";
 		}
+		logger.info("url : " + url);
 		return url;
 	}
 		
