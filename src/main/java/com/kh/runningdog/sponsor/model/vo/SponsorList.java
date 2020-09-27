@@ -12,12 +12,14 @@ public class SponsorList implements java.io.Serializable{
 	private String spEch;
 	private String spPch;
 	private String spWay;
+	private String spBankbook;
+	private int spRealCash;
 	private int sNum;
 	
 	public SponsorList() {}
 
 	public SponsorList(String spDate, String spName, String spEmail, String spPhone, String spSnumber, int spCash,
-			String spEch, String spPch, String spWay, int sNum) {
+			String spEch, String spPch, String spWay, String spBankbook, int spRealCash, int sNum) {
 		super();
 		this.spDate = spDate;
 		this.spName = spName;
@@ -28,6 +30,8 @@ public class SponsorList implements java.io.Serializable{
 		this.spEch = spEch;
 		this.spPch = spPch;
 		this.spWay = spWay;
+		this.spBankbook = spBankbook;
+		this.spRealCash = spRealCash;
 		this.sNum = sNum;
 	}
 
@@ -103,6 +107,22 @@ public class SponsorList implements java.io.Serializable{
 		this.spWay = spWay;
 	}
 
+	public String getSpBankbook() {
+		return spBankbook;
+	}
+
+	public void setSpBankbook(String spBankbook) {
+		this.spBankbook = spBankbook;
+	}
+
+	public int getSpRealCash() {
+		return spRealCash;
+	}
+
+	public void setSpRealCash(int spRealCash) {
+		this.spRealCash = spRealCash;
+	}
+
 	public int getsNum() {
 		return sNum;
 	}
@@ -115,7 +135,8 @@ public class SponsorList implements java.io.Serializable{
 	public String toString() {
 		return "SponsorList [spDate=" + spDate + ", spName=" + spName + ", spEmail=" + spEmail + ", spPhone=" + spPhone
 				+ ", spSnumber=" + spSnumber + ", spCash=" + spCash + ", spEch=" + spEch + ", spPch=" + spPch
-				+ ", spWay=" + spWay + ", sNum=" + sNum + "]";
+				+ ", spWay=" + spWay + ", spBankbook=" + spBankbook + ", spRealCash=" + spRealCash + ", sNum=" + sNum
+				+ "]";
 	}
-
+	
 }

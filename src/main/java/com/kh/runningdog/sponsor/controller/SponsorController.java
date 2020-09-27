@@ -125,14 +125,7 @@ public class SponsorController {
 	public String moveSponsoredPaySuccess(Model model, @RequestParam() String date, SponsorList slist, @RequestParam() String title) {
     	slist = sponsorService.selectSponsorListOne(date);
     	
-    	String way = null;
-    	switch(slist.getSpWay()) {
-    	case "chk1" : way = "신용카드"; break;
-    	case "chk2" : way = "무통장입금"; break;
-    	case "chk3" : way = "실시간 계좌이체"; break;
-    	}
-    	
-    	model.addAttribute("way", way);
+    	model.addAttribute("way", slist.getSpWay());
     	model.addAttribute("cash", slist.getSpCash());
     	model.addAttribute("title", title);
 		return "sponsor/sponsoredPaySuccess";
@@ -181,16 +174,36 @@ public class SponsorController {
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String spDate = sdf.format(new java.sql.Date(System.currentTimeMillis()));
 		slist.setSpDate(spDate);
-    	slist.setSpCash(Integer.parseInt(request.getParameter("amount").replaceAll(",", "")));
+    	
+		slist.setSpCash(Integer.parseInt(request.getParameter("amount").replaceAll(",", "")));
+    	
     	if(slist.getSpEch() == null)
     		slist.setSpEch("n");
     	if(slist.getSpPch() == null)
     		slist.setSpPch("n");
+
+    	switch(slist.getSpWay()) {
+    	case "chk1" : slist.setSpWay("신용카드"); break;
+    	case "chk2" : slist.setSpWay("무통장입금"); break;
+    	}
+    	
     	logger.info("결제창 열리기 전 : "+slist.toString());
     	
-    	mv.addObject("title", title.replaceAll("'", "\\\\'"));
-    	mv.addObject("sponsorList", slist);
-    	mv.setViewName("sponsor/sponsoredPayment2");
+    	if(slist.getSpWay().equals("무통장입금")) {
+    		slist.setSpBankbook("y");
+    		slist.setSpRealCash(0);
+    		
+    		sponsorService.insertSponsorList(slist);
+    		
+    		mv.addObject("way", slist.getSpWay());
+    		mv.addObject("cash", slist.getSpCash());
+    		mv.addObject("title", title);
+    		mv.setViewName("sponsor/sponsoredPaySuccess");
+    	}else {
+    		mv.addObject("title", title.replaceAll("'", "\\\\'"));
+        	mv.addObject("sponsorList", slist);
+        	mv.setViewName("sponsor/sponsoredPayment2");
+    	}
     	
     	return mv;
     }

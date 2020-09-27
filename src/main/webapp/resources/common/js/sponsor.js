@@ -51,7 +51,7 @@ function CopyUrlToClipboard(num) {
 }
 
 function snsGo(e, id, title, summary) {
-	var url = "http://192.168.130.160:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
+	var url = "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
 	
 	var loc = "";
 	switch(e) {
@@ -76,10 +76,10 @@ function sendLink(id, title, summary, image, count) {
     content: {
       title: title,
       description: summary,
-      imageUrl: 'http://192.168.35.72:9392/runningdog/resources/sponsor/summernoteContent/'+image,
+      imageUrl: 'http://120.0.0.1:9392/runningdog/resources/sponsor/summernoteContent/'+image,
       link: {
-        mobileWebUrl: "http://192.168.35.72:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
-        webUrl: "http://192.168.35.72:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
+        mobileWebUrl: "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
+        webUrl: "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
       }
     },
     social: {
@@ -89,8 +89,8 @@ function sendLink(id, title, summary, image, count) {
       {
         title: '자세히 보기',
         link: {
-          mobileWebUrl: "http://192.168.35.72:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
-          webUrl: "http://192.168.35.72:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
+          mobileWebUrl: "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
+          webUrl: "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
         }
       }
     ]
@@ -138,6 +138,16 @@ function payOption(ele) {
 	}
 }
 
+$(function(){
+	$("#bank").hide();
+	$("#chk2").on("click", function(){
+		$("#bank").show();
+	});
+	$("#chk1").on("click", function(){
+		$("#bank").hide();
+	});
+});
+
 //썸머노트 내용 빈칸 확인
 $(function(){
 	$("#editor").on('submit', function(e) {
@@ -157,16 +167,16 @@ function checkAll(){
 	}
 }
 
-/* 개별 선택 체크시 전체삭제 체크가 풀어지는거 */
+/* 개별 선택 체크시 전체삭제 체크가 풀어지는거 
 $("input[name=checkDel]").on("click", function(){
 	if($("input[name=checkAll]:checked")) {
 		$("input[name=checkAll]").prop("checked", false);
 	}
-	/* 개별 선택 체크가 모두 체크됬을 경우 전체 삭제 체크 되게 하기 */
+	 개별 선택 체크가 모두 체크됬을 경우 전체 삭제 체크 되게 하기 
 	if($("input[name=checkDel]:checked").length == $("input[name=checkDel]").length){
 		$("input[name=checkAll]").prop("checked", true);
 	}
-});
+});*/
 
 //삭제
 function deleteAction(page){
@@ -265,6 +275,7 @@ $(function(){
 		$('#yes').removeClass('active');
 		$('#no').addClass('active');
 		$("#re").attr("data-val", "n");
+		$("input[name=spSnumber]").attr("value", "");
 	});
 });
 

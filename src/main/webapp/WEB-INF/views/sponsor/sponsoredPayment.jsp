@@ -50,7 +50,7 @@
                         <!--상세-->
                         <form action="sSpon.do" method="post" id="spay">
                         <input type="hidden" value="${ sNum }" name="sNum">
-                        <input type="hidden" value="null" name="spSnumber">
+                        <input type="hidden" value="" name="spSnumber">
                         <input type="hidden" value="${ title }" name="title">
                         <table class="sPaymentInfo">
                             <colgroup>
@@ -111,9 +111,10 @@
                                 <tr>
                                     <td>납부방법<span>*</span></td>
                                     <td>
-                                        <label><input type="radio" name="spWay" value="chk1" checked> 신용카드</label>
-                                        <label><input type="radio" name="spWay" value="chk2"> 무통장입금</label>
-                                        <label><input type="radio" name="spWay" value="chk3"> 실시간계좌이체</label>
+                                        <label><input type="radio" name="spWay" value="chk1" id="chk1" checked> 신용카드</label>
+                                        <label><input type="radio" name="spWay" value="chk2" id="chk2"> 무통장입금</label>
+                                        <!-- <label><input type="radio" name="spWay" value="chk3"> 실시간계좌이체</label><br> -->
+                                        <label id="bank">신한은행 / 111-222-666666 / 지금 달려갈 개</label>
                                     </td>
                                 </tr>
                                 <tr>

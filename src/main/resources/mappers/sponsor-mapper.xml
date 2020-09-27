@@ -3,20 +3,6 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sponsorMapper">
-
-	<resultMap id="resultSponsor" type="Sponsor">
-		<id property="sNum" column="s_num" />
-		<result property="sId" column="s_id" />
-		<result property="sTitle" column="s_title" />
-		<result property="sSummary" column="s_summary" />
-		<result property="sContent" column="s_content"/>
-		<result property="sCount" column="s_count" />
-		<result property="sDate" column="s_date" />
-		<result property="sAmount" column="s_amount" />
-		<result property="sCurrent" column="s_current" />
-		<result property="sOriginal" column="s_Original" />
-		<result property="sRename" column="s_Rename" />
-	</resultMap>
 	
 	<resultMap id="resultThumb" type="Sponsor">
 		<result property="sOriginal" column="s_Original" />
@@ -166,7 +152,8 @@
 	<!-- sponsorList -->
 	<insert id="insertSponsorList" parameterType="SponsorList">
 		insert into sponsorlist
-		values (#{ spDate }, #{ spName }, #{ spEmail }, #{ spPhone }, #{ spSnumber }, #{ spCash }, #{ spEch }, #{ spPch }, #{ spWay }, #{ sNum })
+		values (#{ spDate }, #{ spName }, #{ spEmail }, #{ spPhone }, #{ spSnumber }, #{ spCash }, #{ spEch },
+				#{ spPch }, #{ spWay }, #{ spBankbook }, #{ spRealCash }, #{ sNum })
 	</insert>
 	
 	<select id="selectSponsorListOne" parameterType="String" resultType="SponsorList">
