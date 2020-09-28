@@ -60,8 +60,8 @@ $(function() {
                                     <c:url var = "dSuccess" value= "dUpSuccess.do">
 										<c:param name="dNum" value="${ dboard.dNum }"/>
 										<c:param name="dSuccess" value="${ dboard.dSuccess }"/>
-									</c:url> 
-                                    <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
+									</c:url>
+                                    <a class="linkBtn" href="startChat.do?receiver=${ dboard.dWriter }&receiverNo=${ dboard.uniqueNum }"><i class="xi-message-o"></i> 채팅하기</a>
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                                     <!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
                                     <c:if test= "${sessionScope.loginMember.userId == dboard.userId }">
