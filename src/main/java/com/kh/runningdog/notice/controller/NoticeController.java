@@ -127,6 +127,7 @@ public class NoticeController {
 			
 			Integer preNo = noticeService.selectNoticePre(noticePage); //이전글 번호 조회, int는 null값을 못 받아서 integer사용
 			Integer nextNo = noticeService.selectNoticeNext(noticePage); //다음글 번호 조회
+
 			if(preNo == null){ preNo = 0;}	//이전글이 없을 때 0으로 설정
 			if(nextNo == null){ nextNo = 0;}	//다음글이 없울 때 0으로 설정 
 			

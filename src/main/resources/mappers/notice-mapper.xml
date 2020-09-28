@@ -66,7 +66,7 @@
 
 
 	<select id="selectNoticePre" resultType="Integer" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
-		select lagnum from (select notice_no, lag(notice_no) over(order by notice_state nulls last, notice_date desc) lagnum from notice
+		select leadnum from (select notice_no, lead(notice_no) over(order by notice_state nulls last, notice_date desc) leadnum from notice
 			<if test="search == 'title'">
 				WHERE UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
@@ -80,7 +80,7 @@
 	</select>
 	
 	<select id="selectNoticeNext" resultType="Integer" parameterType="com.kh.runningdog.notice.model.vo.NoticePage">
-		select leadnum from (select notice_no, lead(notice_no) over(order by notice_state nulls last, notice_date desc) leadnum from notice
+			select lagnum from (select notice_no, lag(notice_no) over(order by notice_state nulls last, notice_date desc) lagnum from notice
 			<if test="search == 'title'">
 				WHERE UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%'
 			</if>
@@ -91,6 +91,7 @@
 	  			WHERE (UPPER(NOTICE_TITLE) LIKE '%' ||  UPPER(#{keyword}) || '%' OR UPPER(NOTICE_CONTENT) LIKE '%' ||  UPPER(#{keyword}) || '%')
 			</if>	
 		) where notice_no = #{ noticeNo }
+
 	</select>
 	
 	<insert id="insertNotice" parameterType="Notice">
