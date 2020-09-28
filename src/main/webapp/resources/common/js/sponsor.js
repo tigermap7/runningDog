@@ -38,7 +38,7 @@ $(document).on('click', function (e) {
 //url 복사
 function CopyUrlToClipboard(num) {
 	//window.document.location.href -> 현재 url정보 얻는 방법
-	var obShareUrl = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + num;
+	var obShareUrl = "http://localhost:9392/runningdog/sdetail.do?sNum=" + num;
 
 	var t = document.createElement("textarea");
 	document.body.appendChild(t);
@@ -51,13 +51,13 @@ function CopyUrlToClipboard(num) {
 }
 
 function snsGo(e, id, title) {
-	var url = "http://localhost:9392/runningdog/sdetail.do?sNum=" + id;
-	var url2 = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id;
+	//var url = "http://localhost:9392/runningdog/sdetail.do?sNum=" + id;
+	var url = "http://192.168.130.170:9392/runningdog/sdetail.do?sNum=" + id;
 	
 	var loc = "";
 	switch(e) {
 	case 1 : loc = 'https://share.naver.com/web/shareView.nhn?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title); break; //네이버
-	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url2) + '&t=' + encodeURIComponent(title); break;
+	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break;
 	case 4 : loc = 'http://www.twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title); break; //트위터
 	}
 	window.open(loc, '', 'width=400,height=400,left=600');
@@ -76,10 +76,10 @@ function sendLink(id, title, summary, image, count) {
     content: {
       title: title,
       description: summary,
-      imageUrl: 'http://localhost:9392/runningdog/resources/sponsor/summernoteContent/'+image,
+      imageUrl: 'http://192.168.130.170:9392/runningdog/resources/sponsor/summernoteContent/'+image,
       link: {
-        mobileWebUrl: 'http://localhost:9392/runningdog/sdetail.do?sNum=' + id,
-        webUrl: 'http://localhost:9392/runningdog/sdetail.do?sNum=' + id
+        mobileWebUrl: 'http://192.168.130.170:9392/runningdog/sdetail.do?sNum=' + id,
+        webUrl: 'http://192.168.130.170:9392/runningdog/sdetail.do?sNum=' + id
       }
     },
     social: {
@@ -89,8 +89,8 @@ function sendLink(id, title, summary, image, count) {
       {
         title: '자세히 보기',
         link: {
-          mobileWebUrl: 'http://localhost:9392/runningdog/sdetail.do?sNum=' + id,
-          webUrl: 'http://localhost:9392/runningdog/sdetail.do?sNum=' + id
+          mobileWebUrl: 'http://192.168.130.170:9392/runningdog/sdetail.do?sNum=' + id,
+          webUrl: 'http://192.168.130.170:9392/runningdog/sdetail.do?sNum=' + id
         }
       }
     ]
