@@ -117,6 +117,7 @@ public class ChattingController {
 		return "forward:moveChatting.do";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("chatList.do")
 	@ResponseBody
 	public String chatList(HttpSession session) throws UnsupportedEncodingException {
