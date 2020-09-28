@@ -85,6 +85,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateSocialMyinfo(member);
 	}
 
+	@Override
+	public int updateLastAccessDate(Member loginMember) {
+		return memberDao.updateLastAccessDate(loginMember);
+	}
+
 	
 	
 	

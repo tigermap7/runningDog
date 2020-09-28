@@ -544,6 +544,15 @@
     color: #fff;
     font-size: 0.9375rem;
 }
+.chattingList tbody tr td.list-no {
+    padding: 9.375rem 0;
+    text-align: center;
+}
+.chattingList tbody tr td.list-no h1 {
+    font-size: 1.125rem;
+}
+
+
 
 /*채팅 뷰*/
 .chattingView_wrap {
