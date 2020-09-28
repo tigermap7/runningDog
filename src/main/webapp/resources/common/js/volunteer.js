@@ -50,7 +50,7 @@ function che_Size(input) {
  });
  
 //url 복사
- function CopyUrlToClipboard(url) {
+ function CopyUrlToClipboard() {
  	//window.document.location.href -> 현재 url정보 얻는 방법
  	var obShareUrl = window.document.location.href;
 
