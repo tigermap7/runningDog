@@ -19,7 +19,6 @@ $(function() {
 	});
 });
 
-
 </script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
@@ -62,10 +61,11 @@ $(function() {
 										<c:param name="dSuccess" value="${ dboard.dSuccess }"/>
 									</c:url> 
                                     <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
-                                    <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    <a data-id="${ dboard.dNum }" data-title="${ dboard.dTitle }" data-summary="${ dboard.dContent }" data-image="${ dboard.listImage }"
+                                    	data-count="${ dboard.dCount }"class="linkBtn" data-toggle="popover4"><i class="xi-share-alt-o" ></i> 공유하기</a> 
                                     <!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
                                     <c:if test= "${sessionScope.loginMember.userId == dboard.userId }">
-                                    	<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
+                                    	<a class="linkBtn" href="${ dSuccess }"><i class="xi-shield-checked"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
                                     
                                     </c:if>
                                 </dt>
@@ -93,7 +93,13 @@ $(function() {
                                             <tr>
                                                 <th>성별</th>
                                                 <td>
-                                                ${ dboard.dGender eq "m" ? "남/男" : "여/女" }
+                                                ${ dboard.dGender eq "m" ? "남/男" : "여/女" } 
+                                                <c:if test = "${dboard.dSuccess eq 'n'}">
+                                                <span class="protectOn">보호중</span>
+                                                </c:if>
+                                				<c:if test = "${dboard.dSuccess eq 'y'}">
+                                                <span class="protectOn">인계완료</span>
+                                                </c:if>
 												</td>
                                                 <th>분양 여부</th>
                                                 <td>
@@ -155,9 +161,7 @@ $(function() {
                             ${ dboard.dContent }
                             </div>
 					
-							<td>발견 장소</td>
-						
-								<div class="map_wrap">
+								<div class="map_wrap mb50">
 									<div class="hAddr">
 										<div id="map"
 											style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
@@ -190,7 +194,7 @@ $(function() {
 									// 마커가 지도 위에 표시되도록 설정합니다
 									marker.setMap(map);
 									
-									var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">${dboard.dFindLocal}</div>',
+									var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">발견장소 : ${dboard.dFindLocal}</div>',
 								    iwPosition = new kakao.maps.LatLng('${dboard.mapY}', '${dboard.mapX}'); //인포윈도우 표시 위치입니다
 								    
 									// 인포윈도우를 생성합니다
@@ -268,9 +272,11 @@ $(function() {
                             <ul class="cmt_con" id="dreply">
 							<c:forEach items="${ requestScope.dreplyList }" var="d">
 							<!--  대댓글일 경우 대댓글 창 색상 다르게함 -->
-								<li ${ d.dreLevel eq 2? "style='background-color: #E6E6E6;'" : "" }>
+								<li ${ d.dreLevel eq 2? "style='background-color: #f0f0f0; padding: 0.375rem 3rem;'" : "" }>
 								<dl>
 									<dt class="img">
+										<i ${ d.dreLevel eq 2? "class='xi-check-circle-o' style='font-size:22px'" : "" }></i>
+										
 										<img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}">
 									</dt>
 										<dd>
@@ -287,18 +293,15 @@ $(function() {
 										<button onclick="location.href='updateDreplyDel.do?dreNum=${d.dreNum}&dNum=${d.dNum}'" style="float: right;">삭제</button>
 										<button class="Cmt_update_btn" style="float: right; margin-right: 10px;">수정</button>
 										</c:if>
-										<br>
-										<br>
-										<div class="Cmt_update" style="display: none;">
+										<div class="Cmt_update pt20 mt0" style="display: none; width:100%; overflow: hidden;">
 											<form name="updateDreply" action="updateDreply.do" method="post">
 												<input type="hidden" name="dreNum" id="dreNumUp" value="${ d.dreNum }">
 												<input type="hidden" name="dNum" value="${ d.dNum }">
 												<input type="hidden" name="dreParents" value="${ d.dreParents }">
-												<fieldset>
-													<div class="cmt_form">
+												<fieldset style="width:100%;">
+													<div class="cmt_form" style="overflow: unset;">
 														<div class="cmt_body">
-															<textarea name="dreContent"
-																style="resize: none; width: 100%; min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
+															<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
 															<div class="cmt_ok">
 																<input type="submit" class="updateDreply" value="수정">
 															</div>
@@ -307,14 +310,14 @@ $(function() {
 												</fieldset>
 											</form>
 										</div>
-										<div style="display: none" class="Subcmt" id="commentReply">
+										<div class="Subcmt pt20 mt0" id="commentReply" style="display: none; width:100%; overflow: hidden;">
 											<form action="insertDreplyLevel.do" method="post">
 												<input type="hidden" name="dreNum" id="dreNum" value="${ d.dreNum }"> 
 												<input type="hidden" name="dNum" id="dNum" value="${ d.dNum }"> 
 												<input type="hidden" name="dreWriter" id="dreWriter" value="${loginMember.nickname}"> 
 												<input type="hidden" name="uniqueNum" id="uniqueNum" value="${loginMember.uniqueNum}">
-												<fieldset>
-													<div class="cmt_form">
+												<fieldset style="width:100%;">
+													<div class="cmt_form" style="overflow: unset;">
 														<div class="cmt_body">
 															<textarea name="dreContent" id="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
 																onfocus="this.value='';">비방글은 작성할 수 없습니다.</textarea>
@@ -325,11 +328,9 @@ $(function() {
 													</div>
 												</fieldset>
 											</form>
-										</div></li>
+										</div>
+									</li>
 							</c:forEach>
-
-
-
 						</ul>
 <!--  <script type="text/javascript">
                       $(function(){

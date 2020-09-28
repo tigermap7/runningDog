@@ -129,7 +129,7 @@
 	<select id="selectOne" parameterType="_int" resultMap="resultDboard">
 		SELECT * FROM DBOARD WHERE D_NUM = #{ dNum }
 	</select>
-	<!-- 검색한 글 번호중 현재 조회한 글 보다 큰 번호중에 제일 큰 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
+	<!-- 검색한 글 번호중 현재 조회한 글 보다 큰 번호중에 제일 작은 수를 찾음. 하지만 번호가 없이 NULL값이 나오면
 	현재 번호를 리턴시킴 --> 
 	<select id="selectNext" parameterType="Dboard" resultType="int">
 		SELECT NVL(MIN(D_NUM),#{dNum})

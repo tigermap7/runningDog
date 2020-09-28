@@ -92,6 +92,9 @@
 			스프링 3.2 부터 exclude-mappin 앨리먼트 사용할 수 있음
 			<exclude-mapping path="/board/blist.do" /> -->
 			<!-- <mapping path="/blist.do" /> -->
+			<mapping path="/dinsertPage.do"/>
+			<mapping path="/dupView.do" />
+			<mapping path="/insertDreply.do" />
 			<mapping path="/moveChatting.do"/>
 			<mapping path="/mypage.do"/>
 			<mapping path="/memberAllList.ad"/>

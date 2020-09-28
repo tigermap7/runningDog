@@ -56,7 +56,7 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th><input type="checkbox" name="checkHideAll" id="checkHideAll" onclick="checkHideAll();"></th>
+							<th class="checkBox"><input type="checkbox" name="checkHideAll" id="checkHideAll" onclick="checkHideAll();"></th>
 							<th>번호</th>
 							<th>분류</th>
 							<th>썸네일</th>
@@ -106,8 +106,7 @@
 							<tr class="list-no">
 								<td colspan="8">
 									<p>
-										<img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png"
-											alt="" title="" />
+										<img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" />
 									</p>
 									<h1>목록이 없습니다.</h1>
 								</td>

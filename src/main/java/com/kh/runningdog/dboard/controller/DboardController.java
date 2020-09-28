@@ -122,10 +122,10 @@ public class DboardController {
 	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard){
 
 
-		dboard.setSearchFiled(request.getParameter("searchFiled"));
-		dboard.setSearchValue(request.getParameter("searchValue"));
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
+		//dboard.setSearchFiled(request.getParameter("searchFiled"));
+		//dboard.setSearchValue(request.getParameter("searchValue"));
+		//dboard.setdCategory(request.getParameter("dCategory"));
+		//dboard.setdLocal(request.getParameter("dLocal"));
 		logger.info("SearchFiled : " + dboard.getSearchFiled());
 		logger.info("SearchValue : " + dboard.getSearchValue());
 		int totalCount = dboardService.selectListCount(dboard); // 게시물 총갯수를 구한다
@@ -151,7 +151,7 @@ public class DboardController {
 		ArrayList<Dboard> dboardList = dboardService.selectList(dboard); 
 		
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
+		//model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("dboardList", dboardList);
@@ -409,8 +409,7 @@ public class DboardController {
 	@RequestMapping("dboardnext.do")
 	public String dboardNext(HttpServletRequest request,Model model, Dboard dboard) {
 		//다음글 번호조회
-		dboard.setSearchFiled(request.getParameter("searchFiled"));
-		dboard.setSearchValue(request.getParameter("searchValue"));
+		
 		dboard.setdCategory(request.getParameter("dCategory"));
 		dboard.setdLocal(request.getParameter("dLocal"));
 		
@@ -422,9 +421,6 @@ public class DboardController {
 		
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
-		model.addAttribute("searchFiled", dboard.getSearchFiled());
-		model.addAttribute("searchValue",dboard.getSearchValue());
-		
 		
 		String url = "";
 		if (dboard.getdNum() != dboardNextNum) {
@@ -441,8 +437,6 @@ public class DboardController {
 	
 	@RequestMapping("dboardprev.do")
 	public String dboardPrev(HttpServletRequest request,Model model, Dboard dboard) {
-		dboard.setSearchFiled(request.getParameter("searchFiled"));
-		dboard.setSearchValue(request.getParameter("searchValue"));
 		dboard.setdCategory(request.getParameter("dCategory"));
 		dboard.setdLocal(request.getParameter("dLocal"));
 		
@@ -454,8 +448,6 @@ public class DboardController {
 		
 		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
-		model.addAttribute("searchFiled", dboard.getSearchFiled());
-		model.addAttribute("searchValue",dboard.getSearchValue());
 		
 		String url = "";
 		if ( dboard.getdNum() != dboardPrevNum) {
