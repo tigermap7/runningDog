@@ -60,7 +60,12 @@ $(function() {
 										<c:param name="dNum" value="${ dboard.dNum }"/>
 										<c:param name="dSuccess" value="${ dboard.dSuccess }"/>
 									</c:url>
+									<c:if test="${sessionScope.loginMember.getNickname() != volunteer.volwriter}">
                                     <a class="linkBtn" href="startChat.do?receiver=${ dboard.dWriter }&receiverNo=${ dboard.uniqueNum }"><i class="xi-message-o"></i> 채팅하기</a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.loginMember.getNickname() == volunteer.volwriter}">
+                                    <a class="linkBtn" onclick="location.href=alert('자신에게 채팅할 수 없습니다'); location.reload();"><i class="xi-message-o"></i> 채팅하기</a>
+                                    </c:if>
                                     <a data-id="${ dboard.dNum }" data-title="${ dboard.dTitle }" data-summary="${ dboard.dContent }" data-image="${ dboard.listImage }"
                                     	data-count="${ dboard.dCount }"class="linkBtn" data-toggle="popover4"><i class="xi-share-alt-o" ></i> 공유하기</a> 
                                     <!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
