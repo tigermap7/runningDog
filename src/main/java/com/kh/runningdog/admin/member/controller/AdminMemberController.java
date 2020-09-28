@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -387,17 +390,6 @@ public class AdminMemberController {
 	
 
 	
-//	
-//	@RequestMapping("adminInfo.ad")
-//	public String adminInfoPage() {
-//		return "admin/etc/adminInfo";
-//	}
-//	
-//	@RequestMapping("etcView.ad")
-//	public String etcViewPage() {
-//		return "admin/etc/etcView";
-//	}
-	
 	
 	//관리자 탈퇴회원 리스트
 	@RequestMapping("memberLeaveList.ad")
@@ -487,11 +479,7 @@ public class AdminMemberController {
 		}
 		return url;
 	}
-	
-	
-	
-	
-	
+
 	
 	
 	

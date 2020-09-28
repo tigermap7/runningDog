@@ -25,6 +25,7 @@ public interface MemberService {
 	int updateMemberPwd(Member member);
 	int updatemyinfo(Member member);
 	int deleteMember(Member member);
+	int updateLastAccessDate(Member loginMember);
 	
 	//간편로그인, 회원가입, 소셜마이페이지
 	Member selectFacebookLogin(Member member);

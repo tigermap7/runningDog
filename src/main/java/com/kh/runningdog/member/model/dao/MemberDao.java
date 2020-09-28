@@ -70,6 +70,10 @@ public class MemberDao {
 	public int updatemyinfo(Member member) {
 		return session.update("memberMapper.updatemyinfo", member);
 	}
+	public int updateLastAccessDate(Member loginMember) {
+		return session.update("memberMapper.updateLastAccessDate", loginMember);
+	}
+
 
 
 	//간편로그인, 회원가입, 소셜마이페이지
@@ -157,6 +161,8 @@ public class MemberDao {
 	public int deleteChk(int temp) {
 		return session.delete("leaveMemberMapper.deleteChk", temp);
 	}
+
+	
 
 	
 

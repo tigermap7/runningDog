@@ -74,7 +74,7 @@ public class SocialLoginController {
 			loginMember.setRenameProfile(profileImage);
 			loginMember.setLoginType("kakao");
 			
-			if(memberService.updatemyinfo(loginMember) > 0) {
+			if(memberService.updateLastAccessDate(loginMember) > 0) {
 				session.setAttribute("loginMember", loginMember);
 				status.setComplete(); // 요청성공, 200 전송
 				url = "main/main";
@@ -169,7 +169,7 @@ public class SocialLoginController {
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
 			
 			loginMember.setLoginType("naver");
-			if(memberService.updatemyinfo(loginMember) > 0) {
+			if(memberService.updateLastAccessDate(loginMember) > 0) {
 				logger.info("loginMember : " + loginMember);
 				logger.info("로그인 성공");
 				
@@ -194,9 +194,6 @@ public class SocialLoginController {
 	        return "member/socialJoin";
 		}
 		return url;
-        /* 네이버 로그인 성공 페이지 View 호출 */
-        //return null;
-        //return "main/main";
     }
 	
 	
@@ -215,7 +212,7 @@ public class SocialLoginController {
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
 			
 			loginMember.setLoginType("facabook");
-			if(memberService.updatemyinfo(loginMember) > 0) {
+			if(memberService.updateLastAccessDate(loginMember) > 0) {
 				logger.info("loginMember : " + loginMember);
 				logger.info("로그인 성공");
 				

@@ -109,7 +109,7 @@ public class MemberController {
 		String url = null;
 		
 		if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
-			if (bcryptoPasswordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd())) {
+			if (bcryptoPasswordEncoder.matches(member.getUserPwd(), loginMember.getUserPwd()) && memberService.updateLastAccessDate(loginMember) > 0) {
 				// 나의 채팅방 정보 세션 저장
 				room.setMemberNo(loginMember.getUniqueNum());
 				myChatList = chatroomService.selectMyChatList(room);

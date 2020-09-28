@@ -34,6 +34,5 @@ src/main/resources/logs/
 hs_err_pid*
 .tern-project
 /bin
-*.jpg
 
 
