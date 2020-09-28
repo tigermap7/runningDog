@@ -119,6 +119,9 @@
                                  <c:url var="dboardView" value="dboardView.do">
                                  	<c:param name="pageNo" value="${ pageVO.pageNo }"/>
                                  	<c:param name="dNum" value="${ d.dNum }"/>
+                                 	<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
+									<c:param name="searchValue" value="${pageVO.searchValue }"/>
+									<c:param name="dCategory" value="${ d.dCategory }"/>
                                  </c:url>
                                  <c:if test = "${d.dSuccess eq 'n'}">
                                  <li class="grid-item chooseIcon" >

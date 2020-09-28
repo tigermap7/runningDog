@@ -44,10 +44,7 @@ public class AdminDboardController {
 	
 	@RequestMapping("dboardList.ad")
 	public String adminDboardList (HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard) {
-		dboard.setSearchFiled(request.getParameter("searchFiled"));
-		dboard.setSearchValue(request.getParameter("searchValue"));
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
+
 		logger.info("SearchFiled : " + dboard.getSearchFiled());
 		logger.info("SearchValue : " + dboard.getSearchValue());
 		int totalCount = dboardService.selectAdminCount(dboard); // 게시물 총갯수를 구한다
@@ -75,8 +72,6 @@ public class AdminDboardController {
 		ArrayList<Dboard> dboardList = dboardService.selectAdminList(dboard);
 		
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
-		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("dboardList", dboardList);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
@@ -85,7 +80,7 @@ public class AdminDboardController {
 			url = "admin/userBoard/chooseAdminList";
 		} else {
 			model.addAttribute("msg", "검색 결과가 존재 하지 않습니다");
-			model.addAttribute("url", "dlist.ad");
+			model.addAttribute("url", "dboardList.ad");
 			url = "common/errorDboard";
 		}
 		return url;
@@ -93,9 +88,12 @@ public class AdminDboardController {
 	
 	@RequestMapping("dboardView.ad")
 	public String selectOne(@RequestParam("dNum") int dNum,Model model) {
+		
+		
 		Dboard dboard = dboardService.selectOne(dNum);
 		logger.info("dboard View게시글 번호" + dNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
+
 		String url = "";
 		if (dboard != null) {
 			model.addAttribute("dboard", dboard);
@@ -112,10 +110,7 @@ public class AdminDboardController {
 	@RequestMapping("dboardnext.ad")
 	public String dboardNext(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
 		//다음글 번호조회
-		dboard.setSearchFiled(request.getParameter("searchFiled"));
-		dboard.setSearchValue(request.getParameter("searchValue"));
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
+		
 		
 		
 		int dboardNextNum = dboardService.selectAdminNext(dboard);
@@ -123,10 +118,7 @@ public class AdminDboardController {
 		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
-		model.addAttribute("searchFiled", dboard.getSearchFiled());
-		model.addAttribute("searchValue",dboard.getSearchValue());
 		
 		
 		String url = "";
@@ -144,10 +136,9 @@ public class AdminDboardController {
 	
 	@RequestMapping("dboardprev.ad")
 	public String dboardPrev(HttpServletRequest request,Model model,@ModelAttribute("Dboard") Dboard dboard) {
-		dboard.setSearchFiled(request.getParameter("searchFiled"));
-		dboard.setSearchValue(request.getParameter("searchValue"));
+
 		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
+
 		
 		//이전 번호조회
 		//게시물 표시여부 체크하고 게시물 다음글 보기
@@ -157,10 +148,8 @@ public class AdminDboardController {
 		Dboard dboardPrev = dboardService.selectOne(dboardPrevNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
 		model.addAttribute("dCategory", dboard.getdCategory());
-		model.addAttribute("searchFiled", dboard.getSearchFiled());
-		model.addAttribute("searchValue",dboard.getSearchValue());
+		
 		
 		String url = "";
 		if ( dboard.getdNum() != dboardPrevNum) {

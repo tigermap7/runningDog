@@ -46,6 +46,7 @@ $(function() {
 						<c:url var="dSuccess" value="dUpSuccess.ad">
 							<c:param name="dNum" value="${ dboard.dNum }" />
 							<c:param name="dSuccess" value="${ dboard.dSuccess }" />
+							
 						</c:url>
 						<!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
 						<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
@@ -195,18 +196,18 @@ $(function() {
 					<c:param name="dNum" value="${ dboard.dNum }" />
 				</c:url>
 				<c:url var="dboardNext" value="dboardnext.ad">
-					<c:param name="dNum" value="${ dboard.dNum }" />
-					<c:param name="dLocal" value="${ dLocal }" />
-					<c:param name="searchFiled" value="${ searchFiled }" />
-					<c:param name="searchValue" value="${ searchValue }" />
-					<c:param name="dCategory" value="${ dCategory }" />
+						<c:param name="dNum" value="${ dboard.dNum }"/>
+							<c:param name="dLocal" value="${ dboard.dLocal }"/>
+                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
+							<c:param name="searchValue" value="${ dboard.searchValue }" />
+							<c:param name="dCategory" value="${ dboard.dCategory }"/>
 				</c:url>
 				<c:url var="dboardPrev" value="dboardprev.ad">
-					<c:param name="dNum" value="${ dboard.dNum }" />
-					<c:param name="dLocal" value="${ dLocal }" />
-					<c:param name="searchFiled" value="${ searchFiled }" />
-					<c:param name="searchValue" value="${ searchValue }" />
-					<c:param name="dCategory" value="${ dCategory }" />
+						<c:param name="dNum" value="${ dboard.dNum }"/>
+							<c:param name="dLocal" value="${ dboard.dLocal }"/>
+                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
+							<c:param name="searchValue" value="${ dboard.searchValue }" />
+							<c:param name="dCategory" value="${ dboard.dCategory }"/>
 				</c:url>
 				<div class="viewBtn-wrap">
 					<button class="nextBtn" onclick="location='${ dboardPrev }'">
