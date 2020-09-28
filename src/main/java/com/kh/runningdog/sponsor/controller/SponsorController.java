@@ -67,8 +67,7 @@ public class SponsorController {
 	}
 	
     @RequestMapping("sdetail.do")
-	public ModelAndView moveSponsorView(HttpServletRequest request, HttpServletResponse response, ModelAndView mv,
-											@RequestParam() int page, @RequestParam() int sNum) {
+	public ModelAndView moveSponsorView(HttpServletRequest request, HttpServletResponse response, ModelAndView mv, @RequestParam() int sNum) {
     	Sponsor sponsor = sponsorService.selectOne(sNum);
     	
     	Cookie[] cookies = request.getCookies();
@@ -104,10 +103,9 @@ public class SponsorController {
          Integer nextNo = sponsorService.selectSponsorNext(sNum); //다음글 번호 조회
          if(preNo == null){ preNo = 0;}   //이전글이 없을 때 0으로 설정
          if(nextNo == null){ nextNo = 0;}   //다음글이 없울 때 0으로 설정 
-
+         
          mv.addObject("preNo", preNo);
          mv.addObject("nextNo", nextNo);
-         mv.addObject("page", page);
          mv.addObject("sponsor", sponsor);
          mv.setViewName("sponsor/sponsorView");
     	}

@@ -53,7 +53,7 @@
                             </select>
                             <div class="search-box">
                                 <input type="text" name="keyword" placeholder="검색어를 검색해주세요." required>
-                                <button id='seld' onclick="#none" type="submit" class="xi-search"></button>
+                                <button id='seld' type="submit" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
@@ -99,7 +99,6 @@
                                     <div>
                                     	<c:url var="sdt" value="sdetail.do">
                                     		<c:param name="sNum" value="${ s.sNum }"/>
-                                    		<c:param name="page" value="${ page }" />
                                     	</c:url>
                                     	<c:if test="${ s.sAmount > s.sCurrent }">
                                         	<a href="${ sdt }" class="chooseIcon">후원중</a>

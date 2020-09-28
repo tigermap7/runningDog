@@ -19,7 +19,7 @@
         		  amount: '${ sponsorList.spCash }',
         		  buyer_name : '${ sponsorList.spName }',
         		  buyer_email : '${ sponsorList.spEmail }',
-        		  m_redirect_url : 'http://192.168.35.72:9392/runningdog/WEB-INF/views/sponsor/sponsoredPaySuccess'
+        		  m_redirect_url : 'http://localhost:9392/runningdog/sSponpay.do'
         	  }, function(rsp){
         		  if(rsp.success) {
         			  var title = '${ title }';
@@ -150,7 +150,7 @@
                                     <td>
                                         <label><input type="radio" name="spWay" value="chk1" checked> 신용카드</label>
                                         <label><input type="radio" name="spWay" value="chk2"> 무통장입금</label>
-                                        <label><input type="radio" name="spWay" value="chk3"> 실시간계좌이체</label>
+                                        <p id="bank">신한은행 : 111-222-666666(지금 달려갈 개)</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -179,12 +179,14 @@
                                         <button type="button" id="yes">네</button>
                                         <button type="button" class="active" id="no">아니요</button>
                                        	<div style="font-size:13px;" id="spnum">
-                                       		※후원자님의 주민등록번호를 입력해주세요. (타인 주민등록번호 입력 불가)<br>
-                                       		입력하신 주민등록번호로 국세청 연말정산 간소화 서비스에 등록됩니다.<br>
-                                       		※금융거래 기록이 없는 14세 미만은 인증이 불가할 수도 있습니다.<br>
-                                       		주민등록번호
-											<input type="text" id="jumin1" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="6">-<input id="jumin2" type="password" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="7">
-											<button id="re" value="n" onclick="aaa(); return false;" style="width:60px; height:30px;">확인</button>
+                                       		※후원자님의 주민등록번호를 입력해주세요. (타인 주민등록번호 입력 불가)<br/>
+                                       		입력하신 주민등록번호로 국세청 연말정산 간소화 서비스에 등록됩니다.<br/>
+                                       		※금융거래 기록이 없는 14세 미만은 인증이 불가할 수도 있습니다.<br/><br/>
+                                       		
+                                       		<p class="rNumber">
+											주민등록번호 <input type="text" id="jumin1" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="6"> - <input id="jumin2" type="password" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="7">
+											&nbsp;&nbsp;<button data-val="n" id="re" value="n" onclick="aaa(); return false;" style="width:60px; height:30px;">확인</button>
+                                       		</p>
                                        	</div>
                                     </td>
                                 </tr>

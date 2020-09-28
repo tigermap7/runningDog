@@ -1170,9 +1170,17 @@
     padding: 1.875rem 0;
     text-align: center;
 }
-.sPaymentInfo tbody tr.receipt td p {
+.sPaymentInfo tbody tr.receipt td > p {
     color:#333;
     padding-bottom: 1.25rem;
+}
+.sPaymentInfo tbody tr.receipt td > div p {
+    color:#333;
+    padding-bottom: 1.25rem;
+}
+.sPaymentInfo tbody tr.receipt td > div p input {
+    float: unset;
+    display:inline-block;
 }
 .sPaymentInfo tbody tr.privacyInfo td a {
     border: 1px solid #999;
@@ -1227,6 +1235,61 @@
     background-color: #fb3860;
     border: 1px solid #fb3860;
 }
+
+.subContent .sponsorSuccess {
+	text-align: center;
+	padding-top: 150px;
+}
+.subContent .sponsorSuccess h1 {
+	font-size: 32px;
+    margin-bottom: 50px;
+    line-height: 30px;
+}
+.subContent .sponsorSuccess table {
+	width: 70%;
+    margin: 0 auto;
+    border-top: 3px solid #333;
+    margin-bottom: 50px;
+}
+.subContent .sponsorSuccess table tbody {
+	width: 100%;
+}
+.subContent .sponsorSuccess table tbody tr {
+	width: 100%;
+}
+.subContent .sponsorSuccess table tbody tr th {
+    padding: 20px 10px;
+    background-color: #ff92a8;
+    font-size: 14px;
+	text-align: center;
+	border-bottom: 2px solid #aaa;
+    border-right: 1px solid #ddd;
+    font-weight: 500;
+}
+.subContent .sponsorSuccess table tbody tr th:last-child {
+    border-right: none;
+}
+.subContent .sponsorSuccess table tbody tr td {
+    font-size: 14px;
+    padding: 20px 10px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.subContent .sponsorSuccess table tbody tr td:last-child {
+    border-right: none;
+}
+.subContent .sponsorSuccess button {
+	background-color: #fb3860;
+    border: 1px solid #fb3860;
+    color: #fff;
+    font-weight: 500;
+    display: inline-block;
+    line-height: 2.25rem;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 0 3rem;
+}
+
 @media all and (max-width:479px) {
 }
 @media all and (max-width:600px) {

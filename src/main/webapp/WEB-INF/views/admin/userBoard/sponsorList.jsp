@@ -97,8 +97,8 @@
 			                        </c:if>
 			                        <td class="thumbnail" onclick="location='${ sdt }'"><img src="resources\\sponsor\\thumbnail/${ s.sRename }"></td>
 			                        <td class="title" onclick="location='${ sdt }'">${ s.sTitle }</td>
-			                        <td class="name" onclick="location='${ sdt }'">${ s.sAmount }</td>
-			                        <td class="name" onclick="location='${ sdt }'">${ s.sCurrent }</td>
+			                        <td class="name" onclick="location='${ sdt }'">${ s.sAmount } 원</td>
+			                        <td class="name" onclick="location='${ sdt }'">${ s.sCurrent } 원</td>
 			                        <td class="name" onclick="location='${ sdt }'">${ s.sId }</td>
 			                        <td class="date" onclick="location='${ sdt }'"><fmt:formatDate value="${ s.sDate }" pattern="yyyy.MM.dd"/></td>
 		                        </tr>

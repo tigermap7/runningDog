@@ -13,17 +13,17 @@ $(function(){
 			var count = $(this).attr('data-count');
 			
 			var value = "";
-			value += "<a href='javascript:snsGo(1, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
-			value += "<a id='kakao-link-btn' href='javascript:sendLink("+id+", \""+title+"\", \""+summary+"\", \""+image+"\", "+count+")'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(3, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(4, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
+			value += "<a href='javascript:snsGo(1, "+id+", \""+title+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
+			value += "<a id='kakao-link-btn' href='javascript:sendLink("+id+", \""+title+"\", \""+summary+"\", \""+image+"\", "+count+");'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(3, "+id+", \""+title+"\");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(4, "+id+", \""+title+"\");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
 			value += "<a href='javascript:CopyUrlToClipboard("+id+");' class='urlcopy'>URL 복사</a>";
 			return value;
 		}
 	});
 });
 
-//팝오버 범위 밖 클릭하면 닫기
+//팝오버 범위 밖 클릭하면 닫기 
 $(document).on('click', function (e) {
     $('[data-toggle="popover"],[data-original-title]').each(function () {
         //the 'is' for buttons that trigger popups
@@ -38,7 +38,7 @@ $(document).on('click', function (e) {
 //url 복사
 function CopyUrlToClipboard(num) {
 	//window.document.location.href -> 현재 url정보 얻는 방법
-	var obShareUrl = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + num + "&page=1";
+	var obShareUrl = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + num;
 
 	var t = document.createElement("textarea");
 	document.body.appendChild(t);
@@ -50,25 +50,24 @@ function CopyUrlToClipboard(num) {
 	alert("URL이 클립보드에 복사되었습니다");
 }
 
-function snsGo(e, id, title, summary) {
-	var url = "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
+function snsGo(e, id, title) {
+	var url = "http://192.168.130.160:9392/runningdog/sdetail.do?sNum=" + id;
 	
 	var loc = "";
 	switch(e) {
-	case 1 : loc = "https://share.naver.com/web/shareView.nhn?url=" + url + "&title=" + title; break; //네이버
+	case 1 : loc = 'https://share.naver.com/web/shareView.nhn?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title); break; //네이버
 	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break;
-	case 4 : loc = 'http://www.twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break; //트위터
+	case 4 : loc = 'http://www.twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title); break; //트위터
 	}
 	window.open(loc, '', 'width=400,height=400,left=600');
 }
 
 $(function(){
-	 Kakao.init('791ee46aea17d56869d6ab228ba850c1');
+	 Kakao.init('5af2df86f21b8c419bec6598d2c35677');
 });
 
 //카카오톡 공유
 function sendLink(id, title, summary, image, count) {
-  //<![CDATA[
   //카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
   Kakao.Link.createDefaultButton({
     container: '#kakao-link-btn',
@@ -76,10 +75,10 @@ function sendLink(id, title, summary, image, count) {
     content: {
       title: title,
       description: summary,
-      imageUrl: 'http://120.0.0.1:9392/runningdog/resources/sponsor/summernoteContent/'+image,
+      imageUrl: 'http://192.168.130.160:9392/runningdog/resources/sponsor/summernoteContent/'+image,
       link: {
-        mobileWebUrl: "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
-        webUrl: "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
+        mobileWebUrl: 'http://192.168.130.160:9392/runningdog/sdetail.do?sNum=' + id,
+        webUrl: 'http://192.168.130.160:9392/runningdog/sdetail.do?sNum=' + id
       }
     },
     social: {
@@ -89,13 +88,12 @@ function sendLink(id, title, summary, image, count) {
       {
         title: '자세히 보기',
         link: {
-          mobileWebUrl: "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
-          webUrl: "http://120.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
+          mobileWebUrl: 'http://192.168.130.160:9392/runningdog/sdetail.do?sNum=' + id,
+          webUrl: 'http://192.168.130.160:9392/runningdog/sdetail.do?sNum=' + id
         }
       }
     ]
   });
-//]]>
 }
 //sns공유하기 끝
 
