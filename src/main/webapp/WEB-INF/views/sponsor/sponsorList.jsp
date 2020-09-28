@@ -106,8 +106,8 @@
                                         <c:if test="${ s.sAmount <= s.sCurrent }">
                                         	<a href="${ sdt }" class="chooseIcon" style="background-color:#555; border-color:#555;">후원완료</a>
                                         </c:if>
-                                        <a data-id="${ s.sNum }" data-title="${ s.sTitle }" data-summary="${ s.sSummary }" data-image="${ s.sRename }"
-                                        	 data-count="${ s.sCount }" data-toggle="popover" class="urlIcon xi-share-alt-o"></a>
+                                        <a data-sid="${ s.sNum }" data-stitle="${ s.sTitle }" data-ssummary="${ s.sSummary }" data-simage="${ s.sRename }"
+                                        	 data-scount="${ s.sCount }" data-toggle="spopover" class="urlIcon xi-share-alt-o"></a>
 									<a href="${ sdt }"><img src="resources/sponsor/thumbnail/${ s.sRename }"></a>
                                     </div>
                                     <h3 onclick="location='${ sdt }'">${ s.sTitle }</h3>

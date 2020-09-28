@@ -157,7 +157,7 @@
                                 <!-- 카카오지도 -->
                                     <div id="map" style="width:100%;height:350px;"></div>
                                     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78554901e4ce05b55a812c066e4b2f3b&libraries=services"></script>
-                                  <script>
+								<script>
                                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                                     mapOption = {
                                         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표

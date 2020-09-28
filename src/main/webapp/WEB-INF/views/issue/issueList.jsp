@@ -70,7 +70,7 @@
                                 <li class="grid-item" onclick="location='${ cdeurl }'">
                                     <div>
                                         <a class="xi-share-alt-o" onclick="event.cancelBubble=true" data-toggle="popover2"
-                                        data-url="http://192.168.130.170:9392/runningdog/${ cdeurl }" data-title="`${ c.issueTitle }`" data-image="${ c.issueThumbnail }"></a>
+                                        data-url="http://192.168.30.34:9392/runningdog/${ cdeurl }" data-title="${ c.issueTitle }" data-image="${ c.issueThumbnail }"></a>
                                         
                                         <img src="${ c.issueThumbnail }">
                                     </div>
