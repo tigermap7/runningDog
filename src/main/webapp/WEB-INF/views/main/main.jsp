@@ -142,7 +142,7 @@
                         <li class="grid-item" onclick="moveIssueDetail(`${c.issueLink}`)">
                             <div>
                                 <a class="xi-share-alt-o" onclick="event.cancelBubble=true" data-toggle="popover2" 
-                                data-url="http://192.168.130.170:9392/runningdog/cissuedetail.do?link=${ c.issueLink }"
+                                data-url="http://192.168.30.34:9392/runningdog/cissuedetail.do?link=${ c.issueLink }"
                                 data-title="${ c.issueTitle }" data-image="${ c.issueThumbnail }"></a>
                                 <img src="${ c.issueThumbnail }">
                             </div>
