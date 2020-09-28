@@ -7,23 +7,23 @@ $(function(){
 		html: true,
 		content: function() {
 			var id = $(this).attr('data-id');
-			var title = $(this).attr('data-title');
-			var summary = $(this).attr('data-summary');
+			var title = $(this).attr('data-title').replace(/\'/g, "&#39;");
+			var summary = $(this).attr('data-summary').replace(/\'/g, "&#39;");
 			var image = $(this).attr('data-image');
 			var count = $(this).attr('data-count');
 			
 			var value = "";
-			value += "<a href='javascript:snsGo(1, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
-			value += "<a id='kakao-link-btn' href='javascript:sendLink("+id+", \""+title+"\", \""+summary+"\", \""+image+"\", "+count+")'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(3, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
-			value += "<a href='javascript:snsGo(4, "+id+", \""+title+"\", \""+summary+"\");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
+			value += "<a href='javascript:snsGo(1, "+id+", \""+title+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
+			value += "<a id='kakao-link-btn' href='javascript:sendLink("+id+", \""+title+"\", \""+summary+"\", \""+image+"\", "+count+");'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(3, "+id+", \""+title+"\");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGo(4, "+id+", \""+title+"\");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
 			value += "<a href='javascript:CopyUrlToClipboard("+id+");' class='urlcopy'>URL 복사</a>";
 			return value;
 		}
 	});
 });
 
-//팝오버 범위 밖 클릭하면 닫기
+//팝오버 범위 밖 클릭하면 닫기 
 $(document).on('click', function (e) {
     $('[data-toggle="popover"],[data-original-title]').each(function () {
         //the 'is' for buttons that trigger popups
@@ -38,7 +38,7 @@ $(document).on('click', function (e) {
 //url 복사
 function CopyUrlToClipboard(num) {
 	//window.document.location.href -> 현재 url정보 얻는 방법
-	var obShareUrl = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + num + "&page=1";
+	var obShareUrl = "http://localhost:9392/runningdog/sdetail.do?sNum=" + num;
 
 	var t = document.createElement("textarea");
 	document.body.appendChild(t);
@@ -50,22 +50,24 @@ function CopyUrlToClipboard(num) {
 	alert("URL이 클립보드에 복사되었습니다");
 }
 
-function snsGo(e, id, title, summary) {
-	var url = "http://192.168.130.160:9392/runningdog/sdetail.do?sNum=" + id + "&page=1";
+function snsGo(e, id, title) {
+	//var url = "http://localhost:9392/runningdog/sdetail.do?sNum=" + id;
+	var url = "http://192.168.130.170:9392/runningdog/sdetail.do?sNum=" + id;
 	
 	var loc = "";
 	switch(e) {
-	case 1 : loc = "https://share.naver.com/web/shareView.nhn?url=" + url + "&title=" + title; break; //네이버
+	case 1 : loc = 'https://share.naver.com/web/shareView.nhn?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title); break; //네이버
 	case 3 : loc = 'http://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break;
-	case 4 : loc = 'http://www.twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&t=' + encodeURIComponent(title); break; //트위터
+	case 4 : loc = 'http://www.twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&title=' + encodeURIComponent(title); break; //트위터
 	}
 	window.open(loc, '', 'width=400,height=400,left=600');
 }
 
-//카카오톡 공유
-//사용할 앱의 JavaScript 키를 설정해 주세요.
-Kakao.init('791ee46aea17d56869d6ab228ba850c1');
+$(function(){
+	 Kakao.init('5af2df86f21b8c419bec6598d2c35677');
+});
 
+//카카오톡 공유
 function sendLink(id, title, summary, image, count) {
   //카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
   Kakao.Link.createDefaultButton({
@@ -74,10 +76,10 @@ function sendLink(id, title, summary, image, count) {
     content: {
       title: title,
       description: summary,
-      imageUrl: 'http://127.0.0.1:9392/runningdog/resources/sponsor/summernoteContent/'+image,
+      imageUrl: 'http://192.168.130.170:9392/runningdog/resources/sponsor/summernoteContent/'+image,
       link: {
-        mobileWebUrl: "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
-        webUrl: "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
+        mobileWebUrl: 'http://192.168.130.170:9392/runningdog/sdetail.do?sNum=' + id,
+        webUrl: 'http://192.168.130.170:9392/runningdog/sdetail.do?sNum=' + id
       }
     },
     social: {
@@ -87,8 +89,8 @@ function sendLink(id, title, summary, image, count) {
       {
         title: '자세히 보기',
         link: {
-          mobileWebUrl: "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1",
-          webUrl: "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + id + "&page=1"
+          mobileWebUrl: 'http://192.168.130.170:9392/runningdog/sdetail.do?sNum=' + id,
+          webUrl: 'http://192.168.130.170:9392/runningdog/sdetail.do?sNum=' + id
         }
       }
     ]
@@ -135,6 +137,16 @@ function payOption(ele) {
 	}
 }
 
+$(function(){
+	$("#bank").hide();
+	$("#chk2").on("click", function(){
+		$("#bank").show();
+	});
+	$("#chk1").on("click", function(){
+		$("#bank").hide();
+	});
+});
+
 //썸머노트 내용 빈칸 확인
 $(function(){
 	$("#editor").on('submit', function(e) {
@@ -154,16 +166,16 @@ function checkAll(){
 	}
 }
 
-/* 개별 선택 체크시 전체삭제 체크가 풀어지는거 */
+/* 개별 선택 체크시 전체삭제 체크가 풀어지는거 
 $("input[name=checkDel]").on("click", function(){
 	if($("input[name=checkAll]:checked")) {
 		$("input[name=checkAll]").prop("checked", false);
 	}
-	/* 개별 선택 체크가 모두 체크됬을 경우 전체 삭제 체크 되게 하기 */
+	 개별 선택 체크가 모두 체크됬을 경우 전체 삭제 체크 되게 하기 
 	if($("input[name=checkDel]:checked").length == $("input[name=checkDel]").length){
 		$("input[name=checkAll]").prop("checked", true);
 	}
-});
+});*/
 
 //삭제
 function deleteAction(page){
@@ -195,11 +207,11 @@ $(function(){
 	//공백만 입력하고 검색할 때
 	var keyword = $.trim($("input[name=keyword]").val());
 		if(keyword == "") {
-			alert("공백만 입력은 할 수 없습니다.");
+			alert("내용을 입력해주세요.");
 			return false;
 		}
 	});
-});	
+});
 
 //썸네일 알림
 $(function(){
@@ -209,7 +221,7 @@ $(function(){
 			return false;
 		}
 	});
-});	
+});
 
 //썸머노트때문에 리셋추가
 function Refresh() {
@@ -255,11 +267,14 @@ $(function(){
 		$("#spnum").show();
 		$('#no').removeClass('active');
 		$('#yes').addClass('active');
+		$("#re").attr("data-val", "y");
 	});
 	$("#no").on("click", function(){
 		$("#spnum").hide();
 		$('#yes').removeClass('active');
 		$('#no').addClass('active');
+		$("#re").attr("data-val", "n");
+		$("input[name=spSnumber]").attr("value", "");
 	});
 });
 
@@ -272,13 +287,6 @@ $(function(){
 	$("#peer").on("click", function(){
 		$('#per').removeClass('active');
 		$('#peer').addClass('active');
-	});
-});
-
-//이메일 & 전화 수신 동의 여부 & 결제방법
-$(function(){
-	$("input[name=spEch]").is(":checked").each(function(){
-		$("input[name=spEch]").attr("value", $(this).attr("id"));
 	});
 });
 
@@ -317,8 +325,14 @@ function aaa() {
 	}	
 }
 
+//기부금영수증 요청시 검사
 $(function(){
 	$("#sub").on("click", function(){
+		if($("#jumin2").val() == "" && $("#re").val() == "n" && $("#re").attr("data-val") == "y") {
+			alert("주민등록번호를 입력해 주세요.");
+			$("re").focus();
+			return false;
+		}
 		if($("#jumin2").val() != "" && $("#re").val() == "n") {
 			alert("주민등록번호 확인을 눌러주세요.");
 			$("re").focus();
@@ -327,6 +341,14 @@ $(function(){
 	});
 });
 
-
-
+//후원하기 페이지 연락처 입력란 작성
+$(function(){
+	var phoneRule = /^\d{3}-\d{3,4}-\d{4}$/;	
+	$("input[name='spPhone']").blur(function(){
+		if(!phoneRule.test($("input[name='spPhone']").val())) {
+			alert("'-'를 입력해주세요.");
+			$("input[name='spPhone']").val("");
+		}
+	});
+});
 

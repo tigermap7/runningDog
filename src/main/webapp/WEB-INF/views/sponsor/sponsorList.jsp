@@ -53,7 +53,7 @@
                             </select>
                             <div class="search-box">
                                 <input type="text" name="keyword" placeholder="검색어를 검색해주세요." required>
-                                <button id='seld' onclick="#none" type="submit" class="xi-search"></button>
+                                <button id='seld' type="submit" class="xi-search"></button>
                             </div>
                             </form>
                         </div>
@@ -99,7 +99,6 @@
                                     <div>
                                     	<c:url var="sdt" value="sdetail.do">
                                     		<c:param name="sNum" value="${ s.sNum }"/>
-                                    		<c:param name="page" value="${ page }" />
                                     	</c:url>
                                     	<c:if test="${ s.sAmount > s.sCurrent }">
                                         	<a href="${ sdt }" class="chooseIcon">후원중</a>
@@ -136,9 +135,8 @@
                         <!-- 리스트 끝 -->
                     
                         <!-- 검색 x 페이징 -->
-                      <c:if test="${ empty selected && flag eq 1 }">
-                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
-                        <c:if test="${ totalPage ne 1 }">
+                        <c:if test="${ totalPage <= 1 }"><br><br><br><br></c:if>
+                        <c:if test="${ empty selected && flag eq 1 && totalPage > 1 }">
                         <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
@@ -175,13 +173,10 @@
                             </dd>
                         </dl>
                         </c:if>
-                      </c:if>
                         
                         
                         <!-- 검색 페이징 -->
-                      <c:if test="${ !empty selected }">  
-                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
-                        <c:if test="${ totalPage ne 1 }">
+                        <c:if test="${ !empty selected && totalPage > 1 }">
                         <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
@@ -224,13 +219,10 @@
                             </dd>
                         </dl>
                         </c:if>
-                      </c:if>
                       
                         
                         <!-- 후원중 페이징 -->
-                      <c:if test="${ flag eq 2 }">  
-                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
-                        <c:if test="${ totalPage ne 1 }">
+                        <c:if test="${ flag eq 2 && totalPage > 1 }">
                         <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
@@ -267,13 +259,10 @@
                             </dd>
                         </dl>
                         </c:if>
-                      </c:if>
                         
                         
                         <!-- 후원완료 페이징 -->
-                      <c:if test="${ flag eq 3 }">  
-                        <c:if test="${ totalPage eq 1 }"><br><br><br><br></c:if>
-                        <c:if test="${ totalPage ne 1 }">
+                        <c:if test="${ flag eq 3 && totalPage > 1 }">
                         <dl class="list-paging">
                             <dd>
                             	<c:if test="${ page > 1 }">
@@ -310,7 +299,6 @@
                             </dd>
                         </dl>
                         </c:if>
-                      </c:if>
                       
                       
                     </div>

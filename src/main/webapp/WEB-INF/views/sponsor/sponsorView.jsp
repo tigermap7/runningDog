@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="page" value="${ page }"/>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -70,7 +69,6 @@
                         <div class="viewBtn-wrap">
                         	<c:url var="spre" value="sdetail.do">
 								<c:param name="sNum" value="${ preNo }" />
-								<c:param name="page" value="${ page }" />
 							</c:url>
 							<c:if test="${ preNo ne 0 }">
 								<button class="nextBtn" onclick="location.href='${ spre }'"><i class="xi-angle-left-min"></i> 이전</button>
@@ -79,14 +77,10 @@
 								&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 							</c:if>
                             
-                            <c:url var="sl" value="slist.do">
-                            	<c:param name="page" value="${ page }"/>
-                            </c:url>
-                            <button class="listBtn" onclick="javascript:location.href='${ sl }'"><i class="xi-rotate-left"></i> 목록</button>
+                            <button class="listBtn" onclick="javascript:location.href='slist.do'"><i class="xi-rotate-left"></i> 목록</button>
                             
                             <c:url var="snext" value="sdetail.do">
 								<c:param name="sNum" value="${ nextNo }" />
-								<c:param name="page" value="${ page }" />
 							</c:url>
 							<c:if test="${ nextNo ne 0 }">
 								<button class="prevBtn" onclick="location.href='${ snext }'">다음 <i class="xi-angle-right-min"></i></button>

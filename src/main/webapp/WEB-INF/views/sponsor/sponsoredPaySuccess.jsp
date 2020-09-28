@@ -33,38 +33,31 @@
                     <!-- 좌측메뉴 끝 -->
                     <div class="subContent">
                         <!--상세-->
-                        <br><br><br><br><br>
-                        	<p align="center" style="font-size:30px;">후원해 주셔서 감사합니다.</p>
-                        <br><br><br>
-                        
-                        <table class="sPaymentInfo">
-                            <colgroup>
-                                <col width="20%">
-                                <col width="80%">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th colspan="4">● 후원 내역</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>후원유형</td>
-                                    <td>후원항목</td>
-                                    <td>후원방법</td>
-                                    <td>후원내용</td>
-                                </tr>
-                                <tr>
-                                	<td>일시</td>
-                                    <td>${ title }</td>
-                                    <td>${ way }</td>
-                                    <td>${ cash }</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="sPayment_Btn">
-                            <a type="button" href='slist.do' style="width:80px;">확인</button>
+                        <div class="sponsorSuccess">
+                        	<h1>후원해 주셔서 감사합니다.</h1>
+	                        <table>
+	                            <colgroup>
+	                                <col width="20%">
+	                                <col width="%">
+	                                <col width="20%">
+	                                <col width="20%">
+	                            </colgroup>
+	                            <tbody>
+	                                <tr>
+	                                    <th>후원유형</th>
+	                                    <th>후원항목</th>
+	                                    <th>후원방법</th>
+	                                    <th>후원내용</th>
+	                                </tr>
+	                                <tr>
+	                                	<td>일시</td>
+	                                    <td>${ title }</td>
+	                                    <td>${ way }</td>
+	                                    <td>${ cash } 원</td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+                            <button onclick="javascript:location.href='slist.do'">확인</button>
                         </div>
                         <!-- 상세 끝 -->                        
                     </div>

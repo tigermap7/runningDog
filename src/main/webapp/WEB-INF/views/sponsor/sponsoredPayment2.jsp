@@ -18,7 +18,8 @@
         		  name: '${ title }',
         		  amount: '${ sponsorList.spCash }',
         		  buyer_name : '${ sponsorList.spName }',
-        		  buyer_email : '${ sponsorList.spEmail }'
+        		  buyer_email : '${ sponsorList.spEmail }',
+        		  m_redirect_url : 'http://localhost:9392/runningdog/sSponpay.do'
         	  }, function(rsp){
         		  if(rsp.success) {
         			  var title = '${ title }';
@@ -85,7 +86,7 @@
                     <!-- 좌측메뉴 끝 -->
                     <div class="subContent">
                         <!--상세-->
-                        <form action="sSpon.do" method="post" id="spay">
+                        <form action="" method="post" id="spay">
                         <input type="hidden" value="${ sNum }" name="sNum">
                         <input type="hidden" value="null" name="spSnumber">
                         <table class="sPaymentInfo">
@@ -109,21 +110,21 @@
                                 <tr>
                                     <td>후원인(이름or가명)<span>*</span></td>
                                     <td>
-                                        <input type="text" name="spName" title="후원인(이름or가명)" class="form-control w50p" placeholder="이름" required/>
+                                        <input value="${ sponsorList.spName }" type="text" name="spName" title="후원인(이름or가명)" class="form-control w50p" placeholder="이름" required/>
                                         <label style="margin-left:0.9375rem;"><input type="checkbox" required> 14세 이상</label> 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>이메일<span>*</span></td>
                                     <td>
-                                        <input value="${ loginMember.userId }" type="email" name="spEmail" title="이메일" class="form-control w50p" placeholder="이메일" required/>
+                                        <input value="${ sponsorList.spEmail }" type="email" name="spEmail" title="이메일" class="form-control w50p" placeholder="이메일" required/>
                                         <label style="margin-left:0.9375rem;"><input type="checkbox" name="spEch" value="y"> 이메일수신동의(선택)</label> 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>연락처<span>*</span></td>
                                     <td>
-                                        <input value="${ loginMember.phone }" type="tel" name="spPhone" title="연락처" class="form-control w50p" placeholder="연락처" required/>
+                                        <input value="${ sponsorList.spPhone }" type="tel" name="spPhone" title="연락처" class="form-control w50p" placeholder="연락처" required/>
                                         <label style="margin-left:0.9375rem;"><input type="checkbox" name="spPch" value="y"> SNS수신동의(선택)</label> 
                                     </td>
                                 </tr>
@@ -149,7 +150,7 @@
                                     <td>
                                         <label><input type="radio" name="spWay" value="chk1" checked> 신용카드</label>
                                         <label><input type="radio" name="spWay" value="chk2"> 무통장입금</label>
-                                        <label><input type="radio" name="spWay" value="chk3"> 실시간계좌이체</label>
+                                        <p id="bank">신한은행 : 111-222-666666(지금 달려갈 개)</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -178,12 +179,14 @@
                                         <button type="button" id="yes">네</button>
                                         <button type="button" class="active" id="no">아니요</button>
                                        	<div style="font-size:13px;" id="spnum">
-                                       		※후원자님의 주민등록번호를 입력해주세요. (타인 주민등록번호 입력 불가)<br>
-                                       		입력하신 주민등록번호로 국세청 연말정산 간소화 서비스에 등록됩니다.<br>
-                                       		※금융거래 기록이 없는 14세 미만은 인증이 불가할 수도 있습니다.<br>
-                                       		주민등록번호
-											<input type="text" id="jumin1" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="6">-<input id="jumin2" type="password" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="7">
-											<button id="re" value="n" onclick="aaa(); return false;" style="width:60px; height:30px;">확인</button>
+                                       		※후원자님의 주민등록번호를 입력해주세요. (타인 주민등록번호 입력 불가)<br/>
+                                       		입력하신 주민등록번호로 국세청 연말정산 간소화 서비스에 등록됩니다.<br/>
+                                       		※금융거래 기록이 없는 14세 미만은 인증이 불가할 수도 있습니다.<br/><br/>
+                                       		
+                                       		<p class="rNumber">
+											주민등록번호 <input type="text" id="jumin1" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="6"> - <input id="jumin2" type="password" AUTOCOMPLETE="off" class="form-control" style="width:80px; height:30px;" maxlength="7">
+											&nbsp;&nbsp;<button data-val="n" id="re" value="n" onclick="aaa(); return false;" style="width:60px; height:30px;">확인</button>
+                                       		</p>
                                        	</div>
                                     </td>
                                 </tr>

@@ -68,9 +68,9 @@
                             	<button class="deleteBtn" onclick="showFileSelect(${ sponsor.sNum });"><i class="xi-cut"></i> 파일삭제</button></td>
                             </c:if>
                             <c:if test="${ empty sponsor.sOriginal }">
-                            	<td><input type="file" name="upfile"></td>
+                            	<td><input type="file" name="upfile" accept="image/*"></td>
                             </c:if>
-                            	<td id="showSelect"><input type="file" name="upfile"></td>
+                            	<td id="showSelect"><input type="file" name="upfile" accept="image/*"></td>
                         </tr>
                         <tr>
                             <td>내용</td>
@@ -85,7 +85,7 @@
                 		</c:url>
                     <input type="button" class="btn btn-list" value="목록으로" onclick="javascript:location.href='${ lis }'">
                     <input type="reset" class="btn btn-cancel" value="취소하기" onclick="Refresh();">
-                    <input type="submit" class="btn btn-success" value="작성하기">
+                    <input id="cucu" type="submit" class="btn btn-success" value="작성하기">
                 </div>
             </div>
             </form>
