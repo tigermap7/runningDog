@@ -127,7 +127,7 @@
                         <li onclick="location.href='slist.do'">
                             <a href="#none" class="xi-plus-circle-o"></a>
                             <h2>후원하기 <i class="xi-piggy-bank"></i></h2>
-                            <p>작은 천사에게 필요한 용품을 후원할 수 있어요!</p>
+                            <p>작은 천사에게 용품을 후원해 주세요!</p>
                         </li>
                     </ul>
                 </div>
@@ -187,4 +187,41 @@
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
 	</body>
+	
+	<!-- 오늘의 이슈 ajax -->
+ 	<script> 	
+	$(function(){
+		$.ajax({
+			url : "mainIssueList.do",
+		    type : "post",
+		    dataType : "json",
+		    success : function(data) {
+		    	console.log("mainIssueList success : " + data)
+		        var jsonStr = JSON.stringify(data);
+		        var json = JSON.parse(jsonStr);
+		        			 
+		        var values = "";
+		        for( var i in json.list) {
+		        	values +=  '<li class="grid-item" onclick=moveIssueDetail("'+ json.list[i].link +'");>'
+		        		+ '<div><a class="xi-share-alt-o" onclick="event.cancelBubble=true" data-toggle="popover2" data-link="http://192.168.130.170:9392/runningdog/cissuedetail.do?link=' + json.list[i].link + '" data-title="' + decodeURIComponent(json.list[i].title) + '" data-image="' + json.list[i].thumbnail + '"></a>' 
+		        	    + '<img src="' + json.list[i].thumbnail + '"></div>'
+		        	    + '<dl><dt><img src="' + json.list[i].partnerImg + '"></dt>'
+		                + '<dd><h3>' + decodeURIComponent(json.list[i].title) + '</h3>'
+		                + '<p>'
+		                + '작성자 : ' + decodeURIComponent(json.list[i].partnerName) + '<br/>'
+		                + '작성일 : ' + json.list[i].date  
+		                + '</p></dd></dl></li>';
+		        				 
+		        }
+		        
+		        $("#mainIssueList").html(values);
+		        
+			},
+		 	error: function(jqXHR, textstatus, errorthrown) {
+		 		console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+		 	}
+		}); //ajax
+		        	 
+	}); //document.ready 
+	</script> 
 </html>
