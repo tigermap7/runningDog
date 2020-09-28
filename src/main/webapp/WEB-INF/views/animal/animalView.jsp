@@ -42,7 +42,8 @@
                                     <div class="viewImg"><img src="${ animal.popfile }" id="imgControll" onclick="fnImgPop(this.src)"></div>
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"></i> 메일보내기</a> -->
                                     <a class="linkBtn" href="tel:010-3387-7583"><i class="xi-call"></i> 전화하기</a>
-                                    <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    <a data-id="${ animal.desertionNo }" data-title="${ animal.careAddr }" data-summary="${ animal.specialMark }" data-image="${ animal.popfile }"
+                                    class="linkBtn" data-toggle="popover5"><i class="xi-share-alt-o" ></i> 공유하기</a> 
                                 </dt>
                                 <dd>
                                     <h3>동물정보</h3>

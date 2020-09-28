@@ -74,14 +74,15 @@
                                 		<c:param name="searchValue" value="${ pageVO.searchValue }"/>
                                 	</c:url>
                                 
-                                <li class="grid-item chooseIcon" onclick="location='${ animalView }'">
+                                <li class="grid-item chooseIcon" >
                                     <div>
-                                        <a href="#none" class="chooseIcon">분양중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="${ a.popfile }">
+                                        <a href="${ animalView }" class="chooseIcon">분양중</a>
+                                        <a data-id="${ animal.desertionNo }" data-title="${ animal.careAddr }" data-summary="${ animal.specialMark }" data-image="${ animal.popfile }"
+                                  		data-toggle="popover5" class="urlIcon xi-share-alt-o"></a>
+                                        <a href="${ animalView }"><img src="${ a.popfile }"></a>
                                     </div>
-                                    <h3>${ a.kindCd }</h3>
-                                    <p>
+                                    <h3 onclick="location='${ animalView }'">${ a.kindCd }</h3>
+                                    <p onclick="location='${ animalView }'">
                                         나이 : ${ a.age }<br/>
                                         보호센터 : ${ a.careNm }<br/>
                                         지역 : ${ a.careAddr }
