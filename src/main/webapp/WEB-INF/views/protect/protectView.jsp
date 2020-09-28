@@ -43,10 +43,10 @@
                                     <div class="viewImg">                                        
                                         <div class="swiper-container gallery-top">
                                             <ul class="swiper-wrapper">
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                             </ul>
                                             <!-- Add Arrows -->
                                             <div class="swiper-button-next swiper-button-white"></div>
@@ -54,10 +54,10 @@
                                         </div>
                                         <div class="swiper-container gallery-thumbs">
                                             <ol class="swiper-wrapper">
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
-                                                <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
+                                                <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                             </ol>
                                         </div>
                                         <!-- Initialize Swiper -->

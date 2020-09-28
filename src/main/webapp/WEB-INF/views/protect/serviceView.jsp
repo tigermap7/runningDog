@@ -10,7 +10,7 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
-        
+
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -50,32 +50,28 @@
                                         <div class="swiper-container gallery-top">
 										  <ul class="swiper-wrapper">
 											<c:if test="${ empty volunteer.volre1 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png" /></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre1 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre1 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre2 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png" /></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre2 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre2 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre3 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png" /></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre3 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre3 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre4 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png" /></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre4 }">
 												<li class="swiper-slide"><img
@@ -89,32 +85,28 @@
 									<div class="swiper-container gallery-thumbs">
 										<ol class="swiper-wrapper">
 											<c:if test="${ empty volunteer.volre1 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png" /></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre1 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre1 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre2 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png" /></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre2 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre2 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre3 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png" /></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre3 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre3 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre4 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png" /></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre4 }">
 												<li class="swiper-slide"><img
@@ -154,7 +146,7 @@
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"></i> 메일보내기</a> -->
                                     <a class="linkBtn" href="tel:010-3387-7583"><i class="xi-call"></i> 전화하기</a>
                                     <a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
-                                    <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    <a class="linkBtn" href="#none" data-toggle="popover3" data-title="${ volunteer.voltitle }" data-image="${ volunteer.volre1 }"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </dt>
                                 <dd>
                                 <!-- 카카오지도 -->
@@ -300,7 +292,7 @@
                         <!-- 댓글리스트 보기 -->
                            <ul id="VreplyList" class="cmt_con">
                      	   </ul>
-                           </div>
+                          </div>
                             
                       
                          
@@ -325,12 +317,18 @@ function showReplyList(){
         success: function(result) {
         	console.log("success : " + result); 
         	console.log("this.vreply_date : " + this.vreply_date);
-			console.log("댓글 나오기");
+			console.log("댓글 나오기"); 
+			
 			
 			var totalcount = 0;
 			var htmls = "";
 			
 			$(result).each(function(){
+				
+				var vreply_levell = this.vreply_level
+				
+				console.log(vreply_levell);
+				 		if( vreply_levell == 1){
 				htmls +='<li id="vreply_no'+this.vreply_no+'">'+
 							'<dl>'+
 							'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
@@ -339,11 +337,32 @@ function showReplyList(){
 							' </dl>'+
 							'<p>'+ this.vreply_content +'</p>'+
 							'<div class="cmt_conBtn">'+
+							'<c:if test="${ !empty sessionScope.loginMember }">'+
 							'<button id="insertvreply" onclick="fn_SecondVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\' , \'' + this.unique_num + '\')">댓글</button>'+
 							'<button class="Cmt_delete_ctn" onclick="fn_DeleteVreply(' + this.vreply_no + ', \'' + this.nickname + '\')">삭제</button>'+
 							'<button id="Cmt_update_btn" onclick="fn_UpdateVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\', \'' + this.unique_num + '\' )">수정</button>'+
+							'</c:if>'+
 							'</div>'+
-							'</li>'	
+							'</li>'	;
+				 		}
+							else if( vreply_levell == 2){
+					 htmls += '<li id="vreply_no'+this.vreply_no+'" style="background-color: #f0f0f0; padding: 0.375rem 3rem;">'+
+								'<dl>'+
+								'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
+								'<dd><h4>'+ this.nickname+' / #'+this.unique_num +'</h4></dd>'+
+								'<dt class="cmt_date">' + this.vreply_date +'</dt>'+
+								' </dl>'+
+								'<p>'+ this.vreply_content +'</p>'+
+								'<div class="cmt_conBtn">'+
+								'<c:if test="${ !empty sessionScope.loginMember }">'+
+								'<button class="Cmt_delete_ctn" onclick="fn_DeleteVreply(' + this.vreply_no + ', \'' + this.nickname + '\')">삭제</button>'+
+								'<button id="Cmt_update_btn" onclick="fn_UpdateVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\', \'' + this.unique_num + '\' )">수정</button>'+
+								'</c:if>'+
+								'</div>'+
+								'</li>';
+							  }
+							  
+							
 							
 							totalcount = totalcount + 1
 			}); //for in 
@@ -360,33 +379,33 @@ function showReplyList(){
 }
 
 //댓글저장
-$(document).on('click', '#btn_vreplyInsert', function(){
+$("#btn_vreplyInsert").click(function(){
 	var nickname = "${ sessionScope.loginMember.nickname}";
 	if( nickname == "" )
 		alert("로그인 후 이용해주세요.");
-	else
-	var VreplyContent = $('#vreply_content').val();
-	console.log(VreplyContent+"VreplyContent");
-	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
-	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
-	$.ajax({
-		url : 'vrinsert.do',
-		data : paramData,
-		headers : headers,
-		type : 'post',
-		dataType : 'text',
-		success : function(result){
-			
-			$('#vreply_content').val();
-			$('#nickname').val();
-			$('#unique_num').val();
-			showReplyList();
-		},
-		error : function(jqXHR, textstatus, errorthrown) {
-			alert("댓글 등록을 실패하였습니다.");
-			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-		}
-	});  
+	
+		var VreplyContent = $('#vreply_content').val();
+		console.log(VreplyContent+"VreplyContent");
+		var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
+		var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
+		$.ajax({
+			url : 'vrinsert.do',
+			data : paramData,
+			headers : headers,
+			type : 'post',
+			dataType : 'text',
+			success : function(result){
+				
+				$('#vreply_content').val();
+				$('#nickname').val();
+				$('#unique_num').val();
+				showReplyList();
+			},
+			error : function(jqXHR, textstatus, errorthrown) {
+				alert("댓글 등록을 실패하였습니다.");
+				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+			}
+		});
 });
 //댓글수정폼
 function fn_UpdateVreply(vreply_no, nickname, vreply_content, unique_num){
@@ -450,24 +469,31 @@ function fn_SecondVreply(vreply_no, nickname, vreply_content, unique_num){
 				htmls += '<li id="vreply_no'+vreply_no+'">'+
 						'<dl>'+
 						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
-						'<dd><h4>'+ nickname +'</h4></dd>'+
+						'<dd><h4>'+ nickname +' / #'+ unique_num +'</h4></dd>'+
 						' </dl>'+
 						'<p>'+ vreply_content +'</p>'+
 						'</li>'	+
-						'<li id="vreply_no'+vreply_no+'">'+
-						'<dl>'+
-						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
-						'<dd><h4>'+ nickname +'</h4></dd>'+
-						' </dl>'+
-						'<p><textarea id="second_content" name="second_content" style="resize: none; width:100%; min-height:100px; max-height:100px;">비방글은 작성하실 수 없습니다.</textarea></p>'+
-						'<div class="cmt_conBtn">'+
-						'<button class="Cmt_delete_ctn" onclick="showReplyList();">취소</button>'+
-						'<button class="Cmt_update_btn" id="btn_InsertSVreply" onclick="insertSVrLevel(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')">등록</button>'+
+						'<form name="" id="" role="vreply">'+
+						'<fieldset>'+
+						'<div class="cmt_form">'+
+						'<h4 class="cmt_head" id="totalcount"></h4>'+
+						'<div class="cmt_body">'+
+						'<textarea id="second_content" name="second_content" style="resize: none; width:100%; min-height:100px; max-height:100px;"></textarea>'+
+						'<input type="hidden" name="volno" value="${ volunteer.volno}">'+
+						'<input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">'+
+						'<input type="hidden" name="unique_num" value="${ sessionScope.loginMember.uniqueNum}">'+
+						'<div class="cmt_ok"><input type="button" id="btn_vreplyInsert" value="등록" onclick="insertSVrLevel(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')"></div>'+
 						'</div>'+
+						'</div>'+
+						'</fieldset>'+
+						'</form>'+
+						'<li id="vreply_no'+vreply_no+'">'+
 						'</li>'
+						
 						$('#vreply_no'+vreply_no).html(htmls);
 						$('#vreply_no'+vreply_no+'#second_content').focus();
-	
+						
+						
 }
 
 //대댓글내용저장

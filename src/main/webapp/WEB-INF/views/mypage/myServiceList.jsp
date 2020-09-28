@@ -115,7 +115,7 @@ $(function(){
                                           	  <span>마감</span>
                                            </c:if>
                                            <c:if test="${ empty v.volre1 }">
-                                            <img src="/runningdog/resources/images/test/animalNews04.jpg">
+                                            <img src="/runningdog/resources/images/common/noImage02.png" style="border:2px solid #ff92a8;">
                                            </c:if>
                                            <c:if test="${ !empty v.volre1 }">
                                             <img src="/runningdog/resources/vfiles/${v.volre1 }">
@@ -140,8 +140,14 @@ $(function(){
                                         </td>
                                         <td><a href="${vd}">자세히 보기 <i class="xi-eye-o"></i></a></td>
                                     </tr>
-                                   </c:forEach>
-                                </tbody>
+                                    </c:forEach>
+									<c:if test="${ listCount eq 0}">
+										<div class="list-no">
+											<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
+											<h1>목록이 없습니다.</h1>
+										</div>
+									</c:if>
+								</tbody>
                             </table>
                         <!-- 리스트 끝 -->
                     
@@ -194,15 +200,7 @@ $(function(){
 							</dd>
                         </dl>
                       </c:if>
-                      <c:if test="${ listCount eq 0}">
-                        <tr class="list-no">
-							<td colspan="7">
-								<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
-								<h1>목록이 없습니다.</h1>
-							</td>
-						</tr>
-                    </c:if>
-                        <!-- //페이징 -->
+                      <!-- //페이징 -->
                     </div>
                 </div>
             </div>

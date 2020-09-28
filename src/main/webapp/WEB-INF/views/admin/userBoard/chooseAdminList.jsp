@@ -56,7 +56,7 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th><input type="checkbox" name="checkHideAll" id="checkHideAll" onclick="checkHideAll();"></th>
+							<th class="checkBox"><input type="checkbox" name="checkHideAll" id="checkHideAll" onclick="checkHideAll();"></th>
 							<th>번호</th>
 							<th>분류</th>
 							<th>썸네일</th>
@@ -74,8 +74,7 @@
 						<tr>
 						
 						<!-- 관리자용 게시물 번호를 따로 만들기 위해서 listNo 생성 -->
-							<c:set var="listNo"
-								value="${ totalCount - ( 10*(pageVO.pageNo-1)) }" />
+							<c:set var="listNo" value="${ totalCount - ( 10*(pageVO.pageNo-1)) }" />
 							<c:forEach items="${requestScope.dboardList }" var="d">
 								<c:url var="dboardView" value="dboardView.ad">
 									<c:param name="pageNo" value="${ pageVO.pageNo }"/>

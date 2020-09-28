@@ -50,32 +50,28 @@
                                         <div class="swiper-container gallery-top">
 										  <ul class="swiper-wrapper">
 											<c:if test="${ empty volunteer.volre1 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre1 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre1 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre2 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre2 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre2 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre3 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre3 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre3 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre4 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre4 }">
 												<li class="swiper-slide"><img
@@ -89,32 +85,28 @@
 									<div class="swiper-container gallery-thumbs">
 										<ol class="swiper-wrapper">
 											<c:if test="${ empty volunteer.volre1 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre1 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre1 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre2 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre2 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre2 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre3 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre3 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre3 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre4 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre4 }">
 												<li class="swiper-slide"><img

@@ -83,7 +83,8 @@
                            	 </c:url>
                                 <tr class="serviceOn" onclick="location.href='${pd }'">
                                     <td class="img">
-                                        <img src="/runningdog/resources/images/test/animalNews04.jpg">
+                                        <img src="/runningdog/resources/images/common/noImage02.png" style="border:2px solid #ff92a8;">
+                                        <!-- <img src=""> -->
                                     </td>
                                     <td>
                                         <h3>${p.proname}</h3>

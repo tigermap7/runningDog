@@ -122,7 +122,7 @@ $(function(){
                                           	  <span>마감</span>
                                            </c:if>
                                            <c:if test="${ empty v.volre1 }">
-                                            <img src="/runningdog/resources/images/test/animalNews04.jpg">
+                                            <img src="/runningdog/resources/images/common/noImage02.png" style="border:2px solid #ff92a8;">
                                            </c:if>
                                            <c:if test="${ !empty v.volre1 }">
                                             <img src="/runningdog/resources/vfiles/${v.volre1 }">

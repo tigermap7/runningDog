@@ -34,25 +34,25 @@
                             <div class="swiper-container gallery-top">
                                 <ul class="swiper-wrapper">
                                    <c:if test="${ empty volunteer.volre1 }">
-                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                    </c:if>
                                    <c:if test="${ !empty volunteer.volre1 }">
                                     <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre1 }"/></li>
                                    </c:if>
                                    <c:if test="${ empty volunteer.volre2 }">
-                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                    </c:if>
                                    <c:if test="${ !empty volunteer.volre2 }">
                                     <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre2 }"/></li>
                                    </c:if>
                                    <c:if test="${ empty volunteer.volre3 }">
-                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                    </c:if>
                                    <c:if test="${ !empty volunteer.volre3 }">
                                     <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre3 }"/></li>
                                    </c:if>
                                    <c:if test="${ empty volunteer.volre4 }">
-                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                    </c:if>
                                    <c:if test="${ !empty volunteer.volre4 }">
                                     <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre4 }"/></li>
@@ -65,33 +65,29 @@
                             <div class="swiper-container gallery-thumbs">
                                 <ol class="swiper-wrapper">
                                     <c:if test="${ empty volunteer.volre1 }">
-                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                    </c:if>
                                    <c:if test="${ !empty volunteer.volre1 }">
                                     <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre1 }"/></li>
                                    </c:if>
                                    <c:if test="${ empty volunteer.volre2 }">
-                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                    </c:if>
                                    <c:if test="${ !empty volunteer.volre2 }">
                                     <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre2 }"/></li>
                                    </c:if>
                                    <c:if test="${ empty volunteer.volre3 }">
-                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                    </c:if>
                                    <c:if test="${ !empty volunteer.volre3 }">
                                     <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre3 }"/></li>
                                    </c:if>
                                    <c:if test="${ empty volunteer.volre4 }">
-                                    <li class="swiper-slide"><img src="/runningdog/resources/images/test/animalImg01.jpg"/></li>
+                                    <li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
                                    </c:if>
                                    <c:if test="${ !empty volunteer.volre4 }">
                                     <li class="swiper-slide"><img src="/runningdog/resources/vfiles/${volunteer.volre4 }"/></li>
                                    </c:if>
-                                    <!-- <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li>
-                                    <li class="swiper-slide"><img src="/runningdog/../resources/images/test/animalImg01.jpg"/></li> -->
                                 </ol>
                             </div>
                             <!-- Initialize Swiper -->
@@ -118,12 +114,50 @@
                                 });
                             </script>
                         </div>
-                        <a class="linkBtn" href="tel:010-3387-7583"><i class="xi-call"></i> 전화하기</a>
-                        <a class="linkBtn" href="#none"><i class="xi-message-o"></i> 채팅하기</a>
-                        <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                     </dt>
                     <dd>
-                        <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6324.481505654264!2d127.00051190256856!3d37.572948171699984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca325b4d9b81b%3A0xba2de96c741b670a!2z7ISc7Jq47Yq567OE7IucIOyiheuhnOq1rCDsooXroZw1LjbqsIDrj5k!5e0!3m2!1sko!2skr!4v1598454835067!5m2!1sko!2skr" width="100%" height="281.3rem" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>                  
+                        <div id="map" style="width:100%;height:350px;"></div>
+						<!-- 카카오지도 -->
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78554901e4ce05b55a812c066e4b2f3b&libraries=services"></script>
+                      	<script>
+                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                        mapOption = {
+                            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                            level: 3 // 지도의 확대 레벨
+                        };  
+
+                        //지도를 생성합니다    
+                        var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+                        //주소-좌표 변환 객체를 생성합니다
+                        var geocoder = new kakao.maps.services.Geocoder();
+
+                        //주소로 좌표를 검색합니다
+                        geocoder.addressSearch('${volunteer.voladdress}', function(result, status) {
+
+                        // 정상적으로 검색이 완료됐으면 
+                         if (status === kakao.maps.services.Status.OK) {
+
+                            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                            // 결과값으로 받은 위치를 마커로 표시합니다
+                            var marker = new kakao.maps.Marker({
+                                map: map,
+                                position: coords
+                            });
+
+                            // 인포윈도우로 장소에 대한 설명을 표시합니다
+                            var infowindow = new kakao.maps.InfoWindow({
+                                content: '<div style="width:150px;text-align:center;padding:6px 0;">${volunteer.volname }</div>'
+                            });
+                            infowindow.open(map, marker);
+
+                            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                            map.setCenter(coords);
+                        } 
+                        });
+                      </script>
+                      <!-- 카카오지도 -->               
                         <h3 class="mt30">센터정보</h3>
                         <table class="serviceInfo">
                            <colgroup>
@@ -171,31 +205,32 @@
                 ${volunteer.volcontent }
                 </div>
                 
-            </div>
+             	<!-- 버튼 -->
+				<div class="viewBtn-wrap">
+					<c:url var="vpread" value="vpre.ad">
+						<c:param name="volno" value="${volunteer.volno}" />
+						<c:param name="searchFiled" value="${ searchFiled }" />
+						<c:param name="searchValue" value="${ searchValue }" />
+						<c:param name="volche" value="${ volunteer.volche }" />
+					</c:url>
+					<button class="prevBtn" onclick="javascript:location.href='${vpread}'">이전<i class="xi-angle-right-min"></i></button>
+					<button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
+					<button class="listBtn" onclick="location.href='vlist.ad'"><i class="xi-rotate-left"></i>목록</button>
+					<c:url var="vdel" value="vdelete.ad">
+						<c:param name="volno" value="${volunteer.volno}" />
+					</c:url>
+					<c:url var="vnextad" value="vnext.ad">
+						<c:param name="volno" value="${volunteer.volno}" />
+						<c:param name="searchFiled" value="${ searchFiled }" />
+						<c:param name="searchValue" value="${ searchValue }" />
+						<c:param name="volche" value="${ volunteer.volche }" />
+					</c:url>
+					<button class="nextBtn" onclick="javascript:location.href='${vnextad}'"><i class="xi-angle-left-min"></i>다음</button>
+				</div>
+				<!-- 버튼 끝 -->
+
+			</div>
             <!-- 상세 끝 -->
-             <!-- 버튼 -->
-                        <div class="viewBtn-wrap">
-                            <c:url var="vpread" value="vpre.ad">
-                            	<c:param name="volno" value="${volunteer.volno}"/>
-                            	<c:param name="searchFiled" value="${ searchFiled }" />
-								<c:param name="searchValue" value="${ searchValue }" />
-								<c:param name="volche" value="${ volunteer.volche }"/>
-                            </c:url>
-                            <button class="prevBtn" onclick="javascript:location.href='${vpread}'">이전<i class="xi-angle-right-min"></i></button>
-                            <button class="listBtn" onclick="location.href='vlist.ad'"><i class="xi-rotate-left"></i>목록</button>
-                            <c:url var="vdel" value="vdelete.ad">
-                            	<c:param name="volno" value="${volunteer.volno}"/>
-                            </c:url>
-                            <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
-                            <c:url var="vnextad" value="vnext.ad">
-                            	<c:param name="volno" value="${volunteer.volno}"/>
-                            	<c:param name="searchFiled" value="${ searchFiled }" />
-								<c:param name="searchValue" value="${ searchValue }" />
-								<c:param name="volche" value="${ volunteer.volche }"/>
-                            </c:url>
-                            <button class="nextBtn" onclick="javascript:location.href='${vnextad}'"><i class="xi-angle-left-min"></i>다음</button>
-                        </div>
-                        <!-- 버튼 끝 -->
         </div>
         <c:import url="/WEB-INF/views/admin/include/admin_footer.jsp"/>
     </div>
