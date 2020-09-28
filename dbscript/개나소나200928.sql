@@ -134,11 +134,11 @@ COMMENT ON COLUMN LEAVE_MEMBER.LEAVE_LOGIN_TYPE IS '로그인타입';
 
 
 -- LEAVE_MEMBER insert
-INSERT INTO LEAVE_MEMBER VALUES(80, 'test01@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '한남자', '010-5951-5151', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg',  '20/08/27',  '20/08/27', 'naver');
+INSERT INTO LEAVE_MEMBER VALUES(80, 'test01@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '한남자', '010-5951-5151', '20200914/animalImg03.jpg', '20200914/20200914348637891.jpg',  '20/08/27',  '20/08/27', 'naver');
 INSERT INTO LEAVE_MEMBER VALUES(81, 'test02@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '있어', '010-5951-5152', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg',  '20/09/27',  '20/09/27', 'kakao');
-INSERT INTO LEAVE_MEMBER VALUES(82, 'test03@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '널너무', '010-5951-5153', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg',  '20/03/27',  '20/03/27', 'facebook');
+INSERT INTO LEAVE_MEMBER VALUES(82, 'test03@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '널너무', '010-5951-5153', '20200914/animalImg03.jpg', '20200914/20200914154337823.jpg',  '20/03/27',  '20/03/27', 'facebook');
 INSERT INTO LEAVE_MEMBER VALUES(83, 'test04@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '사랑한', '010-5931-5154', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg',  '20/04/27',  '20/04/27', DEFAULT);
-INSERT INTO LEAVE_MEMBER VALUES(84, 'test05@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '사랑사랑', '010-5954-5153', '20200914/animalImg03.jpg', '20200914/20200914132404929.jpg',  '20/05/27',  '20/05/27', 'facebook');
+INSERT INTO LEAVE_MEMBER VALUES(84, 'test05@naver.com', '$2a$10$UvlOgRwKqZrsouycemTEpODYD.0gUfI.dT7JqmSYvGQPJiZbjWEea', '사랑사랑', '010-5954-5153', '20200914/animalImg03.jpg', '20200914/20200914092756919.jpg',  '20/05/27',  '20/05/27', 'facebook');
 
 
 
