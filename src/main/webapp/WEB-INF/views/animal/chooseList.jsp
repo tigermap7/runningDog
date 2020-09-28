@@ -119,16 +119,12 @@
                                  <c:url var="dboardView" value="dboardView.do">
                                  	<c:param name="pageNo" value="${ pageVO.pageNo }"/>
                                  	<c:param name="dNum" value="${ d.dNum }"/>
-                                 	<c:param name="dLocal" value="${ d.dLocal }"/>
-                                 	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
-									<c:param name="searchValue" value="${pageVO.searchValue }" />
-									<c:param name="dCategory" value="${ d.dCategory }"/>
                                  </c:url>
                                  <c:if test = "${d.dSuccess eq 'n'}">
                                  <li class="grid-item chooseIcon" onclick="location='${dboardView}'">
                                     <div>
-                                        <a href="#none" class="chooseIcon">보호중</a>
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
+                                        <a href="${dboardView}" class="chooseIcon">보호중</a>
+                                        <a data-title="${ d.dTitle }"  data-image="${ d.listImage }" data-toggle="popover4" class="urlIcon xi-share-alt-o"></a>
                                         <img src="/runningdog/resources/dboard/dboardImage/${d.listImage }">
                                     </div>
                                     <h3>${ d.dTitle }</h3>
@@ -147,15 +143,15 @@
                                 </li>
                                 </c:if>
                                 <c:if test = "${d.dSuccess eq 'y'}">
-                                <li class="grid-item close" onclick="location='${dboardView}'">
+                                <li class="grid-item close">
                                     <div>
-                                        <a href="#none" class="chooseIcon">인계완료</a>
-                                        
-                                        <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                        <img src="/runningdog/resources/dboard/dboardImage/${d.listImage }">
+                                        <a href="${dboardView}" class="chooseIcon">인계완료</a>
+                                        <a data-title="${ d.dTitle }"  data-image="${ d.listImage }" data-toggle="popover4" class="urlIcon xi-share-alt-o"></a>
+                                       
+                                        <a href="${dboardView}" ><img src="/runningdog/resources/dboard/dboardImage/${d.listImage }"></a>
                                     </div>
-                                    <h3>${ d.dTitle }</h3>
-                                    <p>
+                                    <h3 onclick="location='${dboardView}'">${ d.dTitle }</h3>
+                                    <p onclick="location='${dboardView}'">
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>
                                         발견지역 : ${ d.dFindLocal } 부근<br/>

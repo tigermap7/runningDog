@@ -61,8 +61,7 @@ $(function() {
 										<c:param name="dSuccess" value="${ dboard.dSuccess }"/>
 									</c:url>
                                     <a class="linkBtn" href="startChat.do?receiver=${ dboard.dWriter }&receiverNo=${ dboard.uniqueNum }"><i class="xi-message-o"></i> 채팅하기</a>
-                                    <a data-id="${ dboard.dNum }" data-title="${ dboard.dTitle }" data-summary="${ dboard.dContent }" data-image="${ dboard.listImage }"
-                                    	data-count="${ dboard.dCount }"class="linkBtn" data-toggle="popover4"><i class="xi-share-alt-o" ></i> 공유하기</a> 
+                                    <a  data-title="${ dboard.dTitle }"  data-image="${ dboard.listImage }" class="linkBtn" data-toggle="popover4"><i class="xi-share-alt-o" ></i> 공유하기</a> 
                                     <!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
                                     <c:if test= "${sessionScope.loginMember.userId == dboard.userId }">
                                     	<a class="linkBtn" href="${ dSuccess }"><i class="xi-shield-checked"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
