@@ -6,6 +6,7 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+        <!-- <script src="resources/common/js/issueShare.js"></script> -->
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 		<div id="wrap">
@@ -68,7 +69,9 @@
                                 	</c:url>
                                 <li class="grid-item" onclick="location='${ cdeurl }'">
                                     <div>
-                                        <a href="#none" class="xi-share-alt-o"></a>
+                                        <a class="xi-share-alt-o" onclick="event.cancelBubble=true" data-toggle="popover2"
+                                        data-url="http://192.168.130.170:9392/runningdog/${ cdeurl }" data-title="`${ c.issueTitle }`" data-image="${ c.issueThumbnail }"></a>
+                                        
                                         <img src="${ c.issueThumbnail }">
                                     </div>
                                     <dl>

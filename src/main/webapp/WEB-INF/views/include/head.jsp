@@ -29,6 +29,7 @@
 <script src="resources/common/js/volunteer.js"></script>
 <script src="resources/common/js/contents.js"></script>
 <script src="resources/common/js/notice.js"></script>
+
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <!-- 소셜로그인 API -->
@@ -41,6 +42,7 @@
 <script src="resources/common/js/naverLogin.js"></script>
 <!-- 소셜로그인 API 끝 -->
 
+<script src="resources/common/js/issueShare.js"></script>
 
 <!--티스토리 불펌금지-->
 <script type="text/javascript">
