@@ -326,9 +326,6 @@ public class AdminMemberController {
 		            out.flush();
 				}
 			}
-		} else {
-			model.addAttribute("selectUser", selectUser);
-			url = "common/error";
 		}
 		return url;
 	}

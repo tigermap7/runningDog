@@ -24,7 +24,7 @@
 	</select>
 	
 	<select id="selectMyChatMember" parameterType="Chatroom" resultMap="resultList">
-		select * from chatroom where memberno != #{memberNo} order by lastdate desc
+		select * from chatroom where memberno != #{memberNo} order by lastdate asc
 	</select>
 
 	<select id="selectMyChatCount" parameterType="Chatroom" resultType="_int">
