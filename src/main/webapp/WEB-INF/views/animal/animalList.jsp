@@ -76,7 +76,7 @@
                                 
                                 <li class="grid-item chooseIcon" onclick="location='${ animalView }'">
                                     <div>
-                                       <!--  <a href="#none" class="chooseIcon">분양가능</a> -->
+                                        <a href="#none" class="chooseIcon">분양중</a>
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
                                         <img src="${ a.popfile }">
                                     </div>

@@ -47,11 +47,8 @@ $(function() {
 							<c:param name="dNum" value="${ dboard.dNum }" />
 							<c:param name="dSuccess" value="${ dboard.dSuccess }" />
 						</c:url>
-						<a class="linkBtn" href="##none"><i class="xi-message-o"></i> 채팅하기</a>
-                        <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
 						<!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
-				
-							<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
+						<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
 						
 					</dt>
                     <dd>
@@ -78,7 +75,13 @@ $(function() {
                                     <th>성별</th>
                                     <td>
                                     ${ dboard.dGender eq "m"?"남/男" : "" }
-                                    ${ dboard.dGender eq "f"?"여/女" : "" }
+                                    ${ dboard.dGender eq "f"?"여/女" : "" }&nbsp;&nbsp;
+                                    <c:if test = "${dboard.dSuccess eq 'n'}">
+                                    <span class="protect">보호중</span>
+                                    </c:if>
+                    				<c:if test = "${dboard.dSuccess eq 'y'}">
+                                    <span class="protect">인계완료</span>
+                                    </c:if>
 									</td>
                                     <th>분양 여부</th>
                                     <td>
@@ -136,54 +139,44 @@ $(function() {
                 <div class="viewContent">
                 ${ dboard.dContent }
                 </div>
-				<tr>
-					<td>발견 장소</td>
-					<td>
-						<div class="map_wrap">
-							<div class="hAddr">
-								<div id="map"
-									style="width: 1000px; height: 300px; position: relative; overflow: hidden;">
-								</div>
-							</div>
-						</div> <script type="text/javascript"
-							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
-						<script>
-							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-							mapOption = {
-								center : new kakao.maps.LatLng(
-										'${dboard.mapY}', '${dboard.mapX}'), // 지도의 중심좌표
-								level : 8
-							// 지도의 확대 레벨
-							};
+					<div id="map" class="map_wrap mb50" style="width: 100%; height: 300px; position: relative; overflow: hidden;">
+					</div> <script type="text/javascript"
+						src="//dapi.kakao.com/v2/maps/sdk.js?appkey=68c702b1618fe5e7850fb8b93c89734b&libraries=services"></script>
+					<script>
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						mapOption = {
+							center : new kakao.maps.LatLng(
+									'${dboard.mapY}', '${dboard.mapX}'), // 지도의 중심좌표
+							level : 8
+						// 지도의 확대 레벨
+						};
 
-							var map = new kakao.maps.Map(mapContainer,
-									mapOption); // 지도를 생성합니다
+						var map = new kakao.maps.Map(mapContainer,
+								mapOption); // 지도를 생성합니다
 
-							// 마커가 표시될 위치입니다 
-							var markerPosition = new kakao.maps.LatLng(
-									'${dboard.mapY}', '${dboard.mapX}');
+						// 마커가 표시될 위치입니다 
+						var markerPosition = new kakao.maps.LatLng(
+								'${dboard.mapY}', '${dboard.mapX}');
 
-							// 마커를 생성합니다
-							var marker = new kakao.maps.Marker({
-								position : markerPosition
-							});
+						// 마커를 생성합니다
+						var marker = new kakao.maps.Marker({
+							position : markerPosition
+						});
 
-							// 마커가 지도 위에 표시되도록 설정합니다
-							marker.setMap(map);
+						// 마커가 지도 위에 표시되도록 설정합니다
+						marker.setMap(map);
 
-							var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">${dboard.dFindLocal}</div>', iwPosition = new kakao.maps.LatLng(
-									'${dboard.mapY}', '${dboard.mapX}'); //인포윈도우 표시 위치입니다
+						var iwContent = '<div style="padding:5px;"><style="color:blue" target="_blank">발견장소 : ${dboard.dFindLocal}</div>', iwPosition = new kakao.maps.LatLng(
+								'${dboard.mapY}', '${dboard.mapX}'); //인포윈도우 표시 위치입니다
 
-							// 인포윈도우를 생성합니다
-							var infowindow = new kakao.maps.InfoWindow({
-								position : iwPosition,
-								content : iwContent
-							});
+						// 인포윈도우를 생성합니다
+						var infowindow = new kakao.maps.InfoWindow({
+							position : iwPosition,
+							content : iwContent
+						});
 
-							infowindow.open(map, marker);
-						</script>
-					</td>
-				</tr>
+						infowindow.open(map, marker);
+				</script>
 
 				<div class="textCon">
                     상기 동물을 분실하신 소유주께서는 보호센터로 문의하시어 동물을 찾아가시기 바라며, 동물보호 법 제17조의 규정에 따른 공고가 있는 날부터 10일이 경과하여도 소유자 등을 알 수 없는 경우에는 유실물법 제12조 및 민법 제253조의 규정에 불구하고 해당 시,군,구 자치구가 그 동물의 소유권을 취득하게 됩니다.<br>
@@ -236,69 +229,85 @@ $(function() {
 				</div>
 				<!-- 버튼 끝 -->
 
-                <div class="cmt_wrap">
-                    <form action="" method="">
-                        <fieldset>
-                            <div class="cmt_form">
-                                <h4 class="cmt_head">댓글 77</h4>
-                                <div class="cmt_body">
-<textarea name="" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                    <div class="cmt_ok"><input type="submit" value="등록"></div>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                    <ul class="cmt_con">
-                        <li>
-                            <dl>
-                                <dt class="img"><img src="/runningdog/../resources/images/test/animalImg02.jpg"></dt>
-                                <dd><h4>멍무이 / #1971345</h4></dd>
-                                <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                            </dl>
-                            <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                            <div class="cmt_conBtn">
-                                <button>댓글</button>
-                                <button>삭제</button>
-                                <button>수정</button>
-                            </div>
-                            <div class="Subcmt_form">
-                                <form action="" method="">
-                                    <fieldset>
-                                        <div class="cmt_form">
-                                            <div class="cmt_body">
-<textarea name="" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                            <div class="cmt_ok"><input type="submit" value="등록"></div>
+               <div class="cmt_wrap">
+                            <form name = ""action="insertDreply.do" method="post">
+                            <input type="hidden" id= "dNum" name="dNum" value="${dboard.dNum }">
+                            <input type="hidden" id="dreWriter" name="dreWriter" value="${loginMember.nickname }">
+                            <input type="hidden" id= "uniqueNum" name="uniqueNum" value="${loginMember.uniqueNum }">
+                                <fieldset>
+                                    <div class="cmt_form">
+                                        <h4 class="cmt_head">댓글 ${ dreplyCount }</h4>
+                                        <div class="cmt_body">
+        								<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" id = "dreContent" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+                                            <div class="cmt_ok">
+                                            	<input type="submit" value="등록" >
                                             </div>
                                         </div>
-                                    </fieldset>
-                                </form>
-                            </div>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt class="img"><img src="/runningdog/../resources/images/test/animalImg02.jpg"></dt>
-                                <dd><h4>멍무이 / #1971345</h4></dd>
-                                <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                            </dl>
-                            <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                            <div class="cmt_conBtn">
-                                <button>댓글</button>
-                                <button>삭제</button>
-                                <button>수정</button>
-                            </div>
-                            <div class="Subcmt_form">
-                                <dl>
-                                    <dt class="img"><img src="/runningdog/../resources/images/test/animalImg02.jpg"></dt>
-                                    <dd><h4>담당자 : 박보검</h4></dd>
-                                    <dt class="cmt_date">2020.08.16. 12:12:00</dt>
-                                </dl>
-                                <p>가시가 되어 제발 가라고 아주 가라고 외쳐도 나는 그대로인데. 아주 사랑했던 나를 크게 두려웠던 나를 미치도록 너를 그리워했던 날 이제는 놓아줘. 보이지 않아. 내 안에 숨어. 잊으려 하면 할 수 록 더 다가와.</p>
-                                <div class="cmt_conBtn">
-                                    <button>삭제</button>
-                                    <button>수정</button>
-                                </div>
-                            </div>
-                        </li>
+                                    </div>
+                                </fieldset>
+                            </form>
+                    <ul class="cmt_con">
+                       <c:forEach items="${ requestScope.dreplyList }" var="d">
+							<!--  대댓글일 경우 대댓글 창 색상 다르게함 -->
+								<li ${ d.dreLevel eq 2? "style='background-color: #f0f0f0; padding: 0.375rem 3rem;'" : "" }>
+								<dl>
+									<dt class="img">
+										<i ${ d.dreLevel eq 2? "class='xi-check-circle-o' style='font-size:22px'" : "" }></i>
+										
+										<img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}">
+									</dt>
+										<dd>
+											<h4>${ d.dreWriter }/#${ d.uniqueNum }</h4>
+										</dd>
+										<dt class="cmt_date">${ d.dreMdate }</dt>
+									</dl>
+									<p>${ d.dreContent }</p>
+									<div class="cmt_conBtn">
+										<c:if test="${ d.dreLevel eq 1 and d.dreDelete eq 'n'}">
+										<button class="Subcmt_btn">대댓글</button>
+										</c:if>
+										
+										<button onclick="location.href='updateDreplyDel.do?dreNum=${d.dreNum}&dNum=${d.dNum}'" style="float: right;">삭제</button>
+										<button class="Cmt_update_btn" style="float: right; margin-right: 10px;">수정</button>
+								
+										<div class="Cmt_update pt20 mt0" style="display: none; width:100%; overflow: hidden;">
+											<form name="updateDreply" action="updateDreply.do" method="post">
+												<input type="hidden" name="dreNum" id="dreNumUp" value="${ d.dreNum }">
+												<input type="hidden" name="dNum" value="${ d.dNum }">
+												<input type="hidden" name="dreParents" value="${ d.dreParents }">
+												<fieldset style="width:100%;">
+													<div class="cmt_form" style="overflow: unset;">
+														<div class="cmt_body">
+															<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
+															<div class="cmt_ok">
+																<input type="submit" class="updateDreply" value="수정">
+															</div>
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+										<div class="Subcmt pt20 mt0" id="commentReply" style="display: none; width:100%; overflow: hidden;">
+											<form action="insertDreplyLevel.do" method="post">
+												<input type="hidden" name="dreNum" id="dreNum" value="${ d.dreNum }"> 
+												<input type="hidden" name="dNum" id="dNum" value="${ d.dNum }"> 
+												<input type="hidden" name="dreWriter" id="dreWriter" value="${loginMember.nickname}"> 
+												<input type="hidden" name="uniqueNum" id="uniqueNum" value="${loginMember.uniqueNum}">
+												<fieldset style="width:100%;">
+													<div class="cmt_form" style="overflow: unset;">
+														<div class="cmt_body">
+															<textarea name="dreContent" id="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
+																onfocus="this.value='';">비방글은 작성할 수 없습니다.</textarea>
+															<div class="cmt_ok">
+																<input type="submit"  value="등록">
+															</div>
+														</div>
+													</div>
+												</fieldset>
+											</form>
+										</div>
+									</li>
+							</c:forEach>
                     </ul>
                 </div>                    
             </div>

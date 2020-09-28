@@ -70,11 +70,11 @@
                                                 <th>성별</th>
                                                 <td>${ animal.sexCd eq 'F'? "여/女" : "남/男" }</td>
                                                 <th>중성화 여부</th>
-                                                <td>${ animal.neuterYn }</td>
+                                                <td>${ animal.neuterYn } / <span class="protectOn">${ animal.processState }</span><!-- span class="protectOut">${ animal.processState }</span--></td>
                                             </tr>
                                             <tr>
                                                 <th>특징/성향</th>
-                                                <td>${ animal.processState }</td>
+                                                <td>${ animal.specialMark }</td>
                                                 <th>공고기한</th>
                                                 <td><fmt:parseDate var="animalDate" value="${animal.noticeSdt}" pattern="yyyyMMdd"/>
                                                 	<fmt:formatDate value="${animalDate}" pattern="yyyy-MM-dd"/>
@@ -113,15 +113,13 @@
                                             </tr>
                                             <tr>
                                                 <th>연락처</th>
-                                                <td>${ animal.officetel }</td>
-                                                <th>특이사항</th>
-                                                <td>${ animal.specialMark }</td>
+                                                <td colspan="3">${ animal.officetel }</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </dd>
                             </dl>
-                            <div class="map_wrap">
+                            <div class="map_wrap mb50">
 									<div class="hAddr">
 										<div id="map"
 											style="width: 1000px; height: 300px; position: relative; overflow: hidden;">

@@ -293,6 +293,7 @@
     padding: 15px 20px;
     font-size: 16px;
     font-weight: 500;
+    display: revert;
 }
 
 .list_wrap .warning_text {
@@ -383,6 +384,22 @@
 }
 .animalView > dl > dd .animalInfo tbody tr td {
     padding: 0.75rem 0.625rem;
+}
+.animalView > dl > dd .animalInfo tbody tr td span {
+    color: #fff;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 3px 8px;
+    display: inline-block;
+    border-radius: 5px;
+}
+.animalView > dl > dd .animalInfo tbody tr td span.protect {
+    background-color: #fb3860;
+    border: 1px solid #fb3860;
+}
+.animalView > dl > dd .animalInfo tbody tr td span.complete {
+    background-color: #555;
+    border: 1px solid #555;
 }
 .animalView .viewContent {
     font-size: 1rem;

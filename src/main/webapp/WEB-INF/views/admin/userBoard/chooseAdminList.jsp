@@ -105,8 +105,7 @@
 							<tr class="list-no">
 								<td colspan="8">
 									<p>
-										<img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png"
-											alt="" title="" />
+										<img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" />
 									</p>
 									<h1>목록이 없습니다.</h1>
 								</td>

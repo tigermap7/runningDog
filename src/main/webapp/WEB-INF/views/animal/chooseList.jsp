@@ -73,11 +73,10 @@
 								</c:url>
 								
                                 <form action="" name="dCategory">
-                                    <a ${dboard.dCategory eq "d"?'class="active"' : "" }href="${dCate}&dCategory=d">강아지</a>
-                                    <a ${dboard.dCategory eq "c"?'class="active"' : "" }href="${dCate}&dCategory=c">고양이</a>
-                                    <a ${dboard.dCategory eq "e"?'class="active"' : "" }href="${dCate}&dCategory=e">기타</a>
-                                    <a ${empty dboard.dCategory ?'class="active"' : "" }href="dboardList.do">전체</a>
-                                    
+                                    <a ${empty dCategory ?'class="active"' : "" }href="dboardList.do">전체</a>
+                                    <a ${dCategory eq "d"?'class="active"' : "" }href="${dCate}&dCategory=d">강아지</a>
+                                    <a ${dCategory eq "c"?'class="active"' : "" }href="${dCate}&dCategory=c">고양이</a>
+                                    <a ${dCategory eq "e"?'class="active"' : "" }href="${dCate}&dCategory=e">기타</a>
                                  </form>
                                 </div>
 	                            <form action="dboardList.do" name="dLocal" class="location">
@@ -126,12 +125,9 @@
 									<c:param name="dCategory" value="${ d.dCategory }"/>
                                  </c:url>
                                  <c:if test = "${d.dSuccess eq 'n'}">
-                                
-                                 	
-                                <li class="grid-item chooseIcon" onclick="location='${dboardView}'">
+                                 <li class="grid-item chooseIcon" onclick="location='${dboardView}'">
                                     <div>
                                         <a href="#none" class="chooseIcon">보호중</a>
-                                        
                                         <a href="#none" class="urlIcon xi-share-alt-o"></a>
                                         <img src="/runningdog/resources/dboard/dboardImage/${d.listImage }">
                                     </div>
