@@ -96,6 +96,7 @@
 			<mapping path="/dupView.do" />
 			<mapping path="/insertDreply.do" />
 			<mapping path="/moveChatting.do"/>
+			<mapping path="/startChat.do"/>
 			<mapping path="/mypage.do"/>
 			<mapping path="/memberAllList.ad"/>
 			<mapping path="/adminMemberInsert.ad"/>
