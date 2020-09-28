@@ -79,9 +79,8 @@
 								<c:url var="dboardView" value="dboardView.ad">
 									<c:param name="pageNo" value="${ pageVO.pageNo }"/>
                                  	<c:param name="dNum" value="${ d.dNum }"/>
-                                 	<c:param name="dLocal" value="${ dLocal }"/>
-                                 	<c:param name="searchFiled" value="${ searchFiled }" />
-									<c:param name="searchValue" value="${ searchValue }" />
+                                 	<c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${ pageVO.searchValue }" />
 									<c:param name="dCategory" value="${ dCategory }"/>
 								</c:url>
 								<td class="checkBox">

@@ -122,10 +122,6 @@ public class DboardController {
 	public String dboardList(HttpServletRequest request, Model model, @ModelAttribute("Dboard") Dboard dboard){
 
 
-		//dboard.setSearchFiled(request.getParameter("searchFiled"));
-		//dboard.setSearchValue(request.getParameter("searchValue"));
-		//dboard.setdCategory(request.getParameter("dCategory"));
-		//dboard.setdLocal(request.getParameter("dLocal"));
 		logger.info("SearchFiled : " + dboard.getSearchFiled());
 		logger.info("SearchValue : " + dboard.getSearchValue());
 		int totalCount = dboardService.selectListCount(dboard); // 게시물 총갯수를 구한다
@@ -151,11 +147,9 @@ public class DboardController {
 		ArrayList<Dboard> dboardList = dboardService.selectList(dboard); 
 		
 		
-		//model.addAttribute("dLocal", dboard.getdLocal());
-		model.addAttribute("dCategory", dboard.getdCategory());
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("dboardList", dboardList);
-		
+		model.addAttribute("dCategory", dboard.getdCategory());
 		
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url = "";
@@ -243,18 +237,9 @@ public class DboardController {
 		ArrayList<Dreply> dreplyList = dreplyService.selectList(dNum); //댓글 리스트 
 		
 		
-		//dboard.setdCategory(request.getParameter("dCategory"));
-		//dboard.setdLocal(request.getParameter("dLocal"));
-		//dboard.setSearchFiled(request.getParameter("searchFiled"));
-		//dboard.setSearchValue(request.getParameter("searchValue"));
-		
 		model.addAttribute("dreplyCount" , dreplyCount);
 		model.addAttribute("dreplyList", dreplyList);
-		//model.addAttribute("dLocal", dboard.getdLocal());
-		//model.addAttribute("dCategory", dboard.getdCategory());
-		//model.addAttribute("searchFiled", dboard.getSearchFiled());
-		//model.addAttribute("searchValue", dboard.getSearchValue());
-		
+		model.addAttribute("dCategory" , request.getParameter("dCategory"));
 		String url = "";
 		
 		if (dboard != null) {
