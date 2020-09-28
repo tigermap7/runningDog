@@ -416,7 +416,6 @@
     font-size: 0;
 }
 #main_content .main_animalNews > ul {
-	height:auto !important;
 	text-align: center;
 }
 .main_animalNews > ul li.grid-sizer {

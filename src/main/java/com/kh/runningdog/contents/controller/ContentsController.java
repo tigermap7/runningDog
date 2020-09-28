@@ -179,37 +179,6 @@ public class ContentsController {
 	}
 	
 	
-	//메인페이지에 필수, new 공지사항 출력하기
-	@ResponseBody
-	@RequestMapping(value="mainIssueList.do", produces="application/text; charset=UTF-8")
-	public String selectNoticeState() {
-		logger.info("mainIssueList.do run...");
-		
-		ArrayList<Issue> list = issueService.selectMainIssueList();
-		
-		JSONObject sendjobj = new JSONObject();
-		JSONArray jarr = new JSONArray();
-		
-		for(Issue issue : list) {
-			JSONObject jobj = new JSONObject();
-			
-			jobj.put("link", issue.getIssueLink());
-			jobj.put("partnerName", issue.getPartnerName());
-			jobj.put("partnerImg", issue.getPartnerImg());
-			jobj.put("thumbnail", issue.getIssueThumbnail());
-			jobj.put("title", issue.getIssueTitle());
-			jobj.put("date", issue.getIssueDate());
-			
-			jarr.add(jobj);
-			
-		}
-		
-		sendjobj.put("list", jarr);
-		
-		return sendjobj.toJSONString();
-	}
-	
-	
 	//이슈 목록 DB에 저장
 //	@Scheduled(cron = "0 0 02 * * * ") //매일 새벽 2시에 실행
 //	@Scheduled(cron = "0 0 12 * * * ") //매일 오전 12시에 실행
