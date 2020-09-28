@@ -6,6 +6,7 @@
 <html lang="ko">
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
+        <script src="resources/common/js/issueShare.js"></script>
         <script type="text/javascript">
 
         $(function() {
@@ -112,20 +113,7 @@
                 <div class="main_animalInfo">
                     <h2><span>'작은 생명'</span>의 소중한 친구가<br/>될 수 있는 <span>'작은 실천'</span></h2>
                     <ul id="dtoplist">
-                        <!-- <li onclick="location='dboardList.do'">
-                            <div>
-                                <a href="#none" class="chooseIcon">분양가능</a>
-                                <a href="#none" class="urlIcon xi-share-alt-o"></a>
-                                <img src="/runningdog/resources/images/test/animalImg01.jpg">
-                            </div>
-                            <h3>[강아지] 푸들</h3>
-                            <p>
-                                나이 : 약 2세<br/>
-                                보호센터 : '따뜻한 집'<br/>
-                                주소 : 서울시 종로구 종로5. 6가동
-                                <span>등록일 : 2020.08.22</span>
-                            </p>
-                        </li> -->
+
                     </ul>
                 </div>
 
@@ -179,9 +167,15 @@
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
 	</body>
-	<!-- 상세페이지 이동은 크롤링해서 가져오기 때문에 오류 날 수도 있음 -->
+	
 	<!-- 오늘의 이슈 ajax -->
  	<script>
+ 	$('.xi-share-alt-o').click(function(){
+ 		
+ 		console.log("클릭확인용");
+ 	});
+
+ 	
 	$(function(){
 		$.ajax({
 			url : "mainIssueList.do",
@@ -195,7 +189,7 @@
 		        var values = "";
 		        for( var i in json.list) {
 		        	values +=  '<li class="grid-item" onclick=moveIssueDetail("'+ json.list[i].link +'");>'
-		        		+ '<div><a href="#none" class="xi-share-alt-o"></a>' 
+		        		+ '<div><a class="xi-share-alt-o" onclick="event.cancelBubble=true" data-toggle="popover2" data-link="http://192.168.130.170:9392/runningdog/cissuedetail.do?link=' + json.list[i].link + '" data-title="' + decodeURIComponent(json.list[i].title) + '" data-image="' + json.list[i].thumbnail + '"></a>' 
 		        	    + '<img src="' + json.list[i].thumbnail + '"></div>'
 		        	    + '<dl><dt><img src="' + json.list[i].partnerImg + '"></dt>'
 		                + '<dd><h3>' + decodeURIComponent(json.list[i].title) + '</h3>'

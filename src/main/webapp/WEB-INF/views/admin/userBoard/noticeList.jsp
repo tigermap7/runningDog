@@ -77,7 +77,7 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th><input type="checkbox" name="allCheck" id="allCheck" value=""></th>
+							<th class="checkBox"><input type="checkbox" name="allCheck" id="allCheck" value=""></th>
 							<th>번호</th>
 							<th>공지여부</th>
 							<th>제목</th>
@@ -103,7 +103,7 @@
 								<c:param name="keyword" value="${ noticePage.keyword }" />
 							</c:url>
 							<tr onclick="location='${ndurl}'">
-								<td onclick="event.cancelBubble=true">
+								<td class="checkBox" onclick="event.cancelBubble=true">
 								<input type="checkbox" name="checkDel" id="" value="${ n.noticeNo }"></td>
 								<td class="number">${ n.noticeNo }</td>
 								<td class="kinds">

@@ -35,10 +35,6 @@
 								<option value="cat"	${ animal eq 'cat' ? 'selected' : '' }>고양이</option>
 								<option value="other" ${ animal eq 'other' ? 'selected' : '' }>기타</option>
 							</select>
-						</div>
-					</form>
-					<form action="cknowlist.ad" method="get" id="">
-						<div class="searchBox">
 	 						<select name="searchKnow" class="ListSelect">
                             	<option value="subject" class="fontColor-dark" ${ page.search eq 'subject' ? 'selected' : '' }>제목</option>
                             	<option value="comment" class="fontColor-dark" ${ page.search eq 'comment' ? 'selected' : '' }>내용</option>
@@ -59,7 +55,6 @@
                 <table class="list">
                     <colgroup>
                         <col width="5%">
-                        <col width="5%">
                         <col width="8%">
                         <col width="*">
                         <col width="15%">
@@ -68,7 +63,6 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>선택</th>
                             <th>번호</th>
                             <th>분류</th>
                             <th>제목</th>
@@ -79,7 +73,7 @@
                         <tr>
                         </tr>
                         <tr class="hr">
-                            <th colspan="7"></th>
+                            <th colspan="6"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,7 +86,6 @@
                             <c:param name="readcount" value="${ c.readcount }" />
 		                </c:url>
                         <tr onclick="location='${cdeurl}'">
-                            <td onclick="event.cancelBubble=true"><input type="checkbox"></td>
                             <td class="number">${ c.no }</td>
                             <td class="kinds"><span class="protect">상식</span></td>
                             <td class="title">${ c.title }</td>
@@ -104,7 +97,7 @@
                     <!-- 목록이 없을 때 -->
 					<c:if test="${ page.listCount eq 0 }">
 						<tr class="list-no">
-							<td colspan="7">
+							<td colspan="6">
 								<p>
 									<img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" />
 								</p>

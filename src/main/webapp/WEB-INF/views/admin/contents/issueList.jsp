@@ -41,7 +41,6 @@
                 <!-- 검색영역 끝 -->
                 <table class="list">
                     <colgroup>
-                        <col width="5%">
                         <col width="8%">
                         <col width="*">
                         <col width="8%">
@@ -51,7 +50,6 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>선택</th>
                             <th>썸네일</th>
                             <th>제목</th>
                             <th>작성자 썸네일</th>
@@ -62,7 +60,7 @@
                         <tr>
                         </tr>
                         <tr class="hr">
-                            <th colspan="8"></th>
+                            <th colspan="7"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +71,6 @@
 	                       	<c:param name="link" value="${ c.issueLink }" />
                       	</c:url>
                         <tr onclick="location='${cdeurl}'">
-                            <td onclick="event.cancelBubble=true"><input type="checkbox"></td>
                             <td class="thumbnail"><img src="${ c.issueThumbnail }"></td>
                             <td class="title">${ c.issueTitle }</td>
                             <td class="thumbnail"><img src="${ c.partnerImg }"></td>
@@ -92,16 +89,6 @@
                         </tr>
                      </c:forEach>
                         
-<!--                         <tr>
-                            <td><input type="checkbox" name="" id="" value=""></td>
-                            <td class="number" onclick="location='issueView.jsp'">5</td>
-                            <td class="thumbnail" onclick="location='issueView.jsp'"><img src="/runningdog/../resources/images/test/animalNews02.jpg"></td>
-                            <td class="title" onclick="location='issueView.jsp'">강아지가 아령을? 덤벨 들고 운동하는 강아지.</td>
-                            <td class="name" onclick="location='issueView.jsp'">koreadognews</td>
-                            <td class="date" onclick="location='issueView.jsp'">2020.09.01</td>
-                            <td class="views" onclick="location='issueView.jsp'">102</td>
-                        </tr> -->
-						
                     </tbody>
                 </table>
                <!--  <p class="warning_text"> *삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p> -->

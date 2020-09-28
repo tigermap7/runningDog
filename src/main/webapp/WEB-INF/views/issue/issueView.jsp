@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">오늘의 이슈</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="cissuelist.do">오늘의 이슈</a></li>
                             </ul>
                         </div>
                         <h2><span>오늘의 이슈</span></h2>
@@ -41,7 +41,8 @@
                                 <dt>
                                     <div class="viewImg"><img src="${ issue.issueThumbnail }"></div>
                                     <a class="linkBtn" href="${ issue.issueLink }" target="_blank"><i class="xi-share"></i>원글보기</a>
-                                    <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    <a class="linkBtn" data-toggle="popover2" data-url="http://192.168.130.170:9392/runningdog/cissuedetail.do?link=${ issue.issueLink }"
+                                    data-title="${ issue.issueTitle }" data-image="${ issue.issueThumbnail }"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </dt>
                                 <dd>
                                     <div>
