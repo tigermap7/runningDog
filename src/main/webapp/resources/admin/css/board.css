@@ -61,7 +61,7 @@
 .sort-area div.searchBox > div button {
     background-color: #fff;
     border: none;
-    height: 36px;
+    height: 38px;
     width: 50px;
 }
 .sort-area div.searchBox > div button i {
@@ -172,6 +172,11 @@
 }
 .list_wrap .list thead tr.hr th {
     padding: 1px 0;
+}
+.list_wrap .list thead tr th.checkBox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    z-index: 1;
 }
 .list_wrap .list tbody {
     width:100%;

@@ -409,14 +409,17 @@ public class VolunteerController {
 		}
 		return url;
 	}
+	
 	//자원봉사 mypage 전체목록 출력
 		@RequestMapping("vlistmy.do")
 		public String selectListVolunteerMy(HttpServletRequest request, Model model, @ModelAttribute("Volunteer") Volunteer volunteer) {
 			volunteer.setSearchFiled(request.getParameter("searchFiled"));
 			volunteer.setSearchValue(request.getParameter("searchValue"));
 			volunteer.setVolche(request.getParameter("volche"));
+			volunteer.setUnique_num(Integer.parseInt(request.getParameter("unique_num")));
 			logger.info("SearchFiled : " + volunteer.getSearchFiled());
 			logger.info("SearchValue : " + volunteer.getSearchValue());
+			logger.info("SearchValue : " + volunteer.getUnique_num());
 			int totalCount = volunteerService.selectListCountMypage(volunteer); // 게시물 총갯수를 구한다
 			
 			
@@ -444,13 +447,8 @@ public class VolunteerController {
 			model.addAttribute("list", list);
 			// 리턴은 한번 하기 위해 url 값 받고 리턴
 			String url = " ";
-			if (totalCount > 0) {
+			
 				url = "mypage/myServiceList";
-			} else {
-				model.addAttribute("msg", "검색 결과가 존재 하지 않습니다");
-				model.addAttribute("url", "vlistmy.do");
-				url = "common/errorDboard";
-			}
 			
 			return url;
 		}
@@ -465,6 +463,7 @@ public class VolunteerController {
 			volunteer.setSearchFiled(request.getParameter("searchFiled"));
 			volunteer.setSearchValue(request.getParameter("searchValue"));
 			volunteer.setVolche(request.getParameter("volche"));
+			volunteer.setUnique_num(Integer.parseInt(request.getParameter("unique_num")));
 			
 			
 			model.addAttribute("volche", volunteer.getVolche());
@@ -482,4 +481,208 @@ public class VolunteerController {
 			}
 			return url;
 		}
+		//수정페이지로 이동(mypage)
+		@RequestMapping(value = "vUpdateViewMy.do")
+		public String moveVolunteerUpdateViewMypage(HttpServletRequest request, Model model) {
+			int volno = Integer.parseInt(request.getParameter("volno"));
+			
+			Volunteer volunteer = volunteerService.selectVolunteer(volno);
+			logger.info("업데이트 view  값 :" + volunteer);
+			
+			String url = "";
+			if(volunteer != null) {
+				model.addAttribute("volunteer", volunteer);
+				url = "mypage/myServiceUpdate";
+			}else {
+				model.addAttribute("msg", volno + "번 글 수정페이지로 이동 실패!");
+				model.addAttribute("url", "vdetailmy.do");
+				url = "common/error";
+			}
+			return url;
+			
+		}
+		
+		//글수정하기(mypage)
+		@RequestMapping(value = "vupdatemypage.do", method = RequestMethod.POST) 
+		public String updateVolunteerMypage(Volunteer volunteer, HttpServletRequest request, 
+				@RequestParam Map<String, MultipartFile> fileMap) {
+		      logger.info("vupdate.do run...");
+		      String returnView = null;
+		      int i = 1;
+		      Image img = null;
+		      
+		      String savePath = request.getSession().getServletContext().getRealPath("resources/vfiles"); //파일 저장할 폴더 위치
+		      
+		      
+			  String deleteFilename1 = request.getParameter("deleteFilename1");
+			  String deleteFilename2 = request.getParameter("deleteFilename2");
+			  String deleteFilename3 = request.getParameter("deleteFilename3");
+			  String deleteFilename4 = request.getParameter("deleteFilename4");
+		      
+			//삭제할 파일이 넘겨져왔을 때 삭제하기
+				if(!(deleteFilename1 == null || deleteFilename1.length() == 0)) {
+					new File(savePath + "\\" + volunteer.getVolre1()).delete();
+					volunteer.setVolor1(null);
+					volunteer.setVolre1(null);
+				}
+				if(!(deleteFilename2 == null || deleteFilename2.length() == 0)) {
+					new File(savePath + "\\" + volunteer.getVolre2()).delete();
+					volunteer.setVolor2(null);
+					volunteer.setVolre2(null);
+				}
+				if(!(deleteFilename3 == null || deleteFilename3.length() == 0)) {
+					new File(savePath + "\\" + volunteer.getVolre3()).delete();
+					volunteer.setVolor3(null);
+					volunteer.setVolre3(null);
+				}
+				if(!(deleteFilename4 == null || deleteFilename4.length() == 0)) {
+					new File(savePath + "\\" + volunteer.getVolre4()).delete();
+					volunteer.setVolor4(null);
+					volunteer.setVolre4(null);
+				}
+				//새로 첨부된 파일 있을 경우 파일 추가하기
+			for (String key : fileMap.keySet()) {
+				if (fileMap.get(key).getOriginalFilename() != "") {
+					String originalFilename = fileMap.get(key).getOriginalFilename();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+					String renamefilename = sdf.format(new java.sql.Date(System.currentTimeMillis())); // 현재시간
+					renamefilename += "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1); // 확장자명
+					String resizePath = savePath + "\\" + renamefilename;
+
+					try {
+						fileMap.get(key).transferTo(new File(savePath + "\\" + renamefilename));
+						img = ImageLoader.fromFile(resizePath);
+			            
+			            // 너비 300으로 리사이징 처리 화질은 최대한 보정
+						img.getResizedToWidth(300).soften(0.0f).writeToJPG(new File(resizePath), 0.95f);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					switch (i) {
+					case 1:
+						if (volunteer.getVolor1().length() == 0) { // 1번 파일이 없을 때
+							volunteer.setVolor1(originalFilename);
+							volunteer.setVolre1(renamefilename);
+						} else { // 1번파일이 있을 때
+							if (volunteer.getVolor2().length() == 0) { // 2번파일이 없을 때
+								volunteer.setVolor2(originalFilename);
+								volunteer.setVolre2(renamefilename);
+							} else {
+								if (volunteer.getVolor3().length() == 0) { // 3번파일이 없을 때
+									volunteer.setVolor3(originalFilename);
+									volunteer.setVolre3(renamefilename);
+								} else {
+									volunteer.setVolor4(originalFilename);
+									volunteer.setVolre4(renamefilename);
+								}
+							}
+						}
+						break;
+					case 2:
+						if (volunteer.getVolor2().length() == 0) { // 2번파일이 없을 때
+							volunteer.setVolor2(originalFilename);
+							volunteer.setVolre2(renamefilename);
+						} else {
+							if (volunteer.getVolor3().length() == 0) { // 3번파일이 없을 때
+								volunteer.setVolor3(originalFilename);
+								volunteer.setVolre3(renamefilename);
+							} else {
+								volunteer.setVolor4(originalFilename);
+								volunteer.setVolre4(renamefilename);
+							}
+						}
+						break;
+					case 3:
+						if (volunteer.getVolor3().length() == 0) { // 3번파일이 없을 때
+							volunteer.setVolor3(originalFilename);
+							volunteer.setVolre3(renamefilename);
+						} else {
+							volunteer.setVolor4(originalFilename);
+							volunteer.setVolre4(renamefilename);
+						}
+						break;
+					case 4:
+						volunteer.setVolor4(originalFilename);
+						volunteer.setVolre4(renamefilename);
+						break;
+					}
+
+					i++;
+				} // if문
+			} // for문
+		      
+		      if(volunteerService.updateVolunteer(volunteer) > 0) {
+		         returnView = "redirect:/vlistmy.do";
+		      } else {
+		         request.setAttribute("message", volunteer.getVolno() + "번 글 수정 처리 실패");
+		         returnView = "common/error";
+		      }
+		      
+		      return returnView;
+		   } 
+		
+		//이전글(mypage)
+		@RequestMapping("vpreMypage.do")
+		public String selectVpreMypage(HttpServletRequest request, Model model, @ModelAttribute("Volunteer") Volunteer volunteer) {
+			//다음글 번호조회
+			volunteer.setSearchFiled(request.getParameter("searchFiled"));
+			volunteer.setSearchValue(request.getParameter("searchValue"));
+			volunteer.setVolche(request.getParameter("volche"));
+			volunteer.setUnique_num(Integer.parseInt(request.getParameter("unique_num")));
+					
+			int vboardPreNum = volunteerService.selectVolunteerPreMypage(volunteer);
+			//다음글번호를 받고 다음글로 조회
+			Volunteer vboardPre = volunteerService.selectVolunteer(vboardPreNum);
+					
+			// 리턴은 한번 하기 위해 url 값 받고 리턴
+							
+			model.addAttribute("volche", volunteer.getVolche());
+			model.addAttribute("searchFiled", volunteer.getSearchFiled());
+			model.addAttribute("searchValue",volunteer.getSearchValue());
+					
+			String url = "";
+			if (volunteer.getVolno() != vboardPreNum) {
+				model.addAttribute("volunteer", vboardPre);
+			url = "mypage/myServiceView";
+		 } else {
+			model.addAttribute("volunteer",volunteer);
+			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+			model.addAttribute("url", "javascript:history.back()");
+			url = "common/errorDboard";
+		}
+			return url;
+		}
+		//다음글(mypage)
+		@RequestMapping("vnextMypage.do")
+		public String selectVnextMypage(HttpServletRequest request, Model model, @ModelAttribute("Volunteer") Volunteer volunteer) {
+			
+			//다음글 번호조회
+			volunteer.setSearchFiled(request.getParameter("searchFiled"));
+			volunteer.setSearchValue(request.getParameter("searchValue"));
+			volunteer.setVolche(request.getParameter("volche"));
+			volunteer.setUnique_num(Integer.parseInt(request.getParameter("unique_num")));
+			
+			int vboardNextNum = volunteerService.selectVolunteerNextMypage(volunteer);
+			//다음글번호를 받고 다음글로 조회
+			Volunteer vboardNext = volunteerService.selectVolunteer(vboardNextNum);
+			
+			// 리턴은 한번 하기 위해 url 값 받고 리턴
+					
+			model.addAttribute("volche", volunteer.getVolche());
+			model.addAttribute("searchFiled", volunteer.getSearchFiled());
+			model.addAttribute("searchValue",volunteer.getSearchValue());
+			
+			String url = "";
+			if (volunteer.getVolno() != vboardNextNum) {
+				model.addAttribute("volunteer", vboardNext);
+				url = "mypage/myServiceView";
+			} else {
+				model.addAttribute("volunteer",volunteer);
+				model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
+				model.addAttribute("url", "javascript:history.back()");
+				url = "common/errorDboard";
+			}
+			return url;
+		}
+		
 }

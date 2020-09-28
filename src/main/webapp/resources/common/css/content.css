@@ -1701,6 +1701,19 @@
     background-color: #ff92a8;
     border: 1px solid #ff92a8;
 }
+.cmt_wrap .cmt_form .cmt_body .cmt_ok input[type="button"] {
+    background-color: #555;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 0.1875rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.3125rem;
+}
+.cmt_wrap .cmt_form .cmt_body .cmt_ok input[type="button"]:hover {
+    background-color: #ff92a8;
+    border: 1px solid #ff92a8;
+}
 .cmt_wrap .cmt_con {
     overflow: hidden;
     border-top: 1px solid #ccc;
@@ -1904,14 +1917,14 @@
     color: #333;
     text-align: center;
 }
-.list-area table tbody tr td div.list-no {
+div.list-no {
     padding: 9.375rem 0;
     text-align: center;
 }
-.list-area table tbody tr td div.list-no {
+div.list-no {
     padding: 9.375rem 0;
 }
-.list-area table tbody tr td div.list-no h1 {
+div.list-no h1 {
     font-size: 1.125rem;
 }
 

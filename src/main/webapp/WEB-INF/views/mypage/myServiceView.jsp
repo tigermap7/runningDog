@@ -23,7 +23,7 @@
                        <div>
                             <ul class="navi">
                                 <li><a href="main.do">홈</a></li>
-                                <li class="xi-angle-right"><a href="/runningdog/vlist.do">자원봉사모집</a></li>
+                                <li class="xi-angle-right"><a href="vlistmy.do?unique_num=${loginMember.uniqueNum}">나의 자원봉사</a></li>
                             </ul>
                         </div>
                         <h2><span>자원봉사모집</span></h2>
@@ -50,32 +50,28 @@
                                         <div class="swiper-container gallery-top">
 										  <ul class="swiper-wrapper">
 											<c:if test="${ empty volunteer.volre1 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre1 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre1 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre2 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre2 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre2 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre3 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre3 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre3 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre4 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre4 }">
 												<li class="swiper-slide"><img
@@ -89,32 +85,28 @@
 									<div class="swiper-container gallery-thumbs">
 										<ol class="swiper-wrapper">
 											<c:if test="${ empty volunteer.volre1 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre1 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre1 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre2 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre2 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre2 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre3 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre3 }">
 												<li class="swiper-slide"><img
 													src="/runningdog/resources/vfiles/${volunteer.volre3 }" /></li>
 											</c:if>
 											<c:if test="${ empty volunteer.volre4 }">
-												<li class="swiper-slide"><img
-													src="/runningdog/resources/images/test/animalImg01.jpg" /></li>
+												<li class="swiper-slide"><img src="/runningdog/resources/images/common/noImage02.png"/></li>
 											</c:if>
 											<c:if test="${ !empty volunteer.volre4 }">
 												<li class="swiper-slide"><img
@@ -156,8 +148,9 @@
                                     <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </dt>
                                 <dd>
+                                <!-- 카카오지도 -->
                                     <div id="map" style="width:100%;height:350px;"></div>
-                                    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01975b71985ce8a6ebd803e488cb6d08&libraries=services"></script>
+                                    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78554901e4ce05b55a812c066e4b2f3b&libraries=services"></script>
                                   <script>
                                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                                     mapOption = {
@@ -194,9 +187,9 @@
                                         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                                         map.setCenter(coords);
                                     } 
-                                    });  
-
+                                    });
                                   </script>
+                                  <!-- 카카오지도 -->
                                     <h3 class="mt30">센터정보</h3>
                                     <table class="serviceInfo">
                                        <colgroup>
@@ -218,12 +211,12 @@
                                             </tr>
                                             <tr>
                                                 <th>담당자</th>
-                                                <td>${volunteer.volwriter }</td>
+                                                <td>${volunteer.volwriter } / #${ volunteer.unique_num }</td>
                                                 <th>모집기간</th>
-                                               		<c:if test="${ volunteer.volche eq 'Y' }">
+                                               		<c:if test="${ volunteer.volche eq 'y' }">
                                                  		 <td>상시모집 / <span class="serviceOn">모집중</span></td>
                                                		</c:if>
-                                               		<c:if test="${ volunteer.volche ne 'Y'}">
+                                               		<c:if test="${ volunteer.volche eq 'n'}">
                                                  		 <td>상시모집 / <span class="serviceOn">모집완료</span></td>
                                                		</c:if>
                                             </tr>
@@ -249,32 +242,35 @@
                     
                         <!-- 버튼 -->
                         <div class="viewBtn-wrap">
-                            <c:url var="vpre" value="vpre.do">
+                            <c:url var="vpre" value="vpreMypage.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
                             	<c:param name="searchFiled" value="${ searchFiled }" />
 								<c:param name="searchValue" value="${ searchValue }" />
 								<c:param name="volche" value="${ volunteer.volche }"/>
+								<c:param name="unique_num" value="${ loginMember.uniqueNum }"/>
                             </c:url>
-                            <button class="prevBtn" onclick="javascript:location.href='${vpre}'"><i class="xi-angle-left-min"></i>이전</button>
-                            <button class="listBtn" onclick="location.href='vlist.do'"><i class="xi-rotate-left"></i>목록</button>
+                            <button class="prevBtn" onclick="javascript:location.href='${vpre}'">이전<i class="xi-angle-right-min"></i></button>
+                            
                             <c:url var="vdel" value="vdelete.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
                             </c:url>
-                            <c:if test= "${ sessionScope.loginMember.userId == volunteer.volwriter }">
+                            <c:if test= "${ sessionScope.loginMember.nickname == volunteer.volwriter }">
                             <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
-                            <c:url var="vup" value="vUpdateView.do">
+                            <button class="listBtn" onclick="location.href='vlistmy.do?unique_num=${loginMember.uniqueNum}'"><i class="xi-rotate-left"></i>목록</button>
+                            <c:url var="vup" value="vUpdateViewMy.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
-                            	<c:param name="page" value="${currentPage}"/>
+                            	<c:param name="unique_num" value="${ loginMember.uniqueNum}"/>
                             </c:url>
                             <button class="modifiedBtn" onclick="javascript:location.href='${vup}'"><i class="xi-pen-o"></i>수정</button>
                             </c:if>
-                            <c:url var="vnext" value="vnext.do">
+                            <c:url var="vnext" value="vnextMypage.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
                             	<c:param name="searchFiled" value="${ searchFiled }" />
 								<c:param name="searchValue" value="${ searchValue }" />
 								<c:param name="volche" value="${ volunteer.volche }"/>
+								<c:param name="unique_num" value="${ loginMember.uniqueNum }"/>
                             </c:url>
-                            <button class="nextBtn" onclick="javascript:location.href='${vnext}'">다음<i class="xi-angle-right-min"></i></button>
+                            <button class="nextBtn" onclick="javascript:location.href='${vnext}'"><i class="xi-angle-left-min"></i>다음</button>
                         </div>
                         <!-- 버튼 끝 --> 
                         

@@ -91,4 +91,12 @@ public class VolunteerDao {
 	public int selectListCountMypage(Volunteer volunteer) {
 		return session.selectOne("volunteerMapper.selectListCountMypage", volunteer );
 	}
+
+	public int selectVolunteerPreMypage(Volunteer volunteer) {
+		return session.selectOne("volunteerMapper.selectVolunteerPreMypage", volunteer);
+	}
+
+	public int selectVolunteerNextMypage(Volunteer volunteer) {
+		return session.selectOne("volunteerMapper.selectVolunteerNextMypage", volunteer);
+	}
 }

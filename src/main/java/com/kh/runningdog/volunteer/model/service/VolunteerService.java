@@ -26,4 +26,6 @@ public interface VolunteerService {
 	int deleteVBreplyAll(int volno);
 	ArrayList<Volunteer> selectListMypage(Volunteer volunteer);
 	int selectListCountMypage(Volunteer volunteer);
+	int selectVolunteerPreMypage(Volunteer volunteer);
+	int selectVolunteerNextMypage(Volunteer volunteer);
 }

@@ -93,24 +93,27 @@ function deleteAction(){
                         <col width="8%">
                         <col width="8%">
                         <col width="*">
-                        <col width="10%">
-                        <col width="10%">
+                        <col width="8%">
+                        <col width="8%">
+                        <col width="15%">
+                        <col width="8%">
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>전체 &nbsp;&nbsp;<input type="checkbox" name="checkAll" onclick="checkAll();"></th>
+                            <th class="checkBox"><input type="checkbox" name="checkAll" onclick="checkAll();"></th>
                             <th>번호</th>
                             <th>모집상태</th>
                             <th>썸네일</th>
-                            <!-- <th>지역</th> -->
                             <th>제목</th>
                             <th>센터명</th>
+                            <th>지역</th>
+                            <th>기간</th>
                             <th>등록일</th>
                         </tr>
                         <tr>
                         </tr>
                         <tr class="hr">
-                            <th colspan="8"></th>
+                            <th colspan="9"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,39 +126,38 @@ function deleteAction(){
 									<c:param name="volche" value="${ v.volche }"/>
                             </c:url>
                         <tr>
-                            <td><input type="checkbox" name="checkDel" id="" value="${v.volno }"></td>
+                            <td class="checkBox"><input type="checkbox" name="checkDel" id="" value="${v.volno }"></td>
                             <td class="number" onclick="location.href='${vd}'">${v.volno}</td>
-                            <c:if test="${ v.volche eq'Y'}">
+                            <c:if test="${ v.volche eq'y'}">
                             <td class="kinds" onclick="location.href='${vd}'"><span class="protect">상시모집</span></td>
                             </c:if>
-                             <c:if test="${ v.volche eq'N'}">
+                             <c:if test="${ v.volche eq'n'}">
                             <td class="kinds" onclick="location.href='${vd}'"><span class="protect">모집완료</span></td>
                             </c:if>
                             <td class="thumbnail" onclick="location.href=''">
                             <c:if test="${ empty v.volre1 }">
-                            	<img src="/runningdog/resources/images/test/animalNews04.jpg">
+                            	<img src="/runningdog/resources/images/common/noImage02.png" style="border:2px solid #ff92a8;">
                             </c:if>
                             <c:if test="${ !empty v.volre1 }">
                             	<img src="/runningdog/resources/vfiles/${v.volre1}">
                             </c:if>
                             </td>
-                            <%-- <td class="location" onclick="location.href='${vd}'">${v.voladdress}</td> --%>
                             <td class="title" onclick="location.href='${vd}'">${ v.voltitle }</td>
                             <td class="name" onclick="location.href='${vd}'">${v.volname}</td>
+                            <td class="location" onclick="location.href='${vd}'">${v.voladdress}</td>
+                            <td class="date" onclick="location.href='${vd}'">${v.volterm1}~${v.volterm2}</td>
                             <td class="date" onclick="location.href='${vd}'">${v.voldate}</td>
                         </tr>
+                        
+                     	<c:if test="${ listCount eq 0}">
+                        <tr class="list-no">
+							<td colspan="9">
+								<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
+								<h1>목록이 없습니다.</h1>
+							</td>
+						</tr>
+                    	</c:if>
                      </c:forEach>
-                     <%-- <c:if test="${ listCount eq 0 }">
-							<tr class="list-no">
-								<td colspan="8">
-									<p>
-										<img src="/WEB-INF/resources/images/btnIcn/icn_big_listNo.png"
-											alt="" title="" />
-									</p>
-									<h1>목록이 없습니다.</h1>
-								</td>
-							</tr>
-						</c:if> --%>
                     </tbody>
                 </table>
                 <p class="warning_text"> *삭제된 게시물은 되돌릴 수 없습니다. 신중하게 선택해주세요.</p>
@@ -207,16 +209,7 @@ function deleteAction(){
 						</c:if>
 					</dd>
 				</dl>
-               </c:if>
-                     <c:if test="${ listCount eq 0}">
-                        <tr class="list-no">
-							<td colspan="7">
-								<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
-								<h1>목록이 없습니다.</h1>
-							</td>
-						</tr>
-                    </c:if>
-                        
+               </c:if>                        
                 <!-- //페이징 -->
 
             </div>

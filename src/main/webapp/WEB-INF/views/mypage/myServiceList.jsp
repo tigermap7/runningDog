@@ -23,7 +23,7 @@
                        <div>
                             <ul class="navi">
                                 <li><a href="main.do">홈</a></li>
-                                <li class="xi-angle-right"><a href="vlistmy.do">나의 자원봉사</a></li>
+                                <li class="xi-angle-right"><a href="vlistmy.do?unique_num=${loginMember.uniqueNum}">나의 자원봉사</a></li>
                             </ul>
                         </div>
                         <h2><span>나의 자원봉사</span></h2>
@@ -51,26 +51,33 @@ $(function(){
                         <!--서브 검색-->                
                         <div class="search_wrap">
                             <form action="vlistmy.do" name="">
-                            <select name="type">
-                                <option value="" class="fontColor-dark" selected disabled >전체</option>
-                                <option value="address" class="fontColor-dark">지역</option>
-                                <option value="name" class="fontColor-dark">센터명</option>
-                                <option value="term" class="fontColor-dark">기간(월)</option>
+                            <select name="searchFiled" id="searchS">
+                                <option value="voltitle" class="fontColor-dark" ${pageVO.searchFiled eq"voltitle"?"selected":""}>제목</option>
+                                <option value="voladdress" class="fontColor-dark" ${pageVO.searchFiled eq"voladdress"?"selected":""}>지역</option>
+                                <option value="volname" class="fontColor-dark"${pageVO.searchFiled eq"volname"?"selected":""}>센터명</option>
                             </select>
                             <div class="search-box">
-                                <input type="text" name="keyword" placeholder="원하시는 키워드를 검색해주세요.">
-                                 <button type="submit" name="sel" class="xi-search"></button>
+                                <input type="text" id="searchI" name="searchValue" placeholder="원하시는 키워드를 검색해주세요." value ="${ pageVO.searchValue }">
+                                <input type="hidden" name="unique_num" value="${ loginMember.uniqueNum }"/>
+                                 <button type="submit" name="sel" value="SEARCH"  class="xi-search"></button>
                             </div>
                             </form>
                         </div>
                         <!--서브 검색 끝-->
                         
                         <div class="sort-area">  
-                            <h4>전체 ${listCount}개</h4>
+                            <h4>전체 ${requestScope.totalCount}개</h4>
                             <div>
                                 <div>
-                                <form action="" name="">
-                                    <a class="active" href="#none">전체</a>
+                                <c:url var = "volC" value= "vlistmy.do">
+                                 	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+									<c:param name="searchValue" value="${pageVO.searchValue }" />
+									<c:param name="unique_num" value="${loginMember.uniqueNum }"/>
+								</c:url>
+                                <form action="vlistmy.do" name="">
+                                    <a ${ volche eq "y"?'class="active"' : "" }href="${volC}&volche=y">모집중</a>
+                                    <a ${ volche eq "n"?'class="active"' : "" }href="${volC}&volche=n">모집완료</a>
+                                    <a ${ empty volche ?'class="active"' : "" }href="${volC}">전체</a>
                                 </form>
                                 </div>
                             </div>
@@ -87,23 +94,28 @@ $(function(){
                                     <c:forEach var="v" items="${requestScope.list}">
                                   		<c:url var="vd" value="vdetailmy.do">
                                   	 		<c:param name="volno" value="${v.volno}"/>
-                                  	 		<c:param name="page" value="${currentPage}"/>
+                                  	 		<c:param name="pageNo" value="${ pageVO.pageNo }"/>
+                                 			<c:param name="searchFiled" value="${pageVO.searchFiled }" />
+											<c:param name="searchValue" value="${pageVO.searchValue }" />
+											<c:param name="volche" value="${ v.volche }"/>
+											<c:param name="unique_num" value="${loginMember.uniqueNum }"/>
+											<c:param name="volwriter" value="${ v.volwriter }"/>
                                   		</c:url>
-                                  		<c:if test="${ v.volche eq 'Y' }">
+                                  		<c:if test="${ v.volche eq 'y' }">
                                     <tr class="serviceOn" onclick="location.href='${vd}'">
                                     	</c:if>
-                                    	<c:if test="${ v.volche ne 'Y' }">
+                                    	<c:if test="${ v.volche eq 'n' }">
                                     <tr class="serviceOut" onclick="location.href='${vd}'">
                                         </c:if>
                                         <td class="img">
-                                           <c:if test="${ v.volche eq 'Y' }">  
+                                           <c:if test="${ v.volche eq 'y' }">  
                                               <span>모집중</span>
                                            </c:if>
-                                           <c:if test="${ v.volche ne 'Y' }">
+                                           <c:if test="${ v.volche eq 'n' }">
                                           	  <span>마감</span>
                                            </c:if>
                                            <c:if test="${ empty v.volre1 }">
-                                            <img src="/runningdog/resources/images/test/animalNews04.jpg">
+                                            <img src="/runningdog/resources/images/common/noImage02.png" style="border:2px solid #ff92a8;">
                                            </c:if>
                                            <c:if test="${ !empty v.volre1 }">
                                             <img src="/runningdog/resources/vfiles/${v.volre1 }">
@@ -118,7 +130,7 @@ $(function(){
                                                 	<c:if test="${ v.volche eq'y'}">
                                                 			모집중</li>
                                                		</c:if>
-                                               		<c:if test="${ v.volche ne'y'}">
+                                               		<c:if test="${ v.volche eq'n'}">
                                                				모집완료</li>
                                                		</c:if>
                                                		<c:if test="${!empty v.volterm1 }">
@@ -128,76 +140,67 @@ $(function(){
                                         </td>
                                         <td><a href="${vd}">자세히 보기 <i class="xi-eye-o"></i></a></td>
                                     </tr>
-                                   </c:forEach>
-                                </tbody>
+                                    </c:forEach>
+									<c:if test="${ listCount eq 0}">
+										<div class="list-no">
+											<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
+											<h1>목록이 없습니다.</h1>
+										</div>
+									</c:if>
+								</tbody>
                             </table>
                         <!-- 리스트 끝 -->
                     
                         <!-- 페이징 -->
-                         <c:if test="${listCount > 0}">
+                         <c:if test="${totalCount > 0}">
                         <dl class="list-paging">
                             <dd>
-                            <c:if test="${currentPage <= 1 }">
-                                <a><i class="xi-angle-left"></i></a>
-                            </c:if>
-                            <c:if test="${currentPage > 1}">
-                            	<c:url var="sl" value="vlistmy.do">
-                               		<c:param name="page" value="1"/>
-                                </c:url>
-                                 <a href="${sl}"><i class="xi-angle-left"></i></a>
-                            </c:if>
-                            	<!-- 이전그룹으로 이동처리 -->
-                            <c:if test="${currentPage > 10 }">
-                            	<c:if test="${(currentPage -10) < startPage && (currentPage -10) }">
-                                <c:url var="slbefore" value="vlistmy.do">
-                                	<c:param name="page" value="${startPage - 10}"/>
-                                </c:url>
-                                  <a href="${slbefore}"><i class="xi-angle-left"></i></a>
-                                </c:if>
-                             </c:if>
-                             	<!-- 현재 페이지가 속한 페이지 그룹의 숫자 출력 처리 -->
-                           <c:forEach var="p" begin="${startPage}" end="${endPage}" step="1">
-                              <c:if test="${p eq currentPage }">
-                              		<a class="active">${ p }</a>
-                              </c:if>	
-                              <c:if test="${p ne currentPage }">
-                              		<c:url var="slp" value="vlistmy.do">
-                              			<c:param name="page" value="${p}"/>
-                              		</c:url>
-                              		   <a href="${slp}">${p}</a>
-                              </c:if>
-                           </c:forEach>
-                             <!-- 다음그룹으로 이동처리 -->
-                            <c:if test="${currentPage > 10 }">
-                            	<c:if test="${(currentPage +10) > endPage &&(currentPage + 10) < maxPage }">
-                                <c:url var="slafter" value="vlistmy.do">
-                                	<c:param name="page" value="${ endPage +10 }"/>
-                                </c:url>
-                                  <a href="${slafter}"><i class="xi-angle-right"></i></a>
-                                </c:if>
-                             </c:if>
-                             <!-- 맨끝 페이지로 이동처리 -->
-                             <c:if test="${currentPage >= maxPage }">
-                                <a><i class="xi-angle-right"></i></a>
-                            </c:if>
-                            <c:if test="${currentPage < maxPage}">
-                            	<c:url var="sl2" value="vlistmy.do">
-                               		<c:param name="page" value="${maxPage }"/>
-                                </c:url>
-                                 <a href="${sl2}"><i class="xi-angle-right"></i></a>
-                            </c:if>
-                            </dd>
+								<c:if test="${pageVO.pageNo >0 }">
+									<c:if test="${pageVO.startPageNo >5 }">
+										<c:url var = "dl1" value="vlistmy.do">
+											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
+											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
+											<c:param name="searchValue" value="${pageVO.searchValue }"/>
+											<c:param name="volche" value="${ volunteer.volche }"/>
+											<c:param name="unique_num" value="${ loginMember.uniqueNum }"/>
+										</c:url>
+										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
+									</c:if>
+									<c:forEach var="i" begin="${pageVO.startPageNo}"
+										end="${ pageVO.endPageNo }" step="1">
+										<c:url var = "dl2" value="vlistmy.do">
+												<c:param name="pageNo" value="${ i }"/>
+												<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
+												<c:param name="searchValue" value="${pageVO.searchValue }"/>
+												<c:param name="volche" value="${ volunteer.volche }"/>
+												<c:param name="unique_num" value="${ loginMember.uniqueNum }"/>
+											</c:url>
+										<c:choose>
+											<c:when test="${i eq pageVO.pageNo }">
+											
+												<a href="${dl2}" class="active">${ i }</a>
+											</c:when>
+											<c:otherwise>
+												<a href="${dl2}" class="">${ i }</a>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
+										<c:url var = "dl3" value= "vlistmy.do">
+											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
+											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
+											<c:param name="searchValue" value="${pageVO.searchValue }"/>
+											<c:param name="volche" value="${ volunteer.volche }"/>
+											<c:param name="unique_num" value="${ loginMember.uniqueNum }"/>
+										</c:url>
+										<a href="${dl3 }"><i
+											class="xi-angle-right"></i></a>
+									</c:if>
+								</c:if>
+							</dd>
                         </dl>
-                        </c:if>
-                        <c:if test="${listCount < 0 and listCount eq 0}">
-                        <tr class="list-no">
-							<td colspan="7">
-								<p><img src="/runningdog/resources/images/btnIcn/icn_big_listNo.png" alt="" title="" /></p>
-								<h1>목록이 없습니다.</h1>
-							</td>
-						</tr>
-                    </c:if>
-                        <!-- //페이징 -->
+                      </c:if>
+                      <!-- //페이징 -->
                     </div>
                 </div>
             </div>
