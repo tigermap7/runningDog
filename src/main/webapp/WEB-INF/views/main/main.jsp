@@ -137,7 +137,27 @@
                 <div class="main_animalNews">
                     <h2><span>'나의 작은 천사'</span>천사와<br/>함께보는 오늘의 이슈!</h2>
                     <ul class="grid" id="mainIssueList">
-                        <!-- li class="grid-sizer"></li-->
+                        <li class="grid-sizer"></li>
+                        <c:forEach items="${ requestScope.issuelist }" var="c">
+                        <li class="grid-item" onclick="moveIssueDetail(`${c.issueLink}`)">
+                            <div>
+                                <a class="xi-share-alt-o" onclick="event.cancelBubble=true" data-toggle="popover2" 
+                                data-url="http://192.168.130.170:9392/runningdog/cissuedetail.do?link=${ c.issueLink }"
+                                data-title="${ c.issueTitle }" data-image="${ c.issueThumbnail }"></a>
+                                <img src="${ c.issueThumbnail }">
+                            </div>
+                            <dl>
+                                <dt><img src="${ c.partnerImg }"></dt>
+                                <dd>
+                                    <h3>${ c.issueTitle }</h3>
+                                    <p>
+                                        작성자 : ${ c.partnerName }<br/>
+                                        작성일 : ${ c.issueDate }
+                                    </p>
+                                </dd>
+                            </dl>
+                        </li>
+                        </c:forEach>
                     </ul>
                 </div>
 
@@ -167,47 +187,4 @@
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
 	</body>
-	
-	<!-- 오늘의 이슈 ajax -->
- 	<script>
- 	$('.xi-share-alt-o').click(function(){
- 		
- 		console.log("클릭확인용");
- 	});
-
- 	
-	$(function(){
-		$.ajax({
-			url : "mainIssueList.do",
-		    type : "post",
-		    dataType : "json",
-		    success : function(data) {
-		    	console.log("mainIssueList success : " + data)
-		        var jsonStr = JSON.stringify(data);
-		        var json = JSON.parse(jsonStr);
-		        			 
-		        var values = "";
-		        for( var i in json.list) {
-		        	values +=  '<li class="grid-item" onclick=moveIssueDetail("'+ json.list[i].link +'");>'
-		        		+ '<div><a class="xi-share-alt-o" onclick="event.cancelBubble=true" data-toggle="popover2" data-link="http://192.168.130.170:9392/runningdog/cissuedetail.do?link=' + json.list[i].link + '" data-title="' + decodeURIComponent(json.list[i].title) + '" data-image="' + json.list[i].thumbnail + '"></a>' 
-		        	    + '<img src="' + json.list[i].thumbnail + '"></div>'
-		        	    + '<dl><dt><img src="' + json.list[i].partnerImg + '"></dt>'
-		                + '<dd><h3>' + decodeURIComponent(json.list[i].title) + '</h3>'
-		                + '<p>'
-		                + '작성자 : ' + decodeURIComponent(json.list[i].partnerName) + '<br/>'
-		                + '작성일 : ' + json.list[i].date  
-		                + '</p></dd></dl></li>';
-		        				 
-		        }
-		        
-		        $("#mainIssueList").html(values);
-		        
-			},
-		 	error: function(jqXHR, textstatus, errorthrown) {
-		 		console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-		 	}
-		}); //ajax
-		        	 
-	}); //document.ready 
-	</script> 
 </html>
