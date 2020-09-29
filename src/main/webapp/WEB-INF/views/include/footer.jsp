@@ -20,7 +20,7 @@
 	    </c:if>
 		<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">
         <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
-        <li><a href="/WEB-INF/views/mypage/myServiceList.jsp">나의 자원봉사</a></li>
+        <li><a href="vlistmy.do?unique_num=${loginMember.uniqueNum}">나의 자원봉사</a></li>
         <li><a href="moveChatting.do">나의 채팅</a></li>
         <li><a href="logout.do">로그아웃</a></li>
 	    </c:if>
