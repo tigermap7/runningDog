@@ -52,7 +52,7 @@
                         </tr>
                         <tr>
                             <td>썸네일</td>
-                            <td><input type="file" name="upfile" accept="image/*"></td>
+                            <td><input id="wfile" type="file" name="upfile" accept="image/*"></td>
                         </tr>
                         <tr>
                             <td>내용</td>

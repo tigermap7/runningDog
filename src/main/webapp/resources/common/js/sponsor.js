@@ -14,7 +14,7 @@ $(function(){
 			var surl = "http://192.168.30.34:9392/runningdog/sdetail.do?sNum=" + sid;
 			
 			var value = "";
-			value += "<a href='javascript:snsGos(1, "+sid+", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
+			value += "<a href='javascript:snsGos(1, \""+surl+"\", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
 			value += "<a id='kakao-link-btn' href='javascript:sendLinks("+sid+", \""+stitle+"\", \""+ssummary+"\", \""+simage+"\", "+scount+");'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
 			value += "<a href='javascript:snsGos(3, \""+surl+"\", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
 			value += "<a href='javascript:snsGos(4, \""+surl+"\", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
@@ -217,10 +217,14 @@ $(function(){
 //썸네일 알림
 $(function(){
 	$("#cucu").on("click", function(){
-		if($("input[name='upfile']").val().length == 0) {
+		if($("#wfile").val().length == 0) {
 			alert("썸네일을 선택해주세요");
 			return false;
 		}
+		/*if($("#showSelect").show() && $("#ufile").val().length == 0){
+			alert("썸네일을 선택해주세요");
+			return false;
+		}*/
 	});
 });
 
@@ -276,6 +280,8 @@ $(function(){
 		$('#no').addClass('active');
 		$("#re").attr("data-val", "n");
 		$("input[name=spSnumber]").attr("value", "");
+		$("#jumin1").val("");
+		$("#jumin2").val("");
 	});
 });
 

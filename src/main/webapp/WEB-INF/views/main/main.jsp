@@ -41,7 +41,16 @@
         				}
         			});
         });
-        
+      	//공백만 입력하고 검색할 때
+        $(function(){
+        	$("#dsub").on("click", function(){
+        	var keyword = $.trim($("input[name=searchValue]").val());
+        		if(keyword == "") {
+        			alert("내용을 입력해주세요.");
+        			return false;
+        		}
+        	});
+        });
         </script>
 	</head>
 	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
@@ -105,7 +114,7 @@
                     <div class="search-box">
                         <input type="text" name="searchValue" placeholder="작은 천사들을 검색해주세요.">
                         <input type="hidden" name="searchFiled" value="d_title"/>
-                        <button type="submit" class="xi-search"></button>
+                        <button id="dsub" type="submit" class="xi-search"></button>
                     </div>
                 </form>
                 </div>

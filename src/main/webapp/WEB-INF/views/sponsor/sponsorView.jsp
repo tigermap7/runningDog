@@ -37,8 +37,8 @@
                             <div class="sPaymentTitle">
                                 <p>
                                     조회수 : ${ sponsor.sCount } · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
-                                    <a data-id="${ sponsor.sNum }" data-title="${ sponsor.sTitle }" data-summary="${ sponsor.sSummary }" data-image="${ s.sRename }"
-                                    	 data-count="${ sponsor.sCount }" class="linkBtn" data-toggle="popover"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    <a data-sid="${ sponsor.sNum }" data-stitle="${ sponsor.sTitle }" data-ssummary="${ sponsor.sSummary }" data-simage="${ sponsor.sRename }"
+                                    	 data-scount="${ sponsor.sCount }" data-toggle="spopover" class="linkBtn"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </p>
                                 
                                 <div>
