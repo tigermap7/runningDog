@@ -216,9 +216,9 @@ public class AnimalController {
 		
 		return url;
 	}
-	
-		@RequestMapping("insertAnimal.do")
-	   public void animalInsert(HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
+	   //매일 오전 6시에 최신 데이터 추가
+	   @Scheduled(cron = "0 0 6 * * *")
+	   public void animalInsert() throws IOException {
 
 	      Date today = new Date();        
 	      SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
@@ -247,18 +247,17 @@ public class AnimalController {
 
 	         // root tag
 	         doc.getDocumentElement().normalize();
-	         System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+	         logger.info("Root element :" + doc.getDocumentElement().getNodeName());
 
 	         // 파싱할 tag
 	         NodeList nList = doc.getElementsByTagName("item");
 	         
-	         System.out.println("파싱할 리스트 수 : " + nList.getLength());
+	         logger.info("파싱할 리스트 수 : " + nList.getLength());
 	         
 	         
 	         for (int temp = 0; temp < nList.getLength(); temp++) {
 	            Node nNode = nList.item(temp);
-	            //System.out.println("temp"+temp);
-	            //System.out.println("nNode"+nNode);
+	           
 	            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 	               Element eElement = (Element) nNode;
