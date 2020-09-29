@@ -96,12 +96,19 @@
 								<td class="checkBox"><input type="checkbox" name="leaveChk" id="${ member.uniqueNum }" value=""></td>
 								<td class="number" onclick="location='${ memberView }'">${ listNo }</td>
 								<td class="userId" onclick="location='${ memberView }'">${ member.userId }</td>
+								
 								<c:if test="${ member.renameProfile eq null }">
 								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/common/userBg.png"/>${ member.nickname }</td>
-								</c:if>        
+								</c:if>
 								<c:if test="${ member.renameProfile ne null }">
+								<c:if test="${ member.loginType eq null or member.loginType eq 'facebook' }">
 								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${member.renameProfile}"/>${ member.nickname }</td>
 								</c:if>
+								<c:if test="${ member.loginType ne null and member.loginType ne 'facebook' }">
+								<td class="userName" onclick="location='${ memberView }'"><img src="${member.renameProfile}"/>${ member.nickname }</td>
+								</c:if>
+								</c:if>
+								
 								<td class="phone" onclick="location='${ memberView }'">${ member.phone }</td>
 								<td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.joinDate }"/></td>
 								<td class="lastAccessDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ member.lastAccessDate }"/></td>

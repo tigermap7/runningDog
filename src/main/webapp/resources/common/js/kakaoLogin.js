@@ -35,10 +35,12 @@
 	
 	//카카오 연결끊기(회원탈퇴) 메소드
 	function unlinkApp() {
+		console.log("카카오 연결끊기 11111");
 		Kakao.API.request({
 			url: '/v1/user/unlink',
 			success: function(res) {
-	        //alert('success: ' + JSON.stringify(res))
+				console.log("카카오 연결끊기 완료");
+            	window.location.href = 'logout.do';
 			},
 			fail: function(err) {
 				alert('fail: ' + JSON.stringify(err))

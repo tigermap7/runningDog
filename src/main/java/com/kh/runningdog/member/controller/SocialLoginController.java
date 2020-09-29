@@ -61,7 +61,7 @@ public class SocialLoginController {
 		logger.info("kakaoLogin run...");
 
 		member.setUserId(userId);
-		Member loginMember = memberService.selectFacebookLogin(member);
+		Member loginMember = memberService.selectLogin(member);
 
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -162,7 +162,7 @@ public class SocialLoginController {
         
      
 		member.setUserId(naverUserId);
-		Member loginMember = memberService.selectFacebookLogin(member);
+		Member loginMember = memberService.selectLogin(member);
 		
 		String url = null;
 		
@@ -205,7 +205,7 @@ public class SocialLoginController {
 
 		logger.info("facebookLogin run...");
 		member.setUserId(userId);
-		Member loginMember = memberService.selectFacebookLogin(member);
+		Member loginMember = memberService.selectLogin(member);
 		
 		String url = null;
 		

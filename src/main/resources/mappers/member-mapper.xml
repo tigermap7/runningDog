@@ -67,7 +67,13 @@
 	</update>
 	
 	<update id="updateLastAccessDate" parameterType="Member">
-		update member set last_access_date = #{lastAccessDate}, login_type = #{loginType} where user_id = #{userId}
+		update member set last_access_date = #{lastAccessDate},
+		
+  		<if test="'renameProfile' != null">
+  			rename_profile = #{renameProfile},
+		</if>
+		
+		login_type = #{loginType} where user_id = #{userId}
 	</update>
 	
 	<delete id="deleteMember" parameterType="Member">
@@ -78,10 +84,6 @@
 	
 	
 	<!-- 간편로그인, 회원가입, 소셜마이페이지 -->
-	<select id="selectFacebookLogin" parameterType="Member" resultMap="resultMember">
-		select * from member where user_id = #{userId}
-	</select>
-	
 	<select id="insertFacabookMember" parameterType="Member">
 		insert into member values (UNIQUE_NUM_SEQ.NEXTVAL, #{userId}, null, #{nickname}, #{phone}, #{originProfile}, #{renameProfile}, DEFAULT, DEFAULT, null, DEFAULT, DEFAULT)
 	</select>

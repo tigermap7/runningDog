@@ -808,10 +808,4 @@
     .chattingList colgroup col:first-child {
         width: 20%;
     }
-    .chattingList colgroup col:last-child {
-        display: none;
-    }
-    .chattingList tbody tr td:last-child {
-        display: none;
-    }
 }

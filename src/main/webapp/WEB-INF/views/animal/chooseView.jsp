@@ -280,9 +280,14 @@ $(function() {
 								<li ${ d.dreLevel eq 2? "style='background-color: #f0f0f0; padding: 0.375rem 3rem;'" : "" }>
 								<dl>
 									<dt class="img">
-										<i ${ d.dreLevel eq 2? "class='xi-check-circle-o' style='font-size:22px'" : "" }></i>
+									
+										<c:if test="${ loginMember.renameProfile eq null  }">
+										<img src="/runningdog/resources/images/common/userBg.png"/>
+										</c:if>
+										<c:if test="${ loginMember.renameProfile ne null }">
+										<img src="/runningdog/resources/images/memberImg/${loginMember.renameProfile}"/>
+										</c:if>
 										
-										<img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}">
 									</dt>
 										<dd>
 											<h4>${ d.dreWriter }/#${ d.uniqueNum }</h4>
@@ -337,189 +342,6 @@ $(function() {
 									</li>
 							</c:forEach>
 						</ul>
-<!--  <script type="text/javascript">
-                      $(function(){
-                    	  getCommentList()
-                      });
-                      var arrdreNum = new Array();
-          			var arrdNum = new Array();
-          			var arrdreWriter = new Array();
-          			var arrdreMdate = new Array();
-          			var arrdreContent = new Array();
-          			var arruniqueNum = new Array();
-          			var arrLevel =new Array();
-          			var index = new Array();
-					var idx ="";
-function getCommentList() {	
-	$.ajax({
-		url : "dreplyList.do",
-		type : "post",
-		data : {dNum : ${dboard.dNum}},
-		dataType : "json",
-		success : function(data) {
-			console.log(data);
-
-			var objStr = JSON.stringify(data);
-			var jsonObj = JSON.parse(objStr);
-			var totalcount = (jsonObj.list).length;	
-			
-			var output = "";
-			$("#totalcount").text('댓글 갯수 : ' + totalcount );
-
-			for(var i in jsonObj.list) {
-				idx = i;
-				arrdreNum[i] = jsonObj.list[i].dreNum;
-				arrdNum[i] = jsonObj.list[i].dNum;
-				arrdreWriter[i] = decodeURIComponent(jsonObj.list[i].dreWriter).replace(/\+/gi, " ");
-				arrdreMdate[i] = jsonObj.list[i].dreMdate;
-				arrdreContent[i] = decodeURIComponent(jsonObj.list[i].dreContent).replace(/\+/gi, " ");
-				arruniqueNum[i] = jsonObj.list[i].uniqueNum;
-				output +='<li><dl>'+
-                        '<dt class="img"><img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}"></dt>'+
-                        '<dd><h4>'+arrdreWriter[i]+ '/'+ arruniqueNum[i]+'</h4></dd>'+
-                        '<dt class="cmt_date">'+arrdreMdate[i]+'</dt></dl>'+
-                    	'<p>'+arrdreContent[i]+'</p>'+
-                    	'<div class="cmt_conBtn"> <button class="Subcmt_btn">대댓글</button>'+
-            			'<button onclick= \"location.href='+"''"+'" style="float: right;">삭제</button>'+
-            			'<button class="Cmt_update_btn" >수정</button><br><br><div class="Cmt_update" style="display: none;">'+
-						'<form name="updateDreply" action="" method="post">'+
-						'<input type="hidden" name="dreNum" id="dreNumUp" value="'+arrdreNum[i]+'">'+
-						'<fieldset><div class="cmt_form">'+
-						'<div class="cmt_body"><textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" >'+arrdreContent[i]+'</textarea>'+
-						'<div class="cmt_ok"><input type="button" class="updateDreply" onclick="updateDreply(${result.code})" value="수정"></div></div></div></fieldset>'+
-						'</form></div><div style="display:none" class="Subcmt" id="commentReply">'+
-           			    '<form action="" method="post">'+
-           			 	'<input type="hidden" name="dreNumLevel" id="dreNumLevel" value="'+arrdreNum[i]+'"'+
-						'<input type="hidden" name="dNumLevel" id="dNum" value="'+arrdNum[i]+'">'+
-						'<input type="hidden" name="dreWriterLevel" id="dreWriterLevel" value="${loginMember.nickname}">'+
-						'<input type="hidden" name="uniqueNumLevel" id="uniqueNumLevel" value="${loginMember.uniqueNum}">'+
-						'<fieldset><div class="cmt_form"><div class="cmt_body">'+
-						'<textarea name="dreContentLevel" id="dreContentLevel" style="resize: none; width:100%; min-height:100px; max-height:100px;"'+ 'onfocus="this.value='+"''"+';"></textarea>'+
-                        '<div class="cmt_ok"><input type="button" onclick="DreplyLevelSubmit('+idx+')" value="등록" ></div></div></div></fieldset></form></div></li>';
-			}
-	
-			
-			$("#dreply").empty();
-			$("#dreply").html(output);
-			
-		},
-		error : function(jqXHR, textstatus, errorthrown) {
-			console.log("error : " + jqXHR + ", " + textstatus
-					+ ", " + errorthrown);
-		}
-	}); // ajax
-}	
-
-// 댓글 추가
-function DreplySubmit(code) {
-	if (document.getElementById("dreContent").value == "") {
-		alert("내용을 입력해주세요");
-		return false;
-	}else
-		$.ajax({
-			url : "insertDreply.do",
-			type:'POST',
-			data : {dreContent : $('#dreContent').val(),dNum : $('#dNum').val(), dreWriter : $('#dreWriter').val(), uniqueNum : $('#uniqueNum').val()},
-			success : function(data){
-				console.log(data);
-				if(data == 1) {
-					alert("댓글이 등록되었습니다."); 
-				} else {
-					alert("댓글 등록을 실패했습니다."); 
-				}
-				$("#dreContent").val("");
-				getCommentList();
-			},
-			error:function(request,status,error){
-				alert("로그인후 이용해주세요.");
-				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-			}
-		});
-}
-
-//대댓글 추가
-function DreplyLevelSubmit(idx) {
-	if (document.getElementById("dreContentLevel").value == "") {
-		alert("내용을 입력해주세요");
-		return false;
-	}else
-		$.ajax({
-			url : "insertDreplyLevel.do",
-			type:'POST',
-			data : {dreContent :$('#dreContent').val() ,dNum : $('#dNum').val(),dreNum : $('#dreNumLevel').val(), dreWriter : $('#dreWriterLevel').val(), uniqueNum : $('#uniqueNumLevel').val()},
-			success : function(data){
-				console.log(data);
-				if(data == 1) {
-					
-					alert("대댓글이 등록되었습니다."); 
-				} else {
-					alert("대댓글 등록을 실패했습니다."); 
-				}
-				$("#dreContentLevel").val("");
-				getCommentList();
-			},
-			error:function(request,status,error){
-				console.log(dNum);
-				console.log(dreNum);
-				alert("로그인후 이용해주세요.");
-				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-			}
-		});
-}
-//댓글 수정
-
-function updateDreply(code) {
-	if (document.getElementById("dreContentup").value == "") {
-		alert("내용을 입력해주세요");
-		return false;
-	}else
-		$.ajax({
-			url : "updateDreply.do",
-			type:'POST',
-			data : {dreContent : $('#dreContentup').val(),dreNum : $('#dreNum').val()},
-			success : function(data){
-				console.log(data);
-				if(data == 1) {
-					alert("댓글이 수정 되었습니다."); 
-				} else {
-					alert("댓글 수정을 실패했습니다."); 
-				}
-				$("#dreContent").val("");
-				getCommentList();
-			},
-			error:function(request,status,error){
-				alert("로그인후 이용해주세요.");
-				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-			}
-		});
-}
-
-
-
-// 댓글 삭제
-function Dreplydelete(dreNum) {
-	console.log(dreNum + "댓글 삭제하기")
-	
-	$.ajax({
-		url : "updateDreplyDel.do",
-		type:'POST',
-		data : {dreNum : dreNum },
-		success : function(data){
-			if(data == 1) {
-				alert("댓글이 삭제되었습니다."); 
-			} else {
-				alert("댓글 삭제를 실패했습니다."); 
-			}
-			getCommentList();
-		},
-		error:function(request,status,error){
-			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-		}
-	});
-}
-
-</script> -->
-
                     </div>
                 </div>
             </div>

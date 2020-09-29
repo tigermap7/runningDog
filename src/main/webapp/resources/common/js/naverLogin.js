@@ -1,6 +1,6 @@
 var naverLogin = new naver.LoginWithNaverId({
 	clientId: "BH_kSon1igZkUqwElBdD",
-	callbackUrl: "http://localhost:9392/runningdog/login.do",
+	callbackUrl: "http://192.168.30.34:9392/runningdog/login.do",
 	isPopup: true, /* 팝업을 통한 연동처리 여부 */
 	loginButton: {color: "green", type: 3, height: 60}
 	/* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */
