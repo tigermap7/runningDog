@@ -70,7 +70,7 @@
                             <c:if test="${ empty sponsor.sOriginal }">
                             	<td><input type="file" name="upfile" accept="image/*"></td>
                             </c:if>
-                            	<td id="showSelect"><input type="file" name="upfile" accept="image/*"></td>
+                            	<td id="showSelect"><input id="ufile" type="file" name="upfile" accept="image/*"></td>
                         </tr>
                         <tr>
                             <td>내용</td>

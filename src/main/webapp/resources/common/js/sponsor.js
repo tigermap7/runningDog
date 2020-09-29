@@ -22,6 +22,7 @@ $(function(){
          return value;
       }
    });
+
 });
 
 //팝오버 범위 밖 클릭하면 닫기 
@@ -216,12 +217,17 @@ $(function(){
 
 //썸네일 알림
 $(function(){
-   $("#cucu").on("click", function(){
-      if($("input[name='upfile']").val().length == 0) {
-         alert("썸네일을 선택해주세요");
-         return false;
-      }
-   });
+
+	$("#cucu").on("click", function(){
+		if($("#wfile").val().length == 0) {
+			alert("썸네일을 선택해주세요");
+			return false;
+		}
+		/*if($("#showSelect").show() && $("#ufile").val().length == 0){
+			alert("썸네일을 선택해주세요");
+			return false;
+		}*/
+	});
 });
 
 //썸머노트때문에 리셋추가
@@ -263,22 +269,22 @@ function showFileSelect(snum) {
 
 //기부금 영수증
 $(function(){
-   $('#spnum').hide();
-   $("#yes").on("click", function(){
-      $("#spnum").show();
-      $('#no').removeClass('active');
-      $('#yes').addClass('active');
-      $("#re").attr("data-val", "y");
-   });
-   $("#no").on("click", function(){
-      $("#spnum").hide();
-      $('#yes').removeClass('active');
-      $('#no').addClass('active');
-      $("#re").attr("data-val", "n");
-      $("input[name=spSnumber]").attr("value", "");
-      $("#jumin1").val("");
-      $("#jumin2").val("");
-   });
+	$('#spnum').hide();
+	$("#yes").on("click", function(){
+		$("#spnum").show();
+		$('#no').removeClass('active');
+		$('#yes').addClass('active');
+		$("#re").attr("data-val", "y");
+	});
+	$("#no").on("click", function(){
+		$("#spnum").hide();
+		$('#yes').removeClass('active');
+		$('#no').addClass('active');
+		$("#re").attr("data-val", "n");
+		$("input[name=spSnumber]").attr("value", "");
+		$("#jumin1").val("");
+		$("#jumin2").val("");
+	});
 });
 
 //개인 or 사업자

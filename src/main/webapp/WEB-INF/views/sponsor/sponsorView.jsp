@@ -38,7 +38,7 @@
                                 <p>
                                     조회수 : ${ sponsor.sCount } · <fmt:formatDate value="${ sponsor.sDate }" pattern="yyyy.MM.dd" />
                                     <a data-sid="${ sponsor.sNum }" data-stitle="${ sponsor.sTitle }" data-ssummary="${ sponsor.sSummary }" data-simage="${ sponsor.sRename }"
-                                        data-scount="${ sponsor.sCount }" data-toggle="spopover" class="linkBtn"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    	 data-scount="${ sponsor.sCount }" data-toggle="spopover" class="linkBtn"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </p>
                                 
                                 <div>
