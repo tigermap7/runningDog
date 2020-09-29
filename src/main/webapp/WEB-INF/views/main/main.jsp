@@ -56,21 +56,21 @@
                         <div class="main_visual">
                             <h2>가족이 되어주세요.</h2>
                             <p>매년 수많은 반려동물이 유기되어 가족을 잃은<br/>슬픔을 안고 보호센터에서 살아가고 있어요.</p>
-                            <a href="#none" role="button">자세히보기<i class="xi-long-arrow-right"></i></a>
+                            <a href="dboardList.do" role="button">자세히보기<i class="xi-long-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="swiper-slide middle">
                         <div class="main_visual">
                             <h2>가족이 되어주세요.</h2>
                             <p>매년 수많은 반려동물이 유기되어 가족을 잃은<br/>슬픔을 안고 보호센터에서 살아가고 있어요.</p>
-                            <a href="#none" role="button">자세히보기<i class="xi-long-arrow-right"></i></a>
+                            <a href="dboardList.do" role="button">자세히보기<i class="xi-long-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="swiper-slide last">
                         <div class="main_visual">
                             <h2>가족이 되어주세요.</h2>
                             <p>매년 수많은 반려동물이 유기되어 가족을 잃은<br/>슬픔을 안고 보호센터에서 살아가고 있어요.</p>
-                            <a href="#none" role="button">자세히보기<i class="xi-long-arrow-right"></i></a>
+                            <a href="dboardList.do" role="button">자세히보기<i class="xi-long-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
 
                 <div class="main_banner">
                     <ul>
-                        <li>
+                        <li onclick="location.href='movePlist.do'">
                             <a href="movePlist.do" class="xi-plus-circle-o"></a>
                             <h2>보호센터 정보 <i class="xi-maker-drop"></i></h2>
                             <p>필요한 편의시설의 정보를 한눈에!</p>
@@ -164,7 +164,7 @@
 
                 <div class="main_banner2">
                     <ul>
-                        <li>
+                        <li onclick="location.href='vlist.do'">
                             <a href="vlist.do" class="xi-plus-circle-o"></a>
                             <h2>자원봉사모집 <i class="xi-note-o"></i></h2>
                             <p>

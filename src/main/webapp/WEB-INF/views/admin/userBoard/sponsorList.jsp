@@ -62,7 +62,7 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th><input type="checkbox" name="checkAll" onclick="checkAll();"></th>
+                            <th class="checkBox"><input type="checkbox" name="checkAll" onclick="checkAll();"></th>
                             <th>번호</th>
                             <th>분류</th>
                             <th>썸네일</th>
@@ -87,7 +87,7 @@
                                     	<c:param name="sNum" value="${ s.sNum }"/>
                                     	<c:param name="page" value="${ page }" />
                                     </c:url>
-		                        	<td><input type="checkbox" name="checkDel" value="${ s.sNum }"></td>
+		                        	<td class="checkBox"><input type="checkbox" name="checkDel" value="${ s.sNum }"></td>
 			                        <td class="number" onclick="location='${ sdt }'">${ s.sNum }</td>
 			                        <c:if test="${ s.sAmount > s.sCurrent }">
 			                        	<td class="kinds" onclick="location='${ sdt }'"><span class="protect">후원중</span></td>

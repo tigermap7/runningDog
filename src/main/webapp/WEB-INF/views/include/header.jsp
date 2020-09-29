@@ -145,7 +145,7 @@
                     <li><a href="login.do">로그인</a></li>
                     <li><a href="join.do">회원가입</a></li>
                     <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>
-                    <li><a href="/runningdog/views/mypage/myservice.jsp">나의 자원봉사</a></li>
+                    <li><a href="vlistmy.do?unique_num=${loginMember.uniqueNum}">나의 자원봉사</a></li>
                     <li><a href="moveChatting.do">나의 채팅</a></li>
                 </ul>
             </li>

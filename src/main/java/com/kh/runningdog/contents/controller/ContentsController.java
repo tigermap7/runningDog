@@ -181,7 +181,8 @@ public class ContentsController {
 	
 	//이슈 목록 DB에 저장
 //	@Scheduled(cron = "0 0 02 * * * ") //매일 새벽 2시에 실행
-//	@Scheduled(cron = "0 0 12 * * * ") //매일 오전 12시에 실행
+	@Scheduled(cron = "0 0 13 * * * ") //매일 오전 12시에 실행
+//	@Scheduled(cron = "0 11 10 * * * ") //매일 오전 12시에 실행
 //	@Scheduled(fixedDelay=60000 * 60) //1분 * 60 = 1시간마다 실행
     public void testScheduler(){
         logger.info(("이슈 크롤링 데이터 저장 중.."));
