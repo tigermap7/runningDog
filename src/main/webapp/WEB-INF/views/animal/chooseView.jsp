@@ -60,10 +60,10 @@ $(function() {
 										<c:param name="dNum" value="${ dboard.dNum }"/>
 										<c:param name="dSuccess" value="${ dboard.dSuccess }"/>
 									</c:url>
-									<c:if test="${sessionScope.loginMember.getNickname() != volunteer.volwriter}">
+									<c:if test="${sessionScope.loginMember.getNickname() != dboard.dWriter}">
                                     <a class="linkBtn" href="startChat.do?receiver=${ dboard.dWriter }&receiverNo=${ dboard.uniqueNum }"><i class="xi-message-o"></i> 채팅하기</a>
                                     </c:if>
-                                    <c:if test="${sessionScope.loginMember.getNickname() == volunteer.volwriter}">
+                                    <c:if test="${sessionScope.loginMember.getNickname() == dboard.dWriter}">
                                     <a class="linkBtn" onclick="location.href=alert('자신에게 채팅할 수 없습니다'); location.reload();"><i class="xi-message-o"></i> 채팅하기</a>
                                     </c:if>
                                     <a data-id="${ dboard.dNum }" data-title="${ dboard.dTitle }" data-summary="${ dboard.dContent }" data-image="${ dboard.listImage }"
