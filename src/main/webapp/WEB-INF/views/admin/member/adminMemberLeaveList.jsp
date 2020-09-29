@@ -93,7 +93,19 @@
 							   <td class="checkBox"><input type="checkbox" name="deleteChk" id="${ leaveMember.leaveUniqueNum }" value=""></td>
 	                           <td class="number" onclick="location='${ memberView }'">${ listNo }</td>
 	                           <td class="userId" onclick="location='${ memberView }'">${ leaveMember.leaveUserId }</td>
-	                           <td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${savePath}${leaveMember.leaveRenameProfile}"/>${ leaveMember.leaveNickname }</td>
+	                           
+								<c:if test="${ leaveMember.leaveRenameProfile eq null }">
+								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/common/userBg.png"/>${ leaveMember.leaveNickname }</td>
+								</c:if>
+								<c:if test="${ leaveMember.leaveRenameProfile ne null }">
+								<c:if test="${ leaveMember.leaveLoginType eq null or leaveMember.leaveLoginType eq 'facebook' }">
+								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/memberImg/${leaveMember.leaveRenameProfile}"/>${ leaveMember.leaveNickname }</td>
+								</c:if>
+								<c:if test="${ leaveMember.leaveLoginType ne null and leaveMember.leaveLoginType ne 'facebook' }">
+								<td class="userName" onclick="location='${ memberView }'"><img src="${leaveMember.leaveRenameProfile}"/>${ leaveMember.leaveNickname }</td>
+								</c:if>
+								</c:if>
+	                           
 	                           <td class="phone" onclick="location='${ memberView }'">${ leaveMember.leavePhone }</td>
 	                           <td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ leaveMember.leaveJoinDate }"/></td>
 	                           <td class="leaveDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ leaveMember.leaveDate }"/></td>

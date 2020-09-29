@@ -63,7 +63,12 @@
                 </c:if>
             	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">
                 <li><a class="hover_line01" href="mypage.do?userId=${loginMember.userId}">마이페이지</a></li>
+                <c:if test="${ sessionScope.loginMember.loginType ne 'kakao' }">
                 <li><a class="hover_line01" href="logout.do">로그아웃</a></li>
+                </c:if>
+                <c:if test="${ sessionScope.loginMember.loginType eq 'kakao' }">
+                <li onclick="unlinkApp()"><a class="hover_line01" href="#none">로그아웃</a></li>
+                </c:if>
             	</c:if>
             	<c:if test="${ empty sessionScope.loginMember }">
                 <li><a class="hover_line01" href="login.do">로그인</a></li>

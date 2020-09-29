@@ -14,8 +14,8 @@
 	        </c:if>
 	        </c:if>
 											
-			<c:if test="${ loginMember.loginType eq 'kakao' }">
-			<img src="${loginMember.renameProfile}">
+			<c:if test="${ sessionScope.loginMember.loginType eq 'kakao' }">
+			<img src="${sessionScope.loginMember.renameProfile}">
 			</c:if>
         </div>
         <c:if test="${ !empty sessionScope.loginMember}">

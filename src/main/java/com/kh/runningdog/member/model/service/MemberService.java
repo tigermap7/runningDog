@@ -28,7 +28,6 @@ public interface MemberService {
 	int updateLastAccessDate(Member loginMember);
 	
 	//간편로그인, 회원가입, 소셜마이페이지
-	Member selectFacebookLogin(Member member);
 	int insertFacabookMember(Member member);
 	int updateSocialMyinfo(Member member);
 	

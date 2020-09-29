@@ -90,22 +90,18 @@
     float: left;
 }
 .profile dt div {
-	width: 200px;
-    line-height: 200px;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 500;
-    color: #fff;
+	width: 198px;
+    height: 198px;
+    border: 1px solid #ccc;
+    border-radius: 100%;
+    overflow: hidden;
 }
 .profile dt div img {
-	width: 100%;
-    border-radius: 100%;
-    border: 1px solid #ccc;
+    height: 100%;
 }
 .profile dd {
     float: right;
     width:55%;
-    padding: 10px 20px;
 }
 .profile dd div {
     line-height: 32px;
@@ -1389,4 +1385,12 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+}
+.btn-delete {
+	background-color: #777;
+    color: #fff;
+}
+.btn-delete:hover {
+	background-color: #444;
+    color: #fff !important;
 }
