@@ -145,10 +145,8 @@
 								
                                     <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"></i> 메일보내기</a> -->
                                     <a class="linkBtn" href="tel:010-3387-7583"><i class="xi-call"></i> 전화하기</a>
-<<<<<<< HEAD
                                     <a class="linkBtn" href="startChat.do?receiver=${volunteer.volwriter}&receiverNo=${volunteer.unique_num}"><i class="xi-message-o"></i> 채팅하기</a>
                                     <a class="linkBtn" href="#none" data-toggle="popover3" data-title="${ volunteer.voltitle }" data-image="${ volunteer.volre1 }"><i class="xi-share-alt-o"></i> 공유하기</a>
->>>>>>> origin/volunteerlast
                                 </dt>
                                 <dd>
                                 <!-- 카카오지도 -->
