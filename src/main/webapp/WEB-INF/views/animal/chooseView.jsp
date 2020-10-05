@@ -31,8 +31,8 @@ $(function() {
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">유기동물 주인찾기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="dboardList.do">유기동물 주인찾기</a></li>
                             </ul>
                         </div>
                         <h2><span>유기동물 주인찾기</span></h2>
@@ -226,24 +226,28 @@ $(function() {
 							<c:param name="dNum" value="${ dboard.dNum }"/>
 						</c:url>
 						<c:url var = "dlistMove" value= "dboardList.do">
-							<c:param name="pageNo" value="${ dboard.pageNo }"/>
+							<c:param name="dNum" value="${ dboard.dNum }"/>
+							<c:param name="local" value="${ pageVO.local }"/>
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
+							<c:param name="category" value="${ pageVO.category }"/>
 						</c:url>
 						<c:url var="dboardHide" value="dHide.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
 						</c:url>
 						<c:url var="dboardNext" value="dboardnext.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dboard.dLocal }"/>
-                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
-							<c:param name="searchValue" value="${ dboard.searchValue }" />
-							<c:param name="dCategory" value="${ dboard.dCategory }"/>
+							<c:param name="local" value="${ pageVO.local }"/>
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
+							<c:param name="category" value="${ pageVO.category }"/>
 						</c:url>
 						<c:url var="dboardPrev" value="dboardprev.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dboard.dLocal }"/>
-                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
-							<c:param name="searchValue" value="${ dboard.searchValue }" />
-							<c:param name="dCategory" value="${ dboard.dCategory }"/>
+							<c:param name="local" value="${ pageVO.local }"/>
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
+							<c:param name="category" value="${ pageVO.category }"/>
 						</c:url>
                         <div class="viewBtn-wrap">
                             <button class="nextBtn" onclick="location='${ dboardPrev }'"><i class="xi-angle-left-min"></i> 이전</button>
@@ -280,7 +284,6 @@ $(function() {
 								<li ${ d.dreLevel eq 2? "style='background-color: #f0f0f0; padding: 0.375rem 3rem;'" : "" }>
 								<dl>
 									<dt class="img">
-									
 										<c:if test="${ loginMember.renameProfile eq null  }">
 										<img src="/runningdog/resources/images/common/userBg.png"/>
 										</c:if>
@@ -292,11 +295,12 @@ $(function() {
 										<dd>
 											<h4>${ d.dreWriter }/#${ d.uniqueNum }</h4>
 										</dd>
-										<dt class="cmt_date">${ d.dreMdate }</dt>
+										<dt class="cmt_date">${ d.dreDate ne d.dreMdate ?"수정일": "작성일"}
+										${ d.dreMdate }</dt>
 									</dl>
 									<p>${ d.dreContent }</p>
 									<div class="cmt_conBtn">
-										<c:if test="${ d.dreLevel eq 1 and d.dreDelete eq 'n'}">
+										<c:if test="${ d.dreLevel eq 1 and d.dreDelete eq 'n' and !empty sessionScope.loginMember}">
 										<button class="Subcmt_btn">대댓글</button>
 										</c:if>
 										<c:if test="${ sessionScope.loginMember.uniqueNum == d.uniqueNum and d.dreDelete eq 'n'}">

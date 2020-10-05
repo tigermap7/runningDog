@@ -124,6 +124,8 @@ public class DboardController {
 
 		logger.info("SearchFiled : " + dboard.getSearchFiled());
 		logger.info("SearchValue : " + dboard.getSearchValue());
+		logger.info("Category : " + dboard.getCategory());
+		logger.info("Local : " + dboard.getLocal());
 		int totalCount = dboardService.selectListCount(dboard); // 게시물 총갯수를 구한다
 		
 		
@@ -149,7 +151,6 @@ public class DboardController {
 		
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("dboardList", dboardList);
-		model.addAttribute("dCategory", dboard.getdCategory());
 		
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url = "";
@@ -193,11 +194,12 @@ public class DboardController {
 	}
 	
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum, Dreply dreply, Model model,HttpServletRequest request,HttpServletResponse response) {
+	public String selectOne(@RequestParam("dNum") int dNum, Dreply dreply, Dboard dboard,Model model,HttpServletRequest request,HttpServletResponse response) {
 				
 		logger.info("dboard View게시글 번호" + dNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
+		model.addAttribute("pageVO", dboard);
 		Cookie[] cookies =request.getCookies();
 		
 		Cookie viewCookie = null;
@@ -232,14 +234,13 @@ public class DboardController {
 		}
 		
 		//조회수 처리 후 게시물에 대한 정보 불러오기
-		Dboard dboard = dboardService.selectOne(dNum); //게시물 하나의 정보를 가져옴
+		
+		dboard = dboardService.selectOne(dNum); //게시물 하나의 정보를 가져옴
 		int dreplyCount = dreplyService.seletListCount(dNum); // 게시물의 댓글 갯수를 구한다
 		ArrayList<Dreply> dreplyList = dreplyService.selectList(dNum); //댓글 리스트 
 		
-		
 		model.addAttribute("dreplyCount" , dreplyCount);
 		model.addAttribute("dreplyList", dreplyList);
-		model.addAttribute("dCategory" , request.getParameter("dCategory"));
 		String url = "";
 		
 		if (dboard != null) {
@@ -338,7 +339,7 @@ public class DboardController {
 		String url = "";
 		if (dboardService.updateDboard(dboard) > 0) {
 			//업데이트 후 detail 페이지 이동시 정보 전부 보여주게 하기 위함
-			Dboard dboardView =dboardService.selectOne(dboard.getdNum());
+			Dboard dboardView = dboardService.selectOne(dboard.getdNum());
 			model.addAttribute("dboard",dboardView);
 
 			url = "animal/chooseView";
@@ -372,7 +373,7 @@ public class DboardController {
     @RequestMapping("dUpSuccess.do")
     public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
                                 Dboard dboard,Model model) {
-    	//분양여
+    	//분양여부
         dboard.setdSuccess(dSuccess);
         logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
     
@@ -392,24 +393,28 @@ public class DboardController {
     }
 	
 	@RequestMapping("dboardnext.do")
-	public String dboardNext(HttpServletRequest request,Model model, Dboard dboard) {
-		//다음글 번호조회
+	public String dboardNext(HttpServletRequest request,Model model,Dboard dboard) {
 		
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
+		logger.info("SearchFiled : " + dboard.getSearchFiled());
+		logger.info("SearchValue : " + dboard.getSearchValue());
+		logger.info("Category : " + dboard.getCategory());
+		logger.info("Local : " + dboard.getLocal());
 		
+		//검색값 유지
+		model.addAttribute("pageVO", dboard);
 		
+		//이전게시글번호 저장
+		int beforeNum = dboard.getdNum();
+		//다음게시글 번호 조회
 		int dboardNextNum = dboardService.selectNext(dboard);
 		//다음글번호를 받고 다음글로 조회
-		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
+		dboard = dboardService.selectOne(dboardNextNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
-		model.addAttribute("dCategory", dboard.getdCategory());
 		
 		String url = "";
-		if (dboard.getdNum() != dboardNextNum) {
-			model.addAttribute("dboard", dboardNext);
+		if (beforeNum != dboardNextNum) {
+			model.addAttribute("dboard", dboard);
 			url = "animal/chooseView";
 		} else {
 			model.addAttribute("dboard",dboard);
@@ -422,21 +427,26 @@ public class DboardController {
 	
 	@RequestMapping("dboardprev.do")
 	public String dboardPrev(HttpServletRequest request,Model model, Dboard dboard) {
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
 		
+		logger.info("SearchFiled : " + dboard.getSearchFiled());
+		logger.info("SearchValue : " + dboard.getSearchValue());
+		logger.info("Category : " + dboard.getCategory());
+		logger.info("Local : " + dboard.getLocal());
+		
+		//검색값 유지
+		model.addAttribute("pageVO", dboard);
+		
+		//이전게시글 번호 저장
+		int beforeNum = dboard.getdNum();
 		//이전 번호조회
 		int dboardPrevNum = dboardService.selectPrev(dboard);
 		//이전글번호를 받고 다음글로 조회
-		Dboard dboardPrev = dboardService.selectOne(dboardPrevNum);
+		dboard = dboardService.selectOne(dboardPrevNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
-		model.addAttribute("dCategory", dboard.getdCategory());
-		
 		String url = "";
-		if ( dboard.getdNum() != dboardPrevNum) {
-			model.addAttribute("dboard", dboardPrev);
+		if (beforeNum != dboardPrevNum) {
+			model.addAttribute("dboard", dboard);
 			url = "animal/chooseView";
 		} else {
 			model.addAttribute("dboard",dboard);

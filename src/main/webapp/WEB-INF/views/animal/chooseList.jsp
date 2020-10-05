@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:set var="listCount" value="${ requestScope.totalCount }" />
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -21,8 +20,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">유기동물 주인찾기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="dboardList.do">유기동물 주인찾기</a></li>
                             </ul>
                         </div>
                         <h2><span>유기동물 주인찾기</span></h2>
@@ -42,8 +41,8 @@
                         <!-- searchFiled 로 구분하고 값은 searchValue 로 받음 -->
                        <form action="dboardList.do" method="">
                       	 <div class="search_wrap" id ="search">
-                            <input type="hidden" name="dCategory" value="${ dboard.dCategory }">
-                            <input type="hidden" name="dLocal" value="${ dboard.dLocal }">
+                            <input type="hidden" name="category" value="${ pageVO.category }">
+                            <input type="hidden" name="local" value="${ pageVO.local }">
                             <select name="searchFiled" id="searchS">t
                             <!-- 삼항연산자로 selected 여부 구분 -->
                                 <option value="d_title" class="fontColor-dark" ${pageVO.searchFiled eq"d_title"?"selected":""}>제목</option>
@@ -67,39 +66,39 @@
                             </c:if>
                                 <div>
                                 <c:url var = "dCate" value= "dboardList.do">
-									<c:param name="dLocal" value="${ dboard.dLocal }"/>
+									<c:param name="local" value="${ pageVO.local }"/>
                                  	<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
 								</c:url>
 								
-                                <form action="" name="dCategory">
-                                    <a ${empty dCategory ?'class="active"' : "" }href="dboardList.do">전체</a>
-                                    <a ${dCategory eq "d"?'class="active"' : "" }href="${dCate}&dCategory=d">강아지</a>
-                                    <a ${dCategory eq "c"?'class="active"' : "" }href="${dCate}&dCategory=c">고양이</a>
-                                    <a ${dCategory eq "e"?'class="active"' : "" }href="${dCate}&dCategory=e">기타</a>
+                                <form action="" name="category">
+                                    <a ${empty pageVO.category ?'class="active"' : "" }href="${dCate}">전체</a>
+                                    <a ${pageVO.category eq "d"?'class="active"' : "" }href="${dCate}&category=d">강아지</a>
+                                    <a ${pageVO.category eq "c"?'class="active"' : "" }href="${dCate}&category=c">고양이</a>
+                                    <a ${pageVO.category eq "e"?'class="active"' : "" }href="${dCate}&category=e">기타</a>
                                  </form>
                                 </div>
-	                            <form action="dboardList.do" name="dLocal" class="location">
-	                            <input type="hidden" name="dCategory" value="${ dboard.dCategory }">
-									<select name="dLocal" class="LocationSelect"   onchange=this.form.submit()>
-	                                    <option value=""  ${ dLocal > 16 ?"selected" :"" }>전체지역</option>
-	                                    <option value="0" ${ dLocal eq"0"?"selected" :"" }>서울시</option>
-	                                    <option value="1" ${ dLocal eq"1"?"selected" :"" }>인천시</option>
-	                                    <option value="2" ${ dLocal eq"2"?"selected" :"" }>대전시</option>
-	                                    <option value="3" ${ dLocal eq"3"?"selected" :"" }>광주시</option>
-	                                    <option value="4" ${ dLocal eq"4"?"selected" :"" }>대구시</option>
-	                                    <option value="5" ${ dLocal eq"5"?"selected" :"" }>울산시</option>
-	                                    <option value="6" ${ dLocal eq"6"?"selected" :"" }>부산시</option>
-	                                    <option value="7" ${ dLocal eq"7"?"selected" :"" }>경기도</option>
-	                                    <option value="8" ${ dLocal eq"8"?"selected" :"" }>강원도</option>
-	                                    <option value="9" ${ dLocal eq"9"?"selected" :"" }>세종시</option>
-	                                    <option value="10" ${ dLocal eq"10"?"selected" :"" }>충청남도</option>
-	                                    <option value="11" ${ dLocal eq"11"?"selected" :"" }>충청북도</option>
-	                                    <option value="12" ${ dLocal eq"12"?"selected" :"" }>전라남도</option>
-	                                    <option value="13" ${ dLocal eq"13"?"selected" :"" }>전라북도</option>
-	                                    <option value="14" ${ dLocal eq"14"?"selected" :"" }>경상남도</option>
-	                                    <option value="15" ${ dLocal eq"15"?"selected" :"" }>경상북도</option>
-	                                    <option value="16" ${ dLocal eq"16"?"selected" :"" }>제주도</option>
+	                            <form action="dboardList.do" name="local" class="location">
+	                            <input type="hidden" name="category" value="${ pageVO.category }">
+									<select name="local" class="LocationSelect"   onchange=this.form.submit()>
+	                                    <option value=""  ${ pageVO.local > 16 ?"selected" :"" }>전체지역</option>
+	                                    <option value="0" ${ pageVO.local eq"0"?"selected" :"" }>서울시</option>
+	                                    <option value="1" ${ pageVO.local eq"1"?"selected" :"" }>인천시</option>
+	                                    <option value="2" ${ pageVO.local eq"2"?"selected" :"" }>대전시</option>
+	                                    <option value="3" ${ pageVO.local eq"3"?"selected" :"" }>광주시</option>
+	                                    <option value="4" ${ pageVO.local eq"4"?"selected" :"" }>대구시</option>
+	                                    <option value="5" ${ pageVO.local eq"5"?"selected" :"" }>울산시</option>
+	                                    <option value="6" ${ pageVO.local eq"6"?"selected" :"" }>부산시</option>
+	                                    <option value="7" ${ pageVO.local eq"7"?"selected" :"" }>경기도</option>
+	                                    <option value="8" ${ pageVO.local eq"8"?"selected" :"" }>강원도</option>
+	                                    <option value="9" ${ pageVO.local eq"9"?"selected" :"" }>세종시</option>
+	                                    <option value="10" ${ pageVO.local eq"10"?"selected" :"" }>충청남도</option>
+	                                    <option value="11" ${ pageVO.local eq"11"?"selected" :"" }>충청북도</option>
+	                                    <option value="12" ${ pageVO.local eq"12"?"selected" :"" }>전라남도</option>
+	                                    <option value="13" ${ pageVO.local eq"13"?"selected" :"" }>전라북도</option>
+	                                    <option value="14" ${ pageVO.local eq"14"?"selected" :"" }>경상남도</option>
+	                                    <option value="15" ${ pageVO.local eq"15"?"selected" :"" }>경상북도</option>
+	                                    <option value="16" ${ pageVO.local eq"16"?"selected" :"" }>제주도</option>
 	                            </select>
 								</form>
                             </div>
@@ -121,7 +120,8 @@
                                  	<c:param name="dNum" value="${ d.dNum }"/>
                                  	<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 									<c:param name="searchValue" value="${pageVO.searchValue }"/>
-									<c:param name="dCategory" value="${ d.dCategory }"/>
+									<c:param name="category" value="${ pageVO.category }"/>
+									<c:param name="local" value="${ pageVO.local }" />
                                  </c:url>
                                  <c:if test = "${d.dSuccess eq 'n'}">
                                  <li class="grid-item chooseIcon" >
@@ -185,8 +185,8 @@
 											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
-											<c:param name="dLocal" value="${ dboard.dLocal }"/>
-											<c:param name="dCategory" value="${ dboard.dCategory }"/>
+											<c:param name="local" value="${ pageVO.local }"/>
+											<c:param name="category" value="${ pageVO.category }"/>
 										</c:url>
 										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
@@ -196,8 +196,8 @@
 												<c:param name="pageNo" value="${ i }"/>
 												<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 												<c:param name="searchValue" value="${pageVO.searchValue }"/>
-												<c:param name="dLocal" value="${ dboard.dLocal }"/>
-												<c:param name="dCategory" value="${ dboard.dCategory }"/>
+												<c:param name="local" value="${ pageVO.local }"/>
+												<c:param name="category" value="${ pageVO.category }"/>
 											</c:url>
 										<c:choose>
 											<c:when test="${i eq pageVO.pageNo }">
@@ -214,8 +214,8 @@
 											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
 											<c:param name="searchFiled" value="${pageVO.searchFiled }"/>
 											<c:param name="searchValue" value="${pageVO.searchValue }"/>
-											<c:param name="dLocal" value="${ dboard.dLocal }"/>
-											<c:param name="dCategory" value="${ dboard.dCategory }"/>
+											<c:param name="local" value="${ pageVO.local }"/>
+											<c:param name="category" value="${ pageVO.category }"/>
 										</c:url>
 										<a href="${dl3 }"><i
 											class="xi-angle-right"></i></a>

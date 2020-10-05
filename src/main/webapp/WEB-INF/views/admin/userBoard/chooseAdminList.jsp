@@ -81,7 +81,7 @@
                                  	<c:param name="dNum" value="${ d.dNum }"/>
                                  	<c:param name="searchFiled" value="${ pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${ pageVO.searchValue }" />
-									<c:param name="dCategory" value="${ dCategory }"/>
+									<c:param name="category" value="${ pageVO.category }"/>
 								</c:url>
 								<td class="checkBox">
 								<input type="checkbox" name="checkHide" id="" value="${ d.dNum }"></td>
@@ -131,7 +131,8 @@
 									<c:param name="pageNo" value="${ pageVO.startPageNo-5 }" />
 									<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
-									<c:param name="dLocal" value="${ dLocal }" />
+									<c:param name="category" value="${pageVO.category }" />
+									<c:param name="local" value="${ pageVO.local }" />
 								</c:url>
 								<a href="${ adminPage }"><i class="xi-angle-left"></i></a>
 							</c:if>
@@ -141,7 +142,8 @@
 									<c:param name="pageNo" value="${ i }" />
 									<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
-									<c:param name="dLocal" value="${ dLocal }" />
+									<c:param name="category" value="${pageVO.category }" />
+									<c:param name="local" value="${ pageVO.local }" />
 								</c:url>
 								<c:choose>
 									<c:when test="${i eq pageVO.pageNo }">
@@ -157,7 +159,8 @@
 									<c:param name="pageNo" value="${ pageVO.endPageNo +1 }" />
 									<c:param name="searchFiled" value="${pageVO.searchFiled }" />
 									<c:param name="searchValue" value="${pageVO.searchValue }" />
-									<c:param name="dLocal" value="${ dLocal }" />
+									<c:param name="category" value="${pageVO.category }" />
+									<c:param name="local" value="${ pageVO.local }" />
 								</c:url>
 								<a href="${dl3 }"><i class="xi-angle-right"></i></a>
 							</c:if>

@@ -61,11 +61,11 @@
 		<if test="searchFiled != null and searchFiled !=''">
 			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 		</if>
-		<if test="dCategory != null and dCategory !=''">
-			AND D_CATEGORY LIKE  '%' || #{dCategory} || '%'
+		<if test="category != null and category !=''">
+			AND D_CATEGORY LIKE  '%' || #{category} || '%'
 		</if>
-		<if test="dLocal != null and dLocal !=''">
-			AND D_LOCAL = #{dLocal}
+		<if test="local != null and local !=''">
+			AND D_LOCAL = #{local}
 		</if>
 			AND D_CHECK = 'y'
 	</select>
@@ -77,11 +77,11 @@
 		<if test="searchFiled != null and searchFiled !=''">
 			AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 		</if>
-		<if test="dCategory != null and dCategory !=''">
-			AND D_CATEGORY LIKE  '%' || #{dCategory} || '%'
+		<if test="category != null and category !=''">
+			AND D_CATEGORY LIKE  '%' || #{category} || '%'
 		</if>
-		<if test="dLocal != null and dLocal !=''">
-			AND D_LOCAL = #{dLocal}
+		<if test="local != null and local !=''">
+			AND D_LOCAL = #{local}
 		</if>
 	</select>
 	
@@ -96,11 +96,11 @@
 			  		<if test="searchFiled != null and searchFiled !=''">
 					AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 					</if>
-					<if test="dCategory != null and dCategory !=''">
-					AND D_CATEGORY LIKE  '%' || #{dCategory} || '%'
+					<if test="category != null and category !=''">
+					AND D_CATEGORY LIKE  '%' || #{category} || '%'
 					</if>
-					<if test="dLocal != null and dLocal !=''">
-					AND D_LOCAL = #{dLocal}
+					<if test="local != null and local !=''">
+					AND D_LOCAL = #{local}
 					</if>
 					ORDER BY D_NUM DESC))
 		WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}
@@ -116,11 +116,11 @@
 			  		<if test="searchFiled != null and searchFiled !=''">
 					AND ${searchFiled} LIKE  '%' || #{searchValue} || '%'
 					</if>
-					<if test="dCategory != null and dCategory !=''">
-					AND D_CATEGORY LIKE  '%' || #{dCategory} || '%'
+					<if test="category != null and category !=''">
+					AND D_CATEGORY LIKE  '%' || #{category} || '%'
 					</if>
-					<if test="dLocal != null and dLocal !=''">
-					AND D_LOCAL = #{dLocal}
+					<if test="local != null and local !=''">
+					AND D_LOCAL = #{local}
 					</if>
 					ORDER BY D_NUM DESC))
 		WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}
@@ -138,11 +138,11 @@
 		<if test="searchFiled != null and searchFiled !=''">
 			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'
 		</if>
-		<if test="dCategory != null and dCategory !=''">
-			AND D_CATEGORY LIKE '%' || #{dCategory} || '%'
+		<if test="category != null and category !=''">
+			AND D_CATEGORY LIKE '%' || #{ category } || '%'
 		</if>
-		<if test="dLocal != null and dLocal !=''">
-			AND D_LOCAL = #{dLocal}
+		<if test="local != null and local !=''">
+			AND D_LOCAL = #{ local }
 		</if>
 		<![CDATA[
 			AND D_CHECK = 'y' AND D_NUM > #{ dNum }
@@ -155,13 +155,13 @@
 		FROM DBOARD
 		WHERE 1=1
 		<if test="searchFiled != null and searchFiled !=''">
-			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'
+			AND ${ searchFiled } LIKE '%' || #{ searchValue } || '%'
 		</if>
-		<if test="dCategory != null and dCategory !=''">
-			AND D_CATEGORY LIKE '%' || #{dCategory} || '%'
+		<if test="category != null and category !=''">
+			AND D_CATEGORY LIKE '%' || #{ category } || '%'
 		</if>
-		<if test="dLocal != null and dLocal !=''">
-			AND D_LOCAL = #{dLocal}
+		<if test="local != null and local !=''">
+			AND D_LOCAL = #{ local }
 		</if>
 		<![CDATA[
 		AND D_NUM > #{ dNum }
@@ -174,13 +174,13 @@
 		FROM DBOARD
 		WHERE 1=1
 		<if test="searchFiled != null and searchFiled !=''">
-			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'
+			AND ${searchFiled} LIKE '%' || #{ searchValue } || '%'
 		</if>
-		<if test="dCategory != null and dCategory !=''">
-			AND D_CATEGORY LIKE '%' || #{dCategory} || '%'
+		<if test="category != null and category !=''">
+			AND D_CATEGORY LIKE '%' || #{ category } || '%'
 		</if>
-		<if test="dLocal != null and dLocal !=''">
-			AND D_LOCAL = #{dLocal}
+		<if test="local != null and local !=''">
+			AND D_LOCAL = #{ local }
 		</if>
 		<![CDATA[
 		AND D_CHECK = 'y' AND D_NUM < #{ dNum }
@@ -197,11 +197,11 @@
 		<if test="searchFiled != null and searchFiled !=''">
 			AND ${searchFiled} LIKE '%' || #{searchValue} || '%'
 		</if>
-		<if test="dCategory != null and dCategory !=''">
-			AND D_CATEGORY LIKE '%' || #{dCategory} || '%'
+		<if test="category != null and category !=''">
+			AND D_CATEGORY LIKE '%' || #{category} || '%'
 		</if>
-		<if test="dLocal != null and dLocal !=''">
-			AND D_LOCAL = #{dLocal}
+		<if test="local != null and local !=''">
+			AND D_LOCAL = #{local}
 		</if>
 		<![CDATA[
 		AND D_NUM < #{ dNum }
@@ -256,18 +256,20 @@
 	
 	<update id="updateDboardHide" parameterType="Dboard">
 		UPDATE DBOARD SET
-			   D_CHECK = 'n'
+			   D_CHECK = 'n',
+			   D_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
 		WHERE D_NUM = #{ dNum }
 	</update>
 	
 	<update id="updateDboardSuc" parameterType="Dboard">
 		UPDATE DBOARD SET
 		<if test='dSuccess.equals("y")'>
-			   D_SUCCESS = 'n'
+			   D_SUCCESS = 'n',
 		</if>
 		<if test='dSuccess.equals("n")'>
-			   D_SUCCESS = 'y'
+			   D_SUCCESS = 'y',
 		</if>
+		D_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
 		WHERE D_NUM = #{ dNum }	
 	</update>
 	
@@ -288,7 +290,6 @@
 		UPDATE DBOARD SET
 		D_COUNT = D_COUNT + 1
 		WHERE D_NUM = #{ dNum }
-	
 	</update>
 	
 </mapper>

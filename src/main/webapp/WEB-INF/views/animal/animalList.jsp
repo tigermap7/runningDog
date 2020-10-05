@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">유기동물매칭</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="animalList.do">유기동물매칭</a></li>
                             </ul>
                         </div>
                         <h2><span>유기동물매칭</span></h2>
@@ -103,6 +103,8 @@
 									<c:if test="${pageVO.startPageNo >5 }">
 										<c:url var = "dl1" value="animalList.do">
 											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
+											<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
+                                			<c:param name="searchValue" value="${ pageVO.searchValue }"/>
 										</c:url>
 										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
@@ -110,6 +112,8 @@
 										end="${ pageVO.endPageNo }" step="1">
 										<c:url var = "dl2" value="animalList.do">
 												<c:param name="pageNo" value="${ i }"/>
+												<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
+                                				<c:param name="searchValue" value="${ pageVO.searchValue }"/>
 											</c:url>
 										<c:choose>
 											<c:when test="${i eq pageVO.pageNo }">
@@ -123,6 +127,8 @@
 									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
 										<c:url var = "dl3" value= "animalList.do">
 											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
+                                			<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
+                                			<c:param name="searchValue" value="${ pageVO.searchValue }"/>
 										</c:url>
 										<a href="${dl3 }"><i
 											class="xi-angle-right"></i></a>

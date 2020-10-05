@@ -16,8 +16,27 @@ public class PageVO {
 
 	    private String searchFiled;  //검색 조건
 	    private String searchValue;  //검색어
+	    private String category; //카테고리검색
+	    private String local; //지역검색
+	    
+	    
+	    public String getCategory() {
+			return category;
+		}
 
-	    public int getPageSize() {
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+		public String getLocal() {
+			return local;
+		}
+
+		public void setLocal(String local) {
+			this.local = local;
+		}
+
+		public int getPageSize() {
 	        return pageSize;
 	    }
 
