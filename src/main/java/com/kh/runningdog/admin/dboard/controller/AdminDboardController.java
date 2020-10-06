@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -386,5 +387,24 @@ public class AdminDboardController {
 		}
 		return url;
 	}
-	
+	//매일 7시 숨김처리 한지 3개월 된 게시물 삭제처리
+	@Scheduled(cron = "0 0 7 * * *")
+	public void deleteDboard() {
+		//숨김 처리한지 3개월 된 게시물 번호 리스트 조회
+		logger.info("게시물 삭제 처리 구동");
+		ArrayList<Dboard> selectDboardNumList = dboardService.selectDboardNumList();
+		//파일 위치
+		String savePath = "c:\\gaenasona_workspace/runningdog/src/main/webapp/resources/dboard/dboardImage";
+		// 번호 리스트 조회후 삭제 처리
+		for (Dboard dboard : selectDboardNumList) {
+			logger.info("삭제할 게시물 정보 : " + dboard);
+			
+			int result =dboardService.deleteDboard(dboard);
+			//삭제한 데이터가 있을경우 이미지도 삭제 처리
+			if (result > 0) {
+				new File(savePath + "\\" + dboard.getviewImage()).delete();
+				new File(savePath + "\\" + dboard.getlistImage()).delete();
+			}
+		}
+	}
 }

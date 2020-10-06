@@ -124,7 +124,7 @@
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
-									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
+									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5 and pageVO.endPageNo != pageVO.finalPageNo}">
 										<c:url var = "dl3" value= "animalList.do">
 											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
                                 			<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>

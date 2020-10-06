@@ -23,7 +23,7 @@
         			var json = JSON.parse(jsonStr);
         			var values = "";
         			for ( var i in json.list) {
-        				values += '<li onclick="location='+ "'dboardList.do'" + '">'
+        				values += '<li onclick="location='+ "'dboardView.do?dNum="+json.list[i].dNum +"'" + '">'
                         	   +'<div><img src="/runningdog/resources/dboard/dboardImage/'+json.list[i].listImage+'">'
                         	   +'</div><h3>' + decodeURIComponent(json.list[i].dTitle).replace(/\+/gi, " ") +'</h3><p>임시보호자 :'
                         	   + decodeURIComponent(json.list[i].dWriter).replace(/\+/gi, " ") +'<br/>'

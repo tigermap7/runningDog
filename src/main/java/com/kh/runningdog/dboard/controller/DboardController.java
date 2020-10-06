@@ -188,13 +188,12 @@ public class DboardController {
 		//전송용 객체에 배열 저장
 		sendJson.put("list", jarr);
 		
-		
 		return sendJson.toJSONString();
-		
 	}
 	
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum, Dreply dreply, Dboard dboard,Model model,HttpServletRequest request,HttpServletResponse response) {
+	public String selectOne(@RequestParam("dNum") int dNum, Dreply dreply, Dboard dboard,Model model,
+												HttpServletRequest request,HttpServletResponse response) {
 				
 		logger.info("dboard View게시글 번호" + dNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
@@ -218,9 +217,7 @@ public class DboardController {
 		// 만일 viewCookie 가 null 일 경우 쿠키를 생성해서 조회수 증가 처리함
 		if (viewCookie == null) {
 			logger.info("cookie 없음");
-
 			// 쿠키 생성(이름 , 값)
-
 			Cookie newCookie = new Cookie("cookie" + dNum, "|" + dNum + "|");
 			// 쿠키추가
 			response.addCookie(newCookie);
@@ -325,11 +322,9 @@ public class DboardController {
 					// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
 					viewImg.getResizedToWidth(viewWidth).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
 					listImg.getResizedToWidth(listWidth).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
-
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
-
 				dboard.setviewImage(viewRename);
 				dboard.setlistImage(listRename);
 			}
@@ -341,7 +336,6 @@ public class DboardController {
 			//업데이트 후 detail 페이지 이동시 정보 전부 보여주게 하기 위함
 			Dboard dboardView = dboardService.selectOne(dboard.getdNum());
 			model.addAttribute("dboard",dboardView);
-
 			url = "animal/chooseView";
 		} else {
 			model.addAttribute("msg", "게시글 수정 실패 다시 확인해 주세요");
@@ -351,6 +345,7 @@ public class DboardController {
 		return url;
 	}
 	
+	//게시물숨기기
 	@RequestMapping("dHide.do")
 	public String updateDboardHide(@RequestParam("dNum") int dNum, Dboard dboard,Model model) {
 		//게시물을 삭제 하지 않고 표시 여부에 업데이트 하여

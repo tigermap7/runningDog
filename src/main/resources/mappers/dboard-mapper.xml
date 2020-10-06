@@ -48,7 +48,7 @@
 		SELECT * 
 		FROM (SELECT ROWNUM RNUM, D_NUM, D_WRITER, D_TITLE, D_FIND_DATE, D_FIND_LOCAL, D_DATE, LIST_IMAGE
 			  FROM(SELECT * 
-					FROM DBOARD 
+					FROM DBOARD WHERE D_CHECK ='y'
 					ORDER BY D_NUM DESC)) 
 		WHERE RNUM >=1 AND RNUM <=4
 		]]>
@@ -124,6 +124,19 @@
 					</if>
 					ORDER BY D_NUM DESC))
 		WHERE RNUM BETWEEN #{startRowNo} AND #{endRowNo}
+	</select>
+	
+	
+	<!-- WHERE D_MDATE < (SELECT TO_CHAR(ADD_MONTHS(SYSDATE,-3), 'RRRR-MM-DD HH24:MI:SS') FROM DUAL) -->
+	
+	
+	<select id="selectDboardNumList" resultType="Dboard">
+	<![CDATA[
+		SELECT *
+		FROM DBOARD
+		WHERE D_MDATE < (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
+		AND D_CHECK ='n'
+	]]>
 	</select>
 	
 	<select id="selectOne" parameterType="_int" resultMap="resultDboard">
@@ -276,6 +289,7 @@
 	<!-- 게시물 표시 여부가 n이면 y를 y면 n을 대입 -->
 	<update id="updateAdminHide" parameterType="Dboard">
 		UPDATE DBOARD SET
+		D_MDATE = (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL),
 		D_CHECK =
 			CASE WHEN D_CHECK = 'n' THEN 'y'
 				ELSE 'n'
@@ -291,5 +305,11 @@
 		D_COUNT = D_COUNT + 1
 		WHERE D_NUM = #{ dNum }
 	</update>
+	
+	<delete id="deleteDboard" parameterType="Dboard">
+		DELETE 
+		FROM DBOARD 
+		WHERE D_NUM = #{ dNum }
+	</delete>
 	
 </mapper>
