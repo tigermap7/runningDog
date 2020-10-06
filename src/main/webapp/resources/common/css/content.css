@@ -377,10 +377,14 @@
 .animalList > ul li > div {
     position: relative;
     width: 100%;
-    OVERFLOW: hidden;
     margin-bottom: 0.625rem;
-    MAX-HEIGHT: 300PX;
+    max-height: 300PX;
+}
+.animalList > ul li > div a.animalImg {
+    overflow: hidden;
     border-radius: 0.625rem;
+    max-height: inherit;
+    display: block;
 }
 .animalList > ul li > div a.chooseIcon {
     position: absolute;

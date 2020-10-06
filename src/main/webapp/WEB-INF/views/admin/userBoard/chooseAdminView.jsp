@@ -49,8 +49,7 @@ $(function() {
 							
 						</c:url>
 						<!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
-						<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
-						
+						<a class="linkBtn" href="${ dSuccess }"><i class="xi-shield-checked"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
 					</dt>
                     <dd>
                         <h3>동물정보</h3>

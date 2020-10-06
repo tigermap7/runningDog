@@ -73,13 +73,12 @@
                                 		<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
                                 		<c:param name="searchValue" value="${ pageVO.searchValue }"/>
                                 	</c:url>
-                                
-                                <li class="grid-item chooseIcon" >
+                                <li class="grid-item" >
                                     <div>
                                         <a href="${ animalView }" class="chooseIcon">분양중</a>
-                                        <a data-id="${ animal.desertionNo }" data-title="${ animal.careAddr }" data-summary="${ animal.specialMark }" data-image="${ animal.popfile }"
+                                        <a data-id="${ a.desertionNo }" data-title="${ a.careAddr }" data-summary="${ a.specialMark }" data-image="${ a.popfile }"
                                   		data-toggle="popover5" class="urlIcon xi-share-alt-o"></a>
-                                        <a href="${ animalView }"><img src="${ a.popfile }"></a>
+                                        <a class="animalImg" href="${ animalView }"><img src="${ a.popfile }"></a>
                                     </div>
                                     <h3 onclick="location='${ animalView }'">${ a.kindCd }</h3>
                                     <p onclick="location='${ animalView }'">
@@ -88,7 +87,7 @@
                                         지역 : ${ a.careAddr }
                                         <span>공고시작일 : <fmt:parseDate var="animalDate" value="${a.noticeSdt}" pattern="yyyyMMdd"/>
                                                 			<fmt:formatDate value="${animalDate}" pattern="yyyy-MM-dd"/>
-                                                	</span>
+                                         </span>
                                     </p>
                                 </li>
                                </c:forEach>
