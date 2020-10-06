@@ -154,7 +154,7 @@
                                         <a data-id="${ d.dNum }" data-title="${ d.dTitle }"  data-image="${ d.listImage }" data-toggle="popover4" class="urlIcon xi-share-alt-o"></a>
                                         <a class="animalImg" href="${dboardView}" ><img src="/runningdog/resources/dboard/dboardImage/${d.listImage }"></a>
                                     </div>
-                                    <h3 onclick="location='${dboardView}'">${ d.dTitle }</h3>
+                                    <h3 onclick="location='${dboardView}'"><c:out value='${ d.dTitle }'/></h3>
                                     <p onclick="location='${dboardView}'">
                                         임시보호자 : ${ d.dWriter }<br/>
                                         발견날짜 : ${ d.dFindDate }<br/>

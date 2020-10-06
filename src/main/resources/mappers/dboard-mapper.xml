@@ -127,14 +127,12 @@
 	</select>
 	
 	
-	<!-- WHERE D_MDATE < (SELECT TO_CHAR(ADD_MONTHS(SYSDATE,-3), 'RRRR-MM-DD HH24:MI:SS') FROM DUAL) -->
-	
-	
+	<!-- 숨김처리한지 3개월 지난 게시물 조회 -->
 	<select id="selectDboardNumList" resultType="Dboard">
 	<![CDATA[
 		SELECT *
 		FROM DBOARD
-		WHERE D_MDATE < (SELECT TO_CHAR(SYSDATE, 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
+		WHERE D_MDATE < (SELECT TO_CHAR(ADD_MONTHS(SYSDATE,-3), 'RRRR-MM-DD HH24:MI:SS') FROM DUAL)
 		AND D_CHECK ='n'
 	]]>
 	</select>

@@ -451,6 +451,4 @@ public class DboardController {
 		}
 		return url;
 	}
-	
-	
 }

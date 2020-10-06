@@ -18,10 +18,10 @@
                        <div>
                             <ul class="navi">
                                 <li><a href="main.do">홈</a></li>
-                                <li class="xi-angle-right"><a href="animalList.do">유기동물매칭</a></li>
+                                <li class="xi-angle-right"><a href="animalList.do">유기동물정보</a></li>
                             </ul>
                         </div>
-                        <h2><span>유기동물매칭</span></h2>
+                        <h2><span>유기동물정보</span></h2>
                         <h3>가족을 기다리는 작은 천사에게<br/>가족과 친구가 되어주세요.</h3>
                     </div>
                 </div>

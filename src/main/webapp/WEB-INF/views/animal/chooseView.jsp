@@ -63,7 +63,7 @@ $(function() {
 									<c:if test="${sessionScope.loginMember.getNickname() != dboard.dWriter}">
                                     <a class="linkBtn" href="startChat.do?receiver=${ dboard.dWriter }&receiverNo=${ dboard.uniqueNum }"><i class="xi-message-o"></i> 채팅하기</a>
                                     </c:if>
-                                    <c:if test="${sessionScope.loginMember.getNickname() == dboard.dWriter}">
+                                    <c:if test="${sessionScope.loginMember.getNickname() eq dboard.dWriter}">
                                     <a class="linkBtn" onclick="location.href=alert('자신에게 채팅할 수 없습니다'); location.reload();"><i class="xi-message-o"></i> 채팅하기</a>
                                     </c:if>
                                     <a data-id="${ dboard.dNum }" data-title="${ dboard.dTitle }" data-summary="${ dboard.dContent }" data-image="${ dboard.listImage }"
@@ -118,7 +118,7 @@ $(function() {
                                             </tr>
                                             <tr>
                                                 <th>특이사항</th>
-                                                <td colspan="3">${ dboard.dPoint }</td>
+                                                <td colspan="3"><c:out value='${ dboard.dPoint }'/></td>
                                                
                                             </tr>
                                         </tbody>
@@ -155,7 +155,7 @@ $(function() {
 													<c:if test="${l.count== (dboard.dLocal+1) }"> ${lo }</c:if>
 												</c:forEach></td>
 												<th>조회수</th>
-												<td colspan="1">${ dboard.dCount }</td>
+												<td colspan="1"><c:out value='${ dboard.dCount }'/></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -252,7 +252,7 @@ $(function() {
                         <div class="viewBtn-wrap">
                             <button class="nextBtn" onclick="location='${ dboardPrev }'"><i class="xi-angle-left-min"></i> 이전</button>
                             <button class="listBtn" onclick="location='${ dlistMove }'"><i class="xi-rotate-left"></i> 목록</button>
-                            <c:if test= "${ sessionScope.loginMember.userId == dboard.userId }">
+                            <c:if test= "${ sessionScope.loginMember.userId eq dboard.userId }">
                             <button class="deleteBtn" onclick="location='${ dboardHide }'"><i class="xi-cut"></i> 삭제</button>
                             <button class="modifiedBtn" onclick="location='${ dupPageMove }'"><i class="xi-pen-o"></i> 수정</button>
                             </c:if>
@@ -270,7 +270,7 @@ $(function() {
                                     <div class="cmt_form">
                                         <h4 class="cmt_head">댓글 ${ dreplyCount }</h4>
                                         <div class="cmt_body">
-        								<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" id = "dreContent" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+        								<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" minlength="2" required id = "dreContent" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
                                             <div class="cmt_ok">
                                             	<input type="submit" value="등록" >
                                             </div>
@@ -315,7 +315,7 @@ $(function() {
 												<fieldset style="width:100%;">
 													<div class="cmt_form" style="overflow: unset;">
 														<div class="cmt_body">
-															<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
+															<textarea name="dreContent" style="resize: none; width: 100%;  minlength="2" required min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
 															<div class="cmt_ok">
 																<input type="submit" class="updateDreply" value="수정">
 															</div>
@@ -333,7 +333,7 @@ $(function() {
 												<fieldset style="width:100%;">
 													<div class="cmt_form" style="overflow: unset;">
 														<div class="cmt_body">
-															<textarea name="dreContent" id="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
+															<textarea name="dreContent" id="dreContent" minlength="2" required style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
 																onfocus="this.value='';">비방글은 작성할 수 없습니다.</textarea>
 															<div class="cmt_ok">
 																<input type="submit"  value="등록">
