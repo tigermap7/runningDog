@@ -38,6 +38,19 @@
 					        <c:if test="${ selectLeaveUser.leaveRenameProfile ne null }">
 					        <img src="/runningdog/resources/images/memberImg/${savePath}${selectLeaveUser.leaveRenameProfile}"/>
 					        </c:if>
+					        
+					        
+							<!-- c:if test="${ selectLeaveUser.leaveRenameProfile eq null }">
+							<img src="/runningdog/resources/images/common/userBg.png"/>
+							</c:if>
+							<c:if test="${ selectLeaveUser.leaveRenameProfile ne null }">
+							<c:if test="${ selectLeaveUser.leaveLoginType eq null or selectLeaveUser.leaveLoginType eq 'facebook' }">
+							<img src="/runningdog/resources/images/memberImg/${selectLeaveUser.leaveRenameProfile}"/>
+							</c:if>
+							<c:if test="${ selectLeaveUser.loginType ne null and selectLeaveUser.leaveLoginType ne 'facebook' }">
+							<img src="${selectUser.leaveRenameProfile}"/>
+							</c:if>
+							</c:if-->
 						</div>
 					</dt>
 					<dd>

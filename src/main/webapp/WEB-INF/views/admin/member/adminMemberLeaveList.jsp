@@ -90,11 +90,12 @@
 								<c:param name="leaveUniqueNum" value="${ leaveMember.leaveUniqueNum }" />
 								<c:param name="page" value="${ page }" />
 							</c:url>
-							   <td class="checkBox"><input type="checkbox" name="deleteChk" id="${ leaveMember.leaveUniqueNum }" value=""></td>
-	                           <td class="number" onclick="location='${ memberView }'">${ listNo }</td>
-	                           <td class="userId" onclick="location='${ memberView }'">${ leaveMember.leaveUserId }</td>
+								<td class="checkBox"><input type="checkbox" name="deleteChk" id="${ leaveMember.leaveUniqueNum }" value=""></td>
+								<td class="number" onclick="location='${ memberView }'">${ listNo }</td>
+								<td class="userId" onclick="location='${ memberView }'">${ leaveMember.leaveUserId }</td>
 	                           
-								<c:if test="${ leaveMember.leaveRenameProfile eq null }">
+	                           
+                        		<c:if test="${ leaveMember.leaveRenameProfile eq null }">
 								<td class="userName" onclick="location='${ memberView }'"><img src="/runningdog/resources/images/common/userBg.png"/>${ leaveMember.leaveNickname }</td>
 								</c:if>
 								<c:if test="${ leaveMember.leaveRenameProfile ne null }">
@@ -105,22 +106,22 @@
 								<td class="userName" onclick="location='${ memberView }'"><img src="${leaveMember.leaveRenameProfile}"/>${ leaveMember.leaveNickname }</td>
 								</c:if>
 								</c:if>
-	                           
-	                           <td class="phone" onclick="location='${ memberView }'">${ leaveMember.leavePhone }</td>
-	                           <td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ leaveMember.leaveJoinDate }"/></td>
-	                           <td class="leaveDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ leaveMember.leaveDate }"/></td>
-	                           <c:if test="${ leaveMember.leaveLoginType eq 'kakao' }">
-	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
-	                           </c:if>
-	                           <c:if test="${ leaveMember.leaveLoginType eq 'facebook' }">
-	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-facebook-official"></i></td>
-	                           </c:if>
-	                           <c:if test="${ leaveMember.leaveLoginType eq 'naver' }">
-	                           <td class="loginType" onclick="location='${ memberView }'"><i class="xi-naver-square"></i></td>
-	                           </c:if>
-	                           <c:if test="${ leaveMember.leaveLoginType eq null }">
-	                           <td class="loginType" onclick="location='${ memberView }'">일반</td>
-	                           </c:if>
+								
+								<td class="phone" onclick="location='${ memberView }'">${ leaveMember.leavePhone }</td>
+								<td class="joinDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ leaveMember.leaveJoinDate }"/></td>
+								<td class="leaveDate" onclick="location='${ memberView }'"><fmt:formatDate pattern="yyyy.MM.dd" value="${ leaveMember.leaveDate }"/></td>
+								<c:if test="${ leaveMember.leaveLoginType eq 'kakao' }">
+								<td class="loginType" onclick="location='${ memberView }'"><i class="xi-kakaotalk"></i></td>
+								</c:if>
+								<c:if test="${ leaveMember.leaveLoginType eq 'facebook' }">
+								<td class="loginType" onclick="location='${ memberView }'"><i class="xi-facebook-official"></i></td>
+								</c:if>
+								<c:if test="${ leaveMember.leaveLoginType eq 'naver' }">
+								<td class="loginType" onclick="location='${ memberView }'"><i class="xi-naver-square"></i></td>
+								</c:if>
+								<c:if test="${ leaveMember.leaveLoginType eq null }">
+								<td class="loginType" onclick="location='${ memberView }'">일반</td>
+								</c:if>
 	                       <c:set var="listNo" value="${listNo - 1}"/>
 	                       </tr>
 	                   	</c:forEach>
