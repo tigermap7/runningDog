@@ -62,9 +62,7 @@ public class AnimalController {
 
 		int totalCount = animalService.selectListCount(animal);
 		
-		
 		animal.setTotalCount(totalCount,12); // 페이징 처리를 위한 setter 호출
-		
 		
 		logger.info("PageSize // 한 페이지에 보여줄 게시글 수 : " + animal.getPageSize());
 		logger.info("PageNo // 페이지 번호 : " + animal.getPageNo());
@@ -77,7 +75,7 @@ public class AnimalController {
 		logger.info("StartPageNo // 시작 페이지 (페이징 네비 기준) : " + animal.getStartPageNo());
 		logger.info("EndPageNo // 끝 페이지 (페이징 네비 기준) : " + animal.getEndPageNo());
 		logger.info("totalCount // 게시 글 전체 수 : " + animal.getTotalCount());
-		//검색값 유지
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO" , animal);
 		
 		ArrayList<Animal> animalList = animalService.selectList(animal);
@@ -103,7 +101,7 @@ public class AnimalController {
 		
 		logger.info("Animal View 유기동물 번호 : "+desertionNo );
 		
-		//검색값 유지
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO" , animal);
 		
 		Cookie[] cookies =request.getCookies();
@@ -140,13 +138,7 @@ public class AnimalController {
 		}
 
 		// 조회수 처리 후 게시물에 대한 정보 불러 오기
-
 		animal = animalService.selectOne(desertionNo);
-		animal.setSearchFiled(request.getParameter("searchFiled"));
-		animal.setSearchValue(request.getParameter("searchValue"));
-		
-		model.addAttribute("searchFiled", animal.getSearchFiled());
-		model.addAttribute("searchValue", animal.getSearchValue());
 		
 		String url = "";
 
@@ -164,7 +156,7 @@ public class AnimalController {
 	@RequestMapping("animalNext.do")
 	public String animalNext(HttpServletRequest request, Model model, Animal animal) {
 		
-		//검색값 유지
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO" , animal);
 		String animalNextNum = animalService.selectNext(animal);
 		
@@ -186,11 +178,10 @@ public class AnimalController {
 	@RequestMapping("animalPrev.do")
 	public String animalPrev(HttpServletRequest request, Model model, Animal animal) {
 		
-		//검색값 유지
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO" , animal);
 		
 		String animalPrevNum = animalService.selectPrev(animal);
-		
 		Animal animalPrev = animalService.selectOne(animalPrevNum);
 		
 		String url="";
@@ -205,7 +196,7 @@ public class AnimalController {
 		}
 		return url;
 	}
-	   //매일 오전 6시에 최신 데이터 추가
+	   //매일 오전 6시에 공공데이터 API 최신 데이터 추가
 	   @Scheduled(cron = "0 0 6 * * *")
 	   public void animalInsert() throws IOException {
 
@@ -243,7 +234,6 @@ public class AnimalController {
 	         
 	         logger.info("파싱할 리스트 수 : " + nList.getLength());
 	         
-	         
 	         for (int temp = 0; temp < nList.getLength(); temp++) {
 	            Node nNode = nList.item(temp);
 	           
@@ -276,7 +266,7 @@ public class AnimalController {
 	               job.put("processState", URLEncoder.encode(getTagValue("processState", eElement), "utf-8")); //상태
 	               job.put("sexCd", URLEncoder.encode(getTagValue("sexCd", eElement), "utf-8")); //성별
 	               job.put("specialMark", URLEncoder.encode(getTagValue("specialMark", eElement), "utf-8")); //특징
-	               job.put("weight", URLEncoder.encode(getTagValue("weight", eElement), "utf-8")); // 무게
+	               job.put("weight", URLEncoder.encode(getTagValue("weight", eElement), "utf-8")); // 체중
 	               // JSONArray에 JSONObject 담기
 	               
 	               logger.info("desertionNo : "+ getTagValue("desertionNo", eElement));
@@ -285,7 +275,7 @@ public class AnimalController {
 	               
 	               Animal animal = new Animal();
 	               
-	               
+	               //DB에 저장하기 위해 String으로 파싱 후 셋
 	               for (int i = 0; i < jarr.size(); i++) {
 	            	   JSONObject data = (JSONObject) (JSONObject) jarr.get(i);
 	            	   

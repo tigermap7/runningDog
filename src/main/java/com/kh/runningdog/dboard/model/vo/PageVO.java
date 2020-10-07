@@ -127,7 +127,7 @@ public class PageVO {
 	    public int getTotalCount() {
 	        return totalCount;
 	    }
-
+	    //전체 게시물 수, 한페이지에 보여줄 게시물의 갯수를 보냄
 	    public void setTotalCount(int totalCount,int pageSet) {
 	        this.totalCount = totalCount;
 	        this.makePaging(pageSet);

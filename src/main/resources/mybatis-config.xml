@@ -16,16 +16,6 @@
 		<typeAlias type="com.kh.runningdog.chatting.model.vo.Chatroom" alias="Chatroom" />
 		<typeAlias type="com.kh.runningdog.chatting.model.vo.Message" alias="Message" />
 		<typeAlias type="com.kh.runningdog.member.model.vo.LeaveMember" alias="LeaveMember" />
-		<!-- <typeAlias type="com.kh.second.notice.model.vo.Notice"
-			alias="Notice" />
-		<typeAlias type="com.kh.second.board.model.vo.Board"
-			alias="Board" />
-		<typeAlias type="com.kh.second.test.model.vo.CryptoUser"
-			alias="CryptoUser" />-->
-		<!-- <typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" />
-		<typeAlias type="com.kh.second.notice.model.vo.Notice" alias="Notice" />
-		<typeAlias type="com.kh.second.board.model.vo.Board" alias="Board" />
-		<typeAlias type="com.kh.second.test.model.vo.CryptoUser" alias="CryptoUser" /> -->
 		<typeAlias type="com.kh.runningdog.sponsor.model.vo.Sponsor" alias="Sponsor"/>
 		<typeAlias type="com.kh.runningdog.sponsor.model.vo.SponsorList" alias="SponsorList"/>
 		<typeAlias type="com.kh.runningdog.sponsor.model.vo.SponsorImage" alias="SponsorImage"/>
@@ -37,9 +27,6 @@
 		<typeAlias type="com.kh.runningdog.dboard.model.vo.Dboard" alias="Dboard" />
 		<typeAlias type="com.kh.runningdog.dreply.model.vo.Dreply" alias="Dreply" />
 		<typeAlias type="com.kh.runningdog.animal.model.vo.Animal" alias="Animal" />
-<!-- 		<typeAlias type="com.kh.second.member.model.vo.Member" alias="Member" />
-		<typeAlias type="com.kh.second.board.model.vo.Board" alias="Board" />
-		<typeAlias type="com.kh.second.test.model.vo.CryptoUser" alias="CryptoUser" /> -->
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/notice-mapper.xml" />
@@ -48,11 +35,6 @@
 		<mapper resource="mappers/chatroom-mapper.xml" />
 		<mapper resource="mappers/message-mapper.xml" />
 		<mapper resource="mappers/leaveMember-mapper.xml" />
-		<!-- <mapper resource="mappers/notice-mapper.xml" />
-		<mapper resource="mappers/member-mapper.xml" />
-		<mapper resource="mappers/notice-mapper.xml" />
-		<mapper resource="mappers/board-mapper.xml" />
-		<mapper resource="mappers/test-mapper.xml"/> -->
 		<mapper resource="mappers/sponsor-mapper.xml" />
 		<mapper resource="mappers/sponsorImage-mapper.xml" />
 		<mapper resource="mappers/volunteer-mapper.xml" />
@@ -60,11 +42,6 @@
 		<mapper resource="mappers/dboard-mapper.xml" />
 		<mapper resource="mappers/dreply-mapper.xml" />
 		<mapper resource="mappers/animal-mapper.xml" />
-		<!-- <mapper resource="mappers/notice-mapper.xml" /> 
-		<mapper resource="mappers/test-mapper.xml"/> -->
-<!-- 	<mapper resource="mappers/member-mapper.xml" />
-		<mapper resource="mappers/board-mapper.xml" />
-		<mapper resource="mappers/test-mapper.xml"/> -->
 	</mappers> 
 		
 </configuration> 

@@ -132,7 +132,8 @@ public class DboardController {
 		//게시물 총횟수랑 첫 페이지에 몇개의 리스트를 보여줄지 체크,
 		//pageVO에 makePaing 메소드에 페이지리스트 갯수를 넣어줌
 		dboard.setTotalCount(totalCount,12); // 페이징 처리를 위한 setter 호출
-
+		
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO", dboard);
 		logger.info("PageSize // 한 페이지에 보여줄 게시글 수 : " + dboard.getPageSize());
 		logger.info("PageNo // 페이지 번호 : " + dboard.getPageNo());
@@ -196,9 +197,9 @@ public class DboardController {
 												HttpServletRequest request,HttpServletResponse response) {
 				
 		logger.info("dboard View게시글 번호" + dNum);
-		// 리턴은 한번 하기 위해 url 값 받고 리턴
-		
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO", dboard);
+		
 		Cookie[] cookies =request.getCookies();
 		
 		Cookie viewCookie = null;
@@ -206,14 +207,13 @@ public class DboardController {
 		//cookies가 null이 아닐경우 이름 만들기
 		if(cookies != null && cookies.length > 0) {
 			for (int i = 0; i < cookies.length; i++) {
-			// Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
+			// Cookie의 name이 cookie + 게시물 번호와 일치하는 쿠키를 viewCookie에 넣어줌 
 				if(cookies[i].getName().equals("cookie" + dNum)) {
 					logger.info("처음 쿠키가 생성한 뒤에 들어옴.");
 					viewCookie = cookies[i];
 				}
 			}
 		}
-		
 		// 만일 viewCookie 가 null 일 경우 쿠키를 생성해서 조회수 증가 처리함
 		if (viewCookie == null) {
 			logger.info("cookie 없음");
@@ -349,7 +349,7 @@ public class DboardController {
 	@RequestMapping("dHide.do")
 	public String updateDboardHide(@RequestParam("dNum") int dNum, Dboard dboard,Model model) {
 		//게시물을 삭제 하지 않고 표시 여부에 업데이트 하여
-		//3개월 후 프로시저 등록 후 스케줄러 이용하여 게시물 삭제
+		//3개월 후 스케줄러 이용하여 게시물 삭제
 		 
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url ="";
@@ -395,7 +395,7 @@ public class DboardController {
 		logger.info("Category : " + dboard.getCategory());
 		logger.info("Local : " + dboard.getLocal());
 		
-		//검색값 유지
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO", dboard);
 		
 		//이전게시글번호 저장
@@ -428,7 +428,7 @@ public class DboardController {
 		logger.info("Category : " + dboard.getCategory());
 		logger.info("Local : " + dboard.getLocal());
 		
-		//검색값 유지
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO", dboard);
 		
 		//이전게시글 번호 저장
