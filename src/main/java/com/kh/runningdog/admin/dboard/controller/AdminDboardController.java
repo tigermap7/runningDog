@@ -83,7 +83,7 @@ public class AdminDboardController {
 		} else {
 			model.addAttribute("msg", "검색 결과가 존재 하지 않습니다");
 			model.addAttribute("url", "dboardList.ad");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -104,7 +104,7 @@ public class AdminDboardController {
 		} else {
 			model.addAttribute("msg", "게시글 보기 실패");
 			model.addAttribute("url", "chooseAdminList.ad");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -131,7 +131,7 @@ public class AdminDboardController {
 			model.addAttribute("dboard",dboard);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -159,7 +159,7 @@ public class AdminDboardController {
 			model.addAttribute("dboard",dboard);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -222,7 +222,7 @@ public class AdminDboardController {
 		} else {
 			model.addAttribute("msg", "게시글 등록 실패 다시 확인해 주세요");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -242,7 +242,7 @@ public class AdminDboardController {
 		} else {
 			model.addAttribute("msg", "수정 게시글 이동 실패");
 			model.addAttribute("url", "dboarView.ad");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -318,7 +318,7 @@ public class AdminDboardController {
 		} else {
 			model.addAttribute("msg", "게시글 수정 실패 다시 확인해 주세요");
 			model.addAttribute("url", "dboardView.ad");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -335,12 +335,12 @@ public class AdminDboardController {
         if (result > 0) {
             model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
             model.addAttribute("url", "dboardView.ad"+"?dNum="+dboard.getdNum());
-            url = "common/errorDboard";
+            url = "common/alertDboard";
         } else {
             model.addAttribute("dNum", dboard.getdNum());
             model.addAttribute("msg", "분양 여부 업데이트 실패");
             model.addAttribute("url", "dboardView.ad"+"?dNum="+dboard.getdNum());
-            url = "common/errorDboard";
+            url = "common/alertDboard";
         }
         return url;
     }
@@ -359,11 +359,11 @@ public class AdminDboardController {
 		if (dboardService.updateAdminHide(checkRow.split(",")) > 0) {
 			model.addAttribute("msg", "게시물 표시 업데이트 완료");
 			model.addAttribute("url", "dboardList.ad?pageNo=" + page);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		} else {
 			model.addAttribute("msg", "게시물 표시 업데이트 실패");
 			model.addAttribute("url", "dboardList.ad?pageNo=" + page);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -378,11 +378,11 @@ public class AdminDboardController {
 		if (dboardService.updateDboardHide(dboard) > 0) {
 			model.addAttribute("msg", "게시물을 숨겼습니다.");
 			model.addAttribute("url", "dboardList.ad");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		} else {
 			model.addAttribute("msg", "게시물 숨김 처리에 실패 했습니다.");
 			model.addAttribute("url", "dboardList.ad");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}

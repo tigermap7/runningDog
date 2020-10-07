@@ -54,8 +54,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">유기동물 주인찾기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="dboardList.do">유기동물 주인찾기</a></li>
                             </ul>
                         </div>
                         <h2><span>유기동물 주인찾기</span></h2>
