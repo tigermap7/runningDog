@@ -416,7 +416,7 @@ public class VolunteerController {
 			volunteer.setSearchFiled(request.getParameter("searchFiled"));
 			volunteer.setSearchValue(request.getParameter("searchValue"));
 			volunteer.setVolche(request.getParameter("volche"));
-			volunteer.setUnique_num(Integer.parseInt(request.getParameter("unique_num")));
+			//volunteer.setUnique_num(Integer.parseInt(request.getParameter("unique_num")));
 			logger.info("SearchFiled : " + volunteer.getSearchFiled());
 			logger.info("SearchValue : " + volunteer.getSearchValue());
 			logger.info("SearchValue : " + volunteer.getUnique_num());
