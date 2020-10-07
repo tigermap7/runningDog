@@ -89,7 +89,7 @@ public class AnimalController {
 		}else {
 			model.addAttribute("msg", "검색 결과가 존재 하지 않습니다.");
 			model.addAttribute("url", "animalList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		
 		return url;
@@ -148,7 +148,7 @@ public class AnimalController {
 		} else {
 			model.addAttribute("msg", "게시글 보기 실패");
 			model.addAttribute("url", "animalList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -169,7 +169,7 @@ public class AnimalController {
 			model.addAttribute("animal" , animal);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -192,7 +192,7 @@ public class AnimalController {
 			model.addAttribute("animal" , animal);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
