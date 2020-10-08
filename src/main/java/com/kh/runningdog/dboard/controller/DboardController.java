@@ -63,7 +63,6 @@ public class DboardController {
 
 		String viewImage = file.getOriginalFilename();
 		dboard.setviewImage(viewImage);
-		dboard.setdContent(dboard.getdContent().replace("\r\n", "<br>"));
 		Image viewImg = null;
 		Image listImg = null;
 		// viewImage 가 null아니거나 viewImage크기가 0 이 아니라면
@@ -113,7 +112,7 @@ public class DboardController {
 		} else {
 			model.addAttribute("msg", "게시글 등록 실패 다시 확인해 주세요");
 			model.addAttribute("url", "dboardList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -124,13 +123,16 @@ public class DboardController {
 
 		logger.info("SearchFiled : " + dboard.getSearchFiled());
 		logger.info("SearchValue : " + dboard.getSearchValue());
+		logger.info("Category : " + dboard.getCategory());
+		logger.info("Local : " + dboard.getLocal());
 		int totalCount = dboardService.selectListCount(dboard); // 게시물 총갯수를 구한다
 		
 		
 		//게시물 총횟수랑 첫 페이지에 몇개의 리스트를 보여줄지 체크,
 		//pageVO에 makePaing 메소드에 페이지리스트 갯수를 넣어줌
 		dboard.setTotalCount(totalCount,12); // 페이징 처리를 위한 setter 호출
-
+		
+		//pageVO 로 페이징처리, 검색값 유지
 		model.addAttribute("pageVO", dboard);
 		logger.info("PageSize // 한 페이지에 보여줄 게시글 수 : " + dboard.getPageSize());
 		logger.info("PageNo // 페이지 번호 : " + dboard.getPageNo());
@@ -149,7 +151,6 @@ public class DboardController {
 		
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("dboardList", dboardList);
-		model.addAttribute("dCategory", dboard.getdCategory());
 		
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url = "";
@@ -158,7 +159,7 @@ public class DboardController {
 		} else {
 			model.addAttribute("msg", "검색 결과가 존재 하지 않습니다");
 			model.addAttribute("url", "dboardList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -187,16 +188,16 @@ public class DboardController {
 		//전송용 객체에 배열 저장
 		sendJson.put("list", jarr);
 		
-		
 		return sendJson.toJSONString();
-		
 	}
 	
 	@RequestMapping("dboardView.do")
-	public String selectOne(@RequestParam("dNum") int dNum, Dreply dreply, Model model,HttpServletRequest request,HttpServletResponse response) {
+	public String selectOne(@RequestParam("dNum") int dNum, Dreply dreply, Dboard dboard,Model model,
+												HttpServletRequest request,HttpServletResponse response) {
 				
 		logger.info("dboard View게시글 번호" + dNum);
-		// 리턴은 한번 하기 위해 url 값 받고 리턴
+		//pageVO 로 페이징처리, 검색값 유지
+		model.addAttribute("pageVO", dboard);
 		
 		Cookie[] cookies =request.getCookies();
 		
@@ -205,20 +206,17 @@ public class DboardController {
 		//cookies가 null이 아닐경우 이름 만들기
 		if(cookies != null && cookies.length > 0) {
 			for (int i = 0; i < cookies.length; i++) {
-			// Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
+			// Cookie의 name이 cookie + 게시물 번호와 일치하는 쿠키를 viewCookie에 넣어줌 
 				if(cookies[i].getName().equals("cookie" + dNum)) {
 					logger.info("처음 쿠키가 생성한 뒤에 들어옴.");
 					viewCookie = cookies[i];
 				}
 			}
 		}
-		
 		// 만일 viewCookie 가 null 일 경우 쿠키를 생성해서 조회수 증가 처리함
 		if (viewCookie == null) {
 			logger.info("cookie 없음");
-
 			// 쿠키 생성(이름 , 값)
-
 			Cookie newCookie = new Cookie("cookie" + dNum, "|" + dNum + "|");
 			// 쿠키추가
 			response.addCookie(newCookie);
@@ -232,14 +230,13 @@ public class DboardController {
 		}
 		
 		//조회수 처리 후 게시물에 대한 정보 불러오기
-		Dboard dboard = dboardService.selectOne(dNum); //게시물 하나의 정보를 가져옴
+		
+		dboard = dboardService.selectOne(dNum); //게시물 하나의 정보를 가져옴
 		int dreplyCount = dreplyService.seletListCount(dNum); // 게시물의 댓글 갯수를 구한다
 		ArrayList<Dreply> dreplyList = dreplyService.selectList(dNum); //댓글 리스트 
 		
-		
 		model.addAttribute("dreplyCount" , dreplyCount);
 		model.addAttribute("dreplyList", dreplyList);
-		model.addAttribute("dCategory" , request.getParameter("dCategory"));
 		String url = "";
 		
 		if (dboard != null) {
@@ -248,7 +245,7 @@ public class DboardController {
 		} else {
 			model.addAttribute("msg", "게시글 보기 실패");
 			model.addAttribute("url", "dboardList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -268,7 +265,7 @@ public class DboardController {
 		} else {
 			model.addAttribute("msg", "수정 게시글 이동 실패");
 			model.addAttribute("url", "dboarView.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -278,7 +275,6 @@ public class DboardController {
 			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) throws IOException {
 		logger.info("dupdate.do run..." + dboard + "Image file : " + file.getOriginalFilename());
 		// 상세설명에 엔터키와 띄어쓰기 적용
-		dboard.setdContent(dboard.getdContent().replace("\r\n", "<br>"));
 		// 새로운 이미지를 업로드 했을 경우
 		if (file != null && file.getBytes().length > 0) {
 			String viewImage = file.getOriginalFilename();
@@ -324,11 +320,12 @@ public class DboardController {
 					// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
 					viewImg.getResizedToWidth(viewWidth).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
 					listImg.getResizedToWidth(listWidth).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
-
+					fin.close();
+					fout.close();
+					
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
-
 				dboard.setviewImage(viewRename);
 				dboard.setlistImage(listRename);
 			}
@@ -338,33 +335,33 @@ public class DboardController {
 		String url = "";
 		if (dboardService.updateDboard(dboard) > 0) {
 			//업데이트 후 detail 페이지 이동시 정보 전부 보여주게 하기 위함
-			Dboard dboardView =dboardService.selectOne(dboard.getdNum());
+			Dboard dboardView = dboardService.selectOne(dboard.getdNum());
 			model.addAttribute("dboard",dboardView);
-
 			url = "animal/chooseView";
 		} else {
 			model.addAttribute("msg", "게시글 수정 실패 다시 확인해 주세요");
 			model.addAttribute("url", "dboardView.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
 	
+	//게시물숨기기
 	@RequestMapping("dHide.do")
 	public String updateDboardHide(@RequestParam("dNum") int dNum, Dboard dboard,Model model) {
 		//게시물을 삭제 하지 않고 표시 여부에 업데이트 하여
-		//3개월 후 프로시저 등록 후 스케줄러 이용하여 게시물 삭제
+		//3개월 후 스케줄러 이용하여 게시물 삭제
 		 
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		String url ="";
 		if (dboardService.updateDboardHide(dboard) > 0) {
 			model.addAttribute("msg", "게시물을 삭제 했습니다.");
 			model.addAttribute("url", "dboardList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		} else {
 			model.addAttribute("msg", "게시물 삭제에 실패 했습니다.");
 			model.addAttribute("url", "dboardList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -372,7 +369,7 @@ public class DboardController {
     @RequestMapping("dUpSuccess.do")
     public String updateDboardSuc(@RequestParam("dNum") int dNum,@RequestParam("dSuccess") String dSuccess,
                                 Dboard dboard,Model model) {
-    	//분양여
+    	//분양여부
         dboard.setdSuccess(dSuccess);
         logger.info("게시물 분양 여부 체크 : "+dboard.getdSuccess());
     
@@ -381,71 +378,78 @@ public class DboardController {
         if (dboardService.updateDboardSuc(dboard) > 0) {
             model.addAttribute("msg", "분양 여부를 업데이트 했습니다");
             model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
-            url = "common/errorDboard";
+            url = "common/alertDboard";
         } else {
             model.addAttribute("dNum", dboard.getdNum());
             model.addAttribute("msg", "분양 여부 업데이트 실패");
             model.addAttribute("url", "dboardView.do"+"?dNum="+dboard.getdNum());
-            url = "common/errorDboard";
+            url = "common/alertDboard";
         }
         return url;
     }
 	
 	@RequestMapping("dboardnext.do")
-	public String dboardNext(HttpServletRequest request,Model model, Dboard dboard) {
-		//다음글 번호조회
+	public String dboardNext(HttpServletRequest request,Model model,Dboard dboard) {
 		
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
+		logger.info("SearchFiled : " + dboard.getSearchFiled());
+		logger.info("SearchValue : " + dboard.getSearchValue());
+		logger.info("Category : " + dboard.getCategory());
+		logger.info("Local : " + dboard.getLocal());
 		
+		//pageVO 로 페이징처리, 검색값 유지
+		model.addAttribute("pageVO", dboard);
 		
+		//이전게시글번호 저장
+		int beforeNum = dboard.getdNum();
+		//다음게시글 번호 조회
 		int dboardNextNum = dboardService.selectNext(dboard);
 		//다음글번호를 받고 다음글로 조회
-		Dboard dboardNext = dboardService.selectOne(dboardNextNum);
+		dboard = dboardService.selectOne(dboardNextNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
-		model.addAttribute("dCategory", dboard.getdCategory());
 		
 		String url = "";
-		if (dboard.getdNum() != dboardNextNum) {
-			model.addAttribute("dboard", dboardNext);
+		if (beforeNum != dboardNextNum) {
+			model.addAttribute("dboard", dboard);
 			url = "animal/chooseView";
 		} else {
 			model.addAttribute("dboard",dboard);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
 	
 	@RequestMapping("dboardprev.do")
 	public String dboardPrev(HttpServletRequest request,Model model, Dboard dboard) {
-		dboard.setdCategory(request.getParameter("dCategory"));
-		dboard.setdLocal(request.getParameter("dLocal"));
 		
+		logger.info("SearchFiled : " + dboard.getSearchFiled());
+		logger.info("SearchValue : " + dboard.getSearchValue());
+		logger.info("Category : " + dboard.getCategory());
+		logger.info("Local : " + dboard.getLocal());
+		
+		//pageVO 로 페이징처리, 검색값 유지
+		model.addAttribute("pageVO", dboard);
+		
+		//이전게시글 번호 저장
+		int beforeNum = dboard.getdNum();
 		//이전 번호조회
 		int dboardPrevNum = dboardService.selectPrev(dboard);
 		//이전글번호를 받고 다음글로 조회
-		Dboard dboardPrev = dboardService.selectOne(dboardPrevNum);
+		dboard = dboardService.selectOne(dboardPrevNum);
 		// 리턴은 한번 하기 위해 url 값 받고 리턴
 		
-		model.addAttribute("dLocal", dboard.getdLocal());
-		model.addAttribute("dCategory", dboard.getdCategory());
-		
 		String url = "";
-		if ( dboard.getdNum() != dboardPrevNum) {
-			model.addAttribute("dboard", dboardPrev);
+		if (beforeNum != dboardPrevNum) {
+			model.addAttribute("dboard", dboard);
 			url = "animal/chooseView";
 		} else {
 			model.addAttribute("dboard",dboard);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
-	
-	
 }

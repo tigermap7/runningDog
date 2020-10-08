@@ -49,8 +49,7 @@ $(function() {
 							
 						</c:url>
 						<!-- 분양 완료 버튼 클릭시 분양완료 상태였으면 분양취소를 분양이 아직 안된상태면 완료하기 표시 -->
-						<a class="linkBtn" href="${ dSuccess }"><i class="xi-share-alt-o"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
-						
+						<a class="linkBtn" href="${ dSuccess }"><i class="xi-shield-checked"></i> ${ dboard.dSuccess eq 'y'? '분양완료취소':'분양완료하기'}</a>
 					</dt>
                     <dd>
                         <h3>동물정보</h3>
@@ -191,23 +190,27 @@ $(function() {
 				</c:url>
 				<c:url var="dlistMove" value="dboardList.ad">
 					<c:param name="pageNo" value="${ dboard.pageNo }" />
+					<c:param name="local" value="${ pageVO.local }"/>
+                    <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+					<c:param name="searchValue" value="${ pageVO.searchValue }" />
+					<c:param name="category" value="${ pageVO.category }"/>
 				</c:url>
 				<c:url var="dboardHide" value="dHide.ad">
 					<c:param name="dNum" value="${ dboard.dNum }" />
 				</c:url>
 				<c:url var="dboardNext" value="dboardnext.ad">
 						<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dboard.dLocal }"/>
-                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
-							<c:param name="searchValue" value="${ dboard.searchValue }" />
-							<c:param name="dCategory" value="${ dboard.dCategory }"/>
+							<c:param name="local" value="${ pageVO.local }"/>
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
+							<c:param name="category" value="${ pageVO.category }"/>
 				</c:url>
 				<c:url var="dboardPrev" value="dboardprev.ad">
 						<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dboard.dLocal }"/>
-                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
-							<c:param name="searchValue" value="${ dboard.searchValue }" />
-							<c:param name="dCategory" value="${ dboard.dCategory }"/>
+							<c:param name="local" value="${ pageVO.local }"/>
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
+							<c:param name="category" value="${ pageVO.category }"/>
 				</c:url>
 				<div class="viewBtn-wrap">
 					<button class="nextBtn" onclick="location='${ dboardPrev }'">
@@ -218,7 +221,7 @@ $(function() {
 					</button>
 					
 						<button class="deleteBtn" onclick="location='${ dboardHide }'">
-							<i class="xi-cut"></i> 삭제
+							<i class="xi-cut"></i> 숨김
 						</button>
 						<button class="modifiedBtn" onclick="location='${ dupPageMove }'">
 							<i class="xi-pen-o"></i> 수정
@@ -230,87 +233,7 @@ $(function() {
 				</div>
 				<!-- 버튼 끝 -->
 
-               <div class="cmt_wrap">
-                            <form name = ""action="insertDreply.do" method="post">
-                            <input type="hidden" id= "dNum" name="dNum" value="${dboard.dNum }">
-                            <input type="hidden" id="dreWriter" name="dreWriter" value="${loginMember.nickname }">
-                            <input type="hidden" id= "uniqueNum" name="uniqueNum" value="${loginMember.uniqueNum }">
-                                <fieldset>
-                                    <div class="cmt_form">
-                                        <h4 class="cmt_head">댓글 ${ dreplyCount }</h4>
-                                        <div class="cmt_body">
-        								<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" id = "dreContent" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                            <div class="cmt_ok">
-                                            	<input type="submit" value="등록" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </form>
-                    <ul class="cmt_con">
-                       <c:forEach items="${ requestScope.dreplyList }" var="d">
-							<!--  대댓글일 경우 대댓글 창 색상 다르게함 -->
-								<li ${ d.dreLevel eq 2? "style='background-color: #f0f0f0; padding: 0.375rem 3rem;'" : "" }>
-								<dl>
-									<dt class="img">
-										<i ${ d.dreLevel eq 2? "class='xi-check-circle-o' style='font-size:22px'" : "" }></i>
-										
-										<img src="/runningdog/resources/images/memberImg/${savePath}${selectUser.renameProfile}">
-									</dt>
-										<dd>
-											<h4>${ d.dreWriter }/#${ d.uniqueNum }</h4>
-										</dd>
-										<dt class="cmt_date">${ d.dreMdate }</dt>
-									</dl>
-									<p>${ d.dreContent }</p>
-									<div class="cmt_conBtn">
-										<c:if test="${ d.dreLevel eq 1 and d.dreDelete eq 'n'}">
-										<button class="Subcmt_btn">대댓글</button>
-										</c:if>
-										
-										<button onclick="location.href='updateDreplyDel.do?dreNum=${d.dreNum}&dNum=${d.dNum}'" style="float: right;">삭제</button>
-										<button class="Cmt_update_btn" style="float: right; margin-right: 10px;">수정</button>
-								
-										<div class="Cmt_update pt20 mt0" style="display: none; width:100%; overflow: hidden;">
-											<form name="updateDreply" action="updateDreply.do" method="post">
-												<input type="hidden" name="dreNum" id="dreNumUp" value="${ d.dreNum }">
-												<input type="hidden" name="dNum" value="${ d.dNum }">
-												<input type="hidden" name="dreParents" value="${ d.dreParents }">
-												<fieldset style="width:100%;">
-													<div class="cmt_form" style="overflow: unset;">
-														<div class="cmt_body">
-															<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
-															<div class="cmt_ok">
-																<input type="submit" class="updateDreply" value="수정">
-															</div>
-														</div>
-													</div>
-												</fieldset>
-											</form>
-										</div>
-										<div class="Subcmt pt20 mt0" id="commentReply" style="display: none; width:100%; overflow: hidden;">
-											<form action="insertDreplyLevel.do" method="post">
-												<input type="hidden" name="dreNum" id="dreNum" value="${ d.dreNum }"> 
-												<input type="hidden" name="dNum" id="dNum" value="${ d.dNum }"> 
-												<input type="hidden" name="dreWriter" id="dreWriter" value="${loginMember.nickname}"> 
-												<input type="hidden" name="uniqueNum" id="uniqueNum" value="${loginMember.uniqueNum}">
-												<fieldset style="width:100%;">
-													<div class="cmt_form" style="overflow: unset;">
-														<div class="cmt_body">
-															<textarea name="dreContent" id="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
-																onfocus="this.value='';">비방글은 작성할 수 없습니다.</textarea>
-															<div class="cmt_ok">
-																<input type="submit"  value="등록">
-															</div>
-														</div>
-													</div>
-												</fieldset>
-											</form>
-										</div>
-									</li>
-							</c:forEach>
-                    </ul>
-                </div>                    
+              
             </div>
         </div>
         <c:import url="../include/admin_footer.jsp"/>

@@ -97,4 +97,15 @@ public class DboardDao {
 		session.update("dboardMapper.updateReadCount" , dNum);
 	}
 
+
+	public ArrayList<Dboard> selectDboardNumList() {
+		List<Dboard> list = session.selectList("dboardMapper.selectDboardNumList");
+		return (ArrayList<Dboard>)list;
+	}
+
+
+	public int deleteDboard(Dboard dboard) {
+		return session.delete("dboardMapper.deleteDboard", dboard);
+	}
+
 }

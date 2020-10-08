@@ -44,7 +44,7 @@
 </style>
 
 </head>
-	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+	<body oncontextmenu="return false" ondragstart="return false">
 		<div id="wrap">
             <c:import url="/WEB-INF/views/include/header.jsp"/>
 			<!-- 컨텐츠 -->
@@ -54,8 +54,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">유기동물 주인찾기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="dboardList.do">유기동물 주인찾기</a></li>
                             </ul>
                         </div>
                         <h2><span>유기동물 주인찾기</span></h2>
@@ -258,7 +258,7 @@
                                     <tr>
                                         <td>세부내용 *</td>
                                         <td>
-                                        <textarea name="dContent"  minlength="15" maxlength="1000" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" required placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea>
+                                        <textarea name="dContent"  minlength="15" maxlength="1000" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea>
                                         </td>
                                     </tr>
                                     

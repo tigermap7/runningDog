@@ -26,9 +26,11 @@
 <script src="resources/common/js/volunteer.js"></script>
 <script src="resources/common/js/contents.js"></script>
 <script src="resources/common/js/notice.js"></script>
-
+<link href="${pageContext.request.contextPath}/resources/summernote/summernote.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/summernote/summernote.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-
+<!-- include summernote-ko-KR -->
+<script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
 <!-- 소셜로그인 API -->
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="/runningdog/resources/common/js/kakaoLogin.js"></script>
@@ -42,7 +44,7 @@
 <script src="resources/common/js/issueShare.js"></script>
 
 <!--티스토리 불펌금지-->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     var omitformtags=["input", "textarea", "select"]
     omitformtags=omitformtags.join("|")
     function disableselect(e){
@@ -58,4 +60,4 @@
         document.onmousedown=disableselect
         document.onmouseup=reEnable
     }
-</script>
+</script> -->

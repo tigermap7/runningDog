@@ -109,7 +109,6 @@ public class SponsorDao {
 	public String selectContent(int sNum) {
 		HashMap<String, Object> li = session.selectOne("sponsorMapper.selectContent", sNum);
 		String l = (String)li.get("content");
-		System.out.println(l);
 		return l;
 	}
 

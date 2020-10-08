@@ -36,3 +36,5 @@ hs_err_pid*
 /bin
 
 
+dbscript/gaenasona_200929_DB.sql
+dbscript/gaenasona_200929_DB.txt
