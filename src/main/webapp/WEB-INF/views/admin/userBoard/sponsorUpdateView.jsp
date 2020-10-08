@@ -51,11 +51,11 @@
                     <tbody>
                         <tr>
                             <td>제목</td>
-                            <td><input type="text" name="sTitle" class="form-control w100p" placeholder="제목 입력" required value="${ sponsor.sTitle }"></td>
+                            <td><input onfocus="textlength(this);" maxlength="18" type="text" name="sTitle" class="form-control w100p" placeholder="제목 입력" required value="${ sponsor.sTitle }"></td>
                         </tr>
                         <tr>
                             <td>요약 설명</td>
-                            <td><input type="text" name="sSummary" class="form-control w100p" placeholder="요약 설명 입력" required value="${ sponsor.sSummary }"></td>
+                            <td><input onfocus="textlength(this);" maxlength="40" type="text" name="sSummary" class="form-control w100p" placeholder="요약 설명 입력" required value="${ sponsor.sSummary }"></td>
                         </tr>
                         <tr>
                             <td>목표 금액</td>
