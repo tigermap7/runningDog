@@ -17,7 +17,7 @@
             <!-- 상단 타이틀 -->
             <div class="pageTitle">
                 <div class="adminPath">
-                    <h3>전체회원 관리</h3>
+                    <h3>탈퇴회원 관리</h3>
                     <h2>| 상세</h2>
                 </div>
             </div>
@@ -32,25 +32,17 @@
 				<dl class="profile">
 					<dt>
 						<div>
-					        <c:if test="${ selectLeaveUser.leaveRenameProfile eq null }">
-					        <img src="/runningdog/resources/images/common/userBg.png">
-					        </c:if>        
-					        <c:if test="${ selectLeaveUser.leaveRenameProfile ne null }">
-					        <img src="/runningdog/resources/images/memberImg/${savePath}${selectLeaveUser.leaveRenameProfile}"/>
-					        </c:if>
-					        
-					        
-							<!-- c:if test="${ selectLeaveUser.leaveRenameProfile eq null }">
+							<c:if test="${ selectLeaveUser.leaveRenameProfile eq null }">
 							<img src="/runningdog/resources/images/common/userBg.png"/>
 							</c:if>
 							<c:if test="${ selectLeaveUser.leaveRenameProfile ne null }">
 							<c:if test="${ selectLeaveUser.leaveLoginType eq null or selectLeaveUser.leaveLoginType eq 'facebook' }">
 							<img src="/runningdog/resources/images/memberImg/${selectLeaveUser.leaveRenameProfile}"/>
 							</c:if>
-							<c:if test="${ selectLeaveUser.loginType ne null and selectLeaveUser.leaveLoginType ne 'facebook' }">
-							<img src="${selectUser.leaveRenameProfile}"/>
+							<c:if test="${ selectLeaveUser.leaveLoginType ne 'facebook' }">
+							<img src="${selectLeaveUser.leaveRenameProfile}"/>
 							</c:if>
-							</c:if-->
+							</c:if>
 						</div>
 					</dt>
 					<dd>

@@ -334,9 +334,7 @@ public class SocialLoginController {
 	@ResponseBody
 	public String socialMyinfoMethod(Member member, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam(name = "profilImage", required = false) MultipartFile profilImg) throws IOException {
 		logger.info("myinfoAction run...");
-		logger.info("member : " + member);
 		Member loginMember = memberService.selectLogin(member);
-		logger.info("loginMember : " + loginMember);
 		
 		//닉네임, 핸드폰 번호, 비밀번호 유효성검사
 		Member nicknameChk = memberService.selectNicknameCheck(member);
@@ -345,8 +343,6 @@ public class SocialLoginController {
 
 		String url = null;
 		int myNickname = 0, newNickname = 0, myPhone = 0, newPhone = 0;
-		logger.info("확인1 : " + loginMember.getNickname());
-		logger.info("확인2 : " + member.getNickname());
 
 		myNickname = (loginMember.getNickname().equals(member.getNickname())) ? 1 : 0;
 		myPhone = (member.getPhone().equals(loginMember.getPhone())) ? 1 : 0;
