@@ -47,9 +47,9 @@ public class AnimalController {
 	// tag값의 정보를 가져오는 메소드
 	private static String getTagValue(String tag, Element eElement) {
 		NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-		System.out.println("nlList" + nlList);
+		logger.info("nlList" + nlList);
 		Node nValue = (Node) nlList.item(0);
-		System.out.println("nValue" + nValue);
+		logger.info("nValue" + nValue);
 		if (nValue == null)
 			return null;
 		return nValue.getNodeValue();
@@ -209,7 +209,7 @@ public class AnimalController {
 	      String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(mon.getTime());
 	      
 	      logger.info("오늘날짜 : " + toDay + "한달 전 날짜 " + beforeMonth);
-	      System.out.println(toDay + beforeMonth);
+	      logger.info(toDay + beforeMonth);
 
 	      JSONArray jarr = new JSONArray();
 
@@ -223,8 +223,7 @@ public class AnimalController {
 	         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	         Document doc = dBuilder.parse(url);
-	         System.out.println("doc"+ doc);
-
+	         logger.info("doc"+ doc);
 	         // root tag
 	         doc.getDocumentElement().normalize();
 	         logger.info("Root element :" + doc.getDocumentElement().getNodeName());

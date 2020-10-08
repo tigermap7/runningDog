@@ -69,7 +69,7 @@ public class SocialLoginController {
 		String url = null;
 		
         if(loginMember != null && loginMember.getLoginLimit().equals("N")) {
-			System.out.println("이후 가야함");
+			logger.info("이후 가야함");
 
 			loginMember.setRenameProfile(profileImage);
 			loginMember.setLoginType("kakao");
@@ -109,7 +109,7 @@ public class SocialLoginController {
         
         //https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
         //redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
-        System.out.println("네이버:" + naverAuthUrl);
+        logger.info("네이버:" + naverAuthUrl);
         
         //네이버 
         model.addAttribute("naverAuthUrl", naverAuthUrl);
@@ -122,7 +122,7 @@ public class SocialLoginController {
     @RequestMapping(value = "naverLogin.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String callback(Member member, Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletResponse response, SessionStatus status)
             throws IOException, ParseException {
-        System.out.println("여기는 callback");
+        logger.info("여기는 callback");
         OAuth2AccessToken oauthToken;
         oauthToken = naverLoginBO.getAccessToken(session, code, state);
         //로그인 사용자 정보를 읽어온다.
@@ -130,7 +130,7 @@ public class SocialLoginController {
         model.addAttribute("result", apiResult);
 
 
-        System.out.println("apiResult : " + apiResult);
+        logger.info("apiResult : " + apiResult);
         
         /** apiResult json 구조
         {"resultcode":"00",
@@ -419,7 +419,7 @@ public class SocialLoginController {
 			}
 				
 		}
-		System.out.println("url : " + url);
+		logger.info("url : " + url);
 		return url;
 	}
 	

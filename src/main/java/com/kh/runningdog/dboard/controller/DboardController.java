@@ -63,7 +63,6 @@ public class DboardController {
 
 		String viewImage = file.getOriginalFilename();
 		dboard.setviewImage(viewImage);
-		dboard.setdContent(dboard.getdContent().replace("\r\n", "<br>"));
 		Image viewImg = null;
 		Image listImg = null;
 		// viewImage 가 null아니거나 viewImage크기가 0 이 아니라면
@@ -276,7 +275,6 @@ public class DboardController {
 			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) throws IOException {
 		logger.info("dupdate.do run..." + dboard + "Image file : " + file.getOriginalFilename());
 		// 상세설명에 엔터키와 띄어쓰기 적용
-		dboard.setdContent(dboard.getdContent().replace("\r\n", "<br>"));
 		// 새로운 이미지를 업로드 했을 경우
 		if (file != null && file.getBytes().length > 0) {
 			String viewImage = file.getOriginalFilename();
@@ -322,6 +320,9 @@ public class DboardController {
 					// 원본 파일을 저장하니 용량이 너무 많아져서 viewImg도 리사이징
 					viewImg.getResizedToWidth(viewWidth).soften(0.0f).writeToJPG(new File(viewPath), 0.95f);
 					listImg.getResizedToWidth(listWidth).soften(0.0f).writeToJPG(new File(listPath), 0.95f);
+					fin.close();
+					fout.close();
+					
 				} catch (IllegalStateException | IOException e) {
 					e.printStackTrace();
 				}
