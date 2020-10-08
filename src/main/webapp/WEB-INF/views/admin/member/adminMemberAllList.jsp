@@ -181,9 +181,6 @@
                     </c:if>
                     
                    	<c:forEach var="p" begin="${ memberPage.startPage }" end="${ memberPage.endPage }">
-                   		<c:if test="${ p eq memberPage.currentPage }">
-                        <a href="#none" class="active">${ p }</a>
-                        </c:if>
                    		<c:if test="${ p ne memberPage.currentPage }">
 							<c:url var="memberPaging" value="memberAllList.ad">
 								<c:param name="page" value="${ p }" />
@@ -194,6 +191,9 @@
 							<a href="${ memberPaging }">${ p }</a>
                     	</c:if>
                     </c:forEach>
+               		<c:if test="${ memberPage.listCount eq 0 }">
+                    <a href="#none" class="active">1</a>
+                    </c:if>
                     
 					
                    	<c:if test="${ memberPage.currentPage < memberPage.maxPage }">
