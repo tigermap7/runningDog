@@ -43,7 +43,7 @@
             	window.location.href = 'logout.do';
 			},
 			fail: function(err) {
-				alert('fail: ' + JSON.stringify(err))
+            	window.location.href = 'logout.do';
 			},
 		})
 	}
