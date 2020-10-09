@@ -51,11 +51,11 @@
                     <tbody>
                         <tr>
                             <td>제목</td>
-                            <td><input type="text" name="sTitle" class="form-control w100p" placeholder="제목 입력" required value="${ sponsor.sTitle }"></td>
+                            <td><input onfocus="textlength(this);" maxlength="18" type="text" name="sTitle" class="form-control w100p" placeholder="제목 입력" required value="${ sponsor.sTitle }"></td>
                         </tr>
                         <tr>
                             <td>요약 설명</td>
-                            <td><input type="text" name="sSummary" class="form-control w100p" placeholder="요약 설명 입력" required value="${ sponsor.sSummary }"></td>
+                            <td><input onfocus="textlength(this);" maxlength="40" type="text" name="sSummary" class="form-control w100p" placeholder="요약 설명 입력" required value="${ sponsor.sSummary }"></td>
                         </tr>
                         <tr>
                             <td>목표 금액</td>
@@ -74,7 +74,7 @@
                         </tr>
                         <tr>
                             <td>내용</td>
-                            <td><textarea id="summernote" name="sContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                            <td><textarea name="sContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
                         </tr>
                     </tbody>
                 </table>

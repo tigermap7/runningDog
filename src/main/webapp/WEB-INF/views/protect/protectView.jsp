@@ -84,50 +84,49 @@
                                             });
                                         </script>
                                     </div>
-                                    <!-- <a class="linkBtn" href="mailto:spark720@naver.com"><i class="xi-mail-o"></i> 메일보내기</a> -->
                                     <a class="linkBtn" href="tel:010-3387-7583"><i class="xi-call"></i> 전화하기</a>
-                                    <a class="linkBtn" href="#none"><i class="xi-share-alt-o"></i> 공유하기</a>
+                                    <a class="linkBtn" href="#none" data-toggle="popover3" data-title="${ volunteer.voltitle }" data-image="${ volunteer.volre1 }"><i class="xi-share-alt-o"></i> 공유하기</a>
                                 </dt>
                                 <dd>
                                     <div id="map" style="width:100%;height:350px;"></div>
                                     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78554901e4ce05b55a812c066e4b2f3b&libraries=services"></script>
                                   <script>
-                                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-                                    mapOption = {
-                                        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                                        level: 3 // 지도의 확대 레벨
-                                    };  
+                                  var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                                  mapOption = {
+                                      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                                      level: 3 // 지도의 확대 레벨
+                                  };  
 
-                                    //지도를 생성합니다    
-                                    var map = new kakao.maps.Map(mapContainer, mapOption); 
+                                  //지도를 생성합니다    
+                                  var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-                                    //주소-좌표 변환 객체를 생성합니다
-                                    var geocoder = new kakao.maps.services.Geocoder();
+                                  //주소-좌표 변환 객체를 생성합니다
+                                  var geocoder = new kakao.maps.services.Geocoder();
 
-                                    //주소로 좌표를 검색합니다
-                                    geocoder.addressSearch('${protect.proaddressnew}', function(result, status) {
+                                  //주소로 좌표를 검색합니다
+                                  geocoder.addressSearch('${protect.proaddressnew}', function(result, status) {
 
-                                    // 정상적으로 검색이 완료됐으면 
-                                     if (status === kakao.maps.services.Status.OK) {
+                                  // 정상적으로 검색이 완료됐으면 
+                                   if (status === kakao.maps.services.Status.OK) {
 
-                                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                                      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-                                        // 결과값으로 받은 위치를 마커로 표시합니다
-                                        var marker = new kakao.maps.Marker({
-                                            map: map,
-                                            position: coords
-                                        });
+                                      // 결과값으로 받은 위치를 마커로 표시합니다
+                                      var marker = new kakao.maps.Marker({
+                                          map: map,
+                                          position: coords
+                                      });
 
-                                        // 인포윈도우로 장소에 대한 설명을 표시합니다
-                                        var infowindow = new kakao.maps.InfoWindow({
-                                            content: '<div style="width:150px;text-align:center;padding:6px 0;">${protect.proname }</div>'
-                                        });
-                                        infowindow.open(map, marker);
+                                      // 인포윈도우로 장소에 대한 설명을 표시합니다
+                                      var infowindow = new kakao.maps.InfoWindow({
+                                          content: '<div style="width:150px;text-align:center;padding:6px 0;">${protect.proname }</div>'
+                                      });
+                                      infowindow.open(map, marker);
 
-                                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                                        map.setCenter(coords);
-                                    } 
-                                    });
+                                      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                                      map.setCenter(coords);
+                                  } 
+                                  });
                                   </script>
                                     <!-- <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6324.481505654264!2d127.00051190256856!3d37.572948171699984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca325b4d9b81b%3A0xba2de96c741b670a!2z7ISc7Jq47Yq567OE7IucIOyiheuhnOq1rCDsooXroZw1LjbqsIDrj5k!5e0!3m2!1sko!2skr!4v1598454835067!5m2!1sko!2skr" width="100%" height="281.3rem" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div> -->
                                     <h3 class="mt30" id="detail" >센터정보</h3>

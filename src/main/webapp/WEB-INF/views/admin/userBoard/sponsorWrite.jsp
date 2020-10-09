@@ -40,11 +40,11 @@
                     <tbody>
                         <tr>
                             <td>제목</td>
-                            <td><input type="text" name="sTitle" class="form-control w100p" placeholder="제목 입력" required></td>
+                            <td><input onfocus="textlength(this);" type="text" name="sTitle" class="form-control w100p" placeholder="제목 입력" maxlength="18" required></td>
                         </tr>
                         <tr>
                             <td>요약 설명</td>
-                            <td><input type="text" name="sSummary" class="form-control w100p" placeholder="요약 설명 입력" required></td>
+                            <td><input onfocus="textlength(this);" maxlength="40" type="text" name="sSummary" class="form-control w100p" placeholder="요약 설명 입력" required></td>
                         </tr>
                         <tr>
                             <td>목표 금액</td>

@@ -7,7 +7,7 @@
 	<head>
         <c:import url="/WEB-INF/views/include/head.jsp"/>
 	</head>
-	<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+	<body oncontextmenu="return false" ondragstart="return false">
 		<div id="wrap">
             <c:import url="/WEB-INF/views/include/header.jsp"/>
 			<!-- 컨텐츠 -->
@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">유기동물매칭</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="animalList.do">유기동물매칭</a></li>
                             </ul>
                         </div>
                         <h2><span>유기동물매칭</span></h2>
@@ -181,16 +181,18 @@
                         
                         <c:url var = "alistMove" value= "animalList.do">
 							<c:param name="pageNo" value="${ animal.pageNo }"/>
+							<c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
 						</c:url>
 						<c:url var="animalNext" value="animalNext.do">
 							<c:param name="desertionNo" value="${ animal.desertionNo }"/>
-                            <c:param name="searchFiled" value="${ searchFiled }" />
-							<c:param name="searchValue" value="${ searchValue }" />
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
 						</c:url>
 						<c:url var="animalPrev" value="animalPrev.do">
 							<c:param name="desertionNo" value="${ animal.desertionNo }"/>
-                            <c:param name="searchFiled" value="${ searchFiled }" />
-							<c:param name="searchValue" value="${ searchValue }" />
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
 						</c:url>
                         
                         

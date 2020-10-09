@@ -31,8 +31,8 @@ $(function() {
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">유기동물 주인찾기</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="dboardList.do">유기동물 주인찾기</a></li>
                             </ul>
                         </div>
                         <h2><span>유기동물 주인찾기</span></h2>
@@ -63,7 +63,7 @@ $(function() {
 									<c:if test="${sessionScope.loginMember.getNickname() != dboard.dWriter}">
                                     <a class="linkBtn" href="startChat.do?receiver=${ dboard.dWriter }&receiverNo=${ dboard.uniqueNum }"><i class="xi-message-o"></i> 채팅하기</a>
                                     </c:if>
-                                    <c:if test="${sessionScope.loginMember.getNickname() == dboard.dWriter}">
+                                    <c:if test="${sessionScope.loginMember.getNickname() eq dboard.dWriter}">
                                     <a class="linkBtn" onclick="location.href=alert('자신에게 채팅할 수 없습니다'); location.reload();"><i class="xi-message-o"></i> 채팅하기</a>
                                     </c:if>
                                     <a data-id="${ dboard.dNum }" data-title="${ dboard.dTitle }" data-summary="${ dboard.dContent }" data-image="${ dboard.listImage }"
@@ -118,7 +118,7 @@ $(function() {
                                             </tr>
                                             <tr>
                                                 <th>특이사항</th>
-                                                <td colspan="3">${ dboard.dPoint }</td>
+                                                <td colspan="3"><c:out value='${ dboard.dPoint }'/></td>
                                                
                                             </tr>
                                         </tbody>
@@ -155,7 +155,7 @@ $(function() {
 													<c:if test="${l.count== (dboard.dLocal+1) }"> ${lo }</c:if>
 												</c:forEach></td>
 												<th>조회수</th>
-												<td colspan="1">${ dboard.dCount }</td>
+												<td colspan="1"><c:out value='${ dboard.dCount }'/></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -226,29 +226,33 @@ $(function() {
 							<c:param name="dNum" value="${ dboard.dNum }"/>
 						</c:url>
 						<c:url var = "dlistMove" value= "dboardList.do">
-							<c:param name="pageNo" value="${ dboard.pageNo }"/>
+							<c:param name="dNum" value="${ dboard.dNum }"/>
+							<c:param name="local" value="${ pageVO.local }"/>
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
+							<c:param name="category" value="${ pageVO.category }"/>
 						</c:url>
 						<c:url var="dboardHide" value="dHide.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
 						</c:url>
 						<c:url var="dboardNext" value="dboardnext.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dboard.dLocal }"/>
-                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
-							<c:param name="searchValue" value="${ dboard.searchValue }" />
-							<c:param name="dCategory" value="${ dboard.dCategory }"/>
+							<c:param name="local" value="${ pageVO.local }"/>
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
+							<c:param name="category" value="${ pageVO.category }"/>
 						</c:url>
 						<c:url var="dboardPrev" value="dboardprev.do">
 							<c:param name="dNum" value="${ dboard.dNum }"/>
-							<c:param name="dLocal" value="${ dboard.dLocal }"/>
-                            <c:param name="searchFiled" value="${ dboard.searchFiled }" />
-							<c:param name="searchValue" value="${ dboard.searchValue }" />
-							<c:param name="dCategory" value="${ dboard.dCategory }"/>
+							<c:param name="local" value="${ pageVO.local }"/>
+                            <c:param name="searchFiled" value="${ pageVO.searchFiled }" />
+							<c:param name="searchValue" value="${ pageVO.searchValue }" />
+							<c:param name="category" value="${ pageVO.category }"/>
 						</c:url>
                         <div class="viewBtn-wrap">
                             <button class="nextBtn" onclick="location='${ dboardPrev }'"><i class="xi-angle-left-min"></i> 이전</button>
                             <button class="listBtn" onclick="location='${ dlistMove }'"><i class="xi-rotate-left"></i> 목록</button>
-                            <c:if test= "${ sessionScope.loginMember.userId == dboard.userId }">
+                            <c:if test= "${ sessionScope.loginMember.userId eq dboard.userId }">
                             <button class="deleteBtn" onclick="location='${ dboardHide }'"><i class="xi-cut"></i> 삭제</button>
                             <button class="modifiedBtn" onclick="location='${ dupPageMove }'"><i class="xi-pen-o"></i> 수정</button>
                             </c:if>
@@ -266,7 +270,7 @@ $(function() {
                                     <div class="cmt_form">
                                         <h4 class="cmt_head">댓글 ${ dreplyCount }</h4>
                                         <div class="cmt_body">
-        								<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" id = "dreContent" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
+        								<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;" minlength="2" required id = "dreContent" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
                                             <div class="cmt_ok">
                                             	<input type="submit" value="등록" >
                                             </div>
@@ -280,7 +284,6 @@ $(function() {
 								<li ${ d.dreLevel eq 2? "style='background-color: #f0f0f0; padding: 0.375rem 3rem;'" : "" }>
 								<dl>
 									<dt class="img">
-									
 										<c:if test="${ loginMember.renameProfile eq null  }">
 										<img src="/runningdog/resources/images/common/userBg.png"/>
 										</c:if>
@@ -292,11 +295,12 @@ $(function() {
 										<dd>
 											<h4>${ d.dreWriter }/#${ d.uniqueNum }</h4>
 										</dd>
-										<dt class="cmt_date">${ d.dreMdate }</dt>
+										<dt class="cmt_date">${ d.dreDate ne d.dreMdate ?"수정일": "작성일"}
+										${ d.dreMdate }</dt>
 									</dl>
 									<p>${ d.dreContent }</p>
 									<div class="cmt_conBtn">
-										<c:if test="${ d.dreLevel eq 1 and d.dreDelete eq 'n'}">
+										<c:if test="${ d.dreLevel eq 1 and d.dreDelete eq 'n' and !empty sessionScope.loginMember}">
 										<button class="Subcmt_btn">대댓글</button>
 										</c:if>
 										<c:if test="${ sessionScope.loginMember.uniqueNum == d.uniqueNum and d.dreDelete eq 'n'}">
@@ -311,7 +315,7 @@ $(function() {
 												<fieldset style="width:100%;">
 													<div class="cmt_form" style="overflow: unset;">
 														<div class="cmt_body">
-															<textarea name="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
+															<textarea name="dreContent" style="resize: none; width: 100%;  minlength="2" required min-height: 100px; max-height: 100px;">${ d.dreContent }</textarea>
 															<div class="cmt_ok">
 																<input type="submit" class="updateDreply" value="수정">
 															</div>
@@ -329,7 +333,7 @@ $(function() {
 												<fieldset style="width:100%;">
 													<div class="cmt_form" style="overflow: unset;">
 														<div class="cmt_body">
-															<textarea name="dreContent" id="dreContent" style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
+															<textarea name="dreContent" id="dreContent" minlength="2" required style="resize: none; width: 100%; min-height: 100px; max-height: 100px;"
 																onfocus="this.value='';">비방글은 작성할 수 없습니다.</textarea>
 															<div class="cmt_ok">
 																<input type="submit"  value="등록">

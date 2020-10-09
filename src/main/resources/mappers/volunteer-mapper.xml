@@ -157,7 +157,7 @@
 	</select>
 	<insert id="insertVolunteer" parameterType="Volunteer">
 			insert into volunteer 
-			values (volunteer_seq.nextval, 
+			values ((select max(volno) + 1 from volunteer), 
 								  #{voltitle}, #{unique_num}, #{volwriter}, #{volcontent}, sysdate,
 								  #{voltel}, #{volterm1},  #{volterm2}, #{volname}, #{volor1}, #{volre1},
 								  #{volor2}, #{volre2}, #{volor3}, #{volre3}, #{volor4}, #{volre4}, #{voladdress}, #{volche})			    

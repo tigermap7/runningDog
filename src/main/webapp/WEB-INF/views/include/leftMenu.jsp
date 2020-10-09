@@ -35,7 +35,7 @@
     </div>
     <ul class="leftGnb">
 	   	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk eq 'Y'  }">
-	        <li><a href="allMember.ad">관리자페이지</a></li>
+	        <li><a href="memberAllList.ad">관리자페이지</a></li>
 	       </c:if>
 	   	<c:if test="${ !empty sessionScope.loginMember and loginMember.adminChk ne 'Y' }">
 	        <li><a href="mypage.do?userId=${loginMember.userId}">나의 프로필</a></li>

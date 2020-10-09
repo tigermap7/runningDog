@@ -17,11 +17,11 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="#none">홈</a></li>
-                                <li class="xi-angle-right"><a href="#none">유기동물매칭</a></li>
+                                <li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="animalList.do">유기동물정보</a></li>
                             </ul>
                         </div>
-                        <h2><span>유기동물매칭</span></h2>
+                        <h2><span>유기동물정보</span></h2>
                         <h3>가족을 기다리는 작은 천사에게<br/>가족과 친구가 되어주세요.</h3>
                     </div>
                 </div>
@@ -73,13 +73,12 @@
                                 		<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
                                 		<c:param name="searchValue" value="${ pageVO.searchValue }"/>
                                 	</c:url>
-                                
-                                <li class="grid-item chooseIcon" >
+                                <li class="grid-item" >
                                     <div>
                                         <a href="${ animalView }" class="chooseIcon">분양중</a>
-                                        <a data-id="${ animal.desertionNo }" data-title="${ animal.careAddr }" data-summary="${ animal.specialMark }" data-image="${ animal.popfile }"
+                                        <a data-id="${ a.desertionNo }" data-title="${ a.careAddr }" data-summary="${ a.specialMark }" data-image="${ a.popfile }"
                                   		data-toggle="popover5" class="urlIcon xi-share-alt-o"></a>
-                                        <a href="${ animalView }"><img src="${ a.popfile }"></a>
+                                        <a class="animalImg" href="${ animalView }"><img src="${ a.popfile }"></a>
                                     </div>
                                     <h3 onclick="location='${ animalView }'">${ a.kindCd }</h3>
                                     <p onclick="location='${ animalView }'">
@@ -88,7 +87,7 @@
                                         지역 : ${ a.careAddr }
                                         <span>공고시작일 : <fmt:parseDate var="animalDate" value="${a.noticeSdt}" pattern="yyyyMMdd"/>
                                                 			<fmt:formatDate value="${animalDate}" pattern="yyyy-MM-dd"/>
-                                                	</span>
+                                         </span>
                                     </p>
                                 </li>
                                </c:forEach>
@@ -103,6 +102,8 @@
 									<c:if test="${pageVO.startPageNo >5 }">
 										<c:url var = "dl1" value="animalList.do">
 											<c:param name="pageNo" value="${ pageVO.startPageNo-5 }"/>
+											<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
+                                			<c:param name="searchValue" value="${ pageVO.searchValue }"/>
 										</c:url>
 										<a href="${dl1 }"><i class="xi-angle-left"></i></a>
 									</c:if>
@@ -110,6 +111,8 @@
 										end="${ pageVO.endPageNo }" step="1">
 										<c:url var = "dl2" value="animalList.do">
 												<c:param name="pageNo" value="${ i }"/>
+												<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
+                                				<c:param name="searchValue" value="${ pageVO.searchValue }"/>
 											</c:url>
 										<c:choose>
 											<c:when test="${i eq pageVO.pageNo }">
@@ -120,9 +123,11 @@
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
-									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5}">
+									<c:if test="${pageVO.pageNo != pageVO.finalPageNo and pageVO.finalPageNo > 5 and pageVO.endPageNo != pageVO.finalPageNo}">
 										<c:url var = "dl3" value= "animalList.do">
 											<c:param name="pageNo" value="${ pageVO.endPageNo +1 }"/>
+                                			<c:param name="searchFiled" value="${ pageVO.searchFiled }"/>
+                                			<c:param name="searchValue" value="${ pageVO.searchValue }"/>
 										</c:url>
 										<a href="${dl3 }"><i
 											class="xi-angle-right"></i></a>

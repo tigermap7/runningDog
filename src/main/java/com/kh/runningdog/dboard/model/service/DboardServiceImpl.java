@@ -92,4 +92,14 @@ public class DboardServiceImpl implements DboardService{
 	public void updateReadCount(int dNum) {
 		dboardDao.updateReadCount(dNum);
 	}
+
+	@Override
+	public ArrayList<Dboard> selectDboardNumList() {
+		return dboardDao.selectDboardNumList();
+	}
+
+	@Override
+	public int deleteDboard(Dboard dboard) {
+		return dboardDao.deleteDboard(dboard);
+	}
 }
