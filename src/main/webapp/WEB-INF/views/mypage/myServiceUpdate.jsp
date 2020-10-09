@@ -17,8 +17,8 @@
                     <div class="vsv-copy sub-title">
                        <div>
                             <ul class="navi">
-                                <li><a href="main.do">홈</a></li>
-                                <li class="xi-angle-right"><a href="/runningdog/vlist.do">자원봉사모집</a></li>
+                            	<li><a href="main.do">홈</a></li>
+                                <li class="xi-angle-right"><a href="vlistmy.do?unique_num=${loginMember.uniqueNum}">나의 자원봉사</a></li>
                             </ul>
                         </div>
                         <h2><span>자원봉사모집</span></h2>
@@ -138,7 +138,8 @@
                         <div class="write-btn">
                             <input type="button" class="btn btn-list" onclick="javascript:history.go(-1); return false;" value="목록으로">
                             <input type="reset" class="btn btn-cancel" onclick="Refresh()" value="취소하기">
-                            <input type="submit" class="btn btn-success" value="수정하기">
+                            <input type="hidden" name="unique_num" value="${ loginMember.uniqueNum }"/>
+                            <input type="submit" class="btn btn-success" onclick="UpCom()" value="수정하기">
                         </div>
                         </form>
                         <!-- 글쓰기 끝 -->
@@ -214,6 +215,10 @@
 	/* 수정 최소하기 버튼 눌리면 새로고침하기 */
 	function Refresh(){
 		window.location.reload();
+	}
+	
+	function UpCom(){
+		alert("수정이 완료되었습니다.");
 	}
 	 </script>
 	</body>

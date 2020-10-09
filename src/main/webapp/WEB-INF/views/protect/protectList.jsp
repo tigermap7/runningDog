@@ -41,7 +41,6 @@
                         <!--서브 검색-->                
                         <form action="movePlist.do" name="">     
                         <div class="search_wrap" id="search">
-                          <%-- <input type="hidden" name="volche" value="${ volche }"> --%>
                             <select name="searchFiled" id="searchS">
                                 <option value="proname" class="fontColor-dark" ${pageVO.searchFiled eq"proname"?"selected":""}>센터명</option>
                                 <option value="protype" class="fontColor-dark"${pageVO.searchFiled eq"protype"?"selected":""}>센터유형</option>

@@ -66,7 +66,6 @@ public class VolunteerController {
 		
 		logger.info("SearchFiled : " + volunteer.getSearchFiled());
 		logger.info("SearchValue : " + volunteer.getSearchValue());
-//		logger.info("volche : " + request.getParameter("volche"));
 		logger.info("volche : " + volunteer.getVolche());
 		int totalCount = volunteerService.selectListCount(volunteer); // 게시물 총갯수를 구한다
 		
@@ -507,6 +506,7 @@ public class VolunteerController {
 		public String updateVolunteerMypage(Volunteer volunteer, HttpServletRequest request, 
 				@RequestParam Map<String, MultipartFile> fileMap) {
 		      logger.info("vupdate.do run...");
+		      int uniquenum = Integer.parseInt(request.getParameter("unique_num"));
 		      String returnView = null;
 		      int i = 1;
 		      Image img = null;
@@ -612,7 +612,7 @@ public class VolunteerController {
 			} // for문
 		      
 		      if(volunteerService.updateVolunteer(volunteer) > 0) {
-		         returnView = "redirect:/vlistmy.do";
+		         returnView = "redirect:/vlistmy.do?unique_num="+ uniquenum ;
 		      } else {
 		         request.setAttribute("message", volunteer.getVolno() + "번 글 수정 처리 실패");
 		         returnView = "common/error";
@@ -683,6 +683,29 @@ public class VolunteerController {
 				url = "common/errorDboard";
 			}
 			return url;
+		}
+		//글삭제하기
+		@RequestMapping(value="vdeletemy.do") 
+		public String deleteVolunteerMypage(HttpServletRequest request, Volunteer volunteer, Model model) {
+			int uniquenum = Integer.parseInt(request.getParameter("unique_num"));
+			int volno = Integer.parseInt(request.getParameter("volno"));
+			
+			volunteer.setVolno(volno);
+			
+			if(volunteerService.deleteVolunteer(volunteer) > 0) {
+				for (int i = 1; i < 5; i++) {
+					String renameFileName = request.getParameter("rfile"+ i);
+					if(renameFileName != null) {
+						String savePath = request.getSession().getServletContext().getRealPath("resources/vfiles");
+						new File(savePath + "\\" + renameFileName).delete();
+				}
+			}
+				return "redirect:/vlistmy.do?unique_num="+ uniquenum ;
+			}else {
+				model.addAttribute("message", volno + "번 글 삭제 실패!");
+				return  "common/error";
+			}
+			
 		}
 		
 }

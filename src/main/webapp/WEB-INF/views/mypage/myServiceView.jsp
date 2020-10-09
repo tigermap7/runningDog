@@ -251,8 +251,9 @@
                             </c:url>
                             <button class="prevBtn" onclick="javascript:location.href='${vpre}'">이전<i class="xi-angle-right-min"></i></button>
                             
-                            <c:url var="vdel" value="vdelete.do">
+                            <c:url var="vdel" value="vdeletemy.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
+                            	<c:param name="unique_num" value="${ loginMember.uniqueNum }"/>
                             </c:url>
                             <c:if test= "${ sessionScope.loginMember.nickname == volunteer.volwriter }">
                             <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
@@ -294,20 +295,6 @@
                      	   </ul>
                            </div>
                             
-                      
-                         
-                                    <!-- <div class="Subcmt_form">
-                                        <form action="vrupdate.do" method="post">
-                                            <fieldset>
-                                                <div class="cmt_form">
-                                                    <div class="cmt_body">
-        <textarea name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                                    <div class="cmt_ok"><input type="submit" value="등록"></div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </form>
-                                    </div> -->
                       
                    </div>   
                 </div>
