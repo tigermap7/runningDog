@@ -21,8 +21,8 @@
                                 <li class="xi-angle-right"><a href="vlistmy.do?unique_num=${loginMember.uniqueNum}">나의 자원봉사</a></li>
                             </ul>
                         </div>
-                        <h2><span>자원봉사모집</span></h2>
-                        <h3>작은 천사들을 위해 원하시는 곳에서<br/>봉사활동을 신청하실 수 있습니다.</h3>
+                        <h2><span>나의 자원봉사</span></h2>
+                        <h3>나의 자원봉사 지원 목록을<br/>확인하실 수 있습니다.</h3>
                     </div>
                 </div>
                 <!--서브 비주얼/타이틀 끝-->
