@@ -34,11 +34,11 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		if (dreplyService.insertDreply(dreply) > 0) {
 			model.addAttribute("msg", "댓글을 등록 했습니다.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}else {
 			model.addAttribute("msg", "댓글 등록에 실패 했습니다.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -59,11 +59,11 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		if (dreplyService.updateDreply(dreply) > 0) {
 			model.addAttribute("msg", "댓글수정 완료.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}else {
 			model.addAttribute("msg", "댓글 수정 실패.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -83,11 +83,11 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		if (dreplyService.updateDreplyDel(dreply) > 0) {
 			model.addAttribute("msg", "댓글을 삭제 했습니다.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}else {
 			model.addAttribute("msg", "댓글 삭제 실패.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -105,11 +105,11 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		if (dreplyService.updateDreply(dreply) > 0) {
 			model.addAttribute("msg", "댓글을 수정 했습니다.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}else {
 			model.addAttribute("msg", "댓글 수정 실패.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -127,11 +127,11 @@ private static final Logger logger = LoggerFactory.getLogger(DreplyController.cl
 		if (dreplyService.insertDreplyLevel(dreply) > 0) {
 			model.addAttribute("msg", "댓글을 등록 했습니다.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}else {
 			model.addAttribute("msg", "댓글 등록에 실패 했습니다.");
 			model.addAttribute("url", "dboardView.do?dNum=" + dNum);
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}

@@ -24,7 +24,7 @@
     	console.log("### checkRow => {"+checkRow+"}");
     	
     	if(confirm("게시물을 숨김 처리 하겠습니까?"))
-    		location.href = "dHide.ad?checkRow=" + checkRow + "&page=" + page;
+    		location.href = "dListHide.ad?checkRow=" + checkRow + "&page=" + page;
     }
 
 

@@ -425,7 +425,7 @@ public class MemberController {
 			}
 				
 		}
-		System.out.println(url);
+		logger.info(url);
 		return url;
 	}
 		
@@ -479,7 +479,7 @@ public class MemberController {
 		} else {
 			url = "notUserPwd";
 		}
-		System.out.println("url : " + url);
+		logger.info("url : " + url);
 		return url;
 	}
 	

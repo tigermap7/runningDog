@@ -213,6 +213,9 @@
 						<c:param name="searchValue" value="${ searchValue }" />
 						<c:param name="volche" value="${ volunteer.volche }" />
 					</c:url>
+					<c:url var="vdel" value="vdelete.ad">
+                         <c:param name="volno" value="${volunteer.volno}"/>
+                    </c:url>
 					<button class="prevBtn" onclick="javascript:location.href='${vpread}'">이전<i class="xi-angle-right-min"></i></button>
 					<button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
 					<button class="listBtn" onclick="location.href='vlist.ad'"><i class="xi-rotate-left"></i>목록</button>

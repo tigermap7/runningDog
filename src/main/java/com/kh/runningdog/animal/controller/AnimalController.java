@@ -33,7 +33,6 @@ import org.w3c.dom.NodeList;
 
 import com.kh.runningdog.animal.model.service.AnimalService;
 import com.kh.runningdog.animal.model.vo.Animal;
-import com.kh.runningdog.dboard.model.vo.PageVO;
 
 
 @Controller
@@ -48,9 +47,9 @@ public class AnimalController {
 	// tag값의 정보를 가져오는 메소드
 	private static String getTagValue(String tag, Element eElement) {
 		NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-		System.out.println("nlList" + nlList);
+		logger.info("nlList" + nlList);
 		Node nValue = (Node) nlList.item(0);
-		System.out.println("nValue" + nValue);
+		logger.info("nValue" + nValue);
 		if (nValue == null)
 			return null;
 		return nValue.getNodeValue();
@@ -60,15 +59,10 @@ public class AnimalController {
 
 	@RequestMapping("animalList.do")
 	public String moveAlistPage(HttpServletRequest request, Model model, @ModelAttribute("Animal") Animal animal) {
-		
-		animal.setSearchFiled(request.getParameter("searchFiled"));
-		animal.setSearchValue(request.getParameter("searchValue"));
-		
+
 		int totalCount = animalService.selectListCount(animal);
 		
-		
 		animal.setTotalCount(totalCount,12); // 페이징 처리를 위한 setter 호출
-		
 		
 		logger.info("PageSize // 한 페이지에 보여줄 게시글 수 : " + animal.getPageSize());
 		logger.info("PageNo // 페이지 번호 : " + animal.getPageNo());
@@ -81,11 +75,11 @@ public class AnimalController {
 		logger.info("StartPageNo // 시작 페이지 (페이징 네비 기준) : " + animal.getStartPageNo());
 		logger.info("EndPageNo // 끝 페이지 (페이징 네비 기준) : " + animal.getEndPageNo());
 		logger.info("totalCount // 게시 글 전체 수 : " + animal.getTotalCount());
-		
+		//pageVO 로 페이징처리, 검색값 유지
+		model.addAttribute("pageVO" , animal);
 		
 		ArrayList<Animal> animalList = animalService.selectList(animal);
 		
-		model.addAttribute("pageVO" , animal);
 		model.addAttribute("animalList" , animalList);
 		model.addAttribute("totalCount", totalCount);
 		String url = "";
@@ -95,17 +89,20 @@ public class AnimalController {
 		}else {
 			model.addAttribute("msg", "검색 결과가 존재 하지 않습니다.");
 			model.addAttribute("url", "animalList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		
 		return url;
 	}
 	
 	@RequestMapping("animalView.do")
-	public String animalView(@RequestParam("desertionNo") String desertionNo, Model model, HttpServletRequest request,
+	public String animalView(@RequestParam("desertionNo") String desertionNo, Model model, HttpServletRequest request,Animal animal,
 								HttpServletResponse response) {
 		
 		logger.info("Animal View 유기동물 번호 : "+desertionNo );
+		
+		//pageVO 로 페이징처리, 검색값 유지
+		model.addAttribute("pageVO" , animal);
 		
 		Cookie[] cookies =request.getCookies();
 		
@@ -141,13 +138,7 @@ public class AnimalController {
 		}
 
 		// 조회수 처리 후 게시물에 대한 정보 불러 오기
-
-		Animal animal = animalService.selectOne(desertionNo);
-		animal.setSearchFiled(request.getParameter("searchFiled"));
-		animal.setSearchValue(request.getParameter("searchValue"));
-		
-		model.addAttribute("searchFiled", animal.getSearchFiled());
-		model.addAttribute("searchValue", animal.getSearchValue());
+		animal = animalService.selectOne(desertionNo);
 		
 		String url = "";
 
@@ -157,7 +148,7 @@ public class AnimalController {
 		} else {
 			model.addAttribute("msg", "게시글 보기 실패");
 			model.addAttribute("url", "animalList.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -165,16 +156,11 @@ public class AnimalController {
 	@RequestMapping("animalNext.do")
 	public String animalNext(HttpServletRequest request, Model model, Animal animal) {
 		
-		animal.setSearchFiled(request.getParameter("searchFiled"));
-		animal.setSearchValue(request.getParameter("searchValue"));
-		
+		//pageVO 로 페이징처리, 검색값 유지
+		model.addAttribute("pageVO" , animal);
 		String animalNextNum = animalService.selectNext(animal);
 		
 		Animal animalNext = animalService.selectOne(animalNextNum);
-		
-		model.addAttribute("searchFiled" , animal.getSearchFiled());
-		model.addAttribute("searchValue", animal.getSearchValue());
-		
 		String url="";
 		if( !(animal.getDesertionNo().equals(animalNextNum))) {
 			model.addAttribute("animal", animalNext);
@@ -183,9 +169,8 @@ public class AnimalController {
 			model.addAttribute("animal" , animal);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
-		
 		return url;
 	}
 	
@@ -193,15 +178,11 @@ public class AnimalController {
 	@RequestMapping("animalPrev.do")
 	public String animalPrev(HttpServletRequest request, Model model, Animal animal) {
 		
-		animal.setSearchFiled(request.getParameter("searchFiled"));
-		animal.setSearchValue(request.getParameter("searchValue"));
+		//pageVO 로 페이징처리, 검색값 유지
+		model.addAttribute("pageVO" , animal);
 		
 		String animalPrevNum = animalService.selectPrev(animal);
-		
 		Animal animalPrev = animalService.selectOne(animalPrevNum);
-		
-		model.addAttribute("searchFiled" , animal.getSearchFiled());
-		model.addAttribute("searchValue", animal.getSearchValue());
 		
 		String url="";
 		if( !(animal.getDesertionNo().equals(animalPrevNum))) {
@@ -211,12 +192,11 @@ public class AnimalController {
 			model.addAttribute("animal" , animal);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
-		
 		return url;
 	}
-	   //매일 오전 6시에 최신 데이터 추가
+	   //매일 오전 6시에 공공데이터 API 최신 데이터 추가
 	   @Scheduled(cron = "0 0 6 * * *")
 	   public void animalInsert() throws IOException {
 
@@ -229,7 +209,7 @@ public class AnimalController {
 	      String beforeMonth = new java.text.SimpleDateFormat("yyyyMMdd").format(mon.getTime());
 	      
 	      logger.info("오늘날짜 : " + toDay + "한달 전 날짜 " + beforeMonth);
-	      System.out.println(toDay + beforeMonth);
+	      logger.info(toDay + beforeMonth);
 
 	      JSONArray jarr = new JSONArray();
 
@@ -243,8 +223,7 @@ public class AnimalController {
 	         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 	         Document doc = dBuilder.parse(url);
-	         System.out.println("doc"+ doc);
-
+	         logger.info("doc"+ doc);
 	         // root tag
 	         doc.getDocumentElement().normalize();
 	         logger.info("Root element :" + doc.getDocumentElement().getNodeName());
@@ -253,7 +232,6 @@ public class AnimalController {
 	         NodeList nList = doc.getElementsByTagName("item");
 	         
 	         logger.info("파싱할 리스트 수 : " + nList.getLength());
-	         
 	         
 	         for (int temp = 0; temp < nList.getLength(); temp++) {
 	            Node nNode = nList.item(temp);
@@ -271,7 +249,6 @@ public class AnimalController {
 	               job.put("careAddr", URLEncoder.encode(getTagValue("careAddr", eElement),"utf-8"));// 접수일
 	               job.put("careNm", URLEncoder.encode(getTagValue("careNm", eElement),"utf-8")); // 보호소 이름
 	               job.put("careTel", URLEncoder.encode(getTagValue("careTel", eElement),"utf-8")); // 보호소전화번호
-	               //job.put("chargeNm", URLEncoder.encode(getTagValue("chargeNm", eElement),"utf-8")); //담당자
 	               job.put("colorCd", URLEncoder.encode(getTagValue("colorCd", eElement),"utf-8")); // 색상
 	               job.put("desertionNo", getTagValue("desertionNo", eElement)); // 유기번호
 	               job.put("filename", URLEncoder.encode(getTagValue("filename", eElement),"utf-8")); //썸네일이미지
@@ -288,7 +265,7 @@ public class AnimalController {
 	               job.put("processState", URLEncoder.encode(getTagValue("processState", eElement), "utf-8")); //상태
 	               job.put("sexCd", URLEncoder.encode(getTagValue("sexCd", eElement), "utf-8")); //성별
 	               job.put("specialMark", URLEncoder.encode(getTagValue("specialMark", eElement), "utf-8")); //특징
-	               job.put("weight", URLEncoder.encode(getTagValue("weight", eElement), "utf-8")); // 무게
+	               job.put("weight", URLEncoder.encode(getTagValue("weight", eElement), "utf-8")); // 체중
 	               // JSONArray에 JSONObject 담기
 	               
 	               logger.info("desertionNo : "+ getTagValue("desertionNo", eElement));
@@ -297,7 +274,7 @@ public class AnimalController {
 	               
 	               Animal animal = new Animal();
 	               
-	               
+	               //DB에 저장하기 위해 String으로 파싱 후 셋
 	               for (int i = 0; i < jarr.size(); i++) {
 	            	   JSONObject data = (JSONObject) (JSONObject) jarr.get(i);
 	            	   
@@ -308,7 +285,6 @@ public class AnimalController {
 	            		   animal.setCareAddr(URLDecoder.decode(data.get("careAddr").toString(),"utf-8"));
 	            		   animal.setCareNm(URLDecoder.decode(data.get("careNm").toString(),"utf-8"));
 	            		   animal.setCareTel(URLDecoder.decode(data.get("careTel").toString(),"utf-8"));
-	            		  // animal.setChargeNm(URLDecoder.decode(data.get("chargeNm").toString(),"utf-8"));
 	            		   animal.setColorCd(URLDecoder.decode(data.get("colorCd").toString(),"utf-8"));
 	            		   animal.setDesertionNo(URLDecoder.decode(data.get("desertionNo").toString(),"utf-8"));
 	            		   animal.setFilename(URLDecoder.decode(data.get("filename").toString(),"utf-8"));
@@ -326,8 +302,6 @@ public class AnimalController {
 	            		   animal.setSexCd(URLDecoder.decode(data.get("sexCd").toString(),"utf-8"));
 	            		   animal.setSpecialMark(URLDecoder.decode(data.get("specialMark").toString(),"utf-8"));
 	            		   animal.setWeight(URLDecoder.decode(data.get("weight").toString(),"utf-8"));
-	            		   
-	            	
 	            		   
 	            		   animalService.insertAnimal(animal);
 	            	   }
