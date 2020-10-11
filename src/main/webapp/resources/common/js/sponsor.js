@@ -11,8 +11,8 @@ $(function(){
          var ssummary = $(this).attr('data-ssummary').replace(/\'/g, "&#39;");
          var simage = $(this).attr('data-simage');
          var scount = $(this).attr('data-scount');
-         var surl = "http://localhost:9392/runningdog/sdetail.do?sNum=" + sid; //망할 카카오톡은 127로 작동이 안되고
-         var surl2 = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + sid; //망할 페이스북은 local로 작동이 안됩니다.
+         var surl = "http://localhost:9392/runningdog/sdetail.do?sNum=" + sid; //망할 카카오톡은 127로 작동이 안됩니다. 그런데 localhost로 하면 모바일에서 작동안됩니다.^^
+         var surl2 = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + sid; //망할 페이스북은 또 local로는 작동이 안됩니다.
          
          var value = "";
          value += "<a href='javascript:snsGos(1, \""+surl+"\", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
@@ -146,16 +146,26 @@ $(function(){
 
 //썸네일 & 썸머노트 내용 빈칸 확인
 $(function(){
-   $("#editor").on('submit', function(e) {
-	   if ($('#summernote').summernote('isEmpty') && !($("#wfile").val().length == 0)) {
-		   alert('내용을 입력해주세요');
-		   e.preventDefault();
-	   }
+   $("#editor").on('submit', function() {
 	   if($("#wfile").val().length == 0) {
 		   alert("썸네일을 선택해주세요");
 		   return false;
 	   }
+	   if ($('#summernote').summernote('isEmpty') && !($("#wfile").val().length == 0)) {
+		   alert('내용을 입력해주세요');
+		   return false;
+	   }
    });
+});
+
+//수정용 썸네일 빈칸 확인
+$(function(){
+	$("#cucu").on('click', function() {
+		if($("#ufile").val().length == 0) {
+			alert("썸네일을 선택해주세요");
+			return false;
+		}
+	});
 });
 
 //(전체/선택) 삭제
@@ -220,7 +230,7 @@ function Refresh() {
    window.location.reload();
 }
 
-//파일삭제되면 파일첨부칸 열림
+//파일삭제되면 파일첨부칸 열리게끔 일단 숨김
 $(document).ready(function() {
    $('#showSelect').hide();
 });
@@ -231,11 +241,12 @@ function showFileSelect(snum) {
       data: {snum},
       type: "post",
       url: 'sfileDel.ad',
-      success: function(){
-         console.log("파일 삭제 성공");
-         
-         $("input[name=sOriginal]").attr("value", "null");
-         $("input[name=sOriginal]").attr("value", "null");
+      success: function(result){
+    	  if(result == "ok") {
+    		  console.log("파일 삭제 성공");
+    		  $("input[name=sOriginal]").attr("value", "null");
+    		  $("input[name=sOriginal]").attr("value", "null");
+    	  }
       },
       error : function(reqest, status, errorData){
          console.log("error code : " + request.status
@@ -248,7 +259,6 @@ function showFileSelect(snum) {
    var originalFile = document.getElementById("ofile");
    files.removeChild(originalFile);
    $('#showSelect').show();
-   
 }
 
 //기부금 영수증
@@ -336,7 +346,7 @@ $(function(){
 
 //후원하기 페이지 연락처 입력란 작성
 $(function(){
-   var phoneRule = /^\d{3}-\d{3,4}-\d{4}$/;   
+   var phoneRule = /^\d{2,3}-\d{3,4}-\d{4}$/;   
    $("input[name='spPhone']").blur(function(){
       if(!phoneRule.test($("input[name='spPhone']").val())) {
          alert("'-'를 입력해주세요.");

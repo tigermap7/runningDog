@@ -59,7 +59,7 @@
                         </tr>
                         <tr>
                             <td>목표 금액</td>
-                            <td><input  value="${ amount }" onkeyup="addCommas(this.value)" id="amt" type="text" name="amount" class="form-control" placeholder="0" required style="width:150px; text-align:right;"></td>
+                            <td><input value="${ amount }" onkeyup="addCommas(this.value)" id="amt" type="text" name="amount" class="form-control" placeholder="0" required style="width:150px; text-align:right;"></td>
                         </tr>
                         <tr id="file">
                             <td>썸네일</td>
@@ -67,14 +67,11 @@
                             	<td id="ofile">${ sponsor.sOriginal } &nbsp; &nbsp;
                             	<button class="deleteBtn" onclick="showFileSelect(${ sponsor.sNum });"><i class="xi-cut"></i> 파일삭제</button></td>
                             </c:if>
-                            <c:if test="${ empty sponsor.sOriginal }">
-                            	<td><input type="file" name="upfile" accept="image/*"></td>
-                            </c:if>
-                            	<td id="showSelect"><input id="ufile" type="file" name="upfile" accept="image/*"></td>
+                            	<td id="showSelect"><input id="ufile" type="file" name="upfile" accept="image/*" data-ch="n"></td>
                         </tr>
                         <tr>
                             <td>내용</td>
-                            <td><textarea id="summernote" name="sContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                            <td><textarea id="summernote" name="sContent" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
                         </tr>
                     </tbody>
                 </table>
