@@ -74,7 +74,7 @@
                         </tr>
                         <tr>
                             <td>내용</td>
-                            <td><textarea name="sContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
+                            <td><textarea id="summernote" name="sContent" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;"></textarea></td>
                         </tr>
                     </tbody>
                 </table>

@@ -11,12 +11,13 @@ $(function(){
          var ssummary = $(this).attr('data-ssummary').replace(/\'/g, "&#39;");
          var simage = $(this).attr('data-simage');
          var scount = $(this).attr('data-scount');
-         var surl = "http://localhost:9392/runningdog/sdetail.do?sNum=" + sid;
+         var surl = "http://localhost:9392/runningdog/sdetail.do?sNum=" + sid; //망할 카카오톡은 127로 작동이 안되고
+         var surl2 = "http://127.0.0.1:9392/runningdog/sdetail.do?sNum=" + sid; //망할 페이스북은 local로 작동이 안됩니다.
          
          var value = "";
          value += "<a href='javascript:snsGos(1, \""+surl+"\", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_naver.png' style='width:30px;' alt='네이버'></a>&nbsp;&nbsp;";
          value += "<a href='javascript:sendLinks(\""+surl+"\", \""+stitle+"\", \""+ssummary+"\", \""+simage+"\", "+scount+");'><img src='resources/images/snsIcn/sns_ka.png' style='width:30px' alt='카카오톡'></a>&nbsp;&nbsp;";
-         value += "<a href='javascript:snsGos(3, \""+surl+"\", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
+         value += "<a href='javascript:snsGos(3, \""+surl2+"\", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_face.png' style='width:30px' alt='페이스북'></a>&nbsp;&nbsp;";
          value += "<a href='javascript:snsGos(4, \""+surl+"\", \""+stitle+"\");'><img src='resources/images/snsIcn/sns_tw.png' style='width:30px' alt='트위터'></a><br>";
          value += "<a href='javascript:CopyUrlToClipboard(\""+surl+"\");' class='urlcopy'>URL 복사</a>";
          return value;
