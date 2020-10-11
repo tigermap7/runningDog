@@ -164,12 +164,14 @@ public class AdminSponsorController {
 	@RequestMapping(value="supdate.ad", method=RequestMethod.POST)
 	public String sUpdate(Sponsor sponsor, HttpServletRequest request, @RequestParam(name = "upfile", required = false) MultipartFile upfile) {
 		int sNum = sponsor.getsNum();
-		logger.info(Integer.toString(sNum));
+		logger.info(Integer.toString(sNum)+"supdate.ad 실행됨");
 		sponsor.setsAmount(Integer.parseInt(request.getParameter("amount").replaceAll(",", "")));
 
-		if(!upfile.getOriginalFilename().equals("")) {
+		//if(!upfile.getOriginalFilename().equals("")) {
+			logger.info("upfile이 널이 아니면 실행되야할 if문");
 			String savePath = savePath(request) + "/thumbnail";
 			String thumbName = upfile.getOriginalFilename();
+			logger.info(thumbName);
 			sponsor.setsOriginal(thumbName);
 			File ofile = new File(savePath + "\\" + thumbName);
 			try {
@@ -178,7 +180,7 @@ public class AdminSponsorController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		//}
 
 		int result = sponsorService.updateSponsor(sponsor);
 

@@ -143,13 +143,17 @@ $(function(){
    });
 });
 
-//썸머노트 내용 빈칸 확인
+//썸네일 & 썸머노트 내용 빈칸 확인
 $(function(){
    $("#editor").on('submit', function(e) {
-      if ($('#summernote').summernote('isEmpty')) {
-        alert('내용을 입력해주세요');
-        e.preventDefault();
-      }
+	   if ($('#summernote').summernote('isEmpty') && !($("#wfile").val().length == 0)) {
+		   alert('내용을 입력해주세요');
+		   e.preventDefault();
+	   }
+	   if($("#wfile").val().length == 0) {
+		   alert("썸네일을 선택해주세요");
+		   return false;
+	   }
    });
 });
 
@@ -207,20 +211,6 @@ $(function(){
          return false;
       }
    });
-});
-
-//썸네일 알림
-$(function(){
-	$("#cucu").on("click", function(){
-		if($("#wfile").val().length == 0) {
-			alert("썸네일을 선택해주세요");
-			return false;
-		}
-		/*if($("#showSelect").show() && $("#ufile").val().length == 0){
-			alert("썸네일을 선택해주세요");
-			return false;
-		}*/
-	});
 });
 
 //썸머노트때문에 리셋추가
@@ -372,5 +362,4 @@ function textlength(text) {
 	if(j > inputMax) {
 		$(text).val(inputText.substr(0, count));
 	}
-	
 }
