@@ -185,12 +185,17 @@ public class AdminDboardController {
 			String viewPath = savePath + "\\" + viewRename; // view 이미지 파일 경로
 			String listPath = savePath + "\\" + listRename; // list 이미지 파일 경로
 
+			// 하나의 스트림에 파일 연결은 하나 밖에 못함으로
+			// 저장한 파일 복사해서 이미지 리사이징 처리
+			
 			try {
-				// 하나의 스트림에 파일 연결은 하나 밖에 못함으로
-				// 저장한 파일 복사해서 이미지 리사이징 처리
 				file.transferTo(new File(savePath + "\\" + viewRename));
-				FileInputStream fin = new FileInputStream(viewPath);
-				FileOutputStream fout = new FileOutputStream(listPath);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			try (FileInputStream fin= new FileInputStream(viewPath);
+					FileOutputStream fout= new FileOutputStream(listPath);){
 
 				int data = -1;
 				byte[] buffer = new byte[1024];
@@ -275,12 +280,16 @@ public class AdminDboardController {
 				String viewPath = savePath + "\\" + viewRename; // view 이미지 파일 경로
 				String listPath = savePath + "\\" + listRename; // list 이미지 파일 경로
 
+				// 하나의 스트림에 파일 연결은 하나 밖에 못함으로
+				// 저장한 파일 복사해서 이미지 리사이징 처리
 				try {
-					// 하나의 스트림에 파일 연결은 하나 밖에 못함으로
-					// 저장한 파일 복사해서 이미지 리사이징 처리
 					file.transferTo(new File(savePath + "\\" + viewRename));
-					FileInputStream fin = new FileInputStream(viewPath);
-					FileOutputStream fout = new FileOutputStream(listPath);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				
+				try (FileInputStream fin= new FileInputStream(viewPath);
+						FileOutputStream fout= new FileOutputStream(listPath);){
 
 					int data = -1;
 					byte[] buffer = new byte[1024];
