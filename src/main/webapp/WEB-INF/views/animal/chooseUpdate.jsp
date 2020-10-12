@@ -296,7 +296,7 @@
                                     <tr>
                                         <td>세부내용 *</td>
                                         <td><textarea  name="dContent"  minlength="15" maxlength="1000" rows="" cols="" class="form-control" style="resize: none; width:100%; min-height:300px; max-height:300px;" 
-                                        required placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다."></textarea>
+                                        required placeholder="게시판 성격과 다른글을 올리시면,사이트 이용이 정지되실 수 있습니다.">${dboard.dContent }</textarea>
                                         </td>
                                     </tr>
                                     

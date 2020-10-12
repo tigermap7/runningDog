@@ -34,11 +34,18 @@
 				<param-value>utf-8</param-value>
 		</init-param>
 	</filter>
+	
+	<filter-mapping>
+			<filter-name>encodingFilter</filter-name>
+			<url-pattern>*.do</url-pattern>
+			<url-pattern>*.ad</url-pattern>
+	</filter-mapping>
+	
 	<filter>
 		<filter-name>XSS</filter-name>
-		<filter-class>com.kh.runningdog.common.filter.CrossScriptingFilter
-		</filter-class>
+		<filter-class>com.kh.runningdog.common.filter.CrossScriptingFilter</filter-class>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>XSS</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -46,11 +53,6 @@
 	
 	
 	
-	<filter-mapping>
-			<filter-name>encodingFilter</filter-name>
-			<url-pattern>*.do</url-pattern>
-			<url-pattern>*.ad</url-pattern>
-	</filter-mapping>
 	
 	<!-- Processes application requests -->
 	<servlet>

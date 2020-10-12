@@ -63,6 +63,7 @@ public class DboardController {
 
 		String viewImage = file.getOriginalFilename();
 		dboard.setviewImage(viewImage);
+		dboard.setdContent(dboard.getdContent().replace("\r\n", "<br>"));
 		Image viewImg = null;
 		Image listImg = null;
 		// viewImage 가 null아니거나 viewImage크기가 0 이 아니라면
@@ -275,6 +276,7 @@ public class DboardController {
 			@RequestParam(name = "upfile", required = false) MultipartFile file, Model model) throws IOException {
 		logger.info("dupdate.do run..." + dboard + "Image file : " + file.getOriginalFilename());
 		// 상세설명에 엔터키와 띄어쓰기 적용
+		dboard.setdContent(dboard.getdContent().replace("\r\n", "<br>"));
 		// 새로운 이미지를 업로드 했을 경우
 		if (file != null && file.getBytes().length > 0) {
 			String viewImage = file.getOriginalFilename();
