@@ -36,12 +36,12 @@
 							<img src="/runningdog/resources/images/common/userBg.png"/>
 							</c:if>
 							<c:if test="${ selectUser.renameProfile ne null }">
-							<c:if test="${ selectUser.loginType eq null or selectUser.loginType eq 'facebook' }">
-							<img src="/runningdog/resources/images/memberImg/${selectUser.renameProfile}"/>
-							</c:if>
-							<c:if test="${ selectUser.loginType ne 'facebook' }">
-							<img src="${selectUser.renameProfile}"/>
-							</c:if>
+								<c:if test="${ selectUser.loginType eq null or selectUser.loginType eq 'facebook' }">
+								<img src="/runningdog/resources/images/memberImg/${selectUser.renameProfile}"/>
+								</c:if>
+								<c:if test="${ selectUser.loginType ne null and selectUser.loginType ne 'facebook' }">
+								<img src="${selectUser.renameProfile}"/>
+								</c:if>
 							</c:if>
 						</div>
 					</dt>

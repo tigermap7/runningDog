@@ -39,7 +39,7 @@
 							<c:if test="${ selectLeaveUser.leaveLoginType eq null or selectLeaveUser.leaveLoginType eq 'facebook' }">
 							<img src="/runningdog/resources/images/memberImg/${selectLeaveUser.leaveRenameProfile}"/>
 							</c:if>
-							<c:if test="${ selectLeaveUser.leaveLoginType ne 'facebook' }">
+							<c:if test="${ selectLeaveUser.leaveLoginType ne null and selectLeaveUser.leaveLoginType ne 'facebook' }">
 							<img src="${selectLeaveUser.leaveRenameProfile}"/>
 							</c:if>
 							</c:if>
