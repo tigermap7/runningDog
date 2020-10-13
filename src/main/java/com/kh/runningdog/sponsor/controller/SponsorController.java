@@ -227,14 +227,15 @@ public class SponsorController {
 		slist.setSpPch((String)job.get("spPch"));
 		slist.setSpWay((String)job.get("spWay"));
 		slist.setsNum(Integer.valueOf((String)job.get("sNum")));
+		slist.setSpBankbook("n");
 		
 		logger.info("결제 완료 후 : "+slist.toString());
 		
-		int result = sponsorService.insertSponsorList(slist);
+		sponsorService.insertSponsorList(slist);
 		
 		sponsor.setsCurrent(Integer.valueOf((String)job.get("spCash")));
 		sponsor.setsNum(Integer.valueOf((String)job.get("sNum")));
-		int result2 = sponsorService.updateSponsorCash(sponsor);
+		sponsorService.updateSponsorCash(sponsor);
 		
 		
 		sponsor = sponsorService.selectOne(Integer.parseInt((String)job.get("sNum")));
