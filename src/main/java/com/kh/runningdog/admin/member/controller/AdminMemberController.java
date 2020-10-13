@@ -298,13 +298,13 @@ public class AdminMemberController {
 					member.setOriginProfile(dateString+ "/" + newOriginProfile);
 					member.setRenameProfile(dateString+ "/" + newRenameProfile);
 
-				} else if (!(originProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
+				} else if (!(renameProfile.isEmpty()) && deleteFlag != null && deleteFlag.equals("yes")) {
 					
 					member.setOriginProfile(null);
 					member.setRenameProfile(null);
 					new File(savePath + "\\" + renameProfile).delete();
 					
-				} else if (!originProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
+				} else if (!renameProfile.isEmpty() && (newOriginProfile == null || originProfile.equals(newOriginProfile) &&
 						new File(savePath+ "\\" + renameProfile).length() == new File(savePath + "\\" + newRenameProfile).length())) {
 
 					member.setOriginProfile(originProfile);

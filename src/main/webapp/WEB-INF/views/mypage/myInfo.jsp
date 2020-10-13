@@ -43,13 +43,12 @@
                                     <col width="75%">
                                 </colgroup>
                                 <tbody>
-                                    <tr style="display:none;">
-                                        <td>회원번호(고유번호)</td>
-                                        <td><input type="text" name="uniqueNum" title="회원번호(고유번호)" class="form-control w80p" placeholder="회원번호(고유번호)" value="${sessionScope.loginMember.uniqueNum}" readonly/></td>
-                                    </tr>
                                     <tr>
                                         <td>아이디(이메일)</td>
-                                        <td><input type="text" name="userId" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" readonly/></td>
+                                        <td>
+                                        	<input type="hidden" name="uniqueNum" title="회원번호(고유번호)" class="form-control w80p" placeholder="회원번호(고유번호)" value="${sessionScope.loginMember.uniqueNum}" readonly/>
+                                        	<input type="text" name="userId" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" maxlength="40" readonly/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>프로필 사진</td>
@@ -66,7 +65,7 @@
                                     <tr>
                                         <td>닉네임</td>
                                         <td>
-                                        <input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임" value="${sessionScope.loginMember.nickname}"/>
+                                        <input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임" value="${sessionScope.loginMember.nickname}" maxlength="40"/>
 				                        <p id="nicknameWarning">
 				                       		<span></span>
 				                        </p>
@@ -75,7 +74,7 @@
                                     <tr>
                                         <td>휴대폰번호</td>
                                         <td class="telArea">
-                                        <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력"  value="${sessionScope.loginMember.phone}"/>
+                                        <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력"  value="${sessionScope.loginMember.phone}" maxlength="40"/>
 			                            <p id="phoneWarning">
 			                                <span></span>
 			                            </p>
@@ -84,7 +83,7 @@
                                     <tr>
                                         <td>비밀번호</td>
                                         <td>
-                                        	<input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="form-control w80p" placeholder="기존 비밀번호"/>
+                                        	<input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="form-control w80p" placeholder="기존 비밀번호" maxlength="40"/>
 				                            <p id="pwdWarning">
 				                                <span></span>
 				                            </p>
@@ -93,8 +92,8 @@
                                     <tr>
                                         <td>새 비밀번호</td>
                                         <td class="newPwd">
-                                            <input type="password" name="newUserPwd" title="새 비밀번호" id="newUserPwdChk" class="form-control w80p mb5" placeholder="새 비밀번호 입력"/><br/>
-                                            <input type="password" name="newUserPwd2" title="새 비밀번호 재확인" id="newUserPwdChk2" class="form-control w80p mb10" placeholder="새 비밀번호 재입력"/><br/>
+                                            <input type="password" name="newUserPwd" title="새 비밀번호" id="newUserPwdChk" class="form-control w80p mb5" placeholder="새 비밀번호 입력" maxlength="40"/><br/>
+                                            <input type="password" name="newUserPwd2" title="새 비밀번호 재확인" id="newUserPwdChk2" class="form-control w80p mb10" placeholder="새 비밀번호 재입력" maxlength="40"/><br/>
                                             <button type="button" class="myPwdChangeBtn">변경하기</button>
                                             <p id="newUserPwdWarning">
 				                                <span></span>
@@ -127,44 +126,43 @@
                                     <col width="75%">
                                 </colgroup>
                                 <tbody>
-                                    <tr style="display:none;">
-                                        <td>회원번호(고유번호)</td>
-                                        <td><input type="text" name="uniqueNum" title="회원번호(고유번호)" class="form-control w80p" placeholder="회원번호(고유번호)" value="${sessionScope.loginMember.uniqueNum}" readonly/></td>
-                                    </tr>
                                     <tr>
                                         <td>아이디(이메일)</td>
-                                        <td><input type="text" name="userId" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" readonly/></td>
+                                        <td>
+                                        	<input type="hidden" name="uniqueNum" title="회원번호(고유번호)" class="form-control w80p" placeholder="회원번호(고유번호)" value="${sessionScope.loginMember.uniqueNum}" readonly/>
+                                        	<input type="text" name="userId" title="아이디(이메일)" class="form-control w80p" placeholder="아이디(이메일)" value="${sessionScope.loginMember.userId}" maxlength="40" readonly/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>프로필 사진</td>
                                         <td class="profilImage">
                                        	 	<c:if test="${ loginMember.loginType eq null }">
-											<c:if test="${ !empty loginMember.originProfile  }">
-											${ loginMember.originProfile } &nbsp;
-											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
-											</c:if>
-											<c:if test="${ empty loginMember.originProfile  }">
-											<input type="file" name="profilImage" title="프로필 사진"/>
-											</c:if>
+												<c:if test="${ !empty loginMember.originProfile  }">
+												${ loginMember.originProfile } &nbsp;
+												<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+												</c:if>
+												<c:if test="${ empty loginMember.originProfile  }">
+												<input type="file" name="profilImage" title="프로필 사진"/>
+												</c:if>
 											</c:if>
 											
                                        	 	<c:if test="${ loginMember.loginType ne null }">
-											<c:if test="${ !empty loginMember.renameProfile  }">
-											${ loginMember.renameProfile } &nbsp;
-											<c:if test="${ loginMember.loginType ne 'kakao' }">
-											<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
-											</c:if>
-											</c:if>
-											<c:if test="${ empty loginMember.renameProfile }">
-											<input type="file" name="profilImage" title="프로필 사진"/>
-											</c:if>
+												<c:if test="${ !empty loginMember.renameProfile  }">
+												${ loginMember.renameProfile } &nbsp;
+													<c:if test="${ loginMember.loginType ne 'kakao' }">
+													<label><input type="checkbox" name="deleteFlag" value="yes">이미지삭제</label>
+													</c:if>
+												</c:if>
+												<c:if test="${ empty loginMember.renameProfile }">
+												<input type="file" name="profilImage" title="프로필 사진"/>
+												</c:if>
 											</c:if>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>닉네임</td>
                                         <td>
-                                        <input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임" value="${sessionScope.loginMember.nickname}"/>
+                                        <input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임" value="${sessionScope.loginMember.nickname}" maxlength="40"/>
 				                        <p id="socialNicknameWarning">
 				                       		<span></span>
 				                        </p>
@@ -173,7 +171,7 @@
                                     <tr>
                                         <td>휴대폰번호</td>
                                         <td class="telArea">
-                                        <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력"  value="${sessionScope.loginMember.phone}"/>
+                                        <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력"  value="${sessionScope.loginMember.phone}" maxlength="40"/>
 			                            <p id="socialPhoneWarning">
 			                                <span></span>
 			                            </p>

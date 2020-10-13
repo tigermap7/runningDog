@@ -50,14 +50,14 @@
                             </div>
                             <div>
                                 <span><i class="xi-user-o"></i></span>
-                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임" value="${ param.nickname }${ naverNickname }"/></span>
+                                <span><input type="text" name="nickname" title="닉네임" id="nicknameChk" class="w100p" placeholder="닉네임" value="${ param.nickname }${ naverNickname }" maxlength="40"/></span>
                             </div>
                             <p id="nicknameWarning">
                                 <span></span>
                             </p>
                             <div>
                                 <span><i class="xi-call"></i></span>
-                                <span><input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="w100p" placeholder="휴대폰번호('-'포함 입력)"/></span>
+                                <span><input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="w100p" placeholder="휴대폰번호('-'포함 입력)" maxlength="40"/></span>
                             </div>
                             <p id="phoneWarning">
                                 <span></span>
