@@ -111,7 +111,7 @@
                                     <td>후원인(이름or가명)<span>*</span></td>
                                     <td>
                                         <input value="${ sponsorList.spName }" type="text" name="spName" title="후원인(이름or가명)" class="form-control w50p" placeholder="이름" required/>
-                                        <label style="margin-left:0.9375rem;"><input type="checkbox" required> 14세 이상</label> 
+                                        <label style="margin-left:0.9375rem;"><input type="checkbox" required checked> 14세 이상</label> 
                                     </td>
                                 </tr>
                                 <tr>

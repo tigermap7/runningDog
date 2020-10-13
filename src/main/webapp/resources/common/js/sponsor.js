@@ -346,10 +346,10 @@ $(function(){
 
 //후원하기 페이지 연락처 입력란 작성
 $(function(){
-   var phoneRule = /^\d{2,3}-\d{3,4}-\d{4}$/;   
+   var phoneRule = /^\d{2,3}-\d{3,4}-\d{4}$/;
    $("input[name='spPhone']").blur(function(){
       if(!phoneRule.test($("input[name='spPhone']").val())) {
-         alert("'-'를 입력해주세요.");
+         alert("형식에 맞게 입력해주세요.");
          $("input[name='spPhone']").val("");
       }
    });
