@@ -26,7 +26,7 @@ $(function(){
 
 });
 
-//팝오버 범위 밖 클릭하면 닫기 id='kakao-link-btn' 
+//팝오버 범위 밖 클릭하면 닫기
 $(document).on('click', function (e) {
     $('[data-toggle="popover"],[data-original-title]').each(function () {
         //the 'is' for buttons that trigger popups
@@ -115,9 +115,10 @@ function sendFile(file, el) {
 
 //금액 콤마
 function addCommas(x) {
-   x = x.replace(/[^0-9]/g,'');
-   x = x.replace(/,/g,'');
-   var pay = $("#amt").val(x.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+	x = x.replace(/(^0+)/g,'');
+	x = x.replace(/[^0-9]/g,'');
+	x = x.replace(/,/g,'');
+	var pay = $("#amt").val(x.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 }
 
 //후원금액
@@ -134,6 +135,16 @@ function payOption(ele) {
    }
 }
 
+function checkAc() {  
+	var acount = $("#amt").val().replace(/,/g, "");
+	console.log(acount);
+	if(acount < 1 || acount > 100001) {
+		alert("10만원까지만 가능합니다.");
+		$("#amt").val("");
+	}
+}
+
+//무통장입금, 신용카드 선택 창
 $(function(){
    $("#bank").hide();
    $("#chk2").on("click", function(){
@@ -161,7 +172,7 @@ $(function(){
 //수정용 썸네일 빈칸 확인
 $(function(){
 	$("#cucu").on('click', function() {
-		if($("#ufile").val().length == 0) {
+		if($("#ufile").attr("data-ch") == "y" && $("#ufile").val().length == 0) {
 			alert("썸네일을 선택해주세요");
 			return false;
 		}
@@ -259,6 +270,7 @@ function showFileSelect(snum) {
    var originalFile = document.getElementById("ofile");
    files.removeChild(originalFile);
    $('#showSelect').show();
+   $("#ufile").attr("data-ch", "y");
 }
 
 //기부금 영수증
@@ -355,6 +367,7 @@ $(function(){
    });
 });
 
+//글자수 제한
 function textlength(text) {
 	var inputText = $(text).val();
 	var inputMax = $(text).prop("maxlength");

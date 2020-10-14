@@ -177,18 +177,19 @@ public class AdminSponsorController {
 		int sNum = sponsor.getsNum();
 		sponsor.setsAmount(Integer.parseInt(request.getParameter("amount").replaceAll(",", "")));
 
-
-		String savePath = savePath(request) + "/thumbnail";
-		String thumbName = upfile.getOriginalFilename();
-		sponsor.setsOriginal(thumbName);
-		File ofile = new File(savePath + "\\" + thumbName);
-		try {
-			upfile.transferTo(ofile);
-			sponsor.setsRename(makeThumnail(savePath, thumbName, ofile));
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(!upfile.getOriginalFilename().equals("")) {
+			String savePath = savePath(request) + "/thumbnail";
+			String thumbName = upfile.getOriginalFilename();
+			sponsor.setsOriginal(thumbName);
+			File ofile = new File(savePath + "\\" + thumbName);
+			try {
+				upfile.transferTo(ofile);
+				sponsor.setsRename(makeThumnail(savePath, thumbName, ofile));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
+		
 		int result = sponsorService.updateSponsor(sponsor);
 
 		//--------------------------------------------------

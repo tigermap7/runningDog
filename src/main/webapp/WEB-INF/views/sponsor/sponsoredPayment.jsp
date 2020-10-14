@@ -132,8 +132,8 @@
                                             <option value="30,000">3만원</option>
                                             <option value="50,000">5만원</option>
                                         </select>
-                                        <input maxlength="6" type="text" name="amount" id="amt" onkeyup="addCommas(this.value)" class="form-control w50p" placeholder="금액을 입력해주세요." required>
-                                        &nbsp;10만원 미만의 금액만 후원가능합니다.
+                                        <input onblur="checkAc();" type="text" name="amount" id="amt" onkeyup="addCommas(this.value)" class="form-control w50p" placeholder="금액을 입력해주세요." required>
+                                        &nbsp;10만원 이하의 금액만 후원가능합니다.
                                     </td>
                                 </tr>
                                 <tr class="receipt">
