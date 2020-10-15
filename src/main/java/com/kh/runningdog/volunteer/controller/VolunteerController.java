@@ -99,7 +99,7 @@ public class VolunteerController {
 		} else {
 			model.addAttribute("msg", "검색 결과가 존재 하지 않습니다");
 			model.addAttribute("url", "vlist.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		
 		return url;
@@ -127,7 +127,7 @@ public class VolunteerController {
 		}else {
 			model.addAttribute("msg", "게시글을 볼 수 없습니다.");
 			model.addAttribute("url", "vlist.do");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -182,7 +182,7 @@ public class VolunteerController {
 		      } else {
 		    	  model.addAttribute("msg", "게시글 등록 실패 다시 확인해 주세요");
 				  model.addAttribute("url", "vlist.do");
-				  returnView = "common/errorDboard";
+				  returnView = "common/alertDboard";
 		      }
 		      
 		      return returnView;
@@ -373,7 +373,7 @@ public class VolunteerController {
 		model.addAttribute("volunteer",volunteer);
 		model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 		model.addAttribute("url", "javascript:history.back()");
-		url = "common/errorDboard";
+		url = "common/alertDboard";
 	}
 		return url;
 	}
@@ -404,7 +404,7 @@ public class VolunteerController {
 			model.addAttribute("volunteer",volunteer);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 		return url;
 	}
@@ -476,7 +476,7 @@ public class VolunteerController {
 			}else {
 				model.addAttribute("msg", "게시글을 볼 수 없습니다.");
 				model.addAttribute("url", "vlistmy.do");
-				url = "common/errorDboard";
+				url = "common/alertDboard";
 			}
 			return url;
 		}
@@ -648,7 +648,7 @@ public class VolunteerController {
 			model.addAttribute("volunteer",volunteer);
 			model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 			model.addAttribute("url", "javascript:history.back()");
-			url = "common/errorDboard";
+			url = "common/alertDboard";
 		}
 			return url;
 		}
@@ -680,7 +680,7 @@ public class VolunteerController {
 				model.addAttribute("volunteer",volunteer);
 				model.addAttribute("msg", "현재 글이 마지막 글 입니다.");
 				model.addAttribute("url", "javascript:history.back()");
-				url = "common/errorDboard";
+				url = "common/alertDboard";
 			}
 			return url;
 		}
