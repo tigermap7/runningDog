@@ -26,8 +26,8 @@
                                 <li class="xi-angle-right"><a href="vlistmy.do?unique_num=${loginMember.uniqueNum}">나의 자원봉사</a></li>
                             </ul>
                         </div>
-                        <h2><span>자원봉사모집</span></h2>
-                        <h3>작은 천사들을 위해 도와주실<br/>자원봉사자 여러분을 모집하고 있습니다.</h3>
+                        <h2><span>나의 자원봉사</span></h2>
+                        <h3>나의 자원봉사 지원 목록을<br/>확인하실 수 있습니다.</h3>
                     </div>
                 </div>
                 <!--서브 비주얼/타이틀 끝-->
@@ -251,8 +251,9 @@
                             </c:url>
                             <button class="prevBtn" onclick="javascript:location.href='${vpre}'">이전<i class="xi-angle-right-min"></i></button>
                             
-                            <c:url var="vdel" value="vdelete.do">
+                            <c:url var="vdel" value="vdeletemy.do">
                             	<c:param name="volno" value="${volunteer.volno}"/>
+                            	<c:param name="unique_num" value="${ loginMember.uniqueNum }"/>
                             </c:url>
                             <c:if test= "${ sessionScope.loginMember.nickname == volunteer.volwriter }">
                             <button class="deleteBtn" onclick="javascript:location.href='${vdel}'"><i class="xi-cut"></i>삭제</button>
@@ -284,6 +285,7 @@
         <textarea id="vreply_content" name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
                                             <input type="hidden" name="volno" value="${ volunteer.volno}">
                                             <input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">
+                                            <input type="hidden" name="unique_num" value="${ sessionScope.loginMember.uniqueNum}">
                                             <div class="cmt_ok"><input type="submit" id="btn_vreplyInsert" value="등록"></div>
                                         </div>
                                     </div>
@@ -293,22 +295,6 @@
                            <ul id="VreplyList" class="cmt_con">
                      	   </ul>
                            </div>
-                            
-                      
-                         
-                                    <!-- <div class="Subcmt_form">
-                                        <form action="vrupdate.do" method="post">
-                                            <fieldset>
-                                                <div class="cmt_form">
-                                                    <div class="cmt_body">
-        <textarea name="vreply_content" style="resize: none; width:100%; min-height:100px; max-height:100px;" onfocus="this.value='';">비방글은 작성하실 수 없습니다.</textarea>
-                                                    <div class="cmt_ok"><input type="submit" value="등록"></div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </form>
-                                    </div> -->
-                      
                    </div>   
                 </div>
             </div>
@@ -328,28 +314,55 @@ function showReplyList(){
         success: function(result) {
         	console.log("success : " + result); 
         	console.log("this.vreply_date : " + this.vreply_date);
-			console.log("댓글 나오기");
+			console.log("댓글 나오기"); 
+			
 			
 			var totalcount = 0;
 			var htmls = "";
 			
 			$(result).each(function(){
+				
+				var vreply_levell = this.vreply_level
+				
+				console.log(vreply_levell);
+				 		if( vreply_levell == 1){
 				htmls +='<li id="vreply_no'+this.vreply_no+'">'+
 							'<dl>'+
 							'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
-							'<dd><h4>'+ this.nickname +'</h4></dd>'+
+							'<dd><h4>'+ this.nickname+' / #'+this.unique_num +'</h4></dd>'+
 							'<dt class="cmt_date">' + this.vreply_date +'</dt>'+
 							' </dl>'+
 							'<p>'+ this.vreply_content +'</p>'+
 							'<div class="cmt_conBtn">'+
-							'<button id="insertvreply" onclick="fn_SecondVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\' )">댓글</button>'+
+							'<c:if test="${ !empty sessionScope.loginMember }">'+
+							'<button id="insertvreply" onclick="fn_SecondVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\' , \'' + this.unique_num + '\')">댓글</button>'+
 							'<button class="Cmt_delete_ctn" onclick="fn_DeleteVreply(' + this.vreply_no + ', \'' + this.nickname + '\')">삭제</button>'+
-							'<button id="Cmt_update_btn" onclick="fn_UpdateVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\' )">수정</button>'+
+							'<button id="Cmt_update_btn" onclick="fn_UpdateVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\', \'' + this.unique_num + '\' )">수정</button>'+
+							'</c:if>'+
 							'</div>'+
-							'</li>'	
+							'</li>'	;
+				 		}
+							else if( vreply_levell == 2){
+					 htmls += '<li id="vreply_no'+this.vreply_no+'" style="background-color: #f0f0f0; padding: 0.375rem 3rem;">'+
+								'<dl>'+
+								'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
+								'<dd><h4>'+ this.nickname+' / #'+this.unique_num +'</h4></dd>'+
+								'<dt class="cmt_date">' + this.vreply_date +'</dt>'+
+								' </dl>'+
+								'<p>'+ this.vreply_content +'</p>'+
+								'<div class="cmt_conBtn">'+
+								'<c:if test="${ !empty sessionScope.loginMember }">'+
+								'<button class="Cmt_delete_ctn" onclick="fn_DeleteVreply(' + this.vreply_no + ', \'' + this.nickname + '\')">삭제</button>'+
+								'<button id="Cmt_update_btn" onclick="fn_UpdateVreply(' + this.vreply_no + ', \'' + this.nickname + '\', \'' + this.vreply_content + '\', \'' + this.unique_num + '\' )">수정</button>'+
+								'</c:if>'+
+								'</div>'+
+								'</li>';
+							  }
+							  
+							
 							
 							totalcount = totalcount + 1
-			}); //for in
+			}); //for in 
 			
 			$("#totalcount").text('전체'+ totalcount + '개');
 			$('#VreplyList').html(htmls);
@@ -363,35 +376,36 @@ function showReplyList(){
 }
 
 //댓글저장
-$(document).on('click', '#btn_vreplyInsert', function(){
+$("#btn_vreplyInsert").click(function(){
 	var nickname = "${ sessionScope.loginMember.nickname}";
-	if( nickname == "" ){
+	if( nickname == "" )
 		alert("로그인 후 이용해주세요.");
-	 }else
-	var VreplyContent = $('#vreply_content').val();
-	console.log(VreplyContent+"VreplyContent");
-	var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', "volno" : ${ volunteer.volno} });
-	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
-	$.ajax({
-		url : 'vrinsert.do',
-		data : paramData,
-		headers : headers,
-		type : 'post',
-		dataType : 'text',
-		success : function(result){
-			
-			$('#vreply_content').val();
-			$('#nickname').val();
-			showReplyList();
-		},
-		error : function(jqXHR, textstatus, errorthrown) {
-			alert("댓글 등록을 실패하였습니다.");
-			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
-		}
-	});
+	
+		var VreplyContent = $('#vreply_content').val();
+		console.log(VreplyContent+"VreplyContent");
+		var paramData = JSON.stringify({ "vreply_content" : $('#vreply_content').val() , nickname : '${ sessionScope.loginMember.nickname}', unique_num : '${ sessionScope.loginMember.uniqueNum}',"volno" : ${ volunteer.volno} });
+		var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
+		$.ajax({
+			url : 'vrinsert.do',
+			data : paramData,
+			headers : headers,
+			type : 'post',
+			dataType : 'text',
+			success : function(result){
+				
+				$('#vreply_content').val();
+				$('#nickname').val();
+				$('#unique_num').val();
+				showReplyList();
+			},
+			error : function(jqXHR, textstatus, errorthrown) {
+				alert("댓글 등록을 실패하였습니다.");
+				console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+			}
+		});
 });
 //댓글수정폼
-function fn_UpdateVreply(vreply_no, nickname, vreply_content){
+function fn_UpdateVreply(vreply_no, nickname, vreply_content, unique_num){
 	var user = "${ sessionScope.loginMember.nickname}";
 	var result = confirm("수정하시겠습니까?");
 	var nickname = nickname
@@ -406,14 +420,14 @@ function fn_UpdateVreply(vreply_no, nickname, vreply_content){
 						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
 						'<dd><h4>'+ nickname +'</h4></dd>'+
 						' </dl>'+
-						'<p><textarea id="SecondContent" name="SecondContent" style="resize: none; width:100%; min-height:100px; max-height:100px;">비방글은 작성하실 수 없습니다.</textarea></p>'+
+						'<p><textarea id="editContent" name="editContent" style="resize: none; width:100%; min-height:100px; max-height:100px;">'+ vreply_content +'</textarea></p>'+
 						'<div class="cmt_conBtn">'+
 						'<button class="Cmt_delete_ctn" onclick="showReplyList();">취소</button>'+
-						'<button class="Cmt_update_btn" onclick="updateVreply(' + vreply_no + ', \'' + nickname + '\')">저장</button>'+
+						'<button class="Cmt_update_btn" onclick="updateVreply(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')">저장</button>'+
 						'</div>'+
 						'</li>'
 							$('#vreply_no'+vreply_no).replaceWith(htmls);
-							$('#vreply_no'+vreply_no+'#SecondContent').focus();
+							$('#vreply_no'+vreply_no+'#editContent').focus();
 			}else
 				return;
 		else
@@ -445,36 +459,44 @@ function updateVreply(vreply_no, nickname){
 	});
 }
 //대댓글폼
-function fn_SecondVreply(vreply_no, nickname, vreply_content){
+function fn_SecondVreply(vreply_no, nickname, vreply_content, unique_num){
 	var user = "${ sessionScope.loginMember.nickname}";
 	var nickname = nickname
 				var htmls = "";
 				htmls += '<li id="vreply_no'+vreply_no+'">'+
 						'<dl>'+
 						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
-						'<dd><h4>'+ nickname +'</h4></dd>'+
+						'<dd><h4>'+ nickname +' / #'+ unique_num +'</h4></dd>'+
 						' </dl>'+
 						'<p>'+ vreply_content +'</p>'+
 						'</li>'	+
-						'<li id="vreply_no'+vreply_no+'">'+
-						'<dl>'+
-						'<dt class="img"><img src="/runningdog/resources/images/test/animalImg02.jpg"></dt>'+
-						'<dd><h4>'+ nickname +'</h4></dd>'+
-						' </dl>'+
-						'<p><textarea id="SecondContent" name="SecondContent" style="resize: none; width:100%; min-height:100px; max-height:100px;">비방글은 작성하실 수 없습니다.</textarea></p>'+
-						'<div class="cmt_conBtn">'+
-						'<button class="Cmt_delete_ctn" onclick="showReplyList();">취소</button>'+
-						'<button class="Cmt_update_btn" onclick="insertSVreplyLevel(' + vreply_no + ', \'' + nickname + '\')">저장</button>'+
+						'<form name="" id="" role="vreply">'+
+						'<fieldset>'+
+						'<div class="cmt_form">'+
+						'<h4 class="cmt_head" id="totalcount"></h4>'+
+						'<div class="cmt_body">'+
+						'<textarea id="second_content" name="second_content" style="resize: none; width:100%; min-height:100px; max-height:100px;"></textarea>'+
+						'<input type="hidden" name="volno" value="${ volunteer.volno}">'+
+						'<input type="hidden" name="nickname" value="${ sessionScope.loginMember.nickname}">'+
+						'<input type="hidden" name="unique_num" value="${ sessionScope.loginMember.uniqueNum}">'+
+						'<div class="cmt_ok"><input type="button" id="btn_vreplyInsert" value="등록" onclick="insertSVrLevel(' + vreply_no + ', \'' + nickname + '\', \'' + unique_num + '\')"></div>'+
 						'</div>'+
+						'</div>'+
+						'</fieldset>'+
+						'</form>'+
+						'<li id="vreply_no'+vreply_no+'">'+
 						'</li>'
+						
 						$('#vreply_no'+vreply_no).html(htmls);
-						$('#vreply_no'+vreply_no+'#SecondContent').focus();
-	
+						$('#vreply_no'+vreply_no+'#second_content').focus();
+						
+						
 }
-//대댓글수정내용저장
-function insertSVreplyLevel(vreply_no, nickname){
-	var SecondContent = $('#SecondContent').val();
-	var paramData = JSON.stringify({"vreply_content" : SecondContent, "vreply_no" : vreply_no});
+
+//대댓글내용저장
+function insertSVrLevel(vreply_no, nickname, unique_num){
+	var secondcontent = $('#second_content').val();
+	var paramData = JSON.stringify({"vreply_content" : secondcontent, "vreply_no" : vreply_no, "nickname" : nickname, "unique_num" : unique_num, "volno" : ${ volunteer.volno} });
 	var headers = {"Content-Type" : "application/json" , "X-HTTP-Method-Override" : "POST"};
 	
 	$.ajax({
@@ -485,7 +507,7 @@ function insertSVreplyLevel(vreply_no, nickname){
 		dataType :'text',
 		success : function(result){
 			console.log(result);
-			alert("대댓글 성공!");
+			alert("댓글이 등록되었습니다.");
 			showReplyList(); 
 		},
 		error : function(jqXHR, textstatus, errorthrown) {
@@ -495,6 +517,7 @@ function insertSVreplyLevel(vreply_no, nickname){
 		
 	});
 }
+
 //댓글삭제기능
 function fn_DeleteVreply( vreply_no, nickname ){
 	var paramData = { "vreply_no" : vreply_no };
@@ -525,8 +548,6 @@ function fn_DeleteVreply( vreply_no, nickname ){
 		else
 			alert("작성자만 이용하실 수 있습니다.");
 }
-
-
 </script> 
             <c:import url="/WEB-INF/views/include/footer.jsp"/>
 		</div>
