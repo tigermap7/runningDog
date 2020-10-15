@@ -21,11 +21,11 @@
                             <h4>비밀번호 변경</h4>
                             <div>
                                 <span><i class="xi-lock-o"></i></span>
-                                <span><input type="password" name="" title="신규 비밀번호" class="w100p" placeholder="신규 비밀번호" required/></span>
+                                <span><input type="password" name="" title="신규 비밀번호" class="w100p" placeholder="신규 비밀번호" maxlength="40" required/></span>
                             </div>
                             <div>
                                 <span><i class="xi-lock"></i></span>
-                                <span><input type="password" name="" title="신규 비밀번호 확인" class="w100p" placeholder="신규 비밀번호 확인" required/></span>
+                                <span><input type="password" name="" title="신규 비밀번호 확인" class="w100p" placeholder="신규 비밀번호 확인" maxlength="40" required/></span>
                             </div>
                             <p>
                                 <span>비밀번호를 입력해주세요.</span>

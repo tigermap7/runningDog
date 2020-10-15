@@ -48,7 +48,7 @@
                         <tr>
                             <td>아이디(이메일)</td>
                             <td>
-	                            <input type="text" name="userId" title="아이디(이메일)" id="userIdChk" class="form-control w80p" placeholder="아이디(이메일)"/>
+	                            <input type="text" name="userId" title="아이디(이메일)" id="userIdChk" class="form-control w80p" placeholder="아이디(이메일)" maxlength="40"/>
 	                            <p id="idWarning">
 	                                <span></span>
 	                            </p>
@@ -57,11 +57,11 @@
                         <tr>
                             <td>비밀번호</td>
                             <td>
-	                            <input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="form-control w80p" placeholder="비밀번호"/>
+	                            <input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="form-control w80p" placeholder="비밀번호" maxlength="40"/>
                         	    <p id="pwdWarning">
 	                                <span></span>
 	                            </p>
-	                            <input type="password" name="userPwd2" title="비밀번호 확인" id="userPwdChk2" class="form-control w80p" placeholder="비밀번호 확인"/>
+	                            <input type="password" name="userPwd2" title="비밀번호 확인" id="userPwdChk2" class="form-control w80p" placeholder="비밀번호 확인" maxlength="40"/>
 	                            <p id="pwdWarning2">
 	                                <span>사용하실 비밀번호는 특수문자 / 문자 / 숫자 포함, 8~15자리 이내로 입력해주세요.</span>
 	                            </p>
@@ -74,7 +74,7 @@
                         <tr>
                             <td>닉네임</td>
                             <td>
-                            	<input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임"/>
+                            	<input type="text" name="nickname" title="닉네임" id="nicknameChk" class="form-control w80p" placeholder="닉네임" maxlength="40"/>
 	                            <p id="nicknameWarning">
 	                                <span></span>
 	                            </p>
@@ -83,7 +83,7 @@
                         <tr>
                             <td>휴대폰번호</td>
                             <td class="telArea">
-                            <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력"/>
+                            <input type="tel" name="phone" title="휴대폰번호" id="phoneChk" class="form-control w80p" placeholder="'-' 포함 입력" maxlength="40"/>
                             <p id="phoneWarning">
                                 <span></span>
                             </p>

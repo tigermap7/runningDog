@@ -29,14 +29,14 @@
                             <h4>비밀번호 찾기</h4>
                             <div>
                                 <span><i class="xi-mail-o"></i></span>
-                                <span><input type="email" name="userId" title="아이디(이메일)" id="userIdChk" class="w100p" placeholder="아이디(이메일)" required/></span>
+                                <span><input type="email" name="userId" title="아이디(이메일)" id="userIdChk" class="w100p" placeholder="아이디(이메일)" maxlength="40" required/></span>
                             </div>
                             <p id="idWarning">
                                 <span></span>
                             </p>
                             <div>
                                 <span><i class="xi-call"></i></span>
-                                <span><input type="tel" name="phone" title="휴대폰번호" id="phoneChk2" class="w100p" placeholder="휴대폰번호('-'포함 입력)" required/></span>
+                                <span><input type="tel" name="phone" title="휴대폰번호" id="phoneChk2" class="w100p" placeholder="휴대폰번호('-'포함 입력)" maxlength="40" required/></span>
                             </div>
                             <p id="phoneWarning2">
                                 <span></span>
@@ -44,7 +44,7 @@
                             <p id="userIdPhoneWarning">
                                 <span></span>
                             </p>
-                            <input type="hidden" name="userPwd" title="비밀번호" id="userPwdChk" class="w100p" placeholder="비밀번호"/>
+                            <input type="hidden" name="userPwd" title="비밀번호" id="userPwdChk" class="w100p" placeholder="비밀번호" maxlength="40"/>
                             <input class="find_btn pwdFindBtn" type="button" name="" value="비밀번호 찾기">
                         </div>
                         <div id="pwdFindView" class="pwdFindView">

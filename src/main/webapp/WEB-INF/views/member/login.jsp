@@ -26,29 +26,22 @@
 						</h1>
 						<div class="loginInfo">
 							<div>
-								<span><i class="xi-mail-o"></i></span> <span><input
-									type="email" name="userId" title="아이디" id="userIdChk"
-									class="w100p" placeholder="아이디(이메일)" required /></span>
+								<span><i class="xi-mail-o"></i></span> <span><input type="email" name="userId" title="아이디" id="userIdChk" class="userLoginId w100p" placeholder="아이디(이메일)" maxlength="40" required/></span>
 							</div>
 							<p id="idWarning">
 								<span></span>
 							</p>
 							<div>
-								<span><i class="xi-lock-o"></i></span> <span><input
-									type="password" name="userPwd" title="비밀번호" id="userPwdChk"
-									class="w100p" placeholder="비밀번호" required /></span>
+								<span><i class="xi-lock-o"></i></span> <span><input type="password" name="userPwd" title="비밀번호" id="userPwdChk" class="w100p" placeholder="비밀번호" maxlength="40" required/></span>
 							</div>
 							<p id="pwdWarning">
 								<span></span>
 							</p>
 							<dl>
 								<dt>
-									<label><input type="checkbox" name="" id="idSaveCheck">
-										이메일 저장</label>
+									<label><input type="checkbox" name="" id="idSaveCheck">이메일 저장</label>
 								</dt>
-								<dd onclick="location='accountFind.do'">
-									아이디(이메일)/비밀번호 찾기 <i class="xi-angle-right"></i>
-								</dd>
+								<dd onclick="location='accountFind.do'">아이디(이메일)/비밀번호 찾기 <i class="xi-angle-right"></i></dd>
 							</dl>
 							<input class="login_btn" type="submit" name="" value="로그인">
 						</div>
