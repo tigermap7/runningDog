@@ -20,12 +20,24 @@ def issueDetail(url):
 
     # title : <h3 class="tit_headline">엄마가 아들 팔의 점을 보고 오열한 이유</h3>
     # readcount : <span class="txt_num">1,262,949</span>
+    thumbnail_div = soup.find("div", attrs={"class" : "inner_image"})
+
+    if(thumbnail_div) : 
+        thumbnail = thumbnail_div.find("img", attrs={"class" : "img_thumb"})['src']
+    else :
+        thumbnail_div2 = soup.findAll("div", attrs={"class" : "compos_section image_view compos_image"})[0]
+        thumbnail = thumbnail_div2.find("img", attrs={"class" : "img_thumb"})['src']
+
+
+    partner_div = soup.find("div", attrs={"class" : "inner_headline"})
+    partnerName = partner_div.find("strong", attrs={"class" : "txt_name"}).get_text().strip()
+    partnerImg = partner_div.find("img", attrs={"class" : "img_thumb"})['src']
     title = soup.find("h3", attrs={"class" : "tit_headline"}).get_text().strip()
     readcount = int(soup.find("span", attrs={"class":"txt_num"}).get_text().strip().replace(',',''))
     date = soup.find("span", attrs={"class":"txt_date"}).get_text().strip()
     content = str(soup.find("div", attrs={"id":"mainArticles"}))
 
     # json에 담기
-    jsonData = json.dumps({"url" : url, "title" : title, "readcount" : readcount, "date" : date, "content" : content})
+    jsonData = json.dumps({"partnerName" : partnerName, "partnerImg" : partnerImg, "url" : url, "title" : title, "thumbnail" : thumbnail, "readcount" : readcount, "date" : date, "content" : content})
 
     return jsonData

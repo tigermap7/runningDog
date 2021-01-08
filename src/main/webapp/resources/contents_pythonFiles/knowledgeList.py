@@ -6,58 +6,67 @@ import requests
 import re
 import json
 from bs4 import BeautifulSoup
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
+
+
 
 headers = {"User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"}
 
-def knowledgeList(animal) :
-    print("knowledgeList run..." + animal)
+def knowledgeList(animal, page, keyfield, keyword) :
 
-    url = "http://www.zooseyo.or.kr/Yu_board/know.html?gubun=f&page=1&animal={animal}&keyfield=subject&key=".format(animal=animal)
-    res = requests.get(url, headers=headers)
-    res.raise_for_status()
-
-    # soup = BeautifulSoup(res.text, "lxml")
-    soup = BeautifulSoup(res.text)
-
-    arrowback = soup.find('img', src=re.compile('arrow-back'))
-
-    # list생성
-    list = []
-
-    # lastpage = int(arrowback.find_previous_sibling("a").text.strip()) #자기 페이지 일때는 a링크가 아니라 오류뜸
-    # 다음가기 화살표가 있을 시 페이지 수 구하기
-    if arrowback :
-        print("on list")
-        lastpage = int(arrowback.previous_sibling.previous_sibling.get_text().strip()) #페이지 수 추출
-
-        # 페이지 수 가지고 전체 정보 가지고 오기
-        for i in range(1, lastpage + 1) :
-            url = "http://www.zooseyo.or.kr/Yu_board/know.html?gubun=f&page={page}&animal={animal}&keyfield=subject&key=".format(page=i, animal=animal)
-            res = requests.get(url, headers=headers)
-            res.raise_for_status()
-
-            # soup = BeautifulSoup(res.text, "lxml")
-            soup = BeautifulSoup(res.text)
-            
-            hrefs = soup.find_all('a', href=re.compile('^know_view.html'))
-
-            for href in hrefs:
-                title = href.get_text()
-                link = "http://www.zooseyo.or.kr/Yu_board/" + href.attrs['href']
-                tr = href.parent.parent.parent
-                no = tr('td')[0].text.strip()
-                readcount = tr('td')[4].text.strip()
-
-                # dictionary 생성
-                dict = {'no' : no, 'title' : title, 'readcount' : readcount, 'link' : link}
-                # list에 담기
-                list.append(dict)
-
-    else : 
-        print("no list")
+    # 자바에서 온 값(unicode) 변환
+    keyword = keyword.encode('utf-8')
+    keyword = keyword.decode('unicode_escape')
     
-    # json에 담기
-    jsonData = json.dumps({"totalCount" : len(list), "url" : url, "list" : list})
+    print("knowledgeList run..." + animal + str(page) + keyword)
+
+
+    listcount_url = "http://www.zooseyo.or.kr/Yu_board/know.html?gubun=f&page=1&animal={animal}&keyfield={keyfield}&key={key}".format(animal=animal, keyfield=keyfield, key=keyword)
+    listcount_res = requests.get(listcount_url, headers=headers)
+    listcount_res.raise_for_status()
+
+    listcount_soup = BeautifulSoup(listcount_res.text)
+
+    if(listcount_soup.find_all('a', href=re.compile('^know_view.html'))) :
+        listcount_tr = hrefs = listcount_soup.find_all('a', href=re.compile('^know_view.html'))[0].parent.parent.parent
+    
+
+        listcount = listcount_tr('td')[0].text.strip()
+
+        url = "http://www.zooseyo.or.kr/Yu_board/know.html?gubun=f&page={page}&animal={animal}&keyfield={keyfield}&key={key}".format(page=page, animal=animal, keyfield=keyfield, key=keyword)
+        res = requests.get(url, headers=headers)
+        res.raise_for_status()
+
+        # soup = BeautifulSoup(res.text, "lxml")
+        soup = BeautifulSoup(res.text)
+
+        hrefs = soup.find_all('a', href=re.compile('^know_view.html'))
+
+        list = []
+
+        for href in hrefs:
+            title = href.get_text()
+            link = "http://www.zooseyo.or.kr/Yu_board/" + href.attrs['href']
+            tr = href.parent.parent.parent
+            no = tr('td')[0].text.strip()
+            readcount = tr('td')[4].text.strip()
+
+            # dictionary 생성
+            dict = {'no' : no, 'title' : title, 'readcount' : readcount, 'link' : link}
+            # list에 담기
+            list.append(dict)
+
+        # json에 담기
+        jsonData = json.dumps({"totalCount" : listcount, "url" : url, "list" : list})
+    
+    else :
+        print("no list")
+        jsonData = json.dumps({"totalCount" : 0, "url" : listcount_url})
     
     return jsonData
+
+
+
+
 

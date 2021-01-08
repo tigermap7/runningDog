@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
-# sys.path.append("D:\\devtools\\python-3.8.5\\Lib\\site-packages")
 sys.path.append("C:\\Users\\true0\\anaconda3\\envs\\py27\\lib\\site-packages")
+# sys.path.append("D:\\devtools\\python-3.8.5\\Lib\\site-packages")
 import requests
 import re
 import json
