@@ -21,15 +21,12 @@ $(function(){
 	});
 });
 $('.xi-share-alt-o').click(function(){
-	
 	console.log("클릭확인용");
 });
 
 //팝오버 범위 밖 클릭하면 닫기
 $(document).on('click', function (e) {
     $('[data-toggle="popover"],[data-original-title]').each(function () {
-        //the 'is' for buttons that trigger popups
-        //the 'has' for icons within a button that triggers a popup
         if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {                
             (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
         }
@@ -70,9 +67,6 @@ function twitterShare(url, title){
 
 
 //카카오톡 공유
-//사용할 앱의 JavaScript 키를 설정해 주세요.
-
-
 function kakaoSendLink(url, title, img) {
   //카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
 	//Kakao.init('53d444db7d449eb66c0229426868cf97');

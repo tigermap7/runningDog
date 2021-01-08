@@ -91,16 +91,14 @@ public class NoticeController {
             {
                 // Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
                 if (cookies[i].getName().equals("cookie" + noticeNo))
-                { 
-                    //System.out.println("처음 쿠키가 생성한 뒤 들어옴.");
+                { //처음 쿠키가 생성된 뒤 들어옴
                     viewCookie = cookies[i];
                 }
             }
         }
 			
         // 만일 viewCookie가 null일 경우 쿠키를 생성해서 조회수 증가 로직을 처리함.
-        if (viewCookie == null) {    
-            //System.out.println("cookie 없음");	
+        if (viewCookie == null) {  //cookie 없음  
             
          // 쿠키 생성(이름, 값)
             Cookie newCookie = new Cookie("cookie"+noticeNo, "|" + noticeNo + "|");
@@ -110,12 +108,10 @@ public class NoticeController {
  
                 // 쿠키를 추가 시키고 조회수 증가시킴
             noticeService.updateNoticeReadCount(noticeNo);	//조회수 증가
-        } else {
-        	//System.out.println("cookie 있음");
+        } else {	//cookie 있음
             
             // 쿠키 값 받아옴
             String value = viewCookie.getValue();
-            //System.out.println("cookie 값 : " + value);
         }
         
         //상세보기 조회
@@ -212,7 +208,7 @@ public class NoticeController {
 	}	
 	
 	
-	//메인페이지에 필수, new 공지사항 출력하기
+	//헤더에 필수, new 공지사항 출력하기
 	@RequestMapping(value="nstate.do")
 	@ResponseBody
 	public String selectNoticeState() {
