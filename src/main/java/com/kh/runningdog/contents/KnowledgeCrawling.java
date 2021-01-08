@@ -36,8 +36,7 @@ public class KnowledgeCrawling {
 		 String keywordUnicode = new String(ostr);
 		 
 		 intPre = new PythonInterpreter();
-		 intPre.execfile("C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\contents_pythonFiles\\knowledgeList2.py");
-		
+		 intPre.execfile("C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\contents_pythonFiles\\knowledgeList.py");
 		 PyFunction pyFunction = (PyFunction) intPre.get("knowledgeList", PyFunction.class);
 		
 		 PyObject pyobj = pyFunction.__call__(new PyString(animal), new PyInteger(page), new PyString(keyfield), new PyString(keywordUnicode));
@@ -63,7 +62,6 @@ public class KnowledgeCrawling {
 	public static String knowledgeDetal(String link) {
 		intPre = new PythonInterpreter();
 		intPre.execfile("C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\contents_pythonFiles\\knowledgeDetail.py");
-		
 		PyFunction pyFunction = (PyFunction) intPre.get("knowledgeDetail", PyFunction.class);
 
 		PyObject pyobj = pyFunction.__call__(new PyString(link));

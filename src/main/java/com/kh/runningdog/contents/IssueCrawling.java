@@ -64,7 +64,7 @@ public class IssueCrawling {
 	//오늘의 이슈 상세보기 크롤링
 	public static JSONObject issueDetail(String link) {
 		intPre = new PythonInterpreter();
-		intPre.execfile("C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\contents_pythonFiles\\issueDetail2.py");
+		intPre.execfile("C:\\gaenasona_workspace\\runningdog\\src\\main\\webapp\\resources\\contents_pythonFiles\\issueDetail.py");
 		
 		PyFunction pyFunction = (PyFunction) intPre.get("issueDetail", PyFunction.class);
 		
